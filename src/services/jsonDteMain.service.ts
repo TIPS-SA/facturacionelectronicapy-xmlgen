@@ -225,7 +225,7 @@ class JSonDteMainService {
             dEst : data['establecimiento'],
             dPunExp : data['punto'],
             dNumDoc :  data['numero'],
-            dSerieNum : "", //TODO Verificar Serie AB, etc.
+            dSerieNum : data['numeroSerie'],
             dFeIniT : params['timbradoFecha'].substring(0, 10)
         };
     }
