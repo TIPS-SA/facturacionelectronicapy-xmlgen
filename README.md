@@ -1,6 +1,6 @@
 # Facturación Electrónica - Generación de XML para la SET (Paraguay)
 
-Módulo NodeJS que genera el **archivo XML** para enviar a la **SET** _(Subsecretaria de Estado de Tributación del Ministerio de Hacienda)_ para el proceso y generación del documento electrónico.
+Módulo NodeJS que genera el **archivo XML** para enviar a la **SET** _(Subsecretaria de Estado de Tributación del Ministerio de Hacienda)_ para el proceso y generación del documento electrónico, a partir de una estructura de datos en formato JSON.
 
 Versión del Manual Técnico: **150**
 
@@ -48,6 +48,33 @@ TypeScript:
 Ambos parámetros `params` y `data` pueden ser proveidos a partir de una vista de base de datos, leyendo datos de un CSV o proceso generado por otro sistema, para lograr una fácil integración 
 
 Al final podrá encontrar la estructura completa para el PARAMS y el JSON 
+
+## Sobreescritura del algoritmo para código de seguridad
+Uno de los procesos que debe realizarse dentro de la generación del archivo XML es generar un código de seguridad aleatorio no repetido, para enviar dentro del documento.
+
+Si genera el XML la primera vez, el código de seguridad no estará implementado, por lo cual recibirá un mensaje similar al siguiente `[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]` en el atributo `Id` y en la etiqueta `dCodSeg`, como en la imagen:
+``` xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/siRecepDE_v150.xsd">
+	<DE	Id="0180069563100100100000001202009141[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]0">
+		<gOpeDE>
+			<dCodSeg>[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]</dCodSeg>
+		</gOpeDE>
+	</DE>
+</rDE>
+```
+Probablemente querrá realizar la implementación de éste algoritmo por su propia cuenta, validando contra su base de datos u otro medio de almacenamiento
+
+Puede sobre-escribir dicho método antes de invocar al método generateXML, de la siguiente forma:
+
+``` ts
+  //Sobreescritura.
+  xmlgen.generateCodigoSeguridadAleatorio = (params: any, data : any) : string => {
+    // Implemente aqui su lógica de generación del código de seguridad
+    return "valorSobreescritura";
+  }
+```
 
 ## Estructura completa del `params` JSON de Ejemplo
 ``` json 

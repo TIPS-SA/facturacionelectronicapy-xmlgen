@@ -2,28 +2,6 @@ import stringUtilService from './StringUtil.service';
 import fechaUtilService from './FechaUtil.service';
 
 class JSonDteAlgoritmosService {
- 
-    /**
-     * Genera el Codigo de Seguridad aleatorio, conforme especificaciones DT
-     * 
-     * Debe ser un número positivo de 9 dígitos. 
-     * Aleatorio. 
-     * Debe ser distinto para cada DE y generado por un algoritmo de complejidad suficiente para evitar la 
-     * reproducción del valor. 
-     * Rango NO SECUENCIAL entre 000000001 y 999999999. 
-     * No tener relación con ninguna información específica o directa del DE o del emisor de manera a 
-     * garantizar su seguridad. 
-     * No debe ser igual al número de documento campo dNumDoc. 
-     * En caso de ser un número de menos de 9 dígitos completar con 0 a la izquierda. 
-     * 
-     * @param data 
-     * @returns 
-     */
-    public generateCodigoSeguridadAleatorio(data: Object) {
-        
-        const id = "";//data['tipo_documento'];
-        return id;
-    }
 
     /** 
      * Calcula Digito Verificador numérico con entrada alfanumérica y basemax 11
@@ -88,7 +66,7 @@ class JSonDteAlgoritmosService {
      * @param data 
      * @returns 
      */
-    public generateCodigoControl(params: any, data: any) {
+    public generateCodigoControl(params: any, data: any, codigoSeguridad: any) {
 
         if (params['ruc'].indexOf('-') == -1) {
             throw new Error("RUC debe contener dígito verificador en params.ruc");
@@ -102,7 +80,7 @@ class JSonDteAlgoritmosService {
         const tipoContribuyente = data['tipoContribuyente'];
         const fechaEmision = fechaUtilService.convertToAAAAMMDD(new Date(data['fecha']));
         const tipoEmision = data['tipoEmision'];    //1=Normal 2=Contingencia 
-        const codigoSeguridadAleatorio = this.generateCodigoSeguridadAleatorio(data);
+        const codigoSeguridadAleatorio = codigoSeguridad;
         const digitoVerificador = this.calcularDigitoVerificador(rucEmisor, 11 );
 
         const cdc = stringUtilService.leftZero(tipoDocumento, 2) +

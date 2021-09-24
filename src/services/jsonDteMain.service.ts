@@ -12,21 +12,27 @@ import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.
 import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
 
 class JSonDteMainService {
- 
-    version = 150;
-    json :any = {};
+    codigoSeguridad : any = null; 
+    codigoControl : any = null;
+    json : any = {};
 
-    public generateXML(params: any, data: any) : Promise<any> {
+    public generateXML(params: any, data: any, oThis: any) : Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                resolve(this.generateXMLService(params, data));
+                resolve(this.generateXMLService(params, data, oThis));
             } catch (error) {
                 reject(error);
             }
         });
     }
 
-    private generateXMLService(params: any, data: any) {
+    /**
+     * Metodo principal de generacion de XML
+     * @param params 
+     * @param data 
+     * @returns 
+     */
+    private generateXMLService(params: any, data: any, oThis: any) {
         //console.log("data", data);
 
         this.validateValues(data);
@@ -35,7 +41,11 @@ class JSonDteMainService {
 
         this.json = {};
 
-        this.generateRte(data);
+        this.generateCodigoSeguridad(params, data, oThis);  //Primero genera el codigo de seguridad aleatorio único
+        this.generateCodigoControl(params, data);   //Luego genera el código de Control
+
+        this.generateRte(params);
+
         this.json['rDE']['DE'] = this.generateDe(params, data);
         //---
         this.generateDatosOperacion(params, data);
@@ -75,6 +85,14 @@ class JSonDteMainService {
            
     }
 
+    generateCodigoSeguridad(params: any, data: any, oThis: any) {
+        this.codigoSeguridad = oThis.generateCodigoSeguridadAleatorio(params, data);
+    }
+
+    generateCodigoControl(params: any, data: any) {
+        this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
+    }
+
     /**
      * Valida los datos ingresados en el data del req.body
      * @param data 
@@ -101,7 +119,7 @@ class JSonDteMainService {
         data["tipoDocumentoDescripcion"] = constanteService.tiposDocumentos.filter(td => td.codigo == data["tipoDocumento"])[0]['descripcion'];
     }
     
-    private generateRte(data: any) {
+    private generateRte(params: any) {
         this.json = { 
             rDE: {
                 $: {
@@ -109,7 +127,7 @@ class JSonDteMainService {
                     'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
                     'xsi:schemaLocation': 'https://ekuatia.set.gov.py/sifen/xsd/siRecepDE_v150.xsd'
                 },
-                'dVerFor' : this.version
+                'dVerFor' : params.version
             }
         };
         
@@ -123,7 +141,7 @@ class JSonDteMainService {
         const rucEmisor = params['ruc'].split('-')[0];
         const dvEmisor = params['ruc'].split('-')[1];
 
-        const id = jsonDteAlgoritmos.generateCodigoControl(params, data);
+        const id = this.codigoControl;
         const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
         const jsonResult = {
@@ -159,10 +177,10 @@ class JSonDteMainService {
         const rucEmisor = params['ruc'].split('-')[0];
         const dvEmisor = params['ruc'].split('-')[1];
         
-        const id = jsonDteAlgoritmos.generateCodigoControl(params, data);
+        const id = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
         const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
-        const codigoSeguridadAleatorio = jsonDteAlgoritmos.generateCodigoSeguridadAleatorio(data);
+        const codigoSeguridadAleatorio = this.codigoSeguridad;
 
         this.json['rDE']['DE']['gOpeDE'] = {
             iTipEmi : data['tipoEmision'],
