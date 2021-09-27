@@ -19,14 +19,14 @@ class JSonDteIdentificacionDocumentoService {
 
         //Validaciones
         if (constanteService.tiposDocumentosAsociados.filter(um => um.codigo === data['documentoAsociado']['formato']).length == 0){
-            throw new Error("Formato de Documento Asociado '" + data['documentoAsociado']['formato'] + "' en data.documentoAsociado.formato no encontrado. Valores: " + constanteService.tiposDocumentosAsociados.map(a=>a.codigo));
+            throw new Error("Formato de Documento Asociado '" + data['documentoAsociado']['formato'] + "' en data.documentoAsociado.formato no encontrado. Valores: " + constanteService.tiposDocumentosAsociados.map(a=>a.codigo + '-' + a.descripcion));
         }
         if (data['documentoAsociado']['tipo'] == 2) {
             if (constanteService.tiposDocumentosImpresos.filter(um => um.codigo === data['documentoAsociado']['tipoDocumentoImpreso']).length == 0){
-                throw new Error("Tipo de Documento impreso '" + data['documentoAsociado']['tipoDocumentoImpreso'] + "' en data.documentoAsociado.tipoDocumentoImpreso no encontrado. Valores: " + constanteService.tiposDocumentosImpresos.map(a=>a.codigo));
+                throw new Error("Tipo de Documento impreso '" + data['documentoAsociado']['tipoDocumentoImpreso'] + "' en data.documentoAsociado.tipoDocumentoImpreso no encontrado. Valores: " + constanteService.tiposDocumentosImpresos.map(a=>a.codigo + '-' + a.descripcion));
             }
             if (constanteService.tiposConstancias.filter(um => um.codigo === data['documentoAsociado']['constanciaTipo']).length == 0){
-                throw new Error("Tipo de Constancia '" + data['documentoAsociado']['constanciaTipo'] + "' en data.documentoAsociado.constanciaTipo no encontrado. Valores: " + constanteService.tiposConstancias.map(a=>a.codigo));
+                throw new Error("Tipo de Constancia '" + data['documentoAsociado']['constanciaTipo'] + "' en data.documentoAsociado.constanciaTipo no encontrado. Valores: " + constanteService.tiposConstancias.map(a=>a.codigo + '-' + a.descripcion));
             }
         }
         const jsonResult : any = {

@@ -33,10 +33,10 @@ class JSonDteTransporteService {
             }
         }
         if (constanteService.tiposTransportes.filter(um => um.codigo === data['detalleTransporte']['tipo']).length == 0){
-            throw new Error("Tipo de Transporte '" + data['detalleTransporte']['tipo'] + "' en data.detalleTransporte.tipo no encontrado. Valores: " + constanteService.tiposTransportes.map(a=>a.codigo));
+            throw new Error("Tipo de Transporte '" + data['detalleTransporte']['tipo'] + "' en data.detalleTransporte.tipo no encontrado. Valores: " + constanteService.tiposTransportes.map(a=>a.codigo + '-' + a.descripcion));
         }
         if (constanteService.modalidadesTransportes.filter(um => um.codigo === data['detalleTransporte']['modalidad']).length == 0){
-            throw new Error("Modalidad de Transporte '" + data['detalleTransporte']['modalidad'] + "' en data.detalleTransporte.modalidad no encontrado. Valores: " + constanteService.modalidadesTransportes.map(a=>a.codigo));
+            throw new Error("Modalidad de Transporte '" + data['detalleTransporte']['modalidad'] + "' en data.detalleTransporte.modalidad no encontrado. Valores: " + constanteService.modalidadesTransportes.map(a=>a.codigo + '-' + a.descripcion));
         }
         const jsonResult : any = {
             iTipTrans : data['detalleTransporte']['tipo'],
@@ -147,7 +147,7 @@ class JSonDteTransporteService {
      */
     private generateDatosTransportista(params: any, data: any) {
         if (constanteService.tiposDocumentosIdentidades.filter(um => um.codigo === data['detalleTransporte']['transportista']['documentoTipo']).length == 0){
-            throw new Error("Tipo de Documento '" + data['detalleTransporte']['transportista']['documentoTipo'] + "' en data.detalleTransporte.transportista.documentoTipo no encontrado. Valores: " + constanteService.tiposDocumentosIdentidades.map(a=>a.codigo));
+            throw new Error("Tipo de Documento '" + data['detalleTransporte']['transportista']['documentoTipo'] + "' en data.detalleTransporte.transportista.documentoTipo no encontrado. Valores: " + constanteService.tiposDocumentosIdentidades.map(a=>a.codigo + '-' + a.descripcion));
         }
 
         if (data['detalleTransporte']['transportista']['ruc'] == -1) {

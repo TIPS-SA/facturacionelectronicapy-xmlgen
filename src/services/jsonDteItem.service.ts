@@ -20,11 +20,11 @@ class JSonDteItemService {
                 
                 //Validaciones
                 if (constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida']).length == 0){
-                    throw new Error("Unidad de Medida '" + item['unidadMedida'] + "' en data.items[" + i + "].unidadMedida no encontrado. Valores: " + constanteService.unidadesMedidas.map(a=>a.codigo));
+                    throw new Error("Unidad de Medida '" + item['unidadMedida'] + "' en data.items[" + i + "].unidadMedida no encontrado. Valores: " + constanteService.unidadesMedidas.map(a=>a.codigo + '-' + a.descripcion));
                 }
                 if (data["tipoDocumento"] === 7) {
                     if (constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia']).length == 0){
-                        throw new Error("Tolerancia de Mercaderia '" + item['tolerancia'] + "' en data.items[" + i + "].tolerancia no encontrado. Valores: " + constanteService.relevanciasMercaderias.map(a=>a.codigo));
+                        throw new Error("Tolerancia de Mercaderia '" + item['tolerancia'] + "' en data.items[" + i + "].tolerancia no encontrado. Valores: " + constanteService.relevanciasMercaderias.map(a=>a.codigo + '-' + a.descripcion));
                     }
                 }
 
@@ -161,7 +161,7 @@ class JSonDteItemService {
     private generateDatosItemsOperacionIVA(params: any, data: any, item : any, i: number, gCamItem: any) {
 
         if (constanteService.codigosAfectaciones.filter(um => um.codigo === item['ivaTipo']).length == 0){
-            throw new Error("Tipo de IVA '" + item['ivaTipo'] + "' en data.items[" + i + "].ivaTipo no encontrado. Valores: " + constanteService.codigosAfectaciones.map(a=>a.codigo));
+            throw new Error("Tipo de IVA '" + item['ivaTipo'] + "' en data.items[" + i + "].ivaTipo no encontrado. Valores: " + constanteService.codigosAfectaciones.map(a=>a.codigo + '-' + a.descripcion));
         }
 
         const jsonResult : any = {
@@ -259,10 +259,10 @@ class JSonDteItemService {
         }
 
         if (constanteService.tiposOperacionesVehiculos.filter(um => um.codigo === item['automotor']['tipo']).length == 0){
-            throw new Error("Tipo de Operación de Venta de Automotor '" + item['automotor']['tipo'] + "' en data.items[" + i + "].automotor.tipo no encontrado. Valores: " + constanteService.tiposOperacionesVehiculos.map(a=>a.codigo));
+            throw new Error("Tipo de Operación de Venta de Automotor '" + item['automotor']['tipo'] + "' en data.items[" + i + "].automotor.tipo no encontrado. Valores: " + constanteService.tiposOperacionesVehiculos.map(a=>a.codigo + '-' + a.descripcion));
         }
         if (constanteService.tiposCombustibles.filter(um => um.codigo === item['automotor']['tipoCombustible']).length == 0){
-            throw new Error("Tipo de Combustible '" + item['automotor']['tipoCombustible'] + "' en data.items[" + i + "].automotor.tipoCombustible no encontrado. Valores: " + constanteService.tiposCombustibles.map(a=>a.codigo));
+            throw new Error("Tipo de Combustible '" + item['automotor']['tipoCombustible'] + "' en data.items[" + i + "].automotor.tipoCombustible no encontrado. Valores: " + constanteService.tiposCombustibles.map(a=>a.codigo + '-' + a.descripcion));
         }
         const jsonResult : any = {
             iTipOpVN: item['automotor']['tipo'],

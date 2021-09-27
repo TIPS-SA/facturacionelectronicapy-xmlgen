@@ -33,6 +33,14 @@ class ConstanteService {
         descripcion : "Comprobante de retención electrónico",
         situacion : 1   //A futuro
     }];
+    
+    tiposEmisiones = [{
+        codigo: 1,
+        descripcion : "Normal"
+    }, {
+        codigo: 2,
+        descripcion : "Contingencia"
+    }];
 
     tiposTransacciones = [{
         codigo: 1,

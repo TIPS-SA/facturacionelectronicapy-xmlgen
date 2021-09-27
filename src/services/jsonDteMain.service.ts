@@ -107,14 +107,9 @@ class JSonDteMainService {
      * @param data 
      */
     private addDefaultValues(data: any) {
-        data["tipoEmision"] = 1;
-        data["tipoEmisionDescripcion"] = "Normal";
-
-        //data["tipoEmision"] = 2;
-        //data["tipoEmisionDescripcion"] = "Contingencia";
 
         if (constanteService.tiposDocumentos.filter(um => um.codigo === data["tipoDocumento"]).length == 0){
-            throw new Error("Tipo de Documento '" + data["tipoDocumento"]) + "' en data.tipoDocumento no válido. Valores: " + constanteService.tiposDocumentos.map(a=>a.codigo);
+            throw new Error("Tipo de Documento '" + data["tipoDocumento"]) + "' en data.tipoDocumento no válido. Valores: " + constanteService.tiposDocumentos.map(a=>a.codigo + '-' + a.descripcion);
         }
         data["tipoDocumentoDescripcion"] = constanteService.tiposDocumentos.filter(td => td.codigo == data["tipoDocumento"])[0]['descripcion'];
     }
@@ -182,9 +177,13 @@ class JSonDteMainService {
 
         const codigoSeguridadAleatorio = this.codigoSeguridad;
 
+        if (constanteService.tiposEmisiones.filter(um => um.codigo === data["tipoEmision"]).length == 0){
+            throw new Error("Tipo de Emisión '" + data["tipoEmision"]) + "' en data.tipoEmision no válido. Valores: " + constanteService.tiposEmisiones.map(a=>a.codigo + '-' + a.descripcion);
+        }
+
         this.json['rDE']['DE']['gOpeDE'] = {
             iTipEmi : data['tipoEmision'],
-            dDesTipEmi : data['tipoEmisionDescripcion'],
+            dDesTipEmi : constanteService.tiposEmisiones.filter(td => td.codigo == data["tipoEmision"])[0]['descripcion'],
             dCodSeg : codigoSeguridadAleatorio,
             dInfoEmi : data['observacion'],
             dInfoFisc : data['descripcion'],    //Este es obligatorio cuando es Nota de Remision
@@ -275,18 +274,20 @@ class JSonDteMainService {
         }
 
         if (constanteService.tiposImpuestos.filter(um => um.codigo === data["tipoImpuesto"]).length == 0){
-            throw new Error("Tipo de Impuesto '" + data["tipoImpuesto"]) + "' en data.tipoImpuesto no válido. Valores: " + constanteService.tiposImpuestos.map(a=>a.codigo);
+            throw new Error("Tipo de Impuesto '" + data["tipoImpuesto"]) + "' en data.tipoImpuesto no válido. Valores: " + constanteService.tiposImpuestos.map(a=>a.codigo + '-' + a.descripcion);
         }
         if (constanteService.monedas.filter(um => um.codigo === data["moneda"]).length == 0){
-            throw new Error("Moneda '" + data["moneda"]) + "' en data.moneda no válido. Valores: " + constanteService.monedas.map(a=>a.codigo);
+            throw new Error("Moneda '" + data["moneda"]) + "' en data.moneda no válido. Valores: " + constanteService.monedas.map(a=>a.codigo + '-' + a.descripcion);
         }
-        if (constanteService.globalPorItem.filter(um => um.codigo === data["condicionAnticipo"]).length == 0){
-            throw new Error("Condición de Anticipo '" + data["condicionAnticipo"]) + "' en data.condicionAnticipo no válido. Valores: " + constanteService.globalPorItem.map(a=>a.codigo);
+        if (data["condicionAnticipo"]) {
+            if (constanteService.globalPorItem.filter(um => um.codigo === data["condicionAnticipo"]).length == 0){
+                throw new Error("Condición de Anticipo '" + data["condicionAnticipo"]) + "' en data.condicionAnticipo no válido. Valores: " + constanteService.globalPorItem.map(a=>a.codigo + '-Anticipo ' + a.descripcion);
+            }    
         }
         if (constanteService.tiposTransacciones.filter(um => um.codigo === data["tipoTransaccion"]).length == 0){
-            throw new Error("Tipo de Transacción '" + data["tipoTransaccion"]) + "' en data.tipoTransaccion no válido. Valores: " + constanteService.tiposTransacciones.map(a=>a.codigo);
+            throw new Error("Tipo de Transacción '" + data["tipoTransaccion"]) + "' en data.tipoTransaccion no válido. Valores: " + constanteService.tiposTransacciones.map(a=>a.codigo + '-' + a.descripcion);
         }
-
+        
         this.json['rDE']['DE']['gDatGralOpe']['gOpeCom'] = {
             iTipTra : null, //Será sobre escrito
             dDesTipTra : null, //Será sobre escrito
@@ -296,8 +297,8 @@ class JSonDteMainService {
             dDesMoneOpe : constanteService.monedas.filter(m => m.codigo == data['moneda'])[0]['descripcion'],
             dCondTiCam : null, //D017 Será sobre escrito
             dTiCam : null, //Será sobre escrito
-            iCondAnt : data['condicionAnticipo'], 
-            dDesCondAnt : "Anticipo " + constanteService.globalPorItem.filter(ca => ca.codigo == data['condicionAnticipo'])[0]['descripcion']
+            iCondAnt : data['condicionAnticipo'] ? data['condicionAnticipo'] : null, 
+            dDesCondAnt : data['condicionAnticipo'] ? ("Anticipo " + constanteService.globalPorItem.filter(ca => ca.codigo == data['condicionAnticipo'])[0]['descripcion']) : null
         };
 
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
@@ -306,10 +307,17 @@ class JSonDteMainService {
             this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesTipTra'] = constanteService.tiposTransacciones.filter(tt => tt.codigo == data['tipoTransaccion'])[0]['descripcion'];
         }
         if (data['moneda'] != 'PYG') {
+            if (!data['condicionTipoCambio']) {
+                throw new Error("Debe informar el tipo de Cambio en data.condicionTipoCambio");
+            }
             //Obligatorio informar dCondTiCam D017
             this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dCondTiCam'] = data['condicionTipoCambio'];
         }
         if (data['cambio'] == 1 && data['moneda'] != 'PYG') {
+            
+            if (!(data['cambio'] && data['cambio'] > 0)) {
+                throw new Error("Debe informar el valor del Cambio en data.cambio");
+            }
             //Obligatorio informar dCondTiCam D018
             this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dTiCam'] = data['cambio'];
         }
@@ -332,7 +340,7 @@ class JSonDteMainService {
         
         //Validar si el establecimiento viene en params
         if (params.establecimientos.filter((um:any) => um.codigo === data['establecimiento']).length == 0){
-            throw new Error("Establecimiento '" + data['establecimiento'] + "' no encontrado en params.establecimientos*.codigo. Valores: " + params.establecimientos.map((a:any)=>a.codigo));
+            throw new Error("Establecimiento '" + data['establecimiento'] + "' no encontrado en params.establecimientos*.codigo. Valores: " + params.establecimientos.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
         if (params['ruc'].indexOf('-') == -1) {
             throw new Error("RUC debe contener dígito verificador en params.ruc");
@@ -415,7 +423,7 @@ class JSonDteMainService {
 
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
             if (params.tiposDocumentosReceptor.filter((um:any) => um.codigo === data['cliente']['documentoTipo']).length == 0){
-                throw new Error("Tipo de Documento '" + data['cliente']['documentoTipo'] + "' del Cliente en data.cliente.documentoTipo no encontrado. Valores: " + params.tiposDocumentosReceptor.map((a:any)=>a.codigo));
+                throw new Error("Tipo de Documento '" + data['cliente']['documentoTipo'] + "' del Cliente en data.cliente.documentoTipo no encontrado. Valores: " + params.tiposDocumentosReceptor.map((a:any)=>a.codigo + '-' + a.descripcion));
             }
         }
         if (data['cliente']['ruc'].indexOf('-') == -1) {
@@ -450,6 +458,9 @@ class JSonDteMainService {
 
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
             //Obligatorio completar D210
+            if (!data['cliente']['documentoNumero']) {
+                throw new Error("Debe informar el número de documento en data.cliente.documentoNumero");
+            }
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
             
             if (data['cliente']['documentoTipo'] = 5){
@@ -510,7 +521,7 @@ class JSonDteMainService {
     private generateDatosEspecificosPorTipoDE_FacturaElectronica(params: any, data: any) {
 
         if (constanteService.indicadoresPresencias.filter((um:any) => um.codigo === data['factura']['presencia']).length == 0){
-            throw new Error("Indicador de Presencia '" + data['factura']['presencia'] + "' en data.factura.presencia no encontrado. Valores: " + constanteService.indicadoresPresencias.map((a:any)=>a.codigo));
+            throw new Error("Indicador de Presencia '" + data['factura']['presencia'] + "' en data.factura.presencia no encontrado. Valores: " + constanteService.indicadoresPresencias.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
         
         this.json['rDE']['DE']['gDtipDE']['gCamFE'] = {
@@ -534,6 +545,22 @@ class JSonDteMainService {
      */
     private generateDatosEspecificosPorTipoDE_ComprasPublicas(params: any, data: any) {
 
+        if (!(data['dncp'] && data['dncp']['modalidad'] && data['dncp']['modalidad'].lenght > 0)) {
+            throw new Error("Debe informar la modalidad de Contratación DNCP en data.dncp.modalidad");
+        }
+        if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].lenght > 0)) {
+            throw new Error("Debe informar la entidad de Contratación DNCP en data.dncp.entidad");
+        }
+        if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].lenght > 0)) {
+            throw new Error("Debe informar la año de Contratación DNCP en data.dncp.año");
+        }
+        if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].lenght > 0)) {
+            throw new Error("Debe informar la secuencia de Contratación DNCP en data.dncp.secuencia");
+        }
+        if (!(data['dncp'] && data['dncp']['fecha'] && data['dncp']['fecha'].lenght > 0)) {
+            throw new Error("Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha");
+        }
+
         this.json['rDE']['DE']['gDtipDE']['gCamFE']['gCompPub'] = {
             dModCont : data['dncp']['modalidad'],
             dEntCont : data['dncp']['entidad'],
@@ -546,11 +573,11 @@ class JSonDteMainService {
     private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
 
         if (params.naturalezaVendedorAutofactura.filter((um:any) => um.codigo === data['autoFactura']['tipoVendedor']).length == 0){
-            throw new Error("Tipo de Vendedor '" + data['autoFactura']['tipoVendedor'] + "' en data.autoFactura.tipoVendedor no encontrado. Valores: " + params.naturalezaVendedorAutofactura.map((a:any)=>a.codigo));
+            throw new Error("Tipo de Vendedor '" + data['autoFactura']['tipoVendedor'] + "' en data.autoFactura.tipoVendedor no encontrado. Valores: " + params.naturalezaVendedorAutofactura.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         if (params.tiposDocumentosIdentidades.filter((um:any) => um.codigo === data['autoFactura']['documentoTipo']).length == 0){
-            throw new Error("Tipoo de Documento '" + data['autoFactura']['documentoTipo'] + "' en data.autoFactura.documentoTipo no encontrado. Valores: " + params.tiposDocumentosIdentidades.map((a:any)=>a.codigo));
+            throw new Error("Tipoo de Documento '" + data['autoFactura']['documentoTipo'] + "' en data.autoFactura.documentoTipo no encontrado. Valores: " + params.tiposDocumentosIdentidades.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamAE'] = {
@@ -568,19 +595,19 @@ class JSonDteMainService {
             dDesDisVen : data['autoFactura']['distritoDescripcion'],
             cCiuVen : data['autoFactura']['ciudad'],
             dDesCiuVen : data['autoFactura']['ciudadDescripcion'],
-            dDirProv : data['autoFactura']['transaccion']['lugar'],
-            cDepProv : data['autoFactura']['transaccion']['departamento'],
-            dDesDepProv : data['autoFactura']['transaccion']['departamentoDescripcion'],
-            cDisProv : data['autoFactura']['transaccion']['distrito'],
-            dDesDisProv : data['autoFactura']['transaccion']['distritoDescripcion'],
-            cCiuProv : data['autoFactura']['transaccion']['ciudad'],
-            dDesCiuProv  : data['autoFactura']['transaccion']['ciudadDescripcion'],
+            dDirProv : data['autoFactura']['ubicacion']['lugar'],
+            cDepProv : data['autoFactura']['ubicacion']['departamento'],
+            dDesDepProv : data['autoFactura']['ubicacion']['departamentoDescripcion'],
+            cDisProv : data['autoFactura']['ubicacion']['distrito'],
+            dDesDisProv : data['autoFactura']['ubicacion']['distritoDescripcion'],
+            cCiuProv : data['autoFactura']['ubicacion']['ciudad'],
+            dDesCiuProv  : data['autoFactura']['ubicacion']['ciudadDescripcion'],
         };
     }
 
     private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
         if (params.notasCreditosMotivos.filter((um:any) => um.codigo === data['notaCreditoDebito']['motivo']).length == 0){
-            throw new Error("Motivo de la Nota de Crédito/Débito '" + data['notaCreditoDebito']['motivo'] + "' en data.notaCreditoDebito.motivo no encontrado. Valores: " + params.notasCreditosMotivos.map((a:any)=>a.codigo));
+            throw new Error("Motivo de la Nota de Crédito/Débito '" + data['notaCreditoDebito']['motivo'] + "' en data.notaCreditoDebito.motivo no encontrado. Valores: " + params.notasCreditosMotivos.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamNCDE'] = {
@@ -591,14 +618,14 @@ class JSonDteMainService {
 
     private generateDatosEspecificosPorTipoDE_RemisionElectronica(params: any, data: any) {
         if (params.remisionesMotivos.filter((um:any) => um.codigo === data['remision']['motivo']).length == 0){
-            throw new Error("Motivo de la Remisión '" + data['remision']['motivo'] + "' en data.remision.motivo no encontrado. Valores: " + params.remisionesMotivos.map((a:any)=>a.codigo));
+            throw new Error("Motivo de la Remisión '" + data['remision']['motivo'] + "' en data.remision.motivo no encontrado. Valores: " + params.remisionesMotivos.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
         if (params.remisionesResponsables.filter((um:any) => um.codigo === data['remision']['remisionesResponsables']).length == 0){
-            throw new Error("Tipo de Documento '" + data['remision']['remisionesResponsables'] + "' en data.remision.remisionesResponsables no encontrado. Valores: " + params.remisionesResponsables.map((a:any)=>a.codigo));
+            throw new Error("Tipo de Documento '" + data['remision']['remisionesResponsables'] + "' en data.remision.remisionesResponsables no encontrado. Valores: " + params.remisionesResponsables.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamNRE'] = {
-            iMotEmiNR : data['remision']['motivo'],  
+            iMotEmiNR : data['remision']['motivo'],  //E501
             dDesMotEmiNR : constanteService.remisionesMotivos.filter(nv => nv.codigo === data['remision']['motivo'])[0]['descripcion'],
             iRespEmiNR : data['remision']['remisionesResponsables'],
             dDesRespEmiNR : constanteService.remisionesResponsables.filter(nv => nv.codigo === data['remision']['remisionesResponsables'])[0]['descripcion'],
@@ -616,7 +643,7 @@ class JSonDteMainService {
     private generateDatosCondicionOperacionDE(params: any, data: any) {
 
         if (constanteService.condicionesOperaciones.filter((um:any) => um.codigo === data['condicion']['tipo']).length == 0){
-            throw new Error("Condición de la Operación '" + data['condicion']['tipo'] + "' en data.condicion.tipo no encontrado. Valores: " + constanteService.condicionesOperaciones.map((a:any)=>a.codigo));
+            throw new Error("Condición de la Operación '" + data['condicion']['tipo'] + "' en data.condicion.tipo no encontrado. Valores: " + constanteService.condicionesOperaciones.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamCond'] = {
@@ -625,13 +652,13 @@ class JSonDteMainService {
             
         };
 
-        if (data['condicion']['tipo'] === 1) {
+        //if (data['condicion']['tipo'] === 1) {
             this.generateDatosCondicionOperacionDE_Contado(params, data);
-        }
+        //}
 
-        if (data['condicion']['tipo'] === 2) {
+        //if (data['condicion']['tipo'] === 2) {
             this.generateDatosCondicionOperacionDE_Credito(params, data);
-        }
+        //}
     }
     
     /**
@@ -649,7 +676,7 @@ class JSonDteMainService {
                 const dataEntrega = data['condicion']['entregas'][i];
 
                 if (constanteService.condicionesTiposPagos.filter((um:any) => um.codigo === dataEntrega['tipo']).length == 0){
-                    throw new Error("Condición de Tipo de Pago '" + dataEntrega['tipo'] + "' en data.condicion.entregas[" + i + "].tipo no encontrado. Valores: " + constanteService.condicionesTiposPagos.map((a:any)=>a.codigo));
+                    throw new Error("Condición de Tipo de Pago '" + dataEntrega['tipo'] + "' en data.condicion.entregas[" + i + "].tipo no encontrado. Valores: " + constanteService.condicionesTiposPagos.map((a:any)=>a.codigo + '-' + a.descripcion));
                 }
 
                 const cuotaInicialEntrega : any = {
@@ -664,7 +691,7 @@ class JSonDteMainService {
                 //Verificar si el Pago es con Tarjeta de crédito
                 if (dataEntrega['tipo'] === 3 || dataEntrega['tipo'] === 4) {
                     if (constanteService.condicionesOperaciones.filter((um:any) => um.codigo ===  dataEntrega['infoTarjeta']["tipo"]).length == 0){
-                        throw new Error("Tipo de Tarjeta de Crédito '" +  dataEntrega['infoTarjeta']["tipo"] + "' en data.condicion.entregas[" + i + "].infoTarjeta.tipo no encontrado. Valores: " + constanteService.condicionesOperaciones.map((a:any)=>a.codigo));
+                        throw new Error("Tipo de Tarjeta de Crédito '" +  dataEntrega['infoTarjeta']["tipo"] + "' en data.condicion.entregas[" + i + "].infoTarjeta.tipo no encontrado. Valores: " + constanteService.condicionesOperaciones.map((a:any)=>a.codigo + '-' + a.descripcion));
                     }
     
                     cuotaInicialEntrega['gPagTarCD'] = {
@@ -706,7 +733,7 @@ class JSonDteMainService {
      */
     private generateDatosCondicionOperacionDE_Credito(params: any, data: any) {
         if (constanteService.condicionesCreditosTipos.filter((um:any) => um.codigo ===  data['condicion']['credito']['tipo']).length == 0){
-            throw new Error("Tipo de Crédito '" +  data['condicion']['credito']['tipo'] + "' en data.condicion.credito.tipo no encontrado. Valores: " + constanteService.condicionesCreditosTipos.map((a:any)=>a.codigo));
+            throw new Error("Tipo de Crédito '" +  data['condicion']['credito']['tipo'] + "' en data.condicion.credito.tipo no encontrado. Valores: " + constanteService.condicionesCreditosTipos.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred'] = {

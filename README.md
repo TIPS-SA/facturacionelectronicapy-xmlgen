@@ -54,7 +54,7 @@ Uno de los procesos que debe realizarse dentro de la generación del archivo XML
 
 Si genera el XML la primera vez, el código de seguridad no estará implementado, por lo cual recibirá un mensaje similar al siguiente `[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]` en el atributo `Id` y en la etiqueta `dCodSeg`, como en la imagen:
 ``` xml
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/siRecepDE_v150.xsd">
 	<DE	Id="0180069563100100100000001202009141[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]0">

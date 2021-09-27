@@ -77,7 +77,7 @@ class JSonDteAlgoritmosService {
         const establecimiento = data['establecimiento'];
         const punto = data['punto'];
         const numero = data['numero'];
-        const tipoContribuyente = data['tipoContribuyente'];
+        const tipoContribuyente = params['tipoContribuyente'];
         const fechaEmision = fechaUtilService.convertToAAAAMMDD(new Date(data['fecha']));
         const tipoEmision = data['tipoEmision'];    //1=Normal 2=Contingencia 
         const codigoSeguridadAleatorio = codigoSeguridad;
