@@ -139,12 +139,16 @@ class JSonDteMainService {
         const id = this.codigoControl;
         const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
+        if (!(params.fechaFirmaDigital && params.fechaFirmaDigital.length >= 10)) {
+            throw new Error("Debe proveer la fecha de la firma digital en params.fechaFirmaDigital");
+        }
+        const fechaFirmaDigital = new Date(params.fechaFirmaDigital);
         const jsonResult = {
             $: {
                 'Id' : id
             },
             dDVId : 1,
-            dFecFirma : fechaUtilService.convertToJSONFormat(params.fechaFirmaDigital), //Fecha de la Firma Digital
+            dFecFirma : fechaUtilService.convertToJSONFormat(fechaFirmaDigital), //Fecha de la Firma Digital
             dSisFact : 1
         };
 
