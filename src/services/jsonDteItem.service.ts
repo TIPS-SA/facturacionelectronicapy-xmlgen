@@ -38,7 +38,7 @@ class JSonDteItemService {
                     dGtinPq : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelPaquete'] : null,
                     dDesProSer   : item['descripcion'], // RG 24/2019
                     cUniMed : item['unidadMedida'],
-                    dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['descripcion'],
+                    dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['descripcion'].trim(),
                     dCantProSer : item['cantidad'],
                     cPaisOrig : item['pais'],
                     dDesPaisOrig : item['paisDescripcion'],

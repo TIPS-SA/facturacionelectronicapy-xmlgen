@@ -750,7 +750,7 @@ class JSonDteMainService {
         }; 
 
         //Recorrer array de infoCuotas e informar en el JSON
-        if (data['condicion']['credito']['tipo'] === 2) {
+        if (data['condicion']['credito']['tipo'] === 2) {   //A Cuotas
             if (data['condicion']['credito']['infoCuotas'] && data['condicion']['credito']['infoCuotas'].length > 0) {
                 for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
                     const infoCuota = data['condicion']['credito']['infoCuotas'][i];
@@ -764,10 +764,10 @@ class JSonDteMainService {
 
                     this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['gCuotas'].push(gCuotas);
                 }
+            } else {
+                throw new Error("Debe proporcionar data.condicion.credito.infoCuotas[]");
             }
-        } else {
-            throw new Error("Debe proporcionar data.condicion.credito.infoCuotas[]");
-        }
+        } 
     }
 
 }
