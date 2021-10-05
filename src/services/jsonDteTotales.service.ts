@@ -77,13 +77,13 @@ class JSonDteTotalesService {
             dAnticipo : dAnticipo,
             dRedon : dRedon,    //F013
             dComi : data['comision'], //F025 //TODO, ver de donde sale
-            dTotGralOpe: dTotGralOpe,
+            dTotGralOpe: dTotGralOpe,   //F014
             dIVA5  : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA5,  //No si D013 != 1 o !=5
             dIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA10, //No si D013 != 1 o !=5
             dLiqTotIVA5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA5,  //No si D013 != 1 o !=5
             dLiqTotIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA10,  //No si D013 != 1 o !=5
             dIVAComi : comisionLiquid,
-            dTotIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid),
+            dTotIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid),   //F017
             dBaseGrav5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav5,
             dBaseGrav10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav10,
             dTBasGraIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dBaseGrav5 + dBaseGrav10),
