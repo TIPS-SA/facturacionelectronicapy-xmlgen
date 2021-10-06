@@ -27,7 +27,7 @@ Javascript:
 ``` js
   const xmlgen = require('facturacionelectronicapy-xmlgen');
   
-  xmlgen.generateXML(params, data).then(xml => {
+  xmlgen.generateXMLDE(params, data).then(xml => {
       console.log(xml);
   }).catch(error => {
       console.log(error);
@@ -38,7 +38,7 @@ TypeScript:
 ``` ts
   import xmlgen from 'facturacionelectronicapy-xmlgen';
 
-  xmlgen.generateXML(params, data).then(xml => {
+  xmlgen.generateXMLDE(params, data).then(xml => {
       console.log(xml);
   }).catch(error => {
       console.log(error);
@@ -66,7 +66,7 @@ Si genera el XML la primera vez, el código de seguridad no estará implementado
 ```
 Probablemente querrá realizar la implementación de éste algoritmo por su propia cuenta, validando contra su base de datos u otro medio de almacenamiento
 
-Puede sobre-escribir dicho método antes de invocar al método generateXML, de la siguiente forma:
+Puede sobre-escribir dicho método antes de invocar al método generateXMLDE, de la siguiente forma:
 
 ``` ts
   //Sobreescritura.

@@ -1,6 +1,6 @@
 import dteService from './services/jsonDteMain.service';
 class DE {
-    generateXML = (params: any, data: any) : Promise<any> => {
+    generateXMLDE = (params: any, data: any) : Promise<any> => {
         return dteService.generateXML(params, data, this);
     }
 
