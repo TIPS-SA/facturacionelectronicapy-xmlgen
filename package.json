@@ -8,7 +8,7 @@
     "debug": "export DEBUG=* && npm start",
     "test": "mocha -r ts-node/register 'test/**/*.test.ts'",
     "test-debug": "export DEBUG=* && npm test",
-    "build": "tsc",
+    "build": "tsc && copyfiles --up 1 src/**/*.xsd dist/services",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
@@ -38,10 +38,14 @@
   },
   "homepage": "https://github.com/marcosjara/facturacionelectronicapy-xmlgen#readme",
   "dependencies": {
-    "xml2js": "^0.4.23"
+    "copyfiles": "^2.4.1",
+    "fs": "0.0.1-security",
+    "xml2js": "^0.4.23",
+    "xsd-schema-validator": "^0.7.0"
   },
   "devDependencies": {
     "@types/xml2js": "^0.4.9",
+    "@types/xsd-schema-validator": "^0.5.4",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-mocha": "^8.1.0",

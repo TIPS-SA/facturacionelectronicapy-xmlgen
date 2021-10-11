@@ -41,12 +41,12 @@ class JSonDteTotalesService {
                 dTotOpe = item['dTotOpeItem'];
             }
 
-            dTotDesc += item['dDescItem'];
-            dTotDescGlotem += item['dDescGloItem'];
-            dTotAntItem += item['dAntPreUniIt'];
-            dTotAnt += item['dAntGloPreUniIt'];
-            dDescTotal += item['dDescItem'] + item['dTotDescGlotem'];
-            dAnticipo += item['dTotAntItem'] + item['dTotAnt'];
+            dTotDesc += item['dDescItem'] || 0;
+            dTotDescGlotem += item['dDescGloItem'] || 0;
+            dTotAntItem += item['dAntPreUniIt'] || 0;
+            dTotAnt += item['dAntGloPreUniIt'] || 0;
+            dDescTotal += (item['dDescItem'] || 0) + (item['dTotDescGlotem'] || 0);
+            dAnticipo += (item['dTotAntItem'] || 0) + (item['dTotAnt'] || 0);
             dTotOpeGs += item['dTotOpeGs']; //Suma del monto total en Gs.
         }   //end-for
 
@@ -78,18 +78,33 @@ class JSonDteTotalesService {
             dRedon : dRedon,    //F013
             dComi : data['comision'], //F025 //TODO, ver de donde sale
             dTotGralOpe: dTotGralOpe,   //F014
-            dIVA5  : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA5,  //No si D013 != 1 o !=5
-            dIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA10, //No si D013 != 1 o !=5
-            dLiqTotIVA5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA5,  //No si D013 != 1 o !=5
-            dLiqTotIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA10,  //No si D013 != 1 o !=5
+            //dIVA5  : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA5,  //No si D013 != 1 o !=5
+            //dIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA10, //No si D013 != 1 o !=5
+            //dLiqTotIVA5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA5,  //No si D013 != 1 o !=5
+            //dLiqTotIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA10,  //No si D013 != 1 o !=5
             dIVAComi : comisionLiquid,
             dTotIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid),   //F017
-            dBaseGrav5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav5,
-            dBaseGrav10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav10,
-            dTBasGraIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dBaseGrav5 + dBaseGrav10),
-            dTotalGs : null //Sera sobreescrito
+            //dBaseGrav5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav5,
+            //dBaseGrav10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav10,
+            //dTBasGraIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dBaseGrav5 + dBaseGrav10),
+            //dTotalGs : null //Sera sobreescrito
         };
         
+        if (!(data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5)) {
+            jsonResult['dIVA5'] = dIVA5;
+            jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
+            jsonResult['dBaseGrav5'] = dBaseGrav5;
+        //}
+        //if (!(data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5)) {
+            jsonResult['dIVA5'] = dIVA10;
+            jsonResult['dLiqTotIVA10'] = dLiqTotIVA10;
+            jsonResult['dBaseGrav10'] = dBaseGrav10;
+
+            jsonResult['dTotIVA'] = (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid);
+            jsonResult['dTBasGraIVA'] = (dBaseGrav5 + dBaseGrav10);
+        }
+        
+
         if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {  //Por el Global
             jsonResult['dTotalGs'] = dTotGralOpe * data['cambio'];
         }

@@ -18,7 +18,7 @@ class JSonDteAlgoritmosService {
           
         // Cambia la ultima letra por ascii en caso que la cedula termine en letra   
         for (let i = 0; i < ruc.length; i++) {
-            v_caracter = ruc.toUpperCase().substring(i,1);
+            v_caracter = ruc.toUpperCase().substring(i, 1);
             if ( ! ( v_caracter.charCodeAt(0) >= 48 && v_caracter.charCodeAt(0) <= 57) ) {
                 v_numero_al = v_numero_al + v_caracter.charCodeAt(0); 
             } else {
@@ -33,7 +33,7 @@ class JSonDteAlgoritmosService {
             if (k > baseMax) {
                 k = 2;
             }
-            v_numero_aux = parseInt(v_numero_al.substring(i,1));
+            v_numero_aux = parseInt(v_numero_al.substring(i, 1));
             v_total      = v_total + (v_numero_aux * k);
             k            = k + 1;
         }

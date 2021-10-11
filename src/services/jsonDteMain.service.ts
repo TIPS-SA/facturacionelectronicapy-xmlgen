@@ -10,6 +10,7 @@ import jsonDteTransporte from './jsonDteTransporte.service';
 import jsonDteTotales from './jsonDteTotales.service';
 import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.service';
 import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
+import validator from 'xsd-schema-validator';
 
 class JSonDteMainService {
     codigoSeguridad : any = null; 
@@ -71,16 +72,30 @@ class JSonDteMainService {
             this.json['rDE']['DE']['gTotSub'] = jsonDteTotales.generateDatosTotales(params, data, items);
         }
 
-        this.json['rDE']['DE']['gDtipDE']['gCamGen'] = jsonDteComplementarioComercial.generateDatosComercialesUsoGeneral(params, data);
+        if (data['complementarios']) {
+           this.json['rDE']['DE']['gDtipDE']['gCamGen'] = jsonDteComplementarioComercial.generateDatosComercialesUsoGeneral(params, data);
+        }
 
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6 || data['tipoDocumento'] == 7) {
             this.json['rDE']['DE']['gDtipDE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
         }
         //console.log("JSon a Convertir", this.json);
-        var builder = new xml2js.Builder();
+        var builder = new xml2js.Builder({xmldec : {
+            version : '1.0',
+            encoding : 'UTF-8',
+            standalone : false
+        }});
         var xml = builder.buildObject(this.json);
+/*
+        validator.validateXML(xml, __dirname + '\\xsd\\siRecepDE_v150.xsd', function(err, result) {
+        //validator.validateXML(xml.split('\n').slice(1).join('\n'), __dirname + '\\xsd\\siRecepDE_v150.xsd', function(err, result) {
+                if (err) {
+                throw err;
+            }
 
-        //console.log(xml);
+            console.log(result.messages);
+        });
+*/
         return xml;            
            
     }
@@ -182,7 +197,7 @@ class JSonDteMainService {
         const codigoSeguridadAleatorio = this.codigoSeguridad;
 
         if (constanteService.tiposEmisiones.filter(um => um.codigo === data["tipoEmision"]).length == 0){
-            throw new Error("Tipo de Emisión '" + data["tipoEmision"]) + "' en data.tipoEmision no válido. Valores: " + constanteService.tiposEmisiones.map(a=>a.codigo + '-' + a.descripcion);
+            throw new Error("Tipo de Emisión '" + data["tipoEmision"] + "' en data.tipoEmision no válido. Valores: " + constanteService.tiposEmisiones.map(a=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gOpeDE'] = {
@@ -225,12 +240,16 @@ class JSonDteMainService {
             iTiDE : data['tipoDocumento'],
             dDesTiDE : data['tipoDocumentoDescripcion'],
             dNumTim : params['timbradoNumero'],
-            dEst : data['establecimiento'],
-            dPunExp : data['punto'],
-            dNumDoc :  data['numero'],
-            dSerieNum : data['numeroSerie'],
+            dEst : stringUtilService.leftZero(data['establecimiento'], 3),
+            dPunExp : stringUtilService.leftZero(data['punto'], 3),
+            dNumDoc : stringUtilService.leftZero(data['numero'], 7),
+            //dSerieNum : null,
             dFeIniT : params['timbradoFecha'].substring(0, 10)
         };
+
+        if (data['numeroSerie']) {
+            this.json['rDE']['DE']['gTimb']['dSerieNum'] = data['numeroSerie'];
+        }
     }
 
     /**
@@ -299,10 +318,10 @@ class JSonDteMainService {
             dDesTImp : constanteService.tiposImpuestos.filter(ti => ti.codigo == data['tipoImpuesto'])[0]['descripcion'],
             cMoneOpe : data['moneda'],  //D015
             dDesMoneOpe : constanteService.monedas.filter(m => m.codigo == data['moneda'])[0]['descripcion'],
-            dCondTiCam : null, //D017 Será sobre escrito
-            dTiCam : null, //Será sobre escrito
-            iCondAnt : data['condicionAnticipo'] ? data['condicionAnticipo'] : null, 
-            dDesCondAnt : data['condicionAnticipo'] ? ("Anticipo " + constanteService.globalPorItem.filter(ca => ca.codigo == data['condicionAnticipo'])[0]['descripcion']) : null
+            //dCondTiCam : null, //D017 Será sobre escrito
+            //dTiCam : null, //Será sobre escrito
+            //iCondAnt : data['condicionAnticipo'] ? data['condicionAnticipo'] : null, 
+            //dDesCondAnt : data['condicionAnticipo'] ? ("Anticipo " + constanteService.globalPorItem.filter(ca => ca.codigo == data['condicionAnticipo'])[0]['descripcion']) : null
         };
 
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
@@ -326,6 +345,10 @@ class JSonDteMainService {
             this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dTiCam'] = data['cambio'];
         }
 
+        if (data['condicionAnticipo']){
+            this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['iCondAnt'] = data['condicionAnticipo'];
+            this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesCondAnt'] = "Anticipo " + constanteService.globalPorItem.filter(ca => ca.codigo == data['condicionAnticipo'])[0]['descripcion']
+        }
     }
 
     /**
@@ -369,11 +392,25 @@ class JSonDteMainService {
             dTelEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['telefono'],
             dEmailE : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['email'],
             dDenSuc : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['denominacion'],
-            gActEco : {
+            /*gActEco : {
                 cActEco : params["actividadEconomica"],
                 dDesActEco : params["actividadEconomicaDescripcion"]
-            }
+            }*/
         };
+
+        if (params["actividadesEconomicas"] && params["actividadesEconomicas"].length > 0) {
+            this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gActEco'] = [];
+            for (let i = 0; i < params["actividadesEconomicas"].length; i++) {
+                const actividadEconomica = params["actividadesEconomicas"][i];
+                const gActEco = {
+                    cActEco : actividadEconomica.codigo,
+                    dDesActEco : actividadEconomica.descripcion
+                };
+                this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gActEco'].push(gActEco);
+            }
+        } else {
+            throw new Error("Debe proveer el array de actividades económicas en params.actividadesEconomicas");
+        }
     }
 
     /**
@@ -385,7 +422,7 @@ class JSonDteMainService {
      */
     private generateDatosGeneralesResponsableGeneracionDE(params: any, data: any) {
 
-        this.json['rDE']['DE']['gDatGralOpe']['gRespDE'] = {
+        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE'] = {
             iTipIDRespDE : data['usuario']['documentoTipo'],
             dDTipIDRespDE : constanteService.tiposDocumentosIdentidades.filter(td=> td.codigo === data['usuario']['documentoTipo'])[0]["descripcion"],
             dNumIDRespDE : data['usuario']['documentoNumero'],
@@ -441,12 +478,12 @@ class JSonDteMainService {
             iTiContRec : data['cliente']['contribuyente'] ? data['cliente']['tipoContribuyente'] : null,
             dRucRec :  data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
             dDVRec : data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
-            iTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['documentoTipo'] : null,
-            dDTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"]  : null,
-            dNumIDRec : null,   //Sera Sobreescito D210
+            //iTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['documentoTipo'] : null,
+            //dDTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"]  : null,
+            //dNumIDRec : null,   //Sera Sobreescito D210
             dNomRec : (data['cliente']['documentoTipo'] === 5) ? "Sin Nombre": data['cliente']['razonSocial'],
             dNomFanRec : (data['cliente']['documentoTipo'] === 5) ? null: data['cliente']['nombreFantasia'],
-            dDirRec : (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) ? data['cliente']['direccion'] : null,
+            //dDirRec : (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) ? data['cliente']['direccion'] : null,
             dNumCasRec : data['cliente']['direccion'] ? data['cliente']['numeroCasa'] : null,
             cDepRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['departamento'] : null,
             dDesDepRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['departamentoDescripcion'] : null,
@@ -454,22 +491,35 @@ class JSonDteMainService {
             dDesDisRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['distritoDescripcion'] : null,
             cCiuRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['ciudad'] : null,
             dDesCiuRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['ciudadDescripcion'] : null,
-            dTelRec : data['cliente']['telefono'],
-            dCelRec : data['cliente']['celular'],
-            dEmailRec : data['cliente']['email'],
-            dCodCliente : data['cliente']['']
+            //dTelRec : data['cliente']['telefono'],
+            //dCelRec : data['cliente']['celular'],
+            //dEmailRec : data['cliente']['email']
+            //dCodCliente : data['cliente']['']
         };
 
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
             //Obligatorio completar D210
-            if (!data['cliente']['documentoNumero']) {
+            if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
                 throw new Error("Debe informar el número de documento en data.cliente.documentoNumero");
             }
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
-            
+            //iTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['documentoTipo'] : null,
+            //dDTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"]  : null,
+            //dNumIDRec : null,   //Sera Sobreescito D210
+
+            if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
+                this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
+                this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"];
+                this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
+            }
+
             if (data['cliente']['documentoTipo'] = 5){
                 //Si es innominado completar con cero
                 this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = "0";
+            }
+        }
+        if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
+            if (data['cliente']['direccion']) {
+                this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'];
             }
         }
 
@@ -481,6 +531,20 @@ class JSonDteMainService {
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = null;
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = null;
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = null;
+        }
+
+        if (data['cliente']['telefono'] && data['cliente']['telefono'].lenght >= 6) {
+            dTelRec : data['cliente']['telefono'];
+        }
+        if (data['cliente']['celular'] && data['cliente']['telefono'].lenght >= 10) {
+            dCelRec : data['cliente']['celular'];
+        }
+        if (data['cliente']['email']) {
+            dEmailRec : data['cliente']['email'];
+        }
+
+        if (data['cliente']['codigo']) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = data['cliente']['codigo'];
         }
     }
 
@@ -531,9 +595,12 @@ class JSonDteMainService {
         this.json['rDE']['DE']['gDtipDE']['gCamFE'] = {
             iIndPres : data['factura']['presencia'],
             dDesIndPres : constanteService.indicadoresPresencias.filter(ip => ip.codigo === data['factura']['presencia'])[0]['descripcion'],
-            dFecEmNR : data['factura']['fechaEnvio']
+            //dFecEmNR : data['factura']['fechaEnvio']
         };
 
+        if (data['factura']['fechaEnvio']) {
+            this.json['rDE']['DE']['gDtipDE']['gCamFE']['dFecEmNR'] = data['factura']['fechaEnvio'];
+        }
         if (data["cliente"]["tipoOperacion"] === 3){
             this.generateDatosEspecificosPorTipoDE_ComprasPublicas(params, data);
         }
@@ -689,8 +756,14 @@ class JSonDteMainService {
                     dMonTiPag : dataEntrega['monto'],
                     cMoneTiPag : dataEntrega['moneda'],
                     dDMoneTiPag : dataEntrega['monedaDescripcion'],
-                    dTiCamTiPag : dataEntrega['cambio'],
+                    //dTiCamTiPag : dataEntrega['cambio'],
                 };
+
+                if (dataEntrega['moneda'] != 'PYG') {
+                    if (dataEntrega['cambio']) {
+                        cuotaInicialEntrega['dTiCamTiPag'] = dataEntrega['cambio'];
+                    }
+                }
 
                 //Verificar si el Pago es con Tarjeta de crédito
                 if (dataEntrega['tipo'] === 3 || dataEntrega['tipo'] === 4) {
@@ -698,6 +771,10 @@ class JSonDteMainService {
                         throw new Error("Tipo de Tarjeta de Crédito '" +  dataEntrega['infoTarjeta']["tipo"] + "' en data.condicion.entregas[" + i + "].infoTarjeta.tipo no encontrado. Valores: " + constanteService.condicionesOperaciones.map((a:any)=>a.codigo + '-' + a.descripcion));
                     }
     
+                    if (dataEntrega['infoTarjeta']["ruc"].indexOf("-") == -1) {
+                        throw new Error("Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[" + i + "].infoTarjeta.ruc");
+                        
+                    }
                     cuotaInicialEntrega['gPagTarCD'] = {
                         iDenTarj : dataEntrega['infoTarjeta']["tipo"],  
                         dDesDenTarj : dataEntrega['infoTarjeta']["tipo"] === 99 ? dataEntrega['infoTarjeta']["tipoDescripcion"] : constanteService.tarjetasCreditosTipos.filter(co => co.codigo === dataEntrega['infoTarjeta']['tipo'])[0]['descripcion'],
@@ -744,10 +821,17 @@ class JSonDteMainService {
             iCondCred : data['condicion']['credito']['tipo'],
             dDCondCred : constanteService.condicionesCreditosTipos.filter(co => co.codigo === data['condicion']['credito']['tipo'])[0]['descripcion'],
             dPlazoCre : data['condicion']['credito']['tipo'] === 1 ? data['condicion']['credito']['plazo'] : null,
-            dCuotas : data['condicion']['credito']['tipo'] === 2 ? data['condicion']['credito']['cuotas'] : null,
+            //dCuotas : data['condicion']['credito']['tipo'] === 2 ? data['condicion']['credito']['cuotas'] : null,
             dMonEnt : data['condicion']['credito']['montoEntrega'],
             gCuotas : []
         }; 
+
+        if (data['condicion']['credito']['tipo'] === 2) {
+            if (data['condicion']['credito']['cuotas']) {
+                this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dCuotas'] = data['condicion']['credito']['cuotas'];
+            }
+        }
+        
 
         //Recorrer array de infoCuotas e informar en el JSON
         if (data['condicion']['credito']['tipo'] === 2) {   //A Cuotas

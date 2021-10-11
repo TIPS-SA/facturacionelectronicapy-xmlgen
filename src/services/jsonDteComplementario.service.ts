@@ -23,7 +23,7 @@ class JSonDteComplementariosService {
 
         jsonResult['gGrupSeg'] = this.generateDatosSectorSeguros(params, data);
 
-        jsonResult['gGrupSup'] = this.generateDatosSectorSeguros(params, data);
+        jsonResult['gGrupSup'] = this.generateDatosSectorSupermercados(params, data);
 
         jsonResult['gGrupAdi'] = this.generateDatosDatosAdicionalesUsoComercial(params, data);
 
@@ -92,7 +92,7 @@ class JSonDteComplementariosService {
             dEfectivo : data['sectorSupermercados']['efectivo'],
             dVuelto : data['sectorSupermercados']['vuelto'],
             dDonac : data['sectorSupermercados']['donacion'],
-            dDesDonac : data['sectorSupermercados']['donacionDescripcion']
+            dDesDonac : data['sectorSupermercados']['donacionDescripcion'].substring(0, 20)
         };
         return jsonResult;
     }
@@ -107,7 +107,7 @@ class JSonDteComplementariosService {
     */
     private generateDatosDatosAdicionalesUsoComercial(params: any, data: any) {
         const jsonResult : any = {
-            dCiclo : data['sectorAdicional']['ciclo'],
+            dCiclo : data['sectorAdicional']['ciclo'].substring(0, 15),
             dFecIniC : data['sectorAdicional']['inicioCiclo'],
             dFecFinC : data['sectorAdicional']['finCiclo'],
             dVencPag : data['sectorAdicional']['vencimientoPago'],

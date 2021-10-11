@@ -30,27 +30,47 @@ class JSonDteItemService {
 
                 const gCamItem : any = {
                     dCodInt : item['codigo'],
-                    dParAranc : item['partidaArancelaria'],
-                    dNCM : item['monto'],
-                    dDncpG : (data["cliente"]["tipoOperacion"] === 3) ? stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8) : null,
+                    //dParAranc : item['partidaArancelaria'],
+                    //dNCM : item['ncm'],
+                    /*dDncpG : (data["cliente"]["tipoOperacion"] === 3) ? stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8) : null,
                     dDncpE : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelEspecifico'] : null,
                     dGtin : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoGtinProducto'] : null,
-                    dGtinPq : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelPaquete'] : null,
+                    dGtinPq : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelPaquete'] : null,*/
                     dDesProSer   : item['descripcion'], // RG 24/2019
                     cUniMed : item['unidadMedida'],
-                    dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['descripcion'].trim(),
+                    dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['representacion'].trim(),
                     dCantProSer : item['cantidad'],
-                    cPaisOrig : item['pais'],
-                    dDesPaisOrig : item['paisDescripcion'],
-                    dInfItem : item['observacion'],
-                    cRelMerc : data["tipoDocumento"] === 7 ? item['tolerancia'] : null,
-                    dDesRelMerc : data["tipoDocumento"] === 7 ? constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia'])[0]['descripcion'] : null,
-                    dCanQuiMer : item['toleranciaCantidad'],
-                    dPorQuiMer : item['toleranciaPorcentaje'],
-                    dCDCAnticipo : null //Sera sobreescrito
-
+                    //cPaisOrig : item['pais'],
+                    //dDesPaisOrig : item['paisDescripcion'],
+//                    dInfItem : item['observacion'],
+                    //cRelMerc : data["tipoDocumento"] === 7 ? item['tolerancia'] : null,
+                    //dDesRelMerc : data["tipoDocumento"] === 7 ? constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia'])[0]['descripcion'] : null,
+                    //dCanQuiMer : item['toleranciaCantidad'],
+                    //dPorQuiMer : item['toleranciaPorcentaje'],
+                    //dCDCAnticipo : null //Sera sobreescrito
                 };
 
+                if (item['partidaArancelaria']) {
+                    gCamItem['dParAranc'] = item['partidaArancelaria'];
+                }
+                if (item['ncm']) {
+                    gCamItem['dNCM'] = item['ncm'];
+                }
+                if (data["cliente"]["tipoOperacion"] && data["cliente"]["tipoOperacion"] === 3) {
+                    gCamItem['dDncpG'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
+                    gCamItem['dDncpE'] = item['dncp']['codigoNivelEspecifico'];
+                    gCamItem['dGtin'] = item['dncp']['codigoGtinProducto'];
+                    gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
+                }
+
+                if (item['pais']) {
+                    gCamItem['cPaisOrig'] = item['pais'];
+                    gCamItem['dDesPaisOrig'] = item['paisDescripcion'];
+                }
+                
+                if (item['observacion']) {
+                    gCamItem['dInfItem'] = item['observacion'];
+                }
                 //Tratamiento E719. Tiene relacion con generateDatosGeneralesInherentesOperacion
                 if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
                     if (data['tipoTransaccion'] === 9) {
@@ -74,11 +94,21 @@ class JSonDteItemService {
                 }
 
                 //Rastreo
-                gCamItem['gRasMerc'] = this.generateDatosItemsOperacionRastreoMercaderias(params, data, item, i);
+                if (item['lote'] || item['vencimiento'] || item['numeroSerie'] || item['numeroPedido'] || item['numeroSeguimiento']) {
+                    gCamItem['gRasMerc'] = this.generateDatosItemsOperacionRastreoMercaderias(params, data, item, i);
+                }
 
                 //Automotores
-                gCamItem['gVehNuevo'] = this.generateDatosItemsOperacionSectorAutomotores(params, data, item, i);
+                if (item['automotor'] && item['automotor']['tipo']) {
+                    gCamItem['gVehNuevo'] = this.generateDatosItemsOperacionSectorAutomotores(params, data, item, i);
+                }
 
+                if (data["tipoDocumento"] === 7) {
+                    gCamItem['cRelMerc'] = item['tolerancia'];
+                    gCamItem['dDesRelMerc'] = constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia'])[0]['descripcion'];
+                    gCamItem['dCanQuiMer'] = item['toleranciaCantidad'];
+                    gCamItem['dPorQuiMer'] = item['toleranciaPorcentaje'];
+                }
                 jsonResult.push(gCamItem);
             }   //end-for
         }
@@ -96,11 +126,13 @@ class JSonDteItemService {
      */
     private generateDatosItemsOperacionPrecioTipoCambioTotal(params: any, data: any, item : any) {
         const jsonResult : any = {
-            dPUniProSer: item['pecioUnitario'],
-            dTiCamIt : data['condicionTipoCambio'] == 2 ? item['cambio'] : null,    //E725
+            dPUniProSer: item['precioUnitario'],
+            //dTiCamIt : data['condicionTipoCambio'] == 2 ? item['cambio'] : null,    //E725
             dTotBruOpeItem : item['subtotal'],
         };
-                        
+        if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
+            jsonResult['dTiCamIt'] = item['cambio'];
+        }          
         jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(params, data, item);
 
         return jsonResult;
@@ -118,11 +150,11 @@ class JSonDteItemService {
         const jsonResult : any = {
             dDescItem: item['descuento'],
             dPorcDesIt : item['descuentoPorcentaje'],
-            dDescGloItem : item['**'],  //TODO este debe ser calculado de acuerdo al descuento global
+            //dDescGloItem : item['**'],  //TODO este debe ser calculado de acuerdo al descuento global
             dAntPreUniIt: item['anticipo'], //Valor del anticipo del item ya emitido en una FE anterior. tipoOperacion=9 Anticipo
-            dAntGloPreUniIt: item['**'],  //TODO este debe ser calculado de acuerdo al anticipo global
-            dTotOpeItem : null, //EA008  sera sobreescrito de acuerdo al calculo
-            dTotOpeGs : null    //EA009  sera sobreescrito.
+            //dAntGloPreUniIt: item['**'],  //TODO este debe ser calculado de acuerdo al anticipo global
+            //dTotOpeItem : null, //EA008  sera sobreescrito de acuerdo al calculo
+            //dTotOpeGs : null    //EA009  sera sobreescrito.
         };
 
         /* dTotOpeItem (EA008)
@@ -137,11 +169,11 @@ class JSonDteItemService {
             Cálculo para Autofactura (C002=4): E721 * E711
         */
         if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 3 || data['tipoImpuesto'] == 4 || data['tipoImpuesto'] == 5) {
-            jsonResult['dTotOpeItem'] = ( item['pecioUnitario'] - jsonResult['dDescItem'] - jsonResult['dDescGloItem'] - 
-                                        jsonResult['dAntPreUniIt'] - jsonResult['dAntGloPreUniIt'] ) * item['cantidad'];
+            jsonResult['dTotOpeItem'] = ( item['precioUnitario'] - (jsonResult['dDescItem'] || 0) - (jsonResult['dDescGloItem'] || 0) - 
+                                        (jsonResult['dAntPreUniIt'] || 0) - (jsonResult['dAntGloPreUniIt'] || 0) ) * item['cantidad'];
         }
         if (data['tipoDocumento'] == 4) {   //Si es Autofactura
-            jsonResult['dTotOpeItem'] = item['pecioUnitario'] * item['cantidad'];
+            jsonResult['dTotOpeItem'] = item['precioUnitario'] * item['cantidad'];
         }
 
         if (data['condicionTipoCambio'] == 2) {
@@ -228,18 +260,41 @@ class JSonDteItemService {
      */
     private generateDatosItemsOperacionRastreoMercaderias(params: any, data: any, item : any, i: number) {
         const jsonResult : any = {
-            dNumLote: item['lote'],
-            dVencMerc : item['vencimiento'],
-            dNSerie : item['numeroSerie'],
-            dNumPedi : item['numeroPedido'],    
+            //dNumLote: item['lote'],
+            //dVencMerc : item['vencimiento'],
+            //dNSerie : item['numeroSerie'],
+            /*dNumPedi : item['numeroPedido'],    
             dNumSegui : item['numeroSeguimiento'], 
             dNomImp : item['importador']['nombre'], 
             dDirImp : item['importador']['direccion'],    
             dNumFir : item['importador']['registroImportador'],    
             dNumReg : item['importador']['registroSenave'],    
-            dNumRegEntCom : item['importador']['registroEntidadComercial']
+            dNumRegEntCom : item['importador']['registroEntidadComercial']*/
         };
         
+        if (item['lote']) {
+            jsonResult['dNumLote'] = item['lote'];
+        }
+        if (item['vencimiento']) {
+            jsonResult['dVencMerc'] = item['vencimiento'];
+        }
+        if (item['numeroSerie']) {
+            jsonResult['dNSerie'] = item['numeroSerie'];
+        }
+        if (item['numeroPedido']) {
+            jsonResult['dNumPedi'] = item['numeroPedido'];
+        }
+        if (item['numeroSeguimiento']) {
+            jsonResult['dNumSegui'] = item['numeroSeguimiento'];
+        }
+        if (item['importador'] && item['importador']['nombre']) {
+            jsonResult['dNomImp'] = item['importador']['nombre'].substring(0, 60);
+            jsonResult['dDirImp'] = item['importador']['direccion'].substring(0, 255);
+            jsonResult['dNumFir'] = item['importador']['registroImportador'].substring(0, 20);
+            jsonResult['dNumReg'] = item['importador']['registroSenave'].substring(0, 20);
+            jsonResult['dNumRegEntCom'] = item['importador']['registroEntidadComercial'].substring(0, 20);
+
+        }
         return jsonResult;
     }
     
@@ -282,7 +337,7 @@ class JSonDteItemService {
             dCapac : item['automotor']['capacidadPasajeros'],
             dCilin : item['automotor']['cilindradas'],
         };
-        
+        //Se puede hacer todo por if, para no enviar null
         return jsonResult;
     }
 

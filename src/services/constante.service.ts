@@ -713,6 +713,17 @@ class ConstanteService {
         codigo: 2,
         descripcion : "Constancia de microproductores"
     }];
+
+    caracteristicasCargas = [{
+        codigo: 1,
+        descripcion : "Mercadería con cadena de frio"
+    }, {
+        codigo: 2,
+        descripcion : "Carga peligrosa"
+    }, {
+        codigo: 3,
+        descripcion : "Otro"
+    }];
 }
 
 export default new ConstanteService();
