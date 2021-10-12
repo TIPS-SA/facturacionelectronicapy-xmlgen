@@ -36,10 +36,10 @@ class JSonDteItemService {
                     dDncpE : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelEspecifico'] : null,
                     dGtin : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoGtinProducto'] : null,
                     dGtinPq : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelPaquete'] : null,*/
-                    dDesProSer   : item['descripcion'], // RG 24/2019
-                    cUniMed : item['unidadMedida'],
-                    dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['representacion'].trim(),
-                    dCantProSer : item['cantidad'],
+                    //dDesProSer   : item['descripcion'], // RG 24/2019
+                    //cUniMed : item['unidadMedida'],
+                    //dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['representacion'].trim(),
+                    //dCantProSer : item['cantidad'],
                     //cPaisOrig : item['pais'],
                     //dDesPaisOrig : item['paisDescripcion'],
 //                    dInfItem : item['observacion'],
@@ -53,9 +53,11 @@ class JSonDteItemService {
                 if (item['partidaArancelaria']) {
                     gCamItem['dParAranc'] = item['partidaArancelaria'];
                 }
+                
                 if (item['ncm']) {
                     gCamItem['dNCM'] = item['ncm'];
                 }
+                
                 if (data["cliente"]["tipoOperacion"] && data["cliente"]["tipoOperacion"] === 3) {
                     gCamItem['dDncpG'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
                     gCamItem['dDncpE'] = item['dncp']['codigoNivelEspecifico'];
@@ -63,6 +65,12 @@ class JSonDteItemService {
                     gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
                 }
 
+                gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
+                gCamItem['cUniMed'] = item['unidadMedida'];
+                gCamItem['dDesUniMed'] = constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['representacion'].trim();
+
+                gCamItem['dCantProSer'] = item['cantidad'];
+                
                 if (item['pais']) {
                     gCamItem['cPaisOrig'] = item['pais'];
                     gCamItem['dDesPaisOrig'] = item['paisDescripcion'];

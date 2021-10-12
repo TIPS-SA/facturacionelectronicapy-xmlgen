@@ -51,7 +51,7 @@ class JSonDteIdentificacionDocumentoService {
         };
         
         if (data['documentoAsociado']['formato'] == 1) { //H002 = Electronico
-            if (data['documentoAsociado']['cdc']) {
+            if (data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44) {
                 jsonResult['dCdCDERef'] = data['documentoAsociado']['cdc'];
             } else {
                 throw new Error("Debe indicar el CDC asociado en data.documentoAsociado.cdc");
@@ -79,15 +79,13 @@ class JSonDteIdentificacionDocumentoService {
                 jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
             }
         }
-        if (data['documentoAsociado']['numeroRetencion']) {
-            jsonResult['dNumComRet'] = data['documentoAsociado']['numeroRetencion'];
+        if (data['documentoAsociado'] && data['documentoAsociado']['numeroRetencion'] && data['documentoAsociado']['numeroRetencion'].length >= 15) {
+            jsonResult['dNumComRet'] = data['documentoAsociado']['numeroRetencion'].substring(0, 15);
         }
-        if (data['documentoAsociado']['resolucionCreditoFiscal']) {
-            jsonResult['dNumResCF'] = data['documentoAsociado']['resolucionCreditoFiscal'];
+        if (data['documentoAsociado'] && data['documentoAsociado']['resolucionCreditoFiscal']  && data['documentoAsociado']['resolucionCreditoFiscal'].length >= 15) {
+            jsonResult['dNumResCF'] = data['documentoAsociado']['resolucionCreditoFiscal'].substring(0, 15);
         }
-        if (data['documentoAsociado']['resolucionCreditoFiscal']) {
-            jsonResult['dNumResCF'] = data['documentoAsociado']['resolucionCreditoFiscal'];
-        }
+        
 
         if (data['documentoAsociado']['formato'] == 3) { //H002 = Constancia electronica 
             if (data['documentoAsociado']['constanciaTipo']) {

@@ -73,11 +73,12 @@ class JSonDteMainService {
         }
 
         if (data['complementarios']) {
-           this.json['rDE']['DE']['gDtipDE']['gCamGen'] = jsonDteComplementarioComercial.generateDatosComercialesUsoGeneral(params, data);
+           this.json['rDE']['DE']['gCamGen'] = jsonDteComplementarioComercial.generateDatosComercialesUsoGeneral(params, data);
         }
 
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6 || data['tipoDocumento'] == 7) {
-            this.json['rDE']['DE']['gDtipDE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
+            //this.json['rDE']['DE']['gDtipDE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
+            this.json['rDE']['DE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
         }
         //console.log("JSon a Convertir", this.json);
         var builder = new xml2js.Builder({xmldec : {

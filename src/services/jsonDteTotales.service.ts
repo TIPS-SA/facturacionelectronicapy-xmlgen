@@ -60,8 +60,8 @@ class JSonDteTotalesService {
 
         dLiqTotIVA5 = (dIVA5 - this.redondeo(dIVA5) ) / 1.05;   //Consultar
         dLiqTotIVA10 = (dIVA10 - this.redondeo(dIVA10) ) / 1.1;
-        let comisionLiquid = (data['comision'] * 10) / 100;
-        let dTotGralOpe = dTotOpe + dRedon + data['comision'];
+        let comisionLiquid = ((data['comision'] ||  0) * 10) / 100;
+        let dTotGralOpe = dTotOpe + dRedon + (data['comision'] || 0);
         const jsonResult : any = {
             dSubExe : dSubExe, 
             dSubExo : dSubExo,
@@ -72,18 +72,18 @@ class JSonDteTotalesService {
             dTotDescGlotem : dTotDescGlotem,
             dTotAntItem : dTotAntItem,
             dTotAnt : dTotAnt,
-            dPorcDescTotal : data['***'],   //TODO, ver de donde sale
+            dPorcDescTotal : 0.0,   //TODO, ver de donde sale
             dDescTotal : dDescTotal,
             dAnticipo : dAnticipo,
             dRedon : dRedon,    //F013
-            dComi : data['comision'], //F025 //TODO, ver de donde sale
+            //dComi : data['comision'], //F025 //TODO, ver de donde sale
             dTotGralOpe: dTotGralOpe,   //F014
             //dIVA5  : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA5,  //No si D013 != 1 o !=5
             //dIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA10, //No si D013 != 1 o !=5
             //dLiqTotIVA5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA5,  //No si D013 != 1 o !=5
             //dLiqTotIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA10,  //No si D013 != 1 o !=5
             dIVAComi : comisionLiquid,
-            dTotIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid),   //F017
+            dTotIVA : 0,   //F017
             //dBaseGrav5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav5,
             //dBaseGrav10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav10,
             //dTBasGraIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dBaseGrav5 + dBaseGrav10),
@@ -114,7 +114,12 @@ class JSonDteTotalesService {
         if (data['tipoDocumento'] == 4) {
             jsonResult['dTotalGs'] = dTotGralOpe;
         }       
-
+        if (data['comision']) {
+            jsonResult['dComi'] = data['comision'];
+        } 
+        if (!(data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5)) {
+            jsonResult['dTotIVA'] = (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid);   //F017
+        }
         // Cuando C002= 4, no informar F002, F003, F004, F005, 
         // F015, F016, F017, F018, F019, F020, 
         // F023, F025 y F026
