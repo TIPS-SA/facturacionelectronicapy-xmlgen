@@ -136,7 +136,7 @@ class JSonDteMainService {
                 $: {
                     'xmlns': 'http://ekuatia.set.gov.py/sifen/xsd',
                     'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-                    'xsi:schemaLocation': 'https://ekuatia.set.gov.py/sifen/xsd/siRecepDE_v150.xsd'
+                    'xsi:schemaLocation': 'http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd'
                 },
                 'dVerFor' : params.version
             }
