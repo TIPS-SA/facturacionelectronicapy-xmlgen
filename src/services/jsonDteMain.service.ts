@@ -97,7 +97,7 @@ class JSonDteMainService {
             console.log(result.messages);
         });
 */
-        return xml;            
+        return this.normalizeXML(xml);
            
     }
 
@@ -855,6 +855,16 @@ class JSonDteMainService {
         } 
     }
 
+    private normalizeXML(xml: string) {
+        xml = xml.split('\r\n').join('');
+                xml = xml.split('\n').join('');
+                xml = xml.split('\t').join('');
+                xml = xml.split('    ').join('');
+                xml = xml.split('>    <').join('><');
+                xml = xml.split('>  <').join('><');
+                xml = xml.replace(/\r?\n|\r/g, '');
+        return xml;
+    }
 }
 
 export default new JSonDteMainService();
