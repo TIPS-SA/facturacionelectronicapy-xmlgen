@@ -153,18 +153,21 @@ class JSonDteMainService {
         const dvEmisor = params['ruc'].split('-')[1];
 
         const id = this.codigoControl;
-        const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
+        //const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
         if (!(params.fechaFirmaDigital && params.fechaFirmaDigital.length >= 10)) {
-            throw new Error("Debe proveer la fecha de la firma digital en params.fechaFirmaDigital");
+//            throw new Error("Debe proveer la fecha de la firma digital en params.fechaFirmaDigital");
         }
         const fechaFirmaDigital = new Date(params.fechaFirmaDigital);
+        
+        let digitoVerificadorString = this.codigoControl + "";
         const jsonResult = {
             $: {
                 'Id' : id
             },
-            dDVId : 1,
-            dFecFirma : fechaUtilService.convertToJSONFormat(fechaFirmaDigital), //Fecha de la Firma Digital
+            dDVId : digitoVerificadorString.substring(digitoVerificadorString.length-1, digitoVerificadorString.length),
+            //dFecFirma : fechaUtilService.convertToJSONFormat(fechaFirmaDigital), //Fecha de la Firma Digital
+            dFecFirma : fechaUtilService.convertToJSONFormat(new Date()),
             dSisFact : 1
         };
 
@@ -728,9 +731,9 @@ class JSonDteMainService {
             this.generateDatosCondicionOperacionDE_Contado(params, data);
         //}
 
-        //if (data['condicion']['tipo'] === 2) {
+        if (data['condicion']['tipo'] === 2) {
             this.generateDatosCondicionOperacionDE_Credito(params, data);
-        //}
+        }
     }
     
     /**

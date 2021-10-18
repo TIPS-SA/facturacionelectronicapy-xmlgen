@@ -6,7 +6,7 @@ class JSonDteAlgoritmosService {
     /** 
      * Calcula Digito Verificador numérico con entrada alfanumérica y basemax 11
     */
-    public calcularDigitoVerificador(ruc: String, baseMax: number = 11) {
+    public calcularDigitoVerificador(cdc: String, baseMax: number = 11) {
         
         let v_total = 0;
         let v_resto = 0;
@@ -17,23 +17,24 @@ class JSonDteAlgoritmosService {
         let v_digit = 0;
           
         // Cambia la ultima letra por ascii en caso que la cedula termine en letra   
-        for (let i = 0; i < ruc.length; i++) {
-            v_caracter = ruc.toUpperCase().substring(i, 1);
+        for (let i = 0; i < cdc.length; i++) {
+            v_caracter = cdc.toUpperCase().substring(i, i+1);
             if ( ! ( v_caracter.charCodeAt(0) >= 48 && v_caracter.charCodeAt(0) <= 57) ) {
                 v_numero_al = v_numero_al + v_caracter.charCodeAt(0); 
             } else {
                 v_numero_al = v_numero_al + v_caracter;     
             }   
         }
+        
         // Calcula el DV    
         k           = 2;
         v_total     = 0;
         //FOR i IN REVERSE 1 .. LENGTH(v_numero_al) LOOP
-        for (let i = v_numero_al.length; i >= 0; i--) {
+        for (let i = v_numero_al.length; i > 0; i--) {
             if (k > baseMax) {
                 k = 2;
             }
-            v_numero_aux = parseInt(v_numero_al.substring(i, 1));
+            v_numero_aux = parseInt(v_numero_al.substring(i-1, i));
             v_total      = v_total + (v_numero_aux * k);
             k            = k + 1;
         }
@@ -81,19 +82,20 @@ class JSonDteAlgoritmosService {
         const fechaEmision = fechaUtilService.convertToAAAAMMDD(new Date(data['fecha']));
         const tipoEmision = data['tipoEmision'];    //1=Normal 2=Contingencia 
         const codigoSeguridadAleatorio = codigoSeguridad;
-        const digitoVerificador = this.calcularDigitoVerificador(rucEmisor, 11 );
-
-        const cdc = stringUtilService.leftZero(tipoDocumento, 2) +
-                        stringUtilService.leftZero(rucEmisor, 8) + 
-                    dvEmisor+ 
-                    establecimiento + 
-                    punto + 
+        
+        let cdc = stringUtilService.leftZero(tipoDocumento, 2) +
+                    stringUtilService.leftZero(rucEmisor, 8) + 
+                    dvEmisor + 
+                    stringUtilService.leftZero(establecimiento+'', 3) + 
+                    stringUtilService.leftZero(punto+'', 3) + 
                     stringUtilService.leftZero(numero, 7) + 
                     tipoContribuyente + 
                     fechaEmision + 
                     tipoEmision + 
-                    codigoSeguridadAleatorio + 
-                    digitoVerificador;
+                    codigoSeguridadAleatorio;
+
+        const digitoVerificador = this.calcularDigitoVerificador(cdc, 11 );
+        cdc += digitoVerificador;
         return cdc;
     }
 }

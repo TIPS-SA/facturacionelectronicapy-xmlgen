@@ -10,6 +10,12 @@ El mismo es utilizado y mantenido por el autor y otorgado a la comunidad de desa
 
 El módulo está preparado de forma a proveer una fácil integración dentro de su entorno **NodeJS** y para con cualquier otro lenguaje, sistema o librería que requiera, por ejemplo publicando el médoto desde un REST.
 
+## Características
+- Genera el CDC automáticamente de acuerdo a los datos del documento electrónico
+- Implementa el Algoritmo del dígito verificador del CDC
+- Permite sobreescribir la funcion para calcular el código de seguridad, de acuerdo a las necesidades del usuario
+- Realiza la validación del XSD, llamando a una API de Java para emitir el error en la estructura del XML
+
 ## Instalación
 
 Para instalar el módulo en su proyecto node, ejecute el siguiente comando:

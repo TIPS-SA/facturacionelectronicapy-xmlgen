@@ -213,20 +213,24 @@ class JSonDteItemService {
             dLiqIVAItem : 0             //E736 Sera sobreescrito
         };
           
+        if (item['ivaTipo'] == 1) {
+            if (item['ivaBase'] != 100) {
+                throw new Error('Valor de "ivaBase" debe ser igual a 100 para "ivaTipo" = 1 en data.items[' + i + '].ivaBase');
+            }
+        }
         if (item['iva'] == 0) {
             if (item['ivaTipo'] != 2 && item['ivaTipo'] != 3) {
-                throw new Error('"Iva" = 0 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado');
-                
+                throw new Error('"Iva" = 0 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva');                
             }
         }
         if (item['iva'] == 5) {
             if (item['ivaTipo'] != 1 && item['ivaTipo'] != 4) {
-                throw new Error('"Iva" = 5 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado');
+                throw new Error('"Iva" = 5 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva');
             }
         }
         if (item['iva'] == 10) {
             if (item['ivaTipo'] != 1 && item['ivaTipo'] != 4) {
-                throw new Error('"Iva" = 10 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado');
+                throw new Error('"Iva" = 10 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva');
             }
         }
 
