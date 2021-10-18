@@ -271,7 +271,6 @@ Puede sobre-escribir dicho método antes de invocar al método generateXMLDE, de
         "descuento": 0,
         "descuentoPorcentaje": 0,
         "anticipo": 0,
-        "subtotal": 108500,
         "pais" : "PY",
         "paisDescripcion" : "Paraguay",
         "tolerancia" : 1,

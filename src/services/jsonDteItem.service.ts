@@ -136,7 +136,7 @@ class JSonDteItemService {
         const jsonResult : any = {
             dPUniProSer: item['precioUnitario'],
             //dTiCamIt : data['condicionTipoCambio'] == 2 ? item['cambio'] : null,    //E725
-            dTotBruOpeItem : item['subtotal'],
+            dTotBruOpeItem : parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']),
         };
         if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
             jsonResult['dTiCamIt'] = item['cambio'];
@@ -176,12 +176,19 @@ class JSonDteItemService {
 
             Cálculo para Autofactura (C002=4): E721 * E711
         */
+       
         if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 3 || data['tipoImpuesto'] == 4 || data['tipoImpuesto'] == 5) {
-            jsonResult['dTotOpeItem'] = ( item['precioUnitario'] - (jsonResult['dDescItem'] || 0) - (jsonResult['dDescGloItem'] || 0) - 
-                                        (jsonResult['dAntPreUniIt'] || 0) - (jsonResult['dAntGloPreUniIt'] || 0) ) * item['cantidad'];
+            const valores = (parseFloat(item['precioUnitario']) - 
+                            parseFloat(jsonResult['dDescItem'] || 0) - 
+                            parseFloat(jsonResult['dDescGloItem'] || 0) - 
+                            parseFloat(jsonResult['dAntPreUniIt'] || 0) - 
+                            parseFloat(jsonResult['dAntGloPreUniIt'] || 0));
+            console.log("tipo impuesto 1", valores, item['cantidad']);
+
+            jsonResult['dTotOpeItem'] = parseFloat( valores+"" ) * parseFloat(item['cantidad']);
         }
         if (data['tipoDocumento'] == 4) {   //Si es Autofactura
-            jsonResult['dTotOpeItem'] = item['precioUnitario'] * item['cantidad'];
+            jsonResult['dTotOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
         }
 
         if (data['condicionTipoCambio'] == 2) {
