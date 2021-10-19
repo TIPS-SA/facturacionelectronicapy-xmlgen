@@ -9,11 +9,12 @@ class JSonDteTotalesService {
      */
     public generateDatosTotales(params: any, data: any, items : any[]) {
 
-        let dSubExe = 0, dSubExo = 0, dSub5 = -1, dSub10 = -1, dTotOpe = 0, dTotDesc = 0, dTotDescGlotem = 0,
+        let dSubExe = 0, dSubExo = 0, dSub5 = 0, dSub10 = 0, dTotOpe = 0, dTotDesc = 0, dTotDescGlotem = 0,
             dTotAntItem = 0, dTotAnt = 0, dDescTotal = 0, dAnticipo = 0, dTotOpeGs = 0,
-            dIVA5 = -1, dIVA10 = -1, dLiqTotIVA5 = -1, dLiqTotIVA10  = -1,
-            dBaseGrav5 = -1, dBaseGrav10 = -1;
+            dIVA5 = 0, dIVA10 = 0, dLiqTotIVA5 = 0, dLiqTotIVA10  = 0,
+            dBaseGrav5 = 0, dBaseGrav10 = 0;
 
+        let agregarDSub = false;
         //console.log("items", items);
         //Crear las variables
         for (let i = 0; i < items.length; i++) {
@@ -29,19 +30,30 @@ class JSonDteTotalesService {
             }
             //Gravadas 5 o 10
             if (item['gCamIVA']['iAfecIVA'] == 1 || item['gCamIVA']['iAfecIVA'] == 4) {
+                if (!(data['tipoImpuesto'] != 1)) { //No debe existir si D013 != 1
+                    if (item['gCamIVA']['dTasaIVA'] == 5) { //E734
+                        dSub5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
+                    }
+                    if (item['gCamIVA']['dTasaIVA'] == 10) {
+                        dSub10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
+                    }
+                    agregarDSub = true;
+                }
+            }
+            //---
+            if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) { //No debe existir si D013 != 1 o D013 != 5
                 if (item['gCamIVA']['dTasaIVA'] == 5) { //E734
-                    dSub5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
                     dIVA5 += item['gCamIVA']['dLiqIVAItem'];
-                    //dLiqTotIVA5 = 0;    //TODO COMO
+                    //dLiqTotIVA5 = 0;    //se hace mas adelante, despues de obtener el redondeo
                     dBaseGrav5 += item['gCamIVA']['dBasGravIVA'];
                 }
                 if (item['gCamIVA']['dTasaIVA'] == 10) {
-                    dSub10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
                     dIVA10 += item['gCamIVA']['dLiqIVAItem'];
-                    //dLiqTotIVA10 = 0;   //TODO COMO
+                    //dLiqTotIVA10 = 0;   //se hace mas adelante, despues de obtener el redondeo
                     dBaseGrav10 += item['gCamIVA']['dBasGravIVA']
                 }
             }
+            //---
             if (data['tipoDocumento'] == 4) {
                 dTotOpe = item['dTotOpeItem'];
             }
@@ -63,14 +75,16 @@ class JSonDteTotalesService {
         const dRedon = this.redondeo(dTotOpe);
         const montoRedondeado = dTotOpe - dRedon;
 
-        if (dIVA5 > 0) {
-            dLiqTotIVA5 = (dIVA5 - this.redondeo(dIVA5) ) / 1.05;   //Consultar
-            dLiqTotIVA5 = Math.round(dLiqTotIVA5);
-        }
+        if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) { //No debe existir si D013 != 1 o D013 != 5
+            if (dIVA5 > 0) {
+                dLiqTotIVA5 = (dIVA5 - this.redondeo(dIVA5) ) / 1.05;   //Consultar
+                dLiqTotIVA5 = Math.round(dLiqTotIVA5);
+            }
 
-        if (dIVA10 > 0) {
-            dLiqTotIVA10 = (dIVA10 - this.redondeo(dIVA10) ) / 1.1;
-            dLiqTotIVA10 = Math.round(dLiqTotIVA10);
+            if (dIVA10 > 0) {
+                dLiqTotIVA10 = (dIVA10 - this.redondeo(dIVA10) ) / 1.1;
+                dLiqTotIVA10 = Math.round(dLiqTotIVA10);
+            }
         }
 
         let comisionLiquid = ((data['comision'] ||  0) * 10) / 100;
@@ -109,11 +123,13 @@ class JSonDteTotalesService {
             dSubExo : dSubExo,
         }
 
-        if (dSub5 > 0) {
-            jsonResult['dSub5'] = dSub5;
-        }
-        if (dSub10 > 0) {
-            jsonResult['dSub10'] = dSub10;
+        if (agregarDSub) {
+            if (!(data['tipoImpuesto'] != 1)) { //No debe existir si D013 != 1        if (dSub5 > 0) {
+                jsonResult['dSub5'] = dSub5;
+            }
+            if (dSub10 > 0) {
+                jsonResult['dSub10'] = dSub10;
+            }
         }
 
         jsonResult = Object.assign(jsonResult, {
@@ -136,41 +152,33 @@ class JSonDteTotalesService {
             dTotGralOpe: dTotGralOpe,   //F014
         });
 
-        if (dIVA5 > 0) {
+        if (agregarDSub) {
             jsonResult['dIVA5'] = dIVA5;
-        }
-
-        if (dIVA10 > 0) {
             jsonResult['dIVA10'] = dIVA10;
-        }
-        
-        if (dLiqTotIVA5 > 0) {
             jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
-        }
-
-        if (dLiqTotIVA10 > 0) {
             jsonResult['dLiqTotIVA10'] = dLiqTotIVA10;
         }
-
+        
         if (comisionLiquid > 0) {
             jsonResult = Object.assign(jsonResult, {
                 dIVAComi : comisionLiquid,
             });
         }
 
-        if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
-            jsonResult['dTotIVA'] = (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid);
+        if (agregarDSub) {
+            if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
+                jsonResult['dTotIVA'] = (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid);
+            }
+            if (dBaseGrav5 > 0) {
+                jsonResult['dBaseGrav5'] = dBaseGrav5;
+            }
+            if (dBaseGrav10 > 0) {
+                jsonResult['dBaseGrav10'] = dBaseGrav10;
+            }
+            if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
+                jsonResult['dTBasGraIVA'] = (dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0);
+            }
         }
-        if (dBaseGrav5 > 0) {
-            jsonResult['dBaseGrav5'] = dBaseGrav5;
-        }
-        if (dBaseGrav10 > 0) {
-            jsonResult['dBaseGrav10'] = dBaseGrav10;
-        }
-        if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
-            jsonResult['dTBasGraIVA'] = (dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0);
-        }
-
         if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {  //Por el Global
             jsonResult['dTotalGs'] = dTotGralOpe * data['cambio'];
         }

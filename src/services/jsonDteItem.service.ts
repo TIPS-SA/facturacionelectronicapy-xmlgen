@@ -216,8 +216,8 @@ class JSonDteItemService {
             dDesAfecIVA : constanteService.codigosAfectaciones.filter(ca => ca.codigo === item['ivaTipo'])[0]['descripcion'],
             dPropIVA : item['ivaBase'], //E733
             dTasaIVA : item['iva'],     //E734 
-            dBasGravIVA : 0,            //E735 Sera sobreescrito
-            dLiqIVAItem : 0             //E736 Sera sobreescrito
+            //dBasGravIVA : 0,            //E735 Sera sobreescrito
+            //dLiqIVAItem : 0             //E736 Sera sobreescrito
         };
           
         if (item['ivaTipo'] == 1) {
