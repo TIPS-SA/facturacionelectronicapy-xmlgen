@@ -1,7 +1,7 @@
 import dteService from './services/jsonDteMain.service';
 class DE {
     generateXMLDE = (params: any, data: any) : Promise<any> => {
-        return dteService.generateXML(params, data, this);
+        return dteService.generateXML(params, data);
     }
 
     /**
@@ -23,9 +23,13 @@ class DE {
      * @param data 
      * @returns 
      */
-    generateCodigoSeguridadAleatorio(params: any, data: any) : string{
-        return "[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]";
-    }
+    //async generateCodigoSeguridadAleatorio(params: any, data: any) : Promise<string> {
+    /*generateCodigoSeguridadAleatorio = (params: any, data: any) : any =>  {
+        /*return new Promise((resolve, reject) => {
+            resolve("[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]");
+        });* /
+        //return "[DebeSobreescribirElMétodo.generateCodigoSeguridadAleatorio(params, data)]";
+    }*/
 }
 
 export default new DE();

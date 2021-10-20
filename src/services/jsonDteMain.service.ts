@@ -17,10 +17,10 @@ class JSonDteMainService {
     codigoControl : any = null;
     json : any = {};
 
-    public generateXML(params: any, data: any, oThis: any) : Promise<any> {
+    public generateXML(params: any, data: any) : Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                resolve(this.generateXMLService(params, data, oThis));
+                resolve(this.generateXMLService(params, data));
             } catch (error) {
                 reject(error);
             }
@@ -33,7 +33,7 @@ class JSonDteMainService {
      * @param data 
      * @returns 
      */
-    private generateXMLService(params: any, data: any, oThis: any) {
+    private generateXMLService(params: any, data: any) {
         //console.log("data", data);
 
         this.validateValues(data);
@@ -42,7 +42,7 @@ class JSonDteMainService {
 
         this.json = {};
 
-        this.generateCodigoSeguridad(params, data, oThis);  //Primero genera el codigo de seguridad aleatorio único
+        this.generateCodigoSeguridad(params, data);  //Primero genera el codigo de seguridad aleatorio único
         this.generateCodigoControl(params, data);   //Luego genera el código de Control
 
         this.generateRte(params);
@@ -103,10 +103,18 @@ class JSonDteMainService {
            
     }
 
-    generateCodigoSeguridad(params: any, data: any, oThis: any) {
-        this.codigoSeguridad = oThis.generateCodigoSeguridadAleatorio(params, data);
+    generateCodigoSeguridad(params: any, data: any) {
+        //this.codigoSeguridad = oThis.generateCodigoSeguridadAleatorio(params, data);
+        this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
     }
 
+    /**
+     * Genera el CDC para la Factura
+     * Corresponde al Id del DE
+     * 
+     * @param params 
+     * @param data 
+     */
     generateCodigoControl(params: any, data: any) {
         this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
     }
