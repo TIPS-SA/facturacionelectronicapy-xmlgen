@@ -183,7 +183,6 @@ class JSonDteItemService {
                             parseFloat(jsonResult['dDescGloItem'] || 0) - 
                             parseFloat(jsonResult['dAntPreUniIt'] || 0) - 
                             parseFloat(jsonResult['dAntGloPreUniIt'] || 0));
-            console.log("tipo impuesto 1", valores, item['cantidad']);
 
             jsonResult['dTotOpeItem'] = parseFloat( valores+"" ) * parseFloat(item['cantidad']);
         }

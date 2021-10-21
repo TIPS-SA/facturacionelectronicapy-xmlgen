@@ -15,11 +15,9 @@ class JSonDteTotalesService {
             dBaseGrav5 = 0, dBaseGrav10 = 0;
 
         let agregarDSub = false;
-        //console.log("items", items);
         //Crear las variables
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            console.log("item",item);
             //Subtotal
             if (item['gCamIVA']['iAfecIVA'] == 3) {    //E731==3
                 dSubExe += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008

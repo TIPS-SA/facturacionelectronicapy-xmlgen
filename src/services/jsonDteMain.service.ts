@@ -34,7 +34,6 @@ class JSonDteMainService {
      * @returns 
      */
     private generateXMLService(params: any, data: any) {
-        //console.log("data", data);
 
         this.validateValues(data);
 
@@ -82,7 +81,6 @@ class JSonDteMainService {
                 this.json['rDE']['DE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
             }
         }
-        //console.log("JSon a Convertir", this.json);
         var builder = new xml2js.Builder({xmldec : {
             version : '1.0',
             encoding : 'UTF-8',
@@ -96,7 +94,6 @@ class JSonDteMainService {
                 throw err;
             }
 
-            console.log(result.messages);
         });
 */
         return this.normalizeXML(xml);
