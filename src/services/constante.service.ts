@@ -242,7 +242,7 @@ class ConstanteService {
 
     naturalezaVendedorAutofactura = [{
         codigo: 1,
-        descripcion : "No Contribuyente"
+        descripcion : "No contribuyente"
     }, {
         codigo: 2,
         descripcion : "Extranjero"

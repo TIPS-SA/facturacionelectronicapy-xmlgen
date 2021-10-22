@@ -18,42 +18,48 @@ class JSonDteTotalesService {
         //Crear las variables
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            //Subtotal
-            if (item['gCamIVA']['iAfecIVA'] == 3) {    //E731==3
-                dSubExe += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008
-            }
-            //Exenta
-            if (item['gCamIVA']['iAfecIVA'] == 2) {    //E731==2
-                dSubExo += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008
-            }
-            //Gravadas 5 o 10
-            if (item['gCamIVA']['iAfecIVA'] == 1 || item['gCamIVA']['iAfecIVA'] == 4) {
-                if (!(data['tipoImpuesto'] != 1)) { //No debe existir si D013 != 1
+            if(item['gCamIVA']) {
+                //gCamIVA puede ser null (MT150=No informar si D013=2 y C002= 4 o 7)
+            
+                //Subtotal
+                if (item['gCamIVA']['iAfecIVA'] == 3) {    //E731==3
+                    dSubExe += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008
+                }
+                //Exenta
+                if (item['gCamIVA']['iAfecIVA'] == 2) {    //E731==2
+                    dSubExo += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008
+                }
+                //Gravadas 5 o 10
+                if (item['gCamIVA']['iAfecIVA'] == 1 || item['gCamIVA']['iAfecIVA'] == 4) {
+                    if (!(data['tipoImpuesto'] != 1)) { //No debe existir si D013 != 1
+                        if (item['gCamIVA']['dTasaIVA'] == 5) { //E734
+                            dSub5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
+                        }
+                        if (item['gCamIVA']['dTasaIVA'] == 10) {
+                            dSub10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
+                        }
+                        agregarDSub = true;
+                    }
+                }
+                //---
+                if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) { //No debe existir si D013 != 1 o D013 != 5
                     if (item['gCamIVA']['dTasaIVA'] == 5) { //E734
-                        dSub5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
+                        dIVA5 += item['gCamIVA']['dLiqIVAItem'];
+                        //dLiqTotIVA5 = 0;    //se hace mas adelante, despues de obtener el redondeo
+                        dBaseGrav5 += item['gCamIVA']['dBasGravIVA'];
                     }
                     if (item['gCamIVA']['dTasaIVA'] == 10) {
-                        dSub10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; 
+                        dIVA10 += item['gCamIVA']['dLiqIVAItem'];
+                        //dLiqTotIVA10 = 0;   //se hace mas adelante, despues de obtener el redondeo
+                        dBaseGrav10 += item['gCamIVA']['dBasGravIVA']
                     }
-                    agregarDSub = true;
                 }
             }
             //---
-            if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) { //No debe existir si D013 != 1 o D013 != 5
-                if (item['gCamIVA']['dTasaIVA'] == 5) { //E734
-                    dIVA5 += item['gCamIVA']['dLiqIVAItem'];
-                    //dLiqTotIVA5 = 0;    //se hace mas adelante, despues de obtener el redondeo
-                    dBaseGrav5 += item['gCamIVA']['dBasGravIVA'];
-                }
-                if (item['gCamIVA']['dTasaIVA'] == 10) {
-                    dIVA10 += item['gCamIVA']['dLiqIVAItem'];
-                    //dLiqTotIVA10 = 0;   //se hace mas adelante, despues de obtener el redondeo
-                    dBaseGrav10 += item['gCamIVA']['dBasGravIVA']
-                }
-            }
-            //---
+            //console.log("td", data['tipoDocumento']);
             if (data['tipoDocumento'] == 4) {
-                dTotOpe = item['dTotOpeItem'];
+                //console.log("dTotOpeItem", item);
+                dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
             }
 
             dTotDesc += item['gValorItem']['gValorRestaItem']['dDescItem'] || 0;
@@ -87,33 +93,6 @@ class JSonDteTotalesService {
 
         let comisionLiquid = ((data['comision'] ||  0) * 10) / 100;
         let dTotGralOpe = dTotOpe + dRedon + (data['comision'] || 0);
-        /*const jsonResultXBorrar : any = {
-            dSubExe : dSubExe, 
-            dSubExo : dSubExo,
-            //dSub5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 4 ? 0 : dSub5,   //No si D013 != 1
-            //dSub10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 4 ? 0 : dSub10, //No si D013 != 1
-            dTotOpe : dTotOpe,  //F008
-            dTotDesc : dTotDesc,
-            dTotDescGlotem : dTotDescGlotem,
-            dTotAntItem : dTotAntItem,
-            dTotAnt : dTotAnt,
-            dPorcDescTotal : 0.0,   //TODO, ver de donde sale
-            dDescTotal : dDescTotal,
-            dAnticipo : dAnticipo,
-            dRedon : dRedon,    //F013
-            //dComi : data['comision'], //F025 //TODO, ver de donde sale
-            dTotGralOpe: dTotGralOpe,   //F014
-            //dIVA5  : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA5,  //No si D013 != 1 o !=5
-            //dIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dIVA10, //No si D013 != 1 o !=5
-            //dLiqTotIVA5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA5,  //No si D013 != 1 o !=5
-            //dLiqTotIVA10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dLiqTotIVA10,  //No si D013 != 1 o !=5
-            dIVAComi : comisionLiquid,
-            dTotIVA : 0,   //F017
-            //dBaseGrav5 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav5,
-            //dBaseGrav10 : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : dBaseGrav10,
-            //dTBasGraIVA : data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5 ? null : (dBaseGrav5 + dBaseGrav10),
-            //dTotalGs : null //Sera sobreescrito
-        };*/
 
         //Asignar al JSON DATA
         let jsonResult : any = {

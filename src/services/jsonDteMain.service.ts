@@ -377,8 +377,11 @@ class JSonDteMainService {
         }
         
         //Validar si el establecimiento viene en params
-        if (params.establecimientos.filter((um:any) => um.codigo === data['establecimiento']).length == 0){
-            throw new Error("Establecimiento '" + data['establecimiento'] + "' no encontrado en params.establecimientos*.codigo. Valores: " + params.establecimientos.map((a:any)=>a.codigo + '-' + a.descripcion));
+        let establecimiento = stringUtilService.leftZero(data['establecimiento'], 3);
+        let punto = stringUtilService.leftZero(data['punto'], 3);
+
+        if (params.establecimientos.filter((um:any) => um.codigo === establecimiento).length == 0){
+            throw new Error("Establecimiento '" + establecimiento + "' no encontrado en params.establecimientos*.codigo. Valores: " + params.establecimientos.map((a:any)=>a.codigo + '-' + a.denominacion));
         }
         if (params['ruc'].indexOf('-') == -1) {
             throw new Error("RUC debe contener dígito verificador en params.ruc");
@@ -390,19 +393,19 @@ class JSonDteMainService {
             cTipReg : params['tipoRegimen'],
             dNomEmi : params['razonSocial'],
             dNomFanEmi : params['nombreFantasia'],
-            dDirEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['direccion'],
-            dNumCas : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['numeroCasa'],
-            dCompDir1 : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['complementoDireccion1'],
-            dCompDir2 : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['complementoDireccion2'],
-            cDepEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['departamento'],
-            dDesDepEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['departamentoDescripcion'],
-            cDisEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['distrito'],
-            dDesDisEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['distritoDescripcion'],
-            cCiuEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['ciudad'],
-            dDesCiuEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['ciudadDescripcion'],
-            dTelEmi : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['telefono'],
-            dEmailE : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['email'],
-            dDenSuc : params["establecimientos"].filter( (e:any) => e.codigo === data['establecimiento'])[0]['denominacion'],
+            dDirEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['direccion'],
+            dNumCas : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['numeroCasa'],
+            dCompDir1 : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['complementoDireccion1'],
+            dCompDir2 : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['complementoDireccion2'],
+            cDepEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['departamento'],
+            dDesDepEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['departamentoDescripcion'],
+            cDisEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['distrito'],
+            dDesDisEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['distritoDescripcion'],
+            cCiuEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['ciudad'],
+            dDesCiuEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['ciudadDescripcion'],
+            dTelEmi : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['telefono'],
+            dEmailE : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['email'],
+            dDenSuc : params["establecimientos"].filter( (e:any) => e.codigo === establecimiento)[0]['denominacion'],
             /*gActEco : {
                 cActEco : params["actividadEconomica"],
                 dDesActEco : params["actividadEconomicaDescripcion"]
@@ -474,8 +477,8 @@ class JSonDteMainService {
     private generateDatosGeneralesReceptorDE(params: any, data: any) {
 
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
-            if (params.tiposDocumentosReceptor.filter((um:any) => um.codigo === data['cliente']['documentoTipo']).length == 0){
-                throw new Error("Tipo de Documento '" + data['cliente']['documentoTipo'] + "' del Cliente en data.cliente.documentoTipo no encontrado. Valores: " + params.tiposDocumentosReceptor.map((a:any)=>a.codigo + '-' + a.descripcion));
+            if (constanteService.tiposDocumentosReceptor.filter((um:any) => um.codigo === data['cliente']['documentoTipo']).length == 0){
+                throw new Error("Tipo de Documento '" + data['cliente']['documentoTipo'] + "' del Cliente en data.cliente.documentoTipo no encontrado. Valores: " + constanteService.tiposDocumentosReceptor.map((a:any)=>a.codigo + '-' + a.descripcion));
             }
         }
         if (data['cliente']['ruc'].indexOf('-') == -1) {
@@ -518,6 +521,7 @@ class JSonDteMainService {
             //dNumIDRec : null,   //Sera Sobreescito D210
 
             if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
+
                 this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
                 this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"];
                 this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
@@ -654,21 +658,25 @@ class JSonDteMainService {
 
     private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
 
-        if (params.naturalezaVendedorAutofactura.filter((um:any) => um.codigo === data['autoFactura']['tipoVendedor']).length == 0){
-            throw new Error("Tipo de Vendedor '" + data['autoFactura']['tipoVendedor'] + "' en data.autoFactura.tipoVendedor no encontrado. Valores: " + params.naturalezaVendedorAutofactura.map((a:any)=>a.codigo + '-' + a.descripcion));
+        if (constanteService.naturalezaVendedorAutofactura.filter((um:any) => um.codigo === data['autoFactura']['tipoVendedor']).length == 0){
+            throw new Error("Tipo de Vendedor '" + data['autoFactura']['tipoVendedor'] + "' en data.autoFactura.tipoVendedor no encontrado. Valores: " + constanteService.naturalezaVendedorAutofactura.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
-        if (params.tiposDocumentosIdentidades.filter((um:any) => um.codigo === data['autoFactura']['documentoTipo']).length == 0){
-            throw new Error("Tipoo de Documento '" + data['autoFactura']['documentoTipo'] + "' en data.autoFactura.documentoTipo no encontrado. Valores: " + params.tiposDocumentosIdentidades.map((a:any)=>a.codigo + '-' + a.descripcion));
+        if (constanteService.tiposDocumentosIdentidades.filter((um:any) => um.codigo === data['autoFactura']['documentoTipo']).length == 0){
+            throw new Error("Tipoo de Documento '" + data['autoFactura']['documentoTipo'] + "' en data.autoFactura.documentoTipo no encontrado. Valores: " + constanteService.tiposDocumentosIdentidades.map((a:any)=>a.codigo + '-' + a.descripcion));
+        }
+
+        if (!data['autoFactura']['ubicacion']) {
+            throw new Error("Debe especificar la ubicación de la transacción en data.autoFactura.ubicacion");
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamAE'] = {
-            iNatVen : data['autoFactura']['tipoVendedor'],  //1=No Contribuyente, 2=Extranjero
+            iNatVen : data['autoFactura']['tipoVendedor'],  //1=No contribuyente, 2=Extranjero
             dDesNatVen : constanteService.naturalezaVendedorAutofactura.filter(nv => nv.codigo === data['autoFactura']['tipoVendedor'])[0]['descripcion'],
             iTipIDVen : data['autoFactura']['documentoTipo'],
             dDTipIDVen : constanteService.tiposDocumentosIdentidades.filter(td => td.codigo === data['autoFactura']['documentoTipo'])[0]['descripcion'],
             dNumIDVen : data['autoFactura']['documentoNumero'],
-            dNomVen : data['autoFactura']['documentoNombre'],
+            dNomVen : data['autoFactura']['nombre'],
             dDirVen : data['autoFactura']['direccion'],
             dNumCasVen : data['autoFactura']['numeroCasa'],
             cDepVen : data['autoFactura']['departamento'],
