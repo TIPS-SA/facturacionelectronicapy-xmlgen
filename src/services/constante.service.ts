@@ -276,7 +276,7 @@ class ConstanteService {
 
     remisionesMotivos = [{
         codigo: 1,
-        descripcion : "Traslado por venta"
+        descripcion : "Traslado por ventas"
     }, {
         codigo: 2,
         descripcion : "Traslado por consignación"
@@ -708,7 +708,7 @@ class ConstanteService {
 
     tiposConstancias = [{
         codigo: 1,
-        descripcion : "Constancia de no ser contribuyente "
+        descripcion : "Constancia de no ser contribuyente"
     }, {
         codigo: 2,
         descripcion : "Constancia de microproductores"
@@ -723,6 +723,14 @@ class ConstanteService {
     }, {
         codigo: 3,
         descripcion : "Otro"
+    }];
+
+    eventoConformidadTipo = [{
+        codigo: 1,
+        descripcion : "Conformidad Total del DTE"
+    }, {
+        codigo: 2,
+        descripcion : "Conformidad Parcial del DTE"
     }];
 }
 

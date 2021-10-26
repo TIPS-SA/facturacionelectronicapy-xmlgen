@@ -162,23 +162,11 @@ class JSonDteTotalesService {
         if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 2) {  //Por item
             jsonResult['dTotalGs'] = dTotOpeGs;
         }
-        if (data['tipoDocumento'] == 4) {
-            jsonResult['dTotalGs'] = dTotGralOpe;
-        }       
-        /*if (data['comision']) {
-            jsonResult['dComi'] = data['comision'];
-        } 
-        if (!(data['tipoImpuesto'] != 1 || data['tipoImpuesto'] != 5)) {
-            jsonResult['dTotIVA'] = (dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid);   //F017
+        if (data['moneda'] != 'PYG') {
+            if (data['tipoDocumento'] == 4) {
+                jsonResult['dTotalGs'] = dTotGralOpe;
+            }
         }
-        // Cuando C002= 4, no informar F002, F003, F004, F005, 
-        // F015, F016, F017, F018, F019, F020, 
-        // F023, F025 y F026
-        if (data['tipoDocumento'] == 4) {
-            jsonResult['dSubExe'] = jsonResult['dSubExo'] = jsonResult['dSub5'] = jsonResult['dSub10'] = null;
-            jsonResult['dIVA5'] = jsonResult['dIVA10'] = jsonResult['dTotIVA'] = jsonResult['dBaseGrav5'] = jsonResult['dBaseGrav10'] = jsonResult['dTBasGraIVA'] = null;
-            jsonResult['dTotalGs'] = jsonResult['dIVAComi'] = jsonResult['dIVAComi'] = null;
-        }*/
         return jsonResult;
     }
 

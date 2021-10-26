@@ -197,22 +197,30 @@ class JSonDteTransporteService {
         const jsonResult : any = {
             iNatTrans : data['detalleTransporte']['transportista']['contribuyente'] ? 1 : 2,
             dNomTrans : data['detalleTransporte']['transportista']['nombre'],
-            dRucTrans : data['detalleTransporte']['transportista']['ruc'].split("-")[0],
-            dDVTrans : data['detalleTransporte']['transportista']['ruc'].split("-")[1],
-            iTipIDTrans : data['detalleTransporte']['transportista']['documentoTipo'],
-            dDTipIDTrans : constanteService.tiposDocumentosIdentidades.filter(td => td.codigo === data['detalleTransporte']['transportista']['documentoTipo'])[0]['descripcion'],
-            dNumIDTrans : data['detalleTransporte']['transportista']['documentoNumero'].substring(0, 20),
-            cNacTrans : data['detalleTransporte']['transportista']['pais'],
-            dDesNacTrans : data['detalleTransporte']['transportista']['paisDescripcion'],
-            dNumIDChof : data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20),
-            dNomChof : data['detalleTransporte']['transportista']['chofer']['nombre'],
-            dDomFisc : data['detalleTransporte']['transportista']['direccion'],
-            dDirChof : data['detalleTransporte']['transportista']['chofer']['direccion'],
-            dNombAg : data['detalleTransporte']['transportista']['agente']['nombre'],
-            dRucAg : data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[0],
-            dDVAg : data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[1],
-            dDirAge : data['detalleTransporte']['transportista']['agente']['direccion']
         };
+        
+        if (data['detalleTransporte']['transportista']['contribuyente']) {
+            jsonResult['dRucTrans'] = data['detalleTransporte']['transportista']['ruc'].split("-")[0];
+            jsonResult['dDVTrans'] = data['detalleTransporte']['transportista']['ruc'].split("-")[1];
+        }
+
+        if ( ! data['detalleTransporte']['transportista']['contribuyente']) {
+            jsonResult['iTipIDTrans'] = data['detalleTransporte']['transportista']['documentoTipo'];
+            jsonResult['dDTipIDTrans'] = constanteService.tiposDocumentosIdentidades.filter(td => td.codigo === data['detalleTransporte']['transportista']['documentoTipo'])[0]['descripcion'];
+            jsonResult['dNumIDTrans'] = data['detalleTransporte']['transportista']['documentoNumero'].substring(0, 20);
+        }
+
+        jsonResult['cNacTrans'] = data['detalleTransporte']['transportista']['pais'];
+        jsonResult['dDesNacTrans'] = data['detalleTransporte']['transportista']['paisDescripcion'];
+        jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20);
+        jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
+        jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];
+        jsonResult['dDirChof'] = data['detalleTransporte']['transportista']['chofer']['direccion'];
+        jsonResult['dNombAg'] = data['detalleTransporte']['transportista']['agente']['nombre'];
+        jsonResult['dRucAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[0];
+        jsonResult['dDVAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[1];
+        jsonResult['dDirAge'] = data['detalleTransporte']['transportista']['agente']['direccion'];
+
         return jsonResult;
     }
 }

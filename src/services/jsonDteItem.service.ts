@@ -79,6 +79,16 @@ class JSonDteItemService {
                 if (item['observacion']) {
                     gCamItem['dInfItem'] = item['observacion'];
                 }
+
+                if (data["tipoDocumento"] === 7) {
+                    if (item['tolerancia']) {
+                        gCamItem['cRelMerc'] = item['tolerancia'];
+                        gCamItem['dDesRelMerc'] = constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia'])[0]['descripcion'];
+                        gCamItem['dCanQuiMer'] = item['toleranciaCantidad'];
+                        gCamItem['dPorQuiMer'] = item['toleranciaPorcentaje'];
+                    }
+                }
+                
                 //Tratamiento E719. Tiene relacion con generateDatosGeneralesInherentesOperacion
                 if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
                     if (data['tipoTransaccion'] === 9) {
@@ -106,17 +116,12 @@ class JSonDteItemService {
                     gCamItem['gRasMerc'] = this.generateDatosItemsOperacionRastreoMercaderias(params, data, item, i);
                 }
 
+                
                 //Automotores
-                if (item['automotor'] && item['automotor']['tipo']) {
+                if (item['sectorAutomotor'] && item['sectorAutomotor']['tipo']) {
                     gCamItem['gVehNuevo'] = this.generateDatosItemsOperacionSectorAutomotores(params, data, item, i);
                 }
 
-                if (data["tipoDocumento"] === 7) {
-                    gCamItem['cRelMerc'] = item['tolerancia'];
-                    gCamItem['dDesRelMerc'] = constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia'])[0]['descripcion'];
-                    gCamItem['dCanQuiMer'] = item['toleranciaCantidad'];
-                    gCamItem['dPorQuiMer'] = item['toleranciaPorcentaje'];
-                }
                 jsonResult.push(gCamItem);
             }   //end-for
         }
@@ -326,34 +331,34 @@ class JSonDteItemService {
      */
     private generateDatosItemsOperacionSectorAutomotores(params: any, data: any, item : any, i: number) {
 
-        if (!item['automotor']) {
+        if (!item['sectorAutomotor']) {
             //Como no indica que este campo es obligatorio, si no se informa sale con vacio
             return null;
         }
 
-        if (constanteService.tiposOperacionesVehiculos.filter(um => um.codigo === item['automotor']['tipo']).length == 0){
-            throw new Error("Tipo de Operación de Venta de Automotor '" + item['automotor']['tipo'] + "' en data.items[" + i + "].automotor.tipo no encontrado. Valores: " + constanteService.tiposOperacionesVehiculos.map(a=>a.codigo + '-' + a.descripcion));
+        if (constanteService.tiposOperacionesVehiculos.filter(um => um.codigo === item['sectorAutomotor']['tipo']).length == 0){
+            throw new Error("Tipo de Operación de Venta de Automotor '" + item['sectorAutomotor']['tipo'] + "' en data.items[" + i + "].sectorAutomotor.tipo no encontrado. Valores: " + constanteService.tiposOperacionesVehiculos.map(a=>a.codigo + '-' + a.descripcion));
         }
-        if (constanteService.tiposCombustibles.filter(um => um.codigo === item['automotor']['tipoCombustible']).length == 0){
-            throw new Error("Tipo de Combustible '" + item['automotor']['tipoCombustible'] + "' en data.items[" + i + "].automotor.tipoCombustible no encontrado. Valores: " + constanteService.tiposCombustibles.map(a=>a.codigo + '-' + a.descripcion));
+        if (constanteService.tiposCombustibles.filter(um => um.codigo === item['sectorAutomotor']['tipoCombustible']).length == 0){
+            throw new Error("Tipo de Combustible '" + item['sectorAutomotor']['tipoCombustible'] + "' en data.items[" + i + "].sectorAutomotor.tipoCombustible no encontrado. Valores: " + constanteService.tiposCombustibles.map(a=>a.codigo + '-' + a.descripcion));
         }
         const jsonResult : any = {
-            iTipOpVN: item['automotor']['tipo'],
-            dDesTipOpVN : constanteService.tiposOperacionesVehiculos.filter(ov => ov.codigo === item['automotor']['tipo'])[0]['descripcion'],
-            dChasis : item['automotor']['chasis'],
-            dColor : item['automotor']['color'],    
-            dPotencia : item['automotor']['potencia'], 
-            dCapMot : item['automotor']['capacidadMotor'], 
-            dPNet : item['automotor']['pesoNeto'],    
-            dPBruto : item['automotor']['pesoBruto'],    
-            iTipCom : item['automotor']['tipoCombustible'],
-            dDesTipCom : constanteService.tiposCombustibles.filter(tc => tc.codigo === item['automotor']['tipoCombustible'])[0]['descripcion'],
-            dNroMotor : item['automotor']['numeroMotor'],
-            dCapTracc : item['automotor']['capacidadTraccion'],
-            dAnoFab : item['automotor']['año'],
-            cTipVeh : item['automotor']['tipoVehiculo'],
-            dCapac : item['automotor']['capacidadPasajeros'],
-            dCilin : item['automotor']['cilindradas'],
+            iTipOpVN: item['sectorAutomotor']['tipo'],
+            dDesTipOpVN : constanteService.tiposOperacionesVehiculos.filter(ov => ov.codigo === item['sectorAutomotor']['tipo'])[0]['descripcion'],
+            dChasis : item['sectorAutomotor']['chasis'],
+            dColor : item['sectorAutomotor']['color'],    
+            dPotencia : item['sectorAutomotor']['potencia'], 
+            dCapMot : item['sectorAutomotor']['capacidadMotor'], 
+            dPNet : item['sectorAutomotor']['pesoNeto'],    
+            dPBruto : item['sectorAutomotor']['pesoBruto'],    
+            iTipCom : item['sectorAutomotor']['tipoCombustible'],
+            dDesTipCom : constanteService.tiposCombustibles.filter(tc => tc.codigo === item['sectorAutomotor']['tipoCombustible'])[0]['descripcion'],
+            dNroMotor : item['sectorAutomotor']['numeroMotor'],
+            dCapTracc : item['sectorAutomotor']['capacidadTraccion'],
+            dAnoFab : item['sectorAutomotor']['año'],
+            cTipVeh : item['sectorAutomotor']['tipoVehiculo'],
+            dCapac : item['sectorAutomotor']['capacidadPasajeros'],
+            dCilin : item['sectorAutomotor']['cilindradas'],
         };
         //Se puede hacer todo por if, para no enviar null
         return jsonResult;

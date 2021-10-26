@@ -12,15 +12,15 @@ import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.
 import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
 import validator from 'xsd-schema-validator';
 
-class JSonDteMainService {
+class JSonDeMainService {
     codigoSeguridad : any = null; 
     codigoControl : any = null;
     json : any = {};
 
-    public generateXML(params: any, data: any) : Promise<any> {
+    public generateXMLDE(params: any, data: any) : Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                resolve(this.generateXMLService(params, data));
+                resolve(this.generateXMLDeService(params, data));
             } catch (error) {
                 reject(error);
             }
@@ -28,12 +28,12 @@ class JSonDteMainService {
     }
 
     /**
-     * Metodo principal de generacion de XML
+     * Metodo principal de generacion de XML del DE
      * @param params 
      * @param data 
      * @returns 
      */
-    private generateXMLService(params: any, data: any) {
+    private generateXMLDeService(params: any, data: any) {
 
         this.validateValues(data);
 
@@ -54,7 +54,9 @@ class JSonDteMainService {
         //---
         this.generateDatosEspecificosPorTipoDE(params, data);
 
-        this.generateDatosCondicionOperacionDE(params, data);
+        if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
+            this.generateDatosCondicionOperacionDE(params, data);
+        }
 
         //['gDtipDE']=E001
         this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(params, data);
@@ -323,16 +325,6 @@ class JSonDteMainService {
         }
         
         this.json['rDE']['DE']['gDatGralOpe']['gOpeCom'] = {
-            iTipTra : null, //Será sobre escrito
-            dDesTipTra : null, //Será sobre escrito
-            iTImp : data['tipoImpuesto'],   //D013
-            dDesTImp : constanteService.tiposImpuestos.filter(ti => ti.codigo == data['tipoImpuesto'])[0]['descripcion'],
-            cMoneOpe : data['moneda'],  //D015
-            dDesMoneOpe : constanteService.monedas.filter(m => m.codigo == data['moneda'])[0]['descripcion'],
-            //dCondTiCam : null, //D017 Será sobre escrito
-            //dTiCam : null, //Será sobre escrito
-            //iCondAnt : data['condicionAnticipo'] ? data['condicionAnticipo'] : null, 
-            //dDesCondAnt : data['condicionAnticipo'] ? ("Anticipo " + constanteService.globalPorItem.filter(ca => ca.codigo == data['condicionAnticipo'])[0]['descripcion']) : null
         };
 
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
@@ -340,6 +332,12 @@ class JSonDteMainService {
             this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['iTipTra'] = data['tipoTransaccion'];
             this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesTipTra'] = constanteService.tiposTransacciones.filter(tt => tt.codigo == data['tipoTransaccion'])[0]['descripcion'];
         }
+
+        this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['iTImp'] = data['tipoImpuesto'];   //D013
+        this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesTImp'] = constanteService.tiposImpuestos.filter(ti => ti.codigo == data['tipoImpuesto'])[0]['descripcion'];   //D013
+        this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['cMoneOpe'] = data['moneda'];  //D015
+        this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesMoneOpe'] = constanteService.monedas.filter(m => m.codigo == data['moneda'])[0]['descripcion'];
+
         if (data['moneda'] != 'PYG') {
             if (!data['condicionTipoCambio']) {
                 throw new Error("Debe informar el tipo de Cambio en data.condicionTipoCambio");
@@ -491,7 +489,9 @@ class JSonDteMainService {
             dDesPaisRe : data['cliente']['paisDescripcion'],
             iTiContRec : data['cliente']['contribuyente'] ? data['cliente']['tipoContribuyente'] : null,
             dRucRec :  data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
-            dDVRec : data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
+            dDVRec : data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null
+        };
+        /*,
             //iTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['documentoTipo'] : null,
             //dDTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"]  : null,
             //dNumIDRec : null,   //Sera Sobreescito D210
@@ -509,7 +509,7 @@ class JSonDteMainService {
             //dCelRec : data['cliente']['celular'],
             //dEmailRec : data['cliente']['email']
             //dCodCliente : data['cliente']['']
-        };
+        };*/
 
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
             //Obligatorio completar D210
@@ -532,14 +532,43 @@ class JSonDteMainService {
                 this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = "0";
             }
         }
+
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = (data['cliente']['documentoTipo'] === 5) ? "Sin Nombre": data['cliente']['razonSocial'];
+
+        if (data['cliente']['documentoTipo'] === 5) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
+        }
+
         if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
             if (data['cliente']['direccion']) {
                 this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'];
             }
         }
 
+        if (data['cliente']['numeroCasa']) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = data['cliente']['numeroCasa'];
+        }
+        if (data['cliente']['departamento'] && data['cliente']['tipoOperacion'] != 4) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = data['cliente']['departamento'];
+        }
+        if (data['cliente']['departamentoDescripcion'] && data['cliente']['tipoOperacion'] != 4) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = data['cliente']['departamentoDescripcion'];
+        }
+        if (data['cliente']['distrito'] && data['cliente']['tipoOperacion'] != 4) {            
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = data['cliente']['distrito'];
+        }
+        if (data['cliente']['distritoDescripcion'] && data['cliente']['tipoOperacion'] != 4) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = data['cliente']['distritoDescripcion'];
+        }
+        if (data['cliente']['ciudad'] && data['cliente']['tipoOperacion'] != 4) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = data['cliente']['ciudad'];
+        }
+        if (data['cliente']['ciudadDescripcion'] && data['cliente']['tipoOperacion'] != 4) {
+            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = data['cliente']['ciudadDescripcion'];
+        }
+        
         //Asignar null a departamento, distrito y ciudad si tipoOperacion = 4
-        if (data['cliente']['tipoOperacion'] === 4) {
+    /*    if (data['cliente']['tipoOperacion'] === 4) {
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = null;
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = null;
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = null;
@@ -547,7 +576,7 @@ class JSonDteMainService {
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = null;
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = null;
         }
-
+    */
         if (data['cliente']['telefono'] && data['cliente']['telefono'].lenght >= 6) {
             dTelRec : data['cliente']['telefono'];
         }
@@ -696,8 +725,11 @@ class JSonDteMainService {
     }
 
     private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
-        if (params.notasCreditosMotivos.filter((um:any) => um.codigo === data['notaCreditoDebito']['motivo']).length == 0){
-            throw new Error("Motivo de la Nota de Crédito/Débito '" + data['notaCreditoDebito']['motivo'] + "' en data.notaCreditoDebito.motivo no encontrado. Valores: " + params.notasCreditosMotivos.map((a:any)=>a.codigo + '-' + a.descripcion));
+        if (!data['notaCreditoDebito']['motivo']) {
+            throw new Error("Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo");
+        }
+        if (constanteService.notasCreditosMotivos.filter((um:any) => um.codigo === data['notaCreditoDebito']['motivo']).length == 0){
+            throw new Error("Motivo de la Nota de Crédito/Débito '" + data['notaCreditoDebito']['motivo'] + "' en data.notaCreditoDebito.motivo no encontrado. Valores: " + constanteService.notasCreditosMotivos.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamNCDE'] = {
@@ -707,18 +739,25 @@ class JSonDteMainService {
     }
 
     private generateDatosEspecificosPorTipoDE_RemisionElectronica(params: any, data: any) {
-        if (params.remisionesMotivos.filter((um:any) => um.codigo === data['remision']['motivo']).length == 0){
-            throw new Error("Motivo de la Remisión '" + data['remision']['motivo'] + "' en data.remision.motivo no encontrado. Valores: " + params.remisionesMotivos.map((a:any)=>a.codigo + '-' + a.descripcion));
+        if (!(data['remision'] && data['remision']['motivo'])) {
+            throw new Error("No fue pasado el Motivo de la Remisión en data.remision.motivo.");
         }
-        if (params.remisionesResponsables.filter((um:any) => um.codigo === data['remision']['remisionesResponsables']).length == 0){
-            throw new Error("Tipo de Documento '" + data['remision']['remisionesResponsables'] + "' en data.remision.remisionesResponsables no encontrado. Valores: " + params.remisionesResponsables.map((a:any)=>a.codigo + '-' + a.descripcion));
+        if (!(data['remision'] && data['remision']['tipoResponsable'])) {
+            throw new Error("No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.");
+        }
+
+        if (constanteService.remisionesMotivos.filter((um:any) => um.codigo === data['remision']['motivo']).length == 0){
+            throw new Error("Motivo de la Remisión '" + data['remision']['motivo'] + "' en data.remision.motivo no encontrado. Valores: " + constanteService.remisionesMotivos.map((a:any)=>a.codigo + '-' + a.descripcion));
+        }
+        if (constanteService.remisionesResponsables.filter((um:any) => um.codigo === data['remision']['tipoResponsable']).length == 0){
+            throw new Error("Tipo de Responsable '" + data['remision']['tipoResponsable'] + "' en data.remision.tipoResponsable no encontrado. Valores: " + constanteService.remisionesResponsables.map((a:any)=>a.codigo + '-' + a.descripcion));
         }
 
         this.json['rDE']['DE']['gDtipDE']['gCamNRE'] = {
             iMotEmiNR : data['remision']['motivo'],  //E501
             dDesMotEmiNR : constanteService.remisionesMotivos.filter(nv => nv.codigo === data['remision']['motivo'])[0]['descripcion'],
-            iRespEmiNR : data['remision']['remisionesResponsables'],
-            dDesRespEmiNR : constanteService.remisionesResponsables.filter(nv => nv.codigo === data['remision']['remisionesResponsables'])[0]['descripcion'],
+            iRespEmiNR : data['remision']['tipoResponsable'],
+            dDesRespEmiNR : constanteService.remisionesResponsables.filter(nv => nv.codigo === data['remision']['tipoResponsable'])[0]['descripcion'],
             dKmR : data['remision']['kms'],
             dFecEm : data['remision']['fechaFactura']
         };
@@ -885,4 +924,4 @@ class JSonDteMainService {
     }
 }
 
-export default new JSonDteMainService();
+export default new JSonDeMainService();
