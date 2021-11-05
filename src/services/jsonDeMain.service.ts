@@ -922,6 +922,23 @@ class JSonDeMainService {
                 xml = xml.replace(/\r?\n|\r/g, '');
         return xml;
     }
+
+    getDepartamentos() {
+        return constanteService.departamentos;
+    }
+
+    getDistritos(departamento: number) {
+        return constanteService.distritos.filter(dis => dis.departamento === departamento);
+    }
+
+    getCiudades(distrito: number) {
+        return constanteService.ciudades.filter(ciu => ciu.distrito === distrito);
+    }
+
+    getTiposRegimenes() {
+        return constanteService.tiposRegimenes;
+    }
+
 }
 
 export default new JSonDeMainService();

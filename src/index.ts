@@ -9,6 +9,30 @@ class DE {
         return eventoService.generateXMLEvento(params, data);
     }
     
+    consultarDepartamentos = () : Promise<any> => {
+        return new Promise((resolve, reject) => {
+            resolve(deService.getDepartamentos());
+        });
+    }
+
+    consultarDistritos = (departamento: number) : Promise<any> => {
+        return new Promise((resolve, reject) => {
+            resolve(deService.getDistritos(departamento));
+        });
+    }
+
+    consultarCiudades = (distrito: number) : Promise<any> => {
+        return new Promise((resolve, reject) => {
+            resolve(deService.getCiudades(distrito));
+        });
+    }
+
+    consultarTiposRegimenes = () : Promise<any> => {
+        return new Promise((resolve, reject) => {
+            resolve(deService.getTiposRegimenes());
+        });
+    }
+
 }
 
 export default new DE();
