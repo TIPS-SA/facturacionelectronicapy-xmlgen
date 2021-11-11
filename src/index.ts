@@ -1,38 +1,37 @@
 import deService from './services/jsonDeMain.service';
 import eventoService from './services/jsonEventoMain.service';
 class DE {
-    generateXMLDE = (params: any, data: any) : Promise<any> => {
-        return deService.generateXMLDE(params, data);
-    }
+  generateXMLDE = (params: any, data: any): Promise<any> => {
+    return deService.generateXMLDE(params, data);
+  };
 
-    generateXMLEvento = (params: any, data: any) : Promise<any> => {
-        return eventoService.generateXMLEvento(params, data);
-    }
-    
-    consultarDepartamentos = () : Promise<any> => {
-        return new Promise((resolve, reject) => {
-            resolve(deService.getDepartamentos());
-        });
-    }
+  generateXMLEvento = (params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEvento(params, data);
+  };
 
-    consultarDistritos = (departamento: number) : Promise<any> => {
-        return new Promise((resolve, reject) => {
-            resolve(deService.getDistritos(departamento));
-        });
-    }
+  consultarDepartamentos = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      resolve(deService.getDepartamentos());
+    });
+  };
 
-    consultarCiudades = (distrito: number) : Promise<any> => {
-        return new Promise((resolve, reject) => {
-            resolve(deService.getCiudades(distrito));
-        });
-    }
+  consultarDistritos = (departamento: number): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      resolve(deService.getDistritos(departamento));
+    });
+  };
 
-    consultarTiposRegimenes = () : Promise<any> => {
-        return new Promise((resolve, reject) => {
-            resolve(deService.getTiposRegimenes());
-        });
-    }
+  consultarCiudades = (distrito: number): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      resolve(deService.getCiudades(distrito));
+    });
+  };
 
+  consultarTiposRegimenes = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      resolve(deService.getTiposRegimenes());
+    });
+  };
 }
 
 export default new DE();
