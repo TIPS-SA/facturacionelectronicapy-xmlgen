@@ -9,7 +9,7 @@
     "test": "mocha -r ts-node/register 'test/**/*.test.ts'",
     "test-debug": "export DEBUG=* && npm test",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "",
