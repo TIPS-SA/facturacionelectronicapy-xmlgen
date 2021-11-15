@@ -1103,7 +1103,6 @@ class JSonDeMainService {
   getCiudad(ciudadId: number) {
     return constanteService.ciudades.filter((ciu) => ciu.codigo === ciudadId);
   }
-
 }
 
 export default new JSonDeMainService();
