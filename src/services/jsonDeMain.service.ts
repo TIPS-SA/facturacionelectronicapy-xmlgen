@@ -1091,6 +1091,19 @@ class JSonDeMainService {
   getTiposRegimenes() {
     return constanteService.tiposRegimenes;
   }
+
+  getDepartamento(departamentoId: number) {
+    return constanteService.departamentos.filter((dis) => dis.codigo === departamentoId);
+  }
+
+  getDistrito(distritoId: number) {
+    return constanteService.distritos.filter((dis) => dis.codigo === distritoId);
+  }
+
+  getCiudad(ciudadId: number) {
+    return constanteService.ciudades.filter((ciu) => ciu.codigo === ciudadId);
+  }
+
 }
 
 export default new JSonDeMainService();
