@@ -57,14 +57,18 @@ class JSonDeMainService {
     }
 
     //['gDtipDE']=E001
-    this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(params, data, defaultValues);
+    this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(
+      params,
+      data,
+      defaultValues,
+    );
 
     this.json['rDE']['DE']['gDtipDE']['gCamEsp'] =
       jsonDteComplementarios.generateDatosComplementariosComercialesDeUsoEspecificos(params, data);
 
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 7) {
       //1 Opcional, 7 Obligatorio
-      if (data['detalleTransporte']) { 
+      if (data['detalleTransporte']) {
         this.json['rDE']['DE']['gDtipDE']['gTransp'] = jsonDteTransporte.generateDatosTransporte(params, data);
       }
     }
@@ -490,11 +494,13 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosGeneralesResponsableGeneracionDE(params: any, data: any) {
-
-    if (constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['usuario']['documentoTipo']).length == 0) {
+    if (
+      constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['usuario']['documentoTipo'])
+        .length == 0
+    ) {
       throw new Error(
         "Tipo de Documento '" +
-        data['usuario']['documentoTipo'] +
+          data['usuario']['documentoTipo'] +
           "' no encontrado en data.usuario.documentoTipo. Valores: " +
           constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
       );

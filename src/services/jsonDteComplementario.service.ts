@@ -18,15 +18,15 @@ class JSonDteComplementariosService {
     if (data['sectorEnergiaElectrica']) {
       jsonResult['gGrupEner'] = this.generateDatosSectorEnergiaElectrica(params, data);
     }
-    
+
     if (data['sectorSeguros']) {
       jsonResult['gGrupSeg'] = this.generateDatosSectorSeguros(params, data);
     }
-    
+
     if (data['sectorSupermercados']) {
       jsonResult['gGrupSup'] = this.generateDatosSectorSupermercados(params, data);
     }
-    
+
     if (data['sectorAdicional']) {
       jsonResult['gGrupAdi'] = this.generateDatosDatosAdicionalesUsoComercial(params, data);
     }

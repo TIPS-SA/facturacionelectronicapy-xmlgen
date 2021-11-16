@@ -7,12 +7,10 @@ class JSonDteTotalesService {
    * @param options
    */
   public generateDatosTotales(params: any, data: any, items: any[], defaultValues?: boolean) {
-
     let moneda = data['moneda'];
     if (!moneda && defaultValues === true) {
       moneda = 'PYG';
     }
-
 
     let dSubExe = 0,
       dSubExo = 0,

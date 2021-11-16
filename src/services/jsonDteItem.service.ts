@@ -26,7 +26,7 @@ class JSonDteItemService {
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
           throw new Error(
             "Unidad de Medida '" +
-            unidadMedida +
+              unidadMedida +
               "' en data.items[" +
               i +
               '].unidadMedida no encontrado. Valores: ' +
@@ -253,7 +253,13 @@ class JSonDteItemService {
 
     if (item['ivaTipo'] == 1) {
       if (item['ivaBase'] != 100) {
-        throw new Error('Valor de "ivaBase"=' + item['ivaBase'] + ' debe ser igual a 100 para "ivaTipo" = 1 en data.items[' + i + '].ivaBase');
+        throw new Error(
+          'Valor de "ivaBase"=' +
+            item['ivaBase'] +
+            ' debe ser igual a 100 para "ivaTipo" = 1 en data.items[' +
+            i +
+            '].ivaBase',
+        );
       }
     }
     if (item['iva'] == 0) {
