@@ -1,8 +1,8 @@
 import deService from './services/jsonDeMain.service';
 import eventoService from './services/jsonEventoMain.service';
 class DE {
-  generateXMLDE = (params: any, data: any): Promise<any> => {
-    return deService.generateXMLDE(params, data);
+  generateXMLDE = (params: any, data: any, defaultValues?: boolean): Promise<any> => {
+    return deService.generateXMLDE(params, data, defaultValues);
   };
 
   generateXMLEvento = (params: any, data: any): Promise<any> => {

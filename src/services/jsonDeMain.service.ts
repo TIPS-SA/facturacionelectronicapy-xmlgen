@@ -10,17 +10,16 @@ import jsonDteTransporte from './jsonDteTransporte.service';
 import jsonDteTotales from './jsonDteTotales.service';
 import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.service';
 import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
-import validator from 'xsd-schema-validator';
 
 class JSonDeMainService {
   codigoSeguridad: any = null;
   codigoControl: any = null;
   json: any = {};
 
-  public generateXMLDE(params: any, data: any): Promise<any> {
+  public generateXMLDE(params: any, data: any, defaultValues?: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
-        resolve(this.generateXMLDeService(params, data));
+        resolve(this.generateXMLDeService(params, data, defaultValues));
       } catch (error) {
         reject(error);
       }
@@ -33,7 +32,7 @@ class JSonDeMainService {
    * @param data
    * @returns
    */
-  private generateXMLDeService(params: any, data: any) {
+  private generateXMLDeService(params: any, data: any, defaultValues?: boolean) {
     this.validateValues(data);
 
     this.addDefaultValues(data);
@@ -49,7 +48,7 @@ class JSonDeMainService {
     //---
     this.generateDatosOperacion(params, data);
     this.generateDatosTimbrado(params, data);
-    this.generateDatosGenerales(params, data);
+    this.generateDatosGenerales(params, data, defaultValues);
     //---
     this.generateDatosEspecificosPorTipoDE(params, data);
 
@@ -58,19 +57,21 @@ class JSonDeMainService {
     }
 
     //['gDtipDE']=E001
-    this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(params, data);
+    this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(params, data, defaultValues);
 
     this.json['rDE']['DE']['gDtipDE']['gCamEsp'] =
       jsonDteComplementarios.generateDatosComplementariosComercialesDeUsoEspecificos(params, data);
 
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 7) {
       //1 Opcional, 7 Obligatorio
-      this.json['rDE']['DE']['gDtipDE']['gTransp'] = jsonDteTransporte.generateDatosTransporte(params, data);
+      if (data['detalleTransporte']) { 
+        this.json['rDE']['DE']['gDtipDE']['gTransp'] = jsonDteTransporte.generateDatosTransporte(params, data);
+      }
     }
 
     if (data['tipoDocumento'] != 7) {
       const items = this.json['rDE']['DE']['gDtipDE']['gCamItem'];
-      this.json['rDE']['DE']['gTotSub'] = jsonDteTotales.generateDatosTotales(params, data, items);
+      this.json['rDE']['DE']['gTotSub'] = jsonDteTotales.generateDatosTotales(params, data, items, defaultValues);
     }
 
     if (data['complementarios']) {
@@ -295,11 +296,11 @@ class JSonDeMainService {
      * @param data 
      * @param options 
      */
-  private generateDatosGenerales(params: any, data: any) {
+  private generateDatosGenerales(params: any, data: any, defaultValues?: boolean) {
     this.json['rDE']['DE']['gDatGralOpe'] = {
       dFeEmiDE: data['fecha'],
     };
-    this.generateDatosGeneralesInherentesOperacion(params, data);
+    this.generateDatosGeneralesInherentesOperacion(params, data, defaultValues);
     this.generateDatosGeneralesEmisorDE(params, data);
     this.generateDatosGeneralesResponsableGeneracionDE(params, data);
     this.generateDatosGeneralesReceptorDE(params, data);
@@ -321,7 +322,7 @@ class JSonDeMainService {
      * @param data 
      * @param options 
      */
-  private generateDatosGeneralesInherentesOperacion(params: any, data: any) {
+  private generateDatosGeneralesInherentesOperacion(params: any, data: any, defaultValues?: boolean) {
     if (data['tipoDocumento'] == 7) {
       //C002
       return; //No informa si el tipo de documento es 7
@@ -334,9 +335,15 @@ class JSonDeMainService {
         constanteService.tiposImpuestos.map((a) => a.codigo + '-' + a.descripcion)
       );
     }
-    if (constanteService.monedas.filter((um) => um.codigo === data['moneda']).length == 0) {
+
+    let moneda = data['moneda'];
+    if (!moneda && defaultValues === true) {
+      moneda = 'PYG';
+    }
+
+    if (constanteService.monedas.filter((um) => um.codigo === moneda).length == 0) {
       throw (
-        new Error("Moneda '" + data['moneda']) +
+        new Error("Moneda '" + moneda) +
         "' en data.moneda no válido. Valores: " +
         constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion)
       );
@@ -372,19 +379,19 @@ class JSonDeMainService {
     this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesTImp'] = constanteService.tiposImpuestos.filter(
       (ti) => ti.codigo == data['tipoImpuesto'],
     )[0]['descripcion']; //D013
-    this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['cMoneOpe'] = data['moneda']; //D015
+    this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['cMoneOpe'] = moneda; //D015
     this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesMoneOpe'] = constanteService.monedas.filter(
-      (m) => m.codigo == data['moneda'],
+      (m) => m.codigo == moneda,
     )[0]['descripcion'];
 
-    if (data['moneda'] != 'PYG') {
+    if (moneda != 'PYG') {
       if (!data['condicionTipoCambio']) {
         throw new Error('Debe informar el tipo de Cambio en data.condicionTipoCambio');
       }
       //Obligatorio informar dCondTiCam D017
       this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dCondTiCam'] = data['condicionTipoCambio'];
     }
-    if (data['cambio'] == 1 && data['moneda'] != 'PYG') {
+    if (data['cambio'] == 1 && moneda != 'PYG') {
       if (!(data['cambio'] && data['cambio'] > 0)) {
         throw new Error('Debe informar el valor del Cambio en data.cambio');
       }
@@ -483,6 +490,16 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosGeneralesResponsableGeneracionDE(params: any, data: any) {
+
+    if (constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['usuario']['documentoTipo']).length == 0) {
+      throw new Error(
+        "Tipo de Documento '" +
+        data['usuario']['documentoTipo'] +
+          "' no encontrado en data.usuario.documentoTipo. Valores: " +
+          constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
     this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE'] = {
       iTipIDRespDE: data['usuario']['documentoTipo'],
       dDTipIDRespDE: constanteService.tiposDocumentosIdentidades.filter(

@@ -15,13 +15,21 @@ class JSonDteComplementariosService {
   public generateDatosComplementariosComercialesDeUsoEspecificos(params: any, data: any) {
     const jsonResult: any = {};
 
-    jsonResult['gGrupEner'] = this.generateDatosSectorEnergiaElectrica(params, data);
-
-    jsonResult['gGrupSeg'] = this.generateDatosSectorSeguros(params, data);
-
-    jsonResult['gGrupSup'] = this.generateDatosSectorSupermercados(params, data);
-
-    jsonResult['gGrupAdi'] = this.generateDatosDatosAdicionalesUsoComercial(params, data);
+    if (data['sectorEnergiaElectrica']) {
+      jsonResult['gGrupEner'] = this.generateDatosSectorEnergiaElectrica(params, data);
+    }
+    
+    if (data['sectorSeguros']) {
+      jsonResult['gGrupSeg'] = this.generateDatosSectorSeguros(params, data);
+    }
+    
+    if (data['sectorSupermercados']) {
+      jsonResult['gGrupSup'] = this.generateDatosSectorSupermercados(params, data);
+    }
+    
+    if (data['sectorAdicional']) {
+      jsonResult['gGrupAdi'] = this.generateDatosDatosAdicionalesUsoComercial(params, data);
+    }
 
     return jsonResult;
   }

@@ -73,7 +73,7 @@ class JSonDteComplementariosComercialesService {
           "Unidad de Medida '" +
             data['complementarios']['carga']['unidadMedidaVolumenTotal'] +
             "' en data.complementarios.carga.unidadMedidaVolumenTotal no válido. Valores: " +
-            constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion),
+            constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
         );
       }
       jsonResult['cUniMedTotVol'] = data['complementarios']['carga']['unidadMedidaVolumenTotal'];
@@ -102,7 +102,7 @@ class JSonDteComplementariosComercialesService {
           "Unidad de Medida '" +
             data['complementarios']['carga']['unidadMedidaPesoTotal'] +
             "' en data.complementarios.carga.unidadMedidaPesoTotal no válido. Valores: " +
-            constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion),
+            constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
         );
       }
       jsonResult['cUniMedTotPes'] = data['complementarios']['carga']['unidadMedidaPesoTotal'];

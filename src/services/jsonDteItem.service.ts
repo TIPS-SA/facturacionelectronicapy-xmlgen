@@ -9,7 +9,7 @@ class JSonDteItemService {
    * @param data
    * @param options
    */
-  public generateDatosItemsOperacion(params: any, data: any) {
+  public generateDatosItemsOperacion(params: any, data: any, defaultValues?: boolean) {
     const jsonResult: any = [];
 
     //Recorrer array de infoCuotas e informar en el JSON
@@ -17,15 +17,20 @@ class JSonDteItemService {
       for (let i = 0; i < data['items'].length; i++) {
         const item = data['items'][i];
 
+        //Valores por defecto para el Detalle
+        let unidadMedida: number = item['unidadMedida'];
+        if (!unidadMedida && defaultValues === true) {
+          unidadMedida = 77;
+        }
         //Validaciones
-        if (constanteService.unidadesMedidas.filter((um) => um.codigo === item['unidadMedida']).length == 0) {
+        if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
           throw new Error(
             "Unidad de Medida '" +
-              item['unidadMedida'] +
+            unidadMedida +
               "' en data.items[" +
               i +
               '].unidadMedida no encontrado. Valores: ' +
-              constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion),
+              constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
           );
         }
         if (data['tipoDocumento'] === 7) {
@@ -43,24 +48,6 @@ class JSonDteItemService {
 
         const gCamItem: any = {
           dCodInt: item['codigo'],
-          //dParAranc : item['partidaArancelaria'],
-          //dNCM : item['ncm'],
-          /*dDncpG : (data["cliente"]["tipoOperacion"] === 3) ? stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8) : null,
-                    dDncpE : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelEspecifico'] : null,
-                    dGtin : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoGtinProducto'] : null,
-                    dGtinPq : (data["cliente"]["tipoOperacion"] === 3) ? item['dncp']['codigoNivelPaquete'] : null,*/
-          //dDesProSer   : item['descripcion'], // RG 24/2019
-          //cUniMed : item['unidadMedida'],
-          //dDesUniMed : constanteService.unidadesMedidas.filter(um => um.codigo === item['unidadMedida'])[0]['representacion'].trim(),
-          //dCantProSer : item['cantidad'],
-          //cPaisOrig : item['pais'],
-          //dDesPaisOrig : item['paisDescripcion'],
-          //                    dInfItem : item['observacion'],
-          //cRelMerc : data["tipoDocumento"] === 7 ? item['tolerancia'] : null,
-          //dDesRelMerc : data["tipoDocumento"] === 7 ? constanteService.relevanciasMercaderias.filter(um => um.codigo === item['tolerancia'])[0]['descripcion'] : null,
-          //dCanQuiMer : item['toleranciaCantidad'],
-          //dPorQuiMer : item['toleranciaPorcentaje'],
-          //dCDCAnticipo : null //Sera sobreescrito
         };
 
         if (item['partidaArancelaria']) {
@@ -79,9 +66,9 @@ class JSonDteItemService {
         }
 
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
-        gCamItem['cUniMed'] = item['unidadMedida'];
+        gCamItem['cUniMed'] = unidadMedida;
         gCamItem['dDesUniMed'] = constanteService.unidadesMedidas
-          .filter((um) => um.codigo === item['unidadMedida'])[0]
+          .filter((um) => um.codigo === unidadMedida)[0]
           ['representacion'].trim();
 
         gCamItem['dCantProSer'] = item['cantidad'];
@@ -266,7 +253,7 @@ class JSonDteItemService {
 
     if (item['ivaTipo'] == 1) {
       if (item['ivaBase'] != 100) {
-        throw new Error('Valor de "ivaBase" debe ser igual a 100 para "ivaTipo" = 1 en data.items[' + i + '].ivaBase');
+        throw new Error('Valor de "ivaBase"=' + item['ivaBase'] + ' debe ser igual a 100 para "ivaTipo" = 1 en data.items[' + i + '].ivaBase');
       }
     }
     if (item['iva'] == 0) {

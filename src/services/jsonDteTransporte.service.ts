@@ -15,7 +15,7 @@ class JSonDteTransporteService {
         throw new Error('Obligatorio informar detalleTransporte.tipo');
       }
     }
-    if (data['detalleTransporte']['condicionNegociacion']) {
+    if (data['detalleTransporte'] && data['detalleTransporte']['condicionNegociacion']) {
       if (constanteService.condicionesNegociaciones.indexOf(data['detalleTransporte']['condicionNegociacion']) < -1) {
         throw new Error(
           'detalleTransporte.condicionNegociación (' +

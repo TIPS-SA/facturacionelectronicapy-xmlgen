@@ -6,7 +6,14 @@ class JSonDteTotalesService {
    * @param data
    * @param options
    */
-  public generateDatosTotales(params: any, data: any, items: any[]) {
+  public generateDatosTotales(params: any, data: any, items: any[], defaultValues?: boolean) {
+
+    let moneda = data['moneda'];
+    if (!moneda && defaultValues === true) {
+      moneda = 'PYG';
+    }
+
+
     let dSubExe = 0,
       dSubExo = 0,
       dSub5 = 0,
@@ -185,15 +192,15 @@ class JSonDteTotalesService {
         jsonResult['dTBasGraIVA'] = (dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0);
       }
     }
-    if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {
+    if (moneda != 'PYG' && data['condicionTipoCambio'] == 1) {
       //Por el Global
       jsonResult['dTotalGs'] = dTotGralOpe * data['cambio'];
     }
-    if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 2) {
+    if (moneda != 'PYG' && data['condicionTipoCambio'] == 2) {
       //Por item
       jsonResult['dTotalGs'] = dTotOpeGs;
     }
-    if (data['moneda'] != 'PYG') {
+    if (moneda != 'PYG') {
       if (data['tipoDocumento'] == 4) {
         jsonResult['dTotalGs'] = dTotGralOpe;
       }
