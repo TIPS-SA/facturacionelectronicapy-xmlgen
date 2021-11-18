@@ -266,7 +266,6 @@ class ConstanteService {
       codigo: 9,
       descripcion: 'No especificado',
     },
-
   ];
 
   tiposOperaciones = [

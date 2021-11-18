@@ -141,14 +141,12 @@ class JSonDeMainService {
    * @param data
    */
   private validateValues(data: any) {
-
     if (typeof data['cliente']['contribuyente'] == 'undefined') {
-      throw new Error("Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente");
-      
+      throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
     }
 
     if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
-      throw new Error("data.cliente.contribuyente debe ser true|false");
+      throw new Error('data.cliente.contribuyente debe ser true|false');
     }
   }
 
