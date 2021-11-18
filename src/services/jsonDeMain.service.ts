@@ -140,7 +140,17 @@ class JSonDeMainService {
    * Valida los datos ingresados en el data del req.body
    * @param data
    */
-  private validateValues(data: any) {}
+  private validateValues(data: any) {
+
+    if (typeof data['cliente']['contribuyente'] == 'undefined') {
+      throw new Error("Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente");
+      
+    }
+
+    if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
+      throw new Error("data.cliente.contribuyente debe ser true|false");
+    }
+  }
 
   /**
    * Añade algunos valores por defecto al JSON de entrada, valido para
@@ -572,25 +582,6 @@ class JSonDeMainService {
       dRucRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
       dDVRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
     };
-    /*,
-            //iTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['documentoTipo'] : null,
-            //dDTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"]  : null,
-            //dNumIDRec : null,   //Sera Sobreescito D210
-            dNomRec : (data['cliente']['documentoTipo'] === 5) ? "Sin Nombre": data['cliente']['razonSocial'],
-            dNomFanRec : (data['cliente']['documentoTipo'] === 5) ? null: data['cliente']['nombreFantasia'],
-            //dDirRec : (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) ? data['cliente']['direccion'] : null,
-            dNumCasRec : data['cliente']['direccion'] ? data['cliente']['numeroCasa'] : null,
-            cDepRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['departamento'] : null,
-            dDesDepRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['departamentoDescripcion'] : null,
-            cDisRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['distrito'] : null,
-            dDesDisRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['distritoDescripcion'] : null,
-            cCiuRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['ciudad'] : null,
-            dDesCiuRec : (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['ciudadDescripcion'] : null,
-            //dTelRec : data['cliente']['telefono'],
-            //dCelRec : data['cliente']['celular'],
-            //dEmailRec : data['cliente']['email']
-            //dCodCliente : data['cliente']['']
-        };*/
 
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210

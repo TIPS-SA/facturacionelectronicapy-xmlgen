@@ -262,6 +262,11 @@ class ConstanteService {
       codigo: 6,
       descripcion: 'Tarjeta Diplomática de exoneración fiscal',
     },
+    {
+      codigo: 9,
+      descripcion: 'No especificado',
+    },
+
   ];
 
   tiposOperaciones = [
