@@ -3,14 +3,7 @@ import * as xml2js from 'xml2js';
 import stringUtilService from './StringUtil.service';
 import fechaUtilService from './FechaUtil.service';
 import constanteService from './Constante.service';
-import jsonDteItem from './jsonDteItem.service';
 import jsonDteAlgoritmos from './jsonDteAlgoritmos.service';
-import jsonDteComplementarios from './jsonDteComplementario.service';
-import jsonDteTransporte from './jsonDteTransporte.service';
-import jsonDteTotales from './jsonDteTotales.service';
-import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.service';
-import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
-import validator from 'xsd-schema-validator';
 
 class JSonEventoMainService {
   codigoSeguridad: any = null;

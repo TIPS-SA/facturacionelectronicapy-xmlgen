@@ -33,11 +33,11 @@ class JSonDeMainService {
    * @returns
    */
   private generateXMLDeService(params: any, data: any, defaultValues?: boolean) {
+    this.addUnderscore(data);
+
     this.validateValues(data);
 
     this.addDefaultValues(data);
-
-    this.addUnderscore(data);
 
     this.json = {};
 
@@ -161,7 +161,6 @@ class JSonDeMainService {
   * @param data
   */
   private addUnderscore(data: any) {
-
     if (data.tipo_documento) {
       data.tipoDocumento = data.tipo_documento;
     }
@@ -179,7 +178,7 @@ class JSonDeMainService {
     }
 
     if (data.tipo_impuesto) {
-      data.tipoImpuesto = data.tipo_impuImpuesto  
+      data.tipoImpuesto = data.tipo_impuesto;
     }
      
     if (data.condicion_anticipo) {
@@ -319,6 +318,7 @@ class JSonDeMainService {
 
 
       }
+
     }
 
     if (data.condicion?.credito && data.condicion?.credito.length > 0) {
@@ -501,8 +501,6 @@ class JSonDeMainService {
     if (data.sectorSeguros?.codigo_interno_item) {
       data.sectorSeguros.codigoInternoItem = data.sectorSeguros.codigo_interno_item;
     }    
-
-      
   }
 
 
