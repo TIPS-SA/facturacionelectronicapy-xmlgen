@@ -37,6 +37,8 @@ class JSonDeMainService {
 
     this.addDefaultValues(data);
 
+    this.addUnderscore(data);
+
     this.json = {};
 
     this.generateCodigoSeguridad(params, data); //Primero genera el codigo de seguridad aleatorio único
@@ -149,6 +151,360 @@ class JSonDeMainService {
       throw new Error('data.cliente.contribuyente debe ser true|false');
     }
   }
+
+  /**
+  * Si los valores vienen en underscore, crea los valores en formato variableJava que 
+  * sera utilizado dentro del proceso,
+  * 
+  * Ej. si viene tipo_documento crea una variable tipoDocumento, con el mismo valor.
+  * 
+  * @param data
+  */
+  private addUnderscore(data: any) {
+
+    if (data.tipo_documento) {
+      data.tipoDocumento = data.tipo_documento;
+    }
+
+    if (data.tipo_contribuyente) {
+      data.tipoContribuyente = data.tipo_contribuyente;
+    }
+
+    if (data.tipo_emision) {
+      data.tipoEmision = data.tipo_emision;
+    }
+
+    if (data.tipo_transaccion) {
+      data.tipoTransaccion = data.tipo_transaccion;
+    }
+
+    if (data.tipo_impuesto) {
+      data.tipoImpuesto = data.tipo_impuImpuesto  
+    }
+     
+    if (data.condicion_anticipo) {
+      data.condicionAnticipo = data.condicion_anticipo;
+    }
+
+    if (data.condicion_tipo_cambio) {
+      data.condicionTipoCambio = data.condicion_tipo_cambio  
+    }
+
+    //Objeto Cliente
+    if (data.cliente?.razon_social) {
+      data.cliente.razonSocial = data.cliente.razon_social;
+    }
+    if (data.cliente?.nombre_fantasia) {
+      data.cliente.nombreFantasia = data.cliente.nombre_fantasia;
+    }
+    if (data.cliente?.tipo_operacion) {
+      data.cliente.tipoOperacion = data.cliente.tipo_operacion;
+    }
+    if (data.cliente?.numero_casa) {
+      data.cliente.numeroCasa = data.cliente.numero_casa;
+    }
+    if (data.cliente?.departamento_descripcion) {
+      data.cliente.departamentoDescripcion = data.cliente.departamento_descripcion;
+    }
+    if (data.cliente?.distrito_descripcion) {
+      data.cliente.distritoDescripcion = data.cliente.distrito_descripcion;
+    }
+    if (data.cliente?.ciudad_descripcion) {
+      data.cliente.ciudadDescripcion = data.cliente.ciudad_descripcion;
+    }
+    if (data.cliente?.pais_descripcion) {
+      data.cliente.paisDescripcion = data.cliente.pais_descripcion;
+    }
+    if (data.cliente?.tipo_contribuyente) {
+      data.cliente.tipoContribuyente = data.cliente.tipo_contribuyente;
+    }
+    if (data.cliente?.documento_tipo) {
+      data.cliente.documentoTipo = data.cliente.documento_tipo;
+    }
+    if (data.cliente?.documento_numero) {
+      data.cliente.documentoNumero = data.cliente.documento_numero;
+    }
+
+    //Usuario
+    if (data.usuario?.documento_tipo) {
+      data.usuario.documentoTipo = data.usuario.documento_tipo;
+    }
+    if (data.usuario?.documento_numero) {
+      data.usuario.documentoNumero = data.cliente.documento_numero;
+    }
+
+    //Factura
+    if (data.factura?.fecha_envio) {
+      data.factura.fechaEnvio = data.usuario.fecha_envio;
+    }
+
+    //AutoFactura
+    if (data.auto_factura) {
+      data.autoFactura = {...data.auto_factura};
+    }
+
+    if (data.autoFactura?.tipo_vendedor) {
+      data.autoFactura.tipoVendedor = data.autoFactura.tipo_vendedor;
+    }
+
+    if (data.autoFactura?.documentoTipo) {
+      data.autoFactura.documentoTipo = data.autoFactura.documentoTipo;
+    }
+
+    if (data.autoFactura?.documento_numero) {
+      data.autoFactura.documentoNumero = data.autoFactura.documento_numero;
+    }
+
+    if (data.autoFactura?.departamento_descripcion) {
+      data.autoFactura.departamentoDescripcion = data.autoFactura.departamento_descripcion;
+    }
+
+    if (data.autoFactura?.distrito_descripcion) {
+      data.autoFactura.distritoDescripcion = data.autoFactura.distrito_descripcion;
+    }
+
+    if (data.autoFactura?.ciudad_descripcion) {
+      data.autoFactura.ciudadDescripcion = data.autoFactura.ciudad_descripcion;
+    }
+
+    if (data.autoFactura?.ubicacion?.departamento_descripcion) {
+      data.autoFactura.ubicacion.departamentoDescripcion = data.autoFactura.ubicacion.departamento_descripcion;
+    }
+
+    if (data.autoFactura?.ubicacion?.distrito_descripcion) {
+      data.autoFactura.ubicacion.distritoDescripcion = data.autoFactura.ubicacion.distrito_descripcion;
+    }
+
+    if (data.autoFactura?.ubicacion?.ciudad_descripcion) {
+      data.autoFactura.ubicacion.ciudadDescripcion = data.autoFactura.ubicacion.ciudad_descripcion;
+    }
+
+    //Remision
+    if (data.remision?.tipo_responsable) {
+      data.remision.tipoResponsable = data.remision.tipo_resonsable;
+    }
+
+    //Condicion entregas
+    if (data.condicion?.entregas && data.condicion?.entregas.length > 0) {
+      for (let i = 0; i < data.condicion.entregas.length; i++) {
+        const entrega = data.condicion.entregas[i];
+        
+        if (entrega.info_tarjeta) {
+          entrega.infoTarjeta = {...entrega.info_tarjeta};
+        }
+
+        if (entrega.infoTarjeta?.numero_tarjeta) {
+          entrega.infoTarjeta.numeroTarjeta = entrega.infoTarjeta.numero_tarjeta;
+        }
+
+        if (entrega.infoTarjeta?.razon_social) {
+          entrega.infoTarjeta.razonSocial = entrega.infoTarjeta.razon_social;
+        }
+
+        if (entrega.infoTarjeta?.medio_pago) {
+          entrega.infoTarjeta.medioPago = entrega.infoTarjeta.medio_pago;
+        }
+
+        if (entrega.infoTarjeta?.codigo_autorizacion) {
+          entrega.infoTarjeta.codigoAutorizacion = entrega.infoTarjeta.codigo_autorizacion;
+        }
+
+        if (entrega.info_cheque) {
+          entrega.infoCheque = {...entrega.info_cheque};
+        }
+
+        if (entrega.infoCheque?.numero_cheque) {
+          entrega.infoCheque.numeroCheque = entrega.infoCheque.numero_cheque;
+        }
+
+
+      }
+    }
+
+    if (data.condicion?.credito && data.condicion?.credito.length > 0) {
+      for (let i = 0; i < data.condicion.credito.length; i++) {
+        const credito = data.condicion.credito[i];
+        
+        if (credito.monto_entrega) {
+          credito.montoEntrega = credito.monto_entrega;
+        }
+
+        if (credito.info_cuotas) {
+          credito.infoCuotas = {...credito.info_cuotas};
+        }
+      }
+    }
+
+    //Items
+    if (data.items && data.items?.length > 0) {
+      for (let i = 0; i < data.items.length; i++) {
+        const item = data.items[i];
+
+        if (item.partida_arancelaria) {
+          item.partidaArancelaria = item.partida_arancelaria;
+        }
+        if (item.unidad_medida) {
+          item.unidadMedida = item.unidad_medida;
+        }
+        if (item.precio_unitario) {
+          item.precioUnitario = item.precio_unitario;
+        }
+        if (item.descuento_porcentaje) {
+          item.descuentoPorcentaje = item.descuento_porcentaje;
+        }
+        if (item.tolerancia_cantidad) {
+          item.toleranciaCantidad = item.tolerancia_cantidad;
+        }
+        if (item.tolerancia_porcentaje) {
+          item.toleranciaPorcentaje = item.tolerancia_porcentaje;
+        }
+        if (item.cdc_anticipo) {
+          item.cdcAnticipo = item.cdc_anticipo;
+        }
+
+        if (item.iva_tipo) {
+          item.ivaTipo = item.iva_tipo;
+        }
+        if (item.iva_base) {
+          item.ivaBase = item.iva_base;
+        }
+        if (item.numero_serie) {
+          item.numeroSerie = item.numero_serie;
+        }
+        if (item.numero_pedido) {
+          item.numeroPedido = item.numero_pedido;
+        }
+        if (item.numero_seguimiento) {
+          item.numeroSeguimiento = item.numero_seguimiento;
+        }
+
+        //DNCP
+        if (item.dncp.codigo_nivel_general) {
+          item.dncp.codigoNivelGeneral = item.dncp.codigo_nivel_general;
+        }
+
+        if (item.dncp.codigo_nivel_especifico) {
+          item.dncp.codigoNivelEspecifico = item.dncp.codigo_nivel_especifico;
+        }
+
+        if (item.dncp.codigo_gtin_producto) {
+          item.dncp.codigoGtinProducto = item.dncp.codigo_gtin_producto;
+        }
+
+        if (item.dncp.codigo_nivel_paquete) {
+          item.dncp.codigoNivelPaquete = item.dncp.codigo_nivel_paquete;
+        }
+
+        //Importador
+        if (item.importador.registro_importador) {
+          item.importador.registroImportador = item.importador.registro_importador;
+        }
+
+        if (item.importador.registro_senave) {
+          item.importador.registroSenave = item.importador.registro_senave;
+        }
+
+        if (item.importador.registro_entidad_comercial) {
+          item.importador.registroEntidadComercial = item.importador.registro_entidad_comercial;
+        }
+
+        //Sector Automotor
+        if (item.importador.capacidad_motor) {
+          item.importador.capacidadMotor = item.importador.capacidad_motor;
+        }
+
+        if (item.importador.capacidad_pasajeros) {
+          item.importador.capacidadPasajeros = item.importador.capacidad_pasajeros;
+        }
+
+        if (item.importador.peso_bruto) {
+          item.importador.pesoBruto = item.importador.peso_bruto;
+        }
+
+        if (item.importador.peso_neto) {
+          item.importador.pesoNeto = item.importador.peso_neto;
+        }
+
+        if (item.importador.tipo_combustible) {
+          item.importador.tipoCombustible = item.importador.tipo_combustible;
+        }
+
+        if (item.importador.numero_motor) {
+          item.importador.numeroMotor = item.importador.numero_motor;
+        }
+
+        if (item.importador.capacidad_traccion) {
+          item.importador.capacidadTraccion = item.importador.capacidad_traccion;
+        }
+
+        if (item.importador.tipo_vehiculo) {
+          item.importador.tipoVehiculo = item.importador.tipo_vehiculo;
+        }
+      }
+
+    }
+
+    //Sector Energia
+    if (data.sector_energia_electrica) {
+      data.sectorEnergiaElectrica = {...data.sector_energia_electrica};
+    }
+
+    if (data.sectorEnergiaElectrica?.numero_medidor) {
+      data.sectorEnergiaElectrica.numeroMedidor = data.sectorEnergiaElectrica.numero_medidor;
+    }
+
+    if (data.sectorEnergiaElectrica?.codigo_actividad) {
+      data.sectorEnergiaElectrica.codigoActividad = data.sectorEnergiaElectrica.codigo_actividad;
+    }
+
+    if (data.sectorEnergiaElectrica?.codigo_categoria) {
+      data.sectorEnergiaElectrica.codigoCategoria = data.sectorEnergiaElectrica.codigo_categoria;
+    }
+
+    if (data.sectorEnergiaElectrica?.lectura_anterior) {
+      data.sectorEnergiaElectrica.lecturaAnterior = data.sectorEnergiaElectrica.lectura_anterior;
+    }
+
+    if (data.sectorEnergiaElectrica?.lectura_actual) {
+      data.sectorEnergiaElectrica.lecturaActual = data.sectorEnergiaElectrica.lectura_actual;
+    }
+    
+    //Sector Seguros
+    if (data.sector_seguros) {
+      data.sectorSeguros = {...data.sector_seguros};
+    }
+
+    if (data.sectorSeguros?.codigo_aseguradora) {
+      data.sectorSeguros.codigoAseguradora = data.sectorSeguros.codigo_aseguradora;
+    }
+
+    if (data.sectorSeguros?.codigo_poliza) {
+      data.sectorSeguros.codigoPoliza = data.sectorSeguros.codigo_poliza;
+    }
+
+    if (data.sectorSeguros?.numero_poliza) {
+      data.sectorSeguros.numeroPoliza = data.sectorSeguros.numero_poliza;
+    }
+
+    if (data.sectorSeguros?.vigencia_unidad) {
+      data.sectorSeguros.vigenciaUnidad = data.sectorSeguros.vigencia_unidad;
+    }
+
+    if (data.sectorSeguros?.inicio_vigencia) {
+      data.sectorSeguros.inicioVigencia = data.sectorSeguros.inicio_vigencia;
+    }    
+
+    if (data.sectorSeguros?.fin_vigencia) {
+      data.sectorSeguros.finVigencia = data.sectorSeguros.fin_vigencia;
+    }    
+
+    if (data.sectorSeguros?.codigo_interno_item) {
+      data.sectorSeguros.codigoInternoItem = data.sectorSeguros.codigo_interno_item;
+    }    
+
+      
+  }
+
 
   /**
    * Añade algunos valores por defecto al JSON de entrada, valido para
