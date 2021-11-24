@@ -153,13 +153,13 @@ class JSonDeMainService {
   }
 
   /**
-  * Si los valores vienen en underscore, crea los valores en formato variableJava que 
-  * sera utilizado dentro del proceso,
-  * 
-  * Ej. si viene tipo_documento crea una variable tipoDocumento, con el mismo valor.
-  * 
-  * @param data
-  */
+   * Si los valores vienen en underscore, crea los valores en formato variableJava que
+   * sera utilizado dentro del proceso,
+   *
+   * Ej. si viene tipo_documento crea una variable tipoDocumento, con el mismo valor.
+   *
+   * @param data
+   */
   private addUnderscore(data: any) {
     if (data.tipo_documento) {
       data.tipoDocumento = data.tipo_documento;
@@ -180,13 +180,13 @@ class JSonDeMainService {
     if (data.tipo_impuesto) {
       data.tipoImpuesto = data.tipo_impuesto;
     }
-     
+
     if (data.condicion_anticipo) {
       data.condicionAnticipo = data.condicion_anticipo;
     }
 
     if (data.condicion_tipo_cambio) {
-      data.condicionTipoCambio = data.condicion_tipo_cambio  
+      data.condicionTipoCambio = data.condicion_tipo_cambio;
     }
 
     //Objeto Cliente
@@ -239,7 +239,7 @@ class JSonDeMainService {
 
     //AutoFactura
     if (data.auto_factura) {
-      data.autoFactura = {...data.auto_factura};
+      data.autoFactura = { ...data.auto_factura };
     }
 
     if (data.autoFactura?.tipo_vendedor) {
@@ -287,9 +287,9 @@ class JSonDeMainService {
     if (data.condicion?.entregas && data.condicion?.entregas.length > 0) {
       for (let i = 0; i < data.condicion.entregas.length; i++) {
         const entrega = data.condicion.entregas[i];
-        
+
         if (entrega.info_tarjeta) {
-          entrega.infoTarjeta = {...entrega.info_tarjeta};
+          entrega.infoTarjeta = { ...entrega.info_tarjeta };
         }
 
         if (entrega.infoTarjeta?.numero_tarjeta) {
@@ -309,28 +309,25 @@ class JSonDeMainService {
         }
 
         if (entrega.info_cheque) {
-          entrega.infoCheque = {...entrega.info_cheque};
+          entrega.infoCheque = { ...entrega.info_cheque };
         }
 
         if (entrega.infoCheque?.numero_cheque) {
           entrega.infoCheque.numeroCheque = entrega.infoCheque.numero_cheque;
         }
-
-
       }
-
     }
 
     if (data.condicion?.credito && data.condicion?.credito.length > 0) {
       for (let i = 0; i < data.condicion.credito.length; i++) {
         const credito = data.condicion.credito[i];
-        
+
         if (credito.monto_entrega) {
           credito.montoEntrega = credito.monto_entrega;
         }
 
         if (credito.info_cuotas) {
-          credito.infoCuotas = {...credito.info_cuotas};
+          credito.infoCuotas = { ...credito.info_cuotas };
         }
       }
     }
@@ -441,12 +438,11 @@ class JSonDeMainService {
           item.importador.tipoVehiculo = item.importador.tipo_vehiculo;
         }
       }
-
     }
 
     //Sector Energia
     if (data.sector_energia_electrica) {
-      data.sectorEnergiaElectrica = {...data.sector_energia_electrica};
+      data.sectorEnergiaElectrica = { ...data.sector_energia_electrica };
     }
 
     if (data.sectorEnergiaElectrica?.numero_medidor) {
@@ -468,10 +464,10 @@ class JSonDeMainService {
     if (data.sectorEnergiaElectrica?.lectura_actual) {
       data.sectorEnergiaElectrica.lecturaActual = data.sectorEnergiaElectrica.lectura_actual;
     }
-    
+
     //Sector Seguros
     if (data.sector_seguros) {
-      data.sectorSeguros = {...data.sector_seguros};
+      data.sectorSeguros = { ...data.sector_seguros };
     }
 
     if (data.sectorSeguros?.codigo_aseguradora) {
@@ -492,17 +488,16 @@ class JSonDeMainService {
 
     if (data.sectorSeguros?.inicio_vigencia) {
       data.sectorSeguros.inicioVigencia = data.sectorSeguros.inicio_vigencia;
-    }    
+    }
 
     if (data.sectorSeguros?.fin_vigencia) {
       data.sectorSeguros.finVigencia = data.sectorSeguros.fin_vigencia;
-    }    
+    }
 
     if (data.sectorSeguros?.codigo_interno_item) {
       data.sectorSeguros.codigoInternoItem = data.sectorSeguros.codigo_interno_item;
-    }    
+    }
   }
-
 
   /**
    * Añade algunos valores por defecto al JSON de entrada, valido para
