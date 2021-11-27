@@ -410,7 +410,6 @@ class JSonDeMainService {
         }
         //Sector Automotor
         if (item.sector_automotor) {
-
           if (item.sector_automotor.capacidad_motor) {
             item.sector_automotor.capacidadMotor = item.sector_automotor.capacidad_motor;
           }
@@ -964,14 +963,14 @@ class JSonDeMainService {
       data['cliente']['documentoTipo'] === 5 ? 'Sin Nombre' : data['cliente']['razonSocial'];
 
     //if (data['cliente']['documentoTipo'] === 5) {
-      if (data['cliente']['nombreFantasia']) {
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
-      }
+    if (data['cliente']['nombreFantasia']) {
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
+    }
     //}
 
     if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
       if (!data['cliente']['direccion']) {
-        throw new Error("data.cliente.direccion es Obligatorio para Tipo de Documento 7 o Tipo de Operación 4");
+        throw new Error('data.cliente.direccion es Obligatorio para Tipo de Documento 7 o Tipo de Operación 4');
       }
     }
 
