@@ -376,66 +376,72 @@ class JSonDeMainService {
         }
 
         //DNCP
-        if (item.dncp.codigo_nivel_general) {
-          item.dncp.codigoNivelGeneral = item.dncp.codigo_nivel_general;
-        }
+        if (item.dncp) {
+          if (item.dncp.codigo_nivel_general) {
+            item.dncp.codigoNivelGeneral = item.dncp.codigo_nivel_general;
+          }
 
-        if (item.dncp.codigo_nivel_especifico) {
-          item.dncp.codigoNivelEspecifico = item.dncp.codigo_nivel_especifico;
-        }
+          if (item.dncp.codigo_nivel_especifico) {
+            item.dncp.codigoNivelEspecifico = item.dncp.codigo_nivel_especifico;
+          }
 
-        if (item.dncp.codigo_gtin_producto) {
-          item.dncp.codigoGtinProducto = item.dncp.codigo_gtin_producto;
-        }
+          if (item.dncp.codigo_gtin_producto) {
+            item.dncp.codigoGtinProducto = item.dncp.codigo_gtin_producto;
+          }
 
-        if (item.dncp.codigo_nivel_paquete) {
-          item.dncp.codigoNivelPaquete = item.dncp.codigo_nivel_paquete;
+          if (item.dncp.codigo_nivel_paquete) {
+            item.dncp.codigoNivelPaquete = item.dncp.codigo_nivel_paquete;
+          }
         }
 
         //Importador
-        if (item.importador.registro_importador) {
-          item.importador.registroImportador = item.importador.registro_importador;
-        }
+        if (item.importador) {
+          if (item.importador.registro_importador) {
+            item.importador.registroImportador = item.importador.registro_importador;
+          }
 
-        if (item.importador.registro_senave) {
-          item.importador.registroSenave = item.importador.registro_senave;
-        }
+          if (item.importador.registro_senave) {
+            item.importador.registroSenave = item.importador.registro_senave;
+          }
 
-        if (item.importador.registro_entidad_comercial) {
-          item.importador.registroEntidadComercial = item.importador.registro_entidad_comercial;
+          if (item.importador.registro_entidad_comercial) {
+            item.importador.registroEntidadComercial = item.importador.registro_entidad_comercial;
+          }
         }
-
         //Sector Automotor
-        if (item.importador.capacidad_motor) {
-          item.importador.capacidadMotor = item.importador.capacidad_motor;
-        }
+        if (item.sector_automotor) {
 
-        if (item.importador.capacidad_pasajeros) {
-          item.importador.capacidadPasajeros = item.importador.capacidad_pasajeros;
-        }
+          if (item.sector_automotor.capacidad_motor) {
+            item.sector_automotor.capacidadMotor = item.sector_automotor.capacidad_motor;
+          }
 
-        if (item.importador.peso_bruto) {
-          item.importador.pesoBruto = item.importador.peso_bruto;
-        }
+          if (item.sector_automotor.capacidad_pasajeros) {
+            item.sector_automotor.capacidadPasajeros = item.sector_automotor.capacidad_pasajeros;
+          }
 
-        if (item.importador.peso_neto) {
-          item.importador.pesoNeto = item.importador.peso_neto;
-        }
+          if (item.sector_automotor.peso_bruto) {
+            item.sector_automotor.pesoBruto = item.sector_automotor.peso_bruto;
+          }
 
-        if (item.importador.tipo_combustible) {
-          item.importador.tipoCombustible = item.importador.tipo_combustible;
-        }
+          if (item.sector_automotor.peso_neto) {
+            item.sector_automotor.pesoNeto = item.sector_automotor.peso_neto;
+          }
 
-        if (item.importador.numero_motor) {
-          item.importador.numeroMotor = item.importador.numero_motor;
-        }
+          if (item.sector_automotor.tipo_combustible) {
+            item.sector_automotor.tipoCombustible = item.sector_automotor.tipo_combustible;
+          }
 
-        if (item.importador.capacidad_traccion) {
-          item.importador.capacidadTraccion = item.importador.capacidad_traccion;
-        }
+          if (item.sector_automotor.numero_motor) {
+            item.sector_automotor.numeroMotor = item.sector_automotor.numero_motor;
+          }
 
-        if (item.importador.tipo_vehiculo) {
-          item.importador.tipoVehiculo = item.importador.tipo_vehiculo;
+          if (item.sector_automotor.capacidad_traccion) {
+            item.sector_automotor.capacidadTraccion = item.sector_automotor.capacidad_traccion;
+          }
+
+          if (item.sector_automotor.tipo_vehiculo) {
+            item.sector_automotor.tipoVehiculo = item.sector_automotor.tipo_vehiculo;
+          }
         }
       }
     }
@@ -957,14 +963,20 @@ class JSonDeMainService {
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] =
       data['cliente']['documentoTipo'] === 5 ? 'Sin Nombre' : data['cliente']['razonSocial'];
 
-    if (data['cliente']['documentoTipo'] === 5) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
-    }
+    //if (data['cliente']['documentoTipo'] === 5) {
+      if (data['cliente']['nombreFantasia']) {
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
+      }
+    //}
 
     if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
-      if (data['cliente']['direccion']) {
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'];
+      if (!data['cliente']['direccion']) {
+        throw new Error("data.cliente.direccion es Obligatorio para Tipo de Documento 7 o Tipo de Operación 4");
       }
+    }
+
+    if (data['cliente']['direccion']) {
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'];
     }
 
     if (data['cliente']['numeroCasa']) {
@@ -999,14 +1011,14 @@ class JSonDeMainService {
             this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = null;
         }
     */
-    if (data['cliente']['telefono'] && data['cliente']['telefono'].lenght >= 6) {
-      dTelRec: data['cliente']['telefono'];
+    if (data['cliente']['telefono'] && data['cliente']['telefono'].length >= 6) {
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = data['cliente']['telefono'];
     }
-    if (data['cliente']['celular'] && data['cliente']['telefono'].lenght >= 10) {
-      dCelRec: data['cliente']['celular'];
+    if (data['cliente']['celular'] && data['cliente']['celular'].length >= 10) {
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = data['cliente']['celular'];
     }
     if (data['cliente']['email']) {
-      dEmailRec: data['cliente']['email'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dEmailRec = data['cliente']['email'];
     }
 
     if (data['cliente']['codigo']) {
@@ -1085,19 +1097,19 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosEspecificosPorTipoDE_ComprasPublicas(params: any, data: any) {
-    if (!(data['dncp'] && data['dncp']['modalidad'] && data['dncp']['modalidad'].lenght > 0)) {
+    if (!(data['dncp'] && data['dncp']['modalidad'] && data['dncp']['modalidad'].length > 0)) {
       throw new Error('Debe informar la modalidad de Contratación DNCP en data.dncp.modalidad');
     }
-    if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].lenght > 0)) {
+    if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].length > 0)) {
       throw new Error('Debe informar la entidad de Contratación DNCP en data.dncp.entidad');
     }
-    if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].lenght > 0)) {
+    if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].length > 0)) {
       throw new Error('Debe informar la año de Contratación DNCP en data.dncp.año');
     }
-    if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].lenght > 0)) {
+    if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].length > 0)) {
       throw new Error('Debe informar la secuencia de Contratación DNCP en data.dncp.secuencia');
     }
-    if (!(data['dncp'] && data['dncp']['fecha'] && data['dncp']['fecha'].lenght > 0)) {
+    if (!(data['dncp'] && data['dncp']['fecha'] && data['dncp']['fecha'].length > 0)) {
       throw new Error('Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha');
     }
 
