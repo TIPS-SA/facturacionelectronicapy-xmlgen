@@ -603,15 +603,23 @@ class JSonDeMainService {
       iTipEmi: data['tipoEmision'],
       dDesTipEmi: constanteService.tiposEmisiones.filter((td) => td.codigo == data['tipoEmision'])[0]['descripcion'],
       dCodSeg: codigoSeguridadAleatorio,
-      dInfoEmi: data['observacion'],
-      dInfoFisc: data['descripcion'], //Este es obligatorio cuando es Nota de Remision
+      //dInfoEmi: data['observacion'],
+      //dInfoFisc: data['descripcion'], //Este es obligatorio cuando es Nota de Remision
     };
+
+    if (data['observacion'] && data['observacion'].length > 0) {
+      this.json['rDE']['DE']['gOpeDE']['dInfoEmi'] = data['observacion'];
+    }
+
+    if (data['descripcion'] && data['descripcion'].length > 0) {
+      this.json['rDE']['DE']['gOpeDE']['dInfoFisc'] = data['descripcion'];
+    }
 
     //Validar aqui "dInfoFisc"
     if (data['tipoDocumento'] == 7) {
       //Nota de Remision
-      if (!(data['descripcion'] && data['descripcion'] != '')) {
-        throw new Error('Debe informar la Descripción para el Documento Electrónico');
+      if (!(data['descripcion'] && data['descripcion'].length > 0)) {
+        throw new Error('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
       }
     }
   }

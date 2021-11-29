@@ -98,6 +98,8 @@ class JSonDteTotalesService {
       dTotOpeGs += item['gValorItem']['gValorRestaItem']['dTotOpeGs']; //Suma del monto total en Gs.
     } //end-for
 
+
+          
     if (
       data['tipoImpuesto'] == 1 ||
       data['tipoImpuesto'] == 3 ||
@@ -163,7 +165,21 @@ class JSonDteTotalesService {
       dTotGralOpe: dTotGralOpe, //F014
     });
 
+    //Redondeo
+    dIVA5 = parseFloat(dIVA5.toFixed(2));
+    dIVA10 = parseFloat(dIVA10.toFixed(2));
+    dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(2));
+    dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(2));
+
+    if (data.moneda === 'PYG') {
+      dIVA5 = parseFloat(dIVA5.toFixed(0));
+      dIVA10 = parseFloat(dIVA10.toFixed(0));
+      dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(0));
+      dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(0));
+    }
+
     if (agregarDSub) {
+      
       jsonResult['dIVA5'] = dIVA5;
       jsonResult['dIVA10'] = dIVA10;
       jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
@@ -179,11 +195,30 @@ class JSonDteTotalesService {
     if (agregarDSub) {
       if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
         jsonResult['dTotIVA'] = dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid;
+
+        //Redondeo
+
+        jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(2));
+        if (data.moneda === 'PYG') {
+          jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(0));
+        }
       }
       if (dBaseGrav5 > 0) {
+
+        dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(2));
+        if (data.moneda === 'PYG') {
+          dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
+        }
+
         jsonResult['dBaseGrav5'] = dBaseGrav5;
       }
       if (dBaseGrav10 > 0) {
+
+        dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(2));
+        if (data.moneda === 'PYG') {
+          dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
+        }
+
         jsonResult['dBaseGrav10'] = dBaseGrav10;
       }
       if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {

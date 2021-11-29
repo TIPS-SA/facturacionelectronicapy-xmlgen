@@ -175,14 +175,22 @@ class JSonDteItemService {
    */
   private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any) {
     const jsonResult: any = {
-      dDescItem: item['descuento'],
+      /*dDescItem: item['descuento'],
       dPorcDesIt: item['descuentoPorcentaje'],
-      //dDescGloItem : item['**'],  //TODO este debe ser calculado de acuerdo al descuento global
-      dAntPreUniIt: item['anticipo'], //Valor del anticipo del item ya emitido en una FE anterior. tipoOperacion=9 Anticipo
-      //dAntGloPreUniIt: item['**'],  //TODO este debe ser calculado de acuerdo al anticipo global
-      //dTotOpeItem : null, //EA008  sera sobreescrito de acuerdo al calculo
-      //dTotOpeGs : null    //EA009  sera sobreescrito.
+      dAntPreUniIt: item['anticipo'], //Valor del anticipo del item ya emitido en una FE anterior. tipoOperacion=9 Anticipo*/
     };
+
+    if (item['descuento'] && item['descuento'] > 0) {
+      jsonResult['dDescItem'] = item['descuento'];
+    }
+    
+    if (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) {
+      jsonResult['dPorcDesIt'] = item['descuentoPorcentaje'];
+    }
+
+    if (item['anticipo'] && item['anticipo'] > 0) {
+      jsonResult['dAntPreUniIt'] = item['anticipo'];
+    }
 
     /* dTotOpeItem (EA008)
             Si D013 = 1, 3, 4 o 5 (afectado al IVA, Renta, ninguno, IVA - Renta), 
@@ -285,11 +293,11 @@ class JSonDteItemService {
     }
 
     /*  Calculo para E735
-            Si E731 = 1 o 4 este campo es igual al resultado del cálculo 
-                [EA008 * (E733/100)] / 1,1 si la tasa es del 10% 
-                [EA008 * (E733/100)] / 1,05 si la tasa es del 5%
-            Si E731 = 2 o 3 este campo es igual 0
-        */
+        Si E731 = 1 o 4 este campo es igual al resultado del cálculo 
+            [EA008 * (E733/100)] / 1,1 si la tasa es del 10% 
+            [EA008 * (E733/100)] / 1,05 si la tasa es del 5%
+        Si E731 = 2 o 3 este campo es igual 0
+    */
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
       if (item['iva'] == 10) {
         jsonResult['dBasGravIVA'] =
@@ -299,15 +307,29 @@ class JSonDteItemService {
         jsonResult['dBasGravIVA'] =
           (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (item['ivaBase'] / 100)) / 1.05;
       }
+
+      //Redondeo inicial a 2 decimales
+      if (jsonResult['dBasGravIVA']) {
+        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(2));
+        if (data.moneda === 'PYG') {
+          jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(0));
+        }
+      }
     }
 
     /*  Calculo para E736
-            Corresponde al cálculo aritmético:
-            E735 * ( E734 / 100 )
-            Si E731 = 2 o 3 este campo es igual 0 
-         */
+      Corresponde al cálculo aritmético:
+      E735 * ( E734 / 100 )
+      Si E731 = 2 o 3 este campo es igual 0 
+    */
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
       jsonResult['dLiqIVAItem'] = (jsonResult['dBasGravIVA'] * item['iva']) / 100;
+
+      //Redondeo
+      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(2));
+      if (data.moneda === 'PYG') {
+        jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(0));
+      }
     }
 
     return jsonResult;
