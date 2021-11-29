@@ -183,7 +183,7 @@ class JSonDteItemService {
     if (item['descuento'] && item['descuento'] > 0) {
       jsonResult['dDescItem'] = item['descuento'];
     }
-    
+
     if (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) {
       jsonResult['dPorcDesIt'] = item['descuentoPorcentaje'];
     }

@@ -98,8 +98,6 @@ class JSonDteTotalesService {
       dTotOpeGs += item['gValorItem']['gValorRestaItem']['dTotOpeGs']; //Suma del monto total en Gs.
     } //end-for
 
-
-          
     if (
       data['tipoImpuesto'] == 1 ||
       data['tipoImpuesto'] == 3 ||
@@ -179,7 +177,6 @@ class JSonDteTotalesService {
     }
 
     if (agregarDSub) {
-      
       jsonResult['dIVA5'] = dIVA5;
       jsonResult['dIVA10'] = dIVA10;
       jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
@@ -204,7 +201,6 @@ class JSonDteTotalesService {
         }
       }
       if (dBaseGrav5 > 0) {
-
         dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(2));
         if (data.moneda === 'PYG') {
           dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
@@ -213,7 +209,6 @@ class JSonDteTotalesService {
         jsonResult['dBaseGrav5'] = dBaseGrav5;
       }
       if (dBaseGrav10 > 0) {
-
         dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(2));
         if (data.moneda === 'PYG') {
           dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
