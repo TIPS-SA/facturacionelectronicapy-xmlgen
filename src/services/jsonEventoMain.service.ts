@@ -33,8 +33,8 @@ class JSonEventoMainService {
 
     this.json = {};
 
-    this.generateCodigoSeguridad(params, data); //Primero genera el codigo de seguridad aleatorio único
-    this.generateCodigoControl(params, data); //Luego genera el código de Control
+    //this.generateCodigoSeguridad(params, data); //Primero genera el codigo de seguridad aleatorio único
+    //this.generateCodigoControl(params, data); //Luego genera el código de Control
 
     //this.generateRte(params);
 
@@ -43,15 +43,36 @@ class JSonEventoMainService {
     this.json['gGroupGesEve']['rGesEve']['rEve'] = {};
 
     this.json['gGroupGesEve']['rGesEve']['rEve']['$'] = {};
-    this.json['gGroupGesEve']['rGesEve']['rEve']['$']['Id'] = {};
+    this.json['gGroupGesEve']['rGesEve']['rEve']['$']['Id'] = 1;
     this.json['gGroupGesEve']['rGesEve']['dFecFirma'] = fechaUtilService.convertToJSONFormat(new Date());
     this.json['gGroupGesEve']['rGesEve']['dVerFor'] = params.version;
     this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = {};
 
-    this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosEmisorCancelacion(params, data);
+    if (data.tipoEvento == 1){
+      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosEmisorCancelacion(params, data);
+    }
 
-    this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+    if (data.tipoEvento == 2) {
+      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosEmisorInutilizacion(params, data);
+    }
+      
+    if (data.tipoEvento == 3) {
+      //this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventos(params, data);
+    }
 
+    //Receptor
+    if (data.tipoEvento == 10) {
+      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+    }
+    if (data.tipoEvento == 11) {
+      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+    }
+    if (data.tipoEvento == 12) {
+      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+    }
+    if (data.tipoEvento == 13) {
+      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+    }
     var builder = new xml2js.Builder({
       xmldec: {
         version: '1.0',
@@ -64,10 +85,10 @@ class JSonEventoMainService {
     return this.normalizeXML(xml);
   }
 
-  generateCodigoSeguridad(params: any, data: any) {
+  /*generateCodigoSeguridad(params: any, data: any) {
     //this.codigoSeguridad = oThis.generateCodigoSeguridadAleatorio(params, data);
     this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
-  }
+  }*/
 
   /**
    * Genera el CDC para la Factura
@@ -76,15 +97,17 @@ class JSonEventoMainService {
    * @param params
    * @param data
    */
-  generateCodigoControl(params: any, data: any) {
+  /*generateCodigoControl(params: any, data: any) {
     this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
-  }
+  }*/
 
   /**
    * Valida los datos ingresados en el data del req.body
    * @param data
    */
-  private validateValues(data: any) {}
+  private validateValues(data: any) {
+
+  }
 
   /**
    * Añade algunos valores por defecto al JSON de entrada, valido para
@@ -92,38 +115,25 @@ class JSonEventoMainService {
    * @param data
    */
   private addDefaultValues(data: any) {
-    if (constanteService.tiposDocumentos.filter((um) => um.codigo === data['tipoDocumento']).length == 0) {
+    if (constanteService.tiposEventos.filter((um) => um.codigo === data['tipoEvento']).length == 0) {
       throw (
-        new Error("Tipo de Documento '" + data['tipoDocumento']) +
-        "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion)
+        new Error("Tipo de Evento '" + data['tipoEvento']) +
+        "' en data.tipoEvento no válido. Valores: " +
+        constanteService.tiposEventos.map((a) => a.codigo + '-' + a.descripcion + ' ')
       );
     }
-    data['tipoDocumentoDescripcion'] = constanteService.tiposDocumentos.filter(
-      (td) => td.codigo == data['tipoDocumento'],
+    data['tipoEventoDescripcion'] = constanteService.tiposEventos.filter(
+      (td) => td.codigo == data['tipoEvento'],
     )[0]['descripcion'];
-  }
-
-  private generateRte(params: any) {
-    this.json = {
-      rDE: {
-        $: {
-          xmlns: 'http://ekuatia.set.gov.py/sifen/xsd',
-          'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-          'xsi:schemaLocation': 'http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd',
-        },
-        dVerFor: params.version,
-      },
-    };
   }
 
   private eventosEmisorCancelacion(params: any, data: any) {
     const jsonResult: any = {};
     jsonResult['rGeVeCan'] = {
       $: {
-        Id: data['Id'],
+        Id: data['cdc'],
       },
-      mOtEve: data['mOtEve'],
+      mOtEve: data['motivo'],
     };
 
     return jsonResult;

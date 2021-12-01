@@ -42,6 +42,44 @@ class ConstanteService {
     },
   ];
 
+  tiposEventos = [
+    {
+      codigo: 1,
+      descripcion: 'Cancelación',
+      situacion: 0,
+    },
+    {
+      codigo: 2,
+      descripcion: 'Inutilización',
+      situacion: 1, //A futuro
+    },
+    {
+      codigo: 3,
+      descripcion: 'Endoso',
+      situacion: 1, //A futuro
+    },
+    {
+      codigo: 10,
+      descripcion: 'Acuse del DE',
+      situacion: 0,
+    },
+    {
+      codigo: 11,
+      descripcion: 'Conformidad del DE',
+      situacion: 0,
+    },
+    {
+      codigo: 12,
+      descripcion: 'Disconformidad del DE',
+      situacion: 0,
+    },
+    {
+      codigo: 13,
+      descripcion: 'Desconocimiento del DE',
+      situacion: 0,
+    }
+  ];
+
   tiposEmisiones = [
     {
       codigo: 1,

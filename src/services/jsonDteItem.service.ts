@@ -442,8 +442,14 @@ class JSonDteItemService {
       dAnoFab: item['sectorAutomotor']['año'],
       cTipVeh: item['sectorAutomotor']['tipoVehiculo'],
       dCapac: item['sectorAutomotor']['capacidadPasajeros'],
-      dCilin: item['sectorAutomotor']['cilindradas'],
+      //dCilin: item['sectorAutomotor']['cilindradas'],
     };
+
+    if (item['sectorAutomotor']['cilindradas']) {
+      jsonResult['dCilin'] = item['sectorAutomotor']['cilindradas'];
+    }
+    
+
     //Se puede hacer todo por if, para no enviar null
     return jsonResult;
   }
