@@ -77,7 +77,7 @@ class ConstanteService {
       codigo: 13,
       descripcion: 'Desconocimiento del DE',
       situacion: 0,
-    }
+    },
   ];
 
   tiposEmisiones = [

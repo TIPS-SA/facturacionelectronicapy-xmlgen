@@ -448,7 +448,6 @@ class JSonDteItemService {
     if (item['sectorAutomotor']['cilindradas']) {
       jsonResult['dCilin'] = item['sectorAutomotor']['cilindradas'];
     }
-    
 
     //Se puede hacer todo por if, para no enviar null
     return jsonResult;

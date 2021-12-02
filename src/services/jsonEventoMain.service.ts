@@ -40,7 +40,7 @@ class JSonEventoMainService {
     this.json['gGroupGesEve']['$'] = {};
     this.json['gGroupGesEve']['$']['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance';
     this.json['gGroupGesEve']['$']['xsi:schemaLocation'] = 'http://ekuatia.set.gov.py/sifen/xsd siRecepEvento_v150.xsd';
-    
+
     this.json['gGroupGesEve']['rGesEve']['rEve'] = {};
 
     this.json['gGroupGesEve']['rGesEve']['rEve']['$'] = {};
@@ -49,14 +49,14 @@ class JSonEventoMainService {
     this.json['gGroupGesEve']['rGesEve']['rEve']['dVerFor'] = params.version;
     this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = {};
 
-    if (data.tipoEvento == 1){
+    if (data.tipoEvento == 1) {
       this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosEmisorCancelacion(params, data);
     }
 
     if (data.tipoEvento == 2) {
       this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosEmisorInutilizacion(params, data);
     }
-      
+
     if (data.tipoEvento == 3) {
       //this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventos(params, data);
     }
@@ -106,9 +106,7 @@ class JSonEventoMainService {
    * Valida los datos ingresados en el data del req.body
    * @param data
    */
-  private validateValues(data: any) {
-
-  }
+  private validateValues(data: any) {}
 
   /**
    * Añade algunos valores por defecto al JSON de entrada, valido para
@@ -123,9 +121,9 @@ class JSonEventoMainService {
         constanteService.tiposEventos.map((a) => a.codigo + '-' + a.descripcion + ' ')
       );
     }
-    data['tipoEventoDescripcion'] = constanteService.tiposEventos.filter(
-      (td) => td.codigo == data['tipoEvento'],
-    )[0]['descripcion'];
+    data['tipoEventoDescripcion'] = constanteService.tiposEventos.filter((td) => td.codigo == data['tipoEvento'])[0][
+      'descripcion'
+    ];
   }
 
   private eventosEmisorCancelacion(params: any, data: any) {
