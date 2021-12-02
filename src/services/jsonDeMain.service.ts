@@ -111,7 +111,7 @@ class JSonDeMainService {
     });
     var xml = builder.buildObject(this.json);
 
-    return this.normalizeXML(xml);
+    return this.normalizeXML(xml);  //Para firmar tiene que estar normalizado
   }
 
   generateCodigoSeguridad(params: any, data: any) {

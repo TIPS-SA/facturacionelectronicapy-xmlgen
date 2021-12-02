@@ -83,24 +83,8 @@ class JSonEventoMainService {
     });
     var xml = builder.buildObject(this.json);
 
-    return this.normalizeXML(xml);
+    return this.normalizeXML(xml);  //Para firmar tiene que estar normalizado
   }
-
-  /*generateCodigoSeguridad(params: any, data: any) {
-    //this.codigoSeguridad = oThis.generateCodigoSeguridadAleatorio(params, data);
-    this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
-  }*/
-
-  /**
-   * Genera el CDC para la Factura
-   * Corresponde al Id del DE
-   *
-   * @param params
-   * @param data
-   */
-  /*generateCodigoControl(params: any, data: any) {
-    this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
-  }*/
 
   /**
    * Valida los datos ingresados en el data del req.body
