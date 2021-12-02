@@ -37,9 +37,9 @@ class JSonEventoMainService {
 
     this.json['gGroupGesEve'] = {};
     this.json['gGroupGesEve']['rGesEve'] = {};
-    this.json['gGroupGesEve']['rGesEve']['$'] = {};
-    this.json['gGroupGesEve']['rGesEve']['$']['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance';
-    this.json['gGroupGesEve']['rGesEve']['$']['xsi:schemaLocation'] = 'http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd';
+    this.json['gGroupGesEve']['$'] = {};
+    this.json['gGroupGesEve']['$']['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance';
+    this.json['gGroupGesEve']['$']['xsi:schemaLocation'] = 'http://ekuatia.set.gov.py/sifen/xsd siRecepEvento_v150.xsd';
     
     this.json['gGroupGesEve']['rGesEve']['rEve'] = {};
 
@@ -131,9 +131,7 @@ class JSonEventoMainService {
   private eventosEmisorCancelacion(params: any, data: any) {
     const jsonResult: any = {};
     jsonResult['rGeVeCan'] = {
-      $: {
-        Id: data['cdc'],
-      },
+      Id: data['cdc'],
       mOtEve: data['motivo'],
     };
 
