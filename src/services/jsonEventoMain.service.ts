@@ -85,7 +85,7 @@ class JSonEventoMainService {
     });
     var xml = builder.buildObject(this.json);
 
-    return this.normalizeXML(xml);  //Para firmar tiene que estar normalizado
+    return this.normalizeXML(xml); //Para firmar tiene que estar normalizado
   }
 
   /**
@@ -128,9 +128,7 @@ class JSonEventoMainService {
     if (data.tipo_evento) {
       data.tipoEvento = data.tipo_evento;
     }
-
   }
-  
 
   private eventosEmisorCancelacion(params: any, data: any) {
     const jsonResult: any = {};
@@ -142,8 +140,6 @@ class JSonEventoMainService {
     return jsonResult;
   }
 
-
-
   private eventosEmisorInutilizacion(params: any, data: any) {
     const jsonResult: any = {};
     jsonResult['rGeVeInu'] = {
@@ -153,7 +149,7 @@ class JSonEventoMainService {
       dNumIn: data['desde'],
       dNumFin: data['hasta'],
       iTiDE: data['tipoDocumento'],
-      mOtEve: data['motivo']
+      mOtEve: data['motivo'],
     };
 
     return jsonResult;
