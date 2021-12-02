@@ -1,9 +1,6 @@
 import * as xml2js from 'xml2js';
-
-import stringUtilService from './StringUtil.service';
 import fechaUtilService from './FechaUtil.service';
 import constanteService from './Constante.service';
-import jsonDteAlgoritmos from './jsonDteAlgoritmos.service';
 
 class JSonEventoMainService {
   codigoSeguridad: any = null;
@@ -40,20 +37,24 @@ class JSonEventoMainService {
 
     this.json['gGroupGesEve'] = {};
     this.json['gGroupGesEve']['rGesEve'] = {};
+    this.json['gGroupGesEve']['rGesEve']['$'] = {};
+    this.json['gGroupGesEve']['rGesEve']['$']['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance';
+    this.json['gGroupGesEve']['rGesEve']['$']['xsi:schemaLocation'] = 'http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd';
+    
     this.json['gGroupGesEve']['rGesEve']['rEve'] = {};
 
     this.json['gGroupGesEve']['rGesEve']['rEve']['$'] = {};
     this.json['gGroupGesEve']['rGesEve']['rEve']['$']['Id'] = 1;
-    this.json['gGroupGesEve']['rGesEve']['dFecFirma'] = fechaUtilService.convertToJSONFormat(new Date());
-    this.json['gGroupGesEve']['rGesEve']['dVerFor'] = params.version;
-    this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = {};
+    this.json['gGroupGesEve']['rGesEve']['rEve']['dFecFirma'] = fechaUtilService.convertToJSONFormat(new Date());
+    this.json['gGroupGesEve']['rGesEve']['rEve']['dVerFor'] = params.version;
+    this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = {};
 
     if (data.tipoEvento == 1){
-      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosEmisorCancelacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosEmisorCancelacion(params, data);
     }
 
     if (data.tipoEvento == 2) {
-      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosEmisorInutilizacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosEmisorInutilizacion(params, data);
     }
       
     if (data.tipoEvento == 3) {
@@ -62,16 +63,16 @@ class JSonEventoMainService {
 
     //Receptor
     if (data.tipoEvento == 10) {
-      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
     }
     if (data.tipoEvento == 11) {
-      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
     }
     if (data.tipoEvento == 12) {
-      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
     }
     if (data.tipoEvento == 13) {
-      this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
     }
     var builder = new xml2js.Builder({
       xmldec: {

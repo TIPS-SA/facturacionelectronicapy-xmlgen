@@ -110,15 +110,7 @@ class JSonDeMainService {
       },
     });
     var xml = builder.buildObject(this.json);
-    /*
-        validator.validateXML(xml, __dirname + '\\xsd\\siRecepDE_v150.xsd', function(err, result) {
-        //validator.validateXML(xml.split('\n').slice(1).join('\n'), __dirname + '\\xsd\\siRecepDE_v150.xsd', function(err, result) {
-                if (err) {
-                throw err;
-            }
-
-        });
-*/
+    
     return this.normalizeXML(xml);
   }
 
