@@ -24,6 +24,8 @@ class JSonEventoMainService {
    * @returns
    */
   private generateXMLEventoService(params: any, data: any) {
+    this.addUnderscore(data);
+
     this.validateValues(data);
 
     this.addDefaultValues(data);
@@ -110,6 +112,26 @@ class JSonEventoMainService {
     ];
   }
 
+  /**
+   * Si los valores vienen en underscore, crea los valores en formato variableJava que
+   * sera utilizado dentro del proceso,
+   *
+   * Ej. si viene tipo_documento crea una variable tipoDocumento, con el mismo valor.
+   *
+   * @param data
+   */
+  private addUnderscore(data: any) {
+    if (data.tipo_documento) {
+      data.tipoDocumento = data.tipo_documento;
+    }
+
+    if (data.tipo_evento) {
+      data.tipoEvento = data.tipo_evento;
+    }
+
+  }
+  
+
   private eventosEmisorCancelacion(params: any, data: any) {
     const jsonResult: any = {};
     jsonResult['rGeVeCan'] = {
@@ -120,19 +142,18 @@ class JSonEventoMainService {
     return jsonResult;
   }
 
+
+
   private eventosEmisorInutilizacion(params: any, data: any) {
     const jsonResult: any = {};
     jsonResult['rGeVeInu'] = {
-      $: {
-        Id: data['Id'],
-      },
-      dNumTim: data['dNumTim'],
-      dEst: data['dEst'],
-      iTiDE: data['iTiDE'],
-      dPunExp: data['dPunExp'],
-      dNumIn: data['dNumIn'],
-      dNumFin: data['dNumFin'],
-      mOtEve: data['mOtEve'],
+      dNumTim: data['timbrado'],
+      dEst: data['establecimiento'],
+      dPunExp: data['punto'],
+      dNumIn: data['desde'],
+      dNumFin: data['hasta'],
+      iTiDE: data['tipoDocumento'],
+      mOtEve: data['motivo']
     };
 
     return jsonResult;
