@@ -144,12 +144,10 @@ class JSonEventoMainService {
   private eventosEmisorInutilizacion(params: any, data: any) {
     //console.log("---", data['timbrado'], data['timbrado'].length, new String(data['timbrado']).length);
     if (!data['timbrado']) {
-      throw new Error("Falta el Timbrado en data.timbrado");
-      
+      throw new Error('Falta el Timbrado en data.timbrado');
     }
     if (new String(data['timbrado']).length != 8) {
-      throw new Error("El timbrado debe tener una longitud de 8 caracteres");
-      
+      throw new Error('El timbrado debe tener una longitud de 8 caracteres');
     }
     const jsonResult: any = {};
     jsonResult['rGeVeInu'] = {

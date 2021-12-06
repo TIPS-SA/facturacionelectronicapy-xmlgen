@@ -538,7 +538,7 @@ class JSonDeMainService {
     //const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
     //if (!(params.fechaFirmaDigital && params.fechaFirmaDigital.length >= 10)) {
-      //            throw new Error("Debe proveer la fecha de la firma digital en params.fechaFirmaDigital");
+    //            throw new Error("Debe proveer la fecha de la firma digital en params.fechaFirmaDigital");
     //}
     const fechaFirmaDigital = new Date(params.fechaFirmaDigital);
 
