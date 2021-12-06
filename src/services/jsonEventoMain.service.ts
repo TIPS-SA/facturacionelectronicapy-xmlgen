@@ -1,6 +1,7 @@
 import * as xml2js from 'xml2js';
 import fechaUtilService from './FechaUtil.service';
 import constanteService from './Constante.service';
+import stringUtilService from './StringUtil.service';
 
 class JSonEventoMainService {
   codigoSeguridad: any = null;
@@ -141,13 +142,22 @@ class JSonEventoMainService {
   }
 
   private eventosEmisorInutilizacion(params: any, data: any) {
+    //console.log("---", data['timbrado'], data['timbrado'].length, new String(data['timbrado']).length);
+    if (!data['timbrado']) {
+      throw new Error("Falta el Timbrado en data.timbrado");
+      
+    }
+    if (new String(data['timbrado']).length != 8) {
+      throw new Error("El timbrado debe tener una longitud de 8 caracteres");
+      
+    }
     const jsonResult: any = {};
     jsonResult['rGeVeInu'] = {
-      dNumTim: data['timbrado'],
-      dEst: data['establecimiento'],
-      dPunExp: data['punto'],
-      dNumIn: data['desde'],
-      dNumFin: data['hasta'],
+      dNumTim: stringUtilService.leftZero(data['timbrado'], 8),
+      dEst: stringUtilService.leftZero(data['establecimiento'], 3),
+      dPunExp: stringUtilService.leftZero(data['punto'], 3),
+      dNumIn: stringUtilService.leftZero(data['desde'], 7),
+      dNumFin: stringUtilService.leftZero(data['hasta'], 7),
       iTiDE: data['tipoDocumento'],
       mOtEve: data['motivo'],
     };
