@@ -34,6 +34,10 @@ class JSonDteItemService {
           );
         }
         if (data['tipoDocumento'] === 7) {
+
+          if (!item['tolerancia']) {
+            throw new Error("La Tolerancia es obligatoria para el Tipo de Documento = 7 en data.items[" + i + "].tolerancia");
+          }
           if (constanteService.relevanciasMercaderias.filter((um) => um.codigo === item['tolerancia']).length == 0) {
             throw new Error(
               "Tolerancia de Mercaderia '" +
