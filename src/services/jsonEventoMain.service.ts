@@ -191,7 +191,7 @@ class JSonEventoMainService {
         constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['dTipIDRec']).length == 0
       ) {
         throw new Error(
-          "Tipoo de Documento '" +
+          "Tipo de Documento '" +
             data['dTipIDRec'] +
             "' en data.dTipIdRec no encontrado. Valores: " +
             constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
@@ -212,7 +212,7 @@ class JSonEventoMainService {
 
     if (constanteService.eventoConformidadTipo.filter((um: any) => um.codigo === data['iTipConf']).length == 0) {
       throw new Error(
-        "Tipoo de Documento '" +
+        "Tipo de Documento '" +
           data['iTipConf'] +
           "' en data.iTipConf no encontrado. Valores: " +
           constanteService.eventoConformidadTipo.map((a: any) => a.codigo + '-' + a.descripcion),
@@ -278,7 +278,7 @@ class JSonEventoMainService {
         constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['dTipIDRec']).length == 0
       ) {
         throw new Error(
-          "Tipoo de Documento '" +
+          "Tipo de Documento '" +
             data['dTipIDRec'] +
             "' en data.dTipIdRec no encontrado. Valores: " +
             constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),

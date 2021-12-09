@@ -922,8 +922,13 @@ class JSonDeMainService {
         );
       }
     }
-    if (data['cliente']['ruc'].indexOf('-') == -1) {
-      throw new Error('RUC debe contener dígito verificador en data.cliente.ruc');
+    if (data['cliente']['contribuyente']) {
+      if (!data['cliente']['ruc']) {
+        throw new Error('Debe proporcionar el RUC en data.cliente.ruc');
+      } 
+      if (data['cliente']['ruc'].indexOf('-') == -1) {
+        throw new Error('RUC debe contener dígito verificador en data.cliente.ruc');
+      }  
     }
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec'] = {
       iNatRec: data['cliente']['contribuyente'] ? 1 : 2,
@@ -945,11 +950,16 @@ class JSonDeMainService {
       //dNumIDRec : null,   //Sera Sobreescito D210
 
       if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
+        if (!data['cliente']['documentoTipo']) {
+          throw new Error("Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo");
+        }
+
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
+
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-          constanteService.tiposDocumentosReceptor.filter((tdr) => {
-            tdr.codigo === data['cliente']['documentoTipo'];
-          })[0]['descripcion'];
+          constanteService.tiposDocumentosReceptor.filter((tdr) => 
+            tdr.codigo === data['cliente']['documentoTipo']
+          )[0]['descripcion'];
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
       }
 
@@ -1122,6 +1132,10 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
+
+    if (!data['autoFactura']) {
+      throw new Error("Para tipoDocumento = 4 debe proveer los datos de Autofactura en data.autoFactura");
+    }
     if (
       constanteService.naturalezaVendedorAutofactura.filter(
         (um: any) => um.codigo === data['autoFactura']['tipoVendedor'],
@@ -1141,7 +1155,7 @@ class JSonDeMainService {
       ).length == 0
     ) {
       throw new Error(
-        "Tipoo de Documento '" +
+        "Tipo de Documento '" +
           data['autoFactura']['documentoTipo'] +
           "' en data.autoFactura.documentoTipo no encontrado. Valores: " +
           constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
