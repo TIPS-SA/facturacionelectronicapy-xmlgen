@@ -699,7 +699,7 @@ class ConstanteService {
     },
     {
       codigo: 4,
-      descripcion: 'Gravado parcial',
+      descripcion: 'Gravado parcial (GravExento)',
     },
   ];
 
