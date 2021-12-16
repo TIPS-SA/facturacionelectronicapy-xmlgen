@@ -691,7 +691,7 @@ class ConstanteService {
     },
     {
       codigo: 2,
-      descripcion: 'Exonerado (Art.83 - 125)',
+      descripcion: 'Exonerado (Art.83- Ley 125/91)',
     },
     {
       codigo: 3,
@@ -699,7 +699,7 @@ class ConstanteService {
     },
     {
       codigo: 4,
-      descripcion: 'Gravado parcial (GravExento)',
+      descripcion: 'Gravado parcial (Grav-Exento)',
     },
   ];
 
