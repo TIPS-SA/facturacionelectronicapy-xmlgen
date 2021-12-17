@@ -944,7 +944,6 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTiContRec'] = data['cliente']['tipoContribuyente'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dRucRec'] = data['cliente']['ruc'].split('-')[0];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDVRec'] = data['cliente']['ruc'].split('-')[1];
-
     }
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
