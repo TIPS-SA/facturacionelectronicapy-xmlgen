@@ -935,11 +935,17 @@ class JSonDeMainService {
       iTiOpe: data['cliente']['tipoOperacion'],
       cPaisRec: data['cliente']['pais'],
       dDesPaisRe: data['cliente']['paisDescripcion'],
-      iTiContRec: data['cliente']['contribuyente'] ? data['cliente']['tipoContribuyente'] : null,
-      dRucRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
-      dDVRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
+      //iTiContRec: data['cliente']['contribuyente'] ? data['cliente']['tipoContribuyente'] : null,
+      //dRucRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
+      //dDVRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
     };
 
+    if (data['cliente']['contribuyente']) {
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTiContRec'] = data['cliente']['tipoContribuyente'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dRucRec'] = data['cliente']['ruc'].split('-')[0];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDVRec'] = data['cliente']['ruc'].split('-')[1];
+
+    }
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
       if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
