@@ -269,7 +269,19 @@ class JSonDteTransporteService {
       jsonResult['dNumIDTrans'] = data['detalleTransporte']['transportista']['documentoNumero'].substring(0, 20);
     }
 
-    jsonResult['cNacTrans'] = data['detalleTransporte']['transportista']['pais'];
+    if (
+      constanteService.paises.filter((pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'])
+        .length == 0
+    ) {
+      throw new Error(
+        "Pais '" +
+        data['detalleTransporte']['transportista']['pais'] +
+          "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
+          constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    jsonResult['cNacTrans'] = constanteService.paises.filter((pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'])[0]['descripcion'];
     jsonResult['dDesNacTrans'] = data['detalleTransporte']['transportista']['paisDescripcion'];
     jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20);
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];

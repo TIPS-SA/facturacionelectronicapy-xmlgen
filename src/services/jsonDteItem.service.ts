@@ -79,8 +79,23 @@ class JSonDteItemService {
         gCamItem['dCantProSer'] = item['cantidad'];
 
         if (item['pais']) {
+
+          if (
+            constanteService.paises.filter((pais: any) => pais.codigo === item['pais'])
+              .length == 0
+          ) {
+            throw new Error(
+              "Pais '" +
+                item['pais'] +
+                "' del Cliente en data.items[" +
+                i +
+                "].pais no encontrado. Valores: " +
+                constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+            );
+          }
+
           gCamItem['cPaisOrig'] = item['pais'];
-          gCamItem['dDesPaisOrig'] = item['paisDescripcion'];
+          gCamItem['dDesPaisOrig'] = constanteService.paises.filter((pais) => pais.codigo === item['pais'])[0]['descripcion'];
         }
 
         if (item['observacion']) {
@@ -185,14 +200,17 @@ class JSonDteItemService {
       dAntPreUniIt: item['anticipo'], //Valor del anticipo del item ya emitido en una FE anterior. tipoOperacion=9 Anticipo*/
     };
 
+    jsonResult['dDescItem'] = 0;
     if (item['descuento'] && item['descuento'] > 0) {
       jsonResult['dDescItem'] = item['descuento'];
     }
 
+    jsonResult['dPorcDesIt'] = 0;
     if (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) {
       jsonResult['dPorcDesIt'] = item['descuentoPorcentaje'];
     }
 
+    jsonResult['dAntPreUniIt'] = 0;
     if (item['anticipo'] && item['anticipo'] > 0) {
       jsonResult['dAntPreUniIt'] = item['anticipo'];
     }

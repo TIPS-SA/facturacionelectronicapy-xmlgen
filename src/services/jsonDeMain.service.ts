@@ -668,7 +668,9 @@ class JSonDeMainService {
     };
     this.generateDatosGeneralesInherentesOperacion(params, data, defaultValues);
     this.generateDatosGeneralesEmisorDE(params, data);
-    this.generateDatosGeneralesResponsableGeneracionDE(params, data);
+    if (data['usuario']) {  //No es obligatorio
+      this.generateDatosGeneralesResponsableGeneracionDE(params, data);
+    }
     this.generateDatosGeneralesReceptorDE(params, data);
   }
 
@@ -873,10 +875,30 @@ class JSonDeMainService {
       dDTipIDRespDE: constanteService.tiposDocumentosIdentidades.filter(
         (td) => td.codigo === data['usuario']['documentoTipo'],
       )[0]['descripcion'],
-      dNumIDRespDE: data['usuario']['documentoNumero'],
-      dNomRespDE: data['usuario']['nombre'],
-      dCarRespDE: data['usuario']['cargo'],
+      //dNumIDRespDE: data['usuario']['documentoNumero'],
+      //dNomRespDE: data['usuario']['nombre'],
+      //dCarRespDE: data['usuario']['cargo'],
     };
+
+    if (data['usuario']['documentoNumero']) {
+      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
+    } else {
+      throw new Error("El Documento del responsable en data.usuario.documento no puede ser vacio");
+    }
+
+    if (data['usuario']['nombre']) {
+      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
+    } else {
+      throw new Error("El Nombre del responsable en data.usuario.nombre no puede ser vacio");
+    }
+
+    if (data['usuario']['cargo']) {
+      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dCarRespDE'] = data['usuario']['cargo'];
+    } else {
+      throw new Error("El Cargo del responsable en data.usuario.cargo no puede ser vacio");
+    }
+
+
   }
 
   /**
@@ -930,11 +952,24 @@ class JSonDeMainService {
         throw new Error('RUC debe contener dígito verificador en data.cliente.ruc');
       }
     }
+
+    if (
+      constanteService.paises.filter((pais: any) => pais.codigo === data['cliente']['pais'])
+        .length == 0
+    ) {
+      throw new Error(
+        "Pais '" +
+          data['cliente']['pais'] +
+          "' del Cliente en data.cliente.pais no encontrado. Valores: " +
+          constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec'] = {
       iNatRec: data['cliente']['contribuyente'] ? 1 : 2,
       iTiOpe: data['cliente']['tipoOperacion'],
       cPaisRec: data['cliente']['pais'],
-      dDesPaisRe: data['cliente']['paisDescripcion'],
+      dDesPaisRe: constanteService.paises.filter((pais) => pais.codigo === data['cliente']['pais'])[0]['descripcion'],
       //iTiContRec: data['cliente']['contribuyente'] ? data['cliente']['tipoContribuyente'] : null,
       //dRucRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
       //dDVRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
