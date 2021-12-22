@@ -79,23 +79,21 @@ class JSonDteItemService {
         gCamItem['dCantProSer'] = item['cantidad'];
 
         if (item['pais']) {
-
-          if (
-            constanteService.paises.filter((pais: any) => pais.codigo === item['pais'])
-              .length == 0
-          ) {
+          if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
             throw new Error(
               "Pais '" +
                 item['pais'] +
                 "' del Cliente en data.items[" +
                 i +
-                "].pais no encontrado. Valores: " +
+                '].pais no encontrado. Valores: ' +
                 constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
             );
           }
 
           gCamItem['cPaisOrig'] = item['pais'];
-          gCamItem['dDesPaisOrig'] = constanteService.paises.filter((pais) => pais.codigo === item['pais'])[0]['descripcion'];
+          gCamItem['dDesPaisOrig'] = constanteService.paises.filter((pais) => pais.codigo === item['pais'])[0][
+            'descripcion'
+          ];
         }
 
         if (item['observacion']) {

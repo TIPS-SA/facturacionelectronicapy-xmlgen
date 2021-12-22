@@ -668,7 +668,8 @@ class JSonDeMainService {
     };
     this.generateDatosGeneralesInherentesOperacion(params, data, defaultValues);
     this.generateDatosGeneralesEmisorDE(params, data);
-    if (data['usuario']) {  //No es obligatorio
+    if (data['usuario']) {
+      //No es obligatorio
       this.generateDatosGeneralesResponsableGeneracionDE(params, data);
     }
     this.generateDatosGeneralesReceptorDE(params, data);
@@ -883,22 +884,20 @@ class JSonDeMainService {
     if (data['usuario']['documentoNumero']) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
     } else {
-      throw new Error("El Documento del responsable en data.usuario.documento no puede ser vacio");
+      throw new Error('El Documento del responsable en data.usuario.documento no puede ser vacio');
     }
 
     if (data['usuario']['nombre']) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
     } else {
-      throw new Error("El Nombre del responsable en data.usuario.nombre no puede ser vacio");
+      throw new Error('El Nombre del responsable en data.usuario.nombre no puede ser vacio');
     }
 
     if (data['usuario']['cargo']) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dCarRespDE'] = data['usuario']['cargo'];
     } else {
-      throw new Error("El Cargo del responsable en data.usuario.cargo no puede ser vacio");
+      throw new Error('El Cargo del responsable en data.usuario.cargo no puede ser vacio');
     }
-
-
   }
 
   /**
@@ -953,10 +952,7 @@ class JSonDeMainService {
       }
     }
 
-    if (
-      constanteService.paises.filter((pais: any) => pais.codigo === data['cliente']['pais'])
-        .length == 0
-    ) {
+    if (constanteService.paises.filter((pais: any) => pais.codigo === data['cliente']['pais']).length == 0) {
       throw new Error(
         "Pais '" +
           data['cliente']['pais'] +

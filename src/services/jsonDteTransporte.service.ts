@@ -275,13 +275,15 @@ class JSonDteTransporteService {
     ) {
       throw new Error(
         "Pais '" +
-        data['detalleTransporte']['transportista']['pais'] +
+          data['detalleTransporte']['transportista']['pais'] +
           "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
           constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
 
-    jsonResult['cNacTrans'] = constanteService.paises.filter((pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'])[0]['descripcion'];
+    jsonResult['cNacTrans'] = constanteService.paises.filter(
+      (pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
+    )[0]['descripcion'];
     jsonResult['dDesNacTrans'] = data['detalleTransporte']['transportista']['paisDescripcion'];
     jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20);
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
