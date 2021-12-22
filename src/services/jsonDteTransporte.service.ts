@@ -113,14 +113,23 @@ class JSonDteTransporteService {
       dNumCasSal: data['detalleTransporte']['salida']['numeroCasa'],
       dComp1Sal: data['detalleTransporte']['salida']['complementoDireccion1'],
       dComp2Sal: data['detalleTransporte']['salida']['complementoDireccion1'],
-      cDepSal: data['detalleTransporte']['salida']['departamento'],
-      dDesDepSal: data['detalleTransporte']['salida']['departamentoDescripcion'],
-      cDisSal: data['detalleTransporte']['salida']['distrito'],
-      dDesDisSal: data['detalleTransporte']['salida']['distritoDescripcion'],
-      cCiuSal: data['detalleTransporte']['salida']['ciudad'],
-      dDesCiuSal: data['detalleTransporte']['salida']['ciudadDescripcion'],
+
+      cDepSal: +data['detalleTransporte']['salida']['departamento'],
+      dDesDepSal: constanteService.departamentos.filter(
+        (td) => td.codigo === +data['detalleTransporte']['salida']['departamento']
+      )[0]['descripcion'],
+      cDisSal: +data['detalleTransporte']['salida']['distrito'],
+      dDesDisSal: constanteService.distritos.filter(
+        (td) => td.codigo === +data['detalleTransporte']['salida']['distrito']
+      )[0]['descripcion'],
+      cCiuSal: +data['detalleTransporte']['salida']['ciudad'],
+      dDesCiuSal: constanteService.ciudades.filter(
+        (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad']
+      )[0]['descripcion'],
       //dTelSal : data['detalleTransporte']['salida']['telefonoContacto'],
     };
+
+    constanteService.validateDepartamentoDistritoCiudad("data.detalleTransporte.salida", +data['autoFactura']['departamento'], +data['autoFactura']['distrito'], +data['autoFactura']['ciudad']);
 
     if (
       data['detalleTransporte'] &&
@@ -149,11 +158,17 @@ class JSonDteTransporteService {
       dComp1Ent: data['detalleTransporte']['entrega']['complementoDireccion1'],
       dComp2Ent: data['detalleTransporte']['entrega']['complementoDireccion1'],
       cDepEnt: data['detalleTransporte']['entrega']['departamento'],
-      dDesDepEnt: data['detalleTransporte']['entrega']['departamentoDescripcion'],
+      dDesDepEnt: constanteService.departamentos.filter(
+        (td) => td.codigo === data['detalleTransporte']['entrega']['departamento'],
+      )[0]['descripcion'],
       cDisEnt: data['detalleTransporte']['entrega']['distrito'],
-      dDesDisEnt: data['detalleTransporte']['entrega']['distritoDescripcion'],
+      dDesDisEnt: constanteService.distritos.filter(
+        (td) => td.codigo === data['detalleTransporte']['entrega']['distrito'],
+      )[0]['descripcion'],
       cCiuEnt: data['detalleTransporte']['entrega']['ciudad'],
-      dDesCiuEnt: data['detalleTransporte']['entrega']['ciudadDescripcion'],
+      dDesCiuEnt: constanteService.ciudades.filter(
+        (td) => td.codigo === data['detalleTransporte']['entrega']['ciudad'],
+      )[0]['descripcion'],
       //dTelEnt : data['detalleTransporte']['entrega']['telefonoContacto'],
     };
 
@@ -269,22 +284,26 @@ class JSonDteTransporteService {
       jsonResult['dNumIDTrans'] = data['detalleTransporte']['transportista']['documentoNumero'].substring(0, 20);
     }
 
-    if (
-      constanteService.paises.filter((pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'])
-        .length == 0
-    ) {
-      throw new Error(
-        "Pais '" +
-          data['detalleTransporte']['transportista']['pais'] +
-          "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
-          constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
-      );
-    }
+    if (data['detalleTransporte']['transportista'] && data['detalleTransporte']['transportista']['pais']) {
 
-    jsonResult['cNacTrans'] = constanteService.paises.filter(
-      (pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
-    )[0]['descripcion'];
-    jsonResult['dDesNacTrans'] = data['detalleTransporte']['transportista']['paisDescripcion'];
+      if (
+        constanteService.paises.filter((pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'])
+          .length == 0
+      ) {
+        throw new Error(
+          "Pais '" +
+            data['detalleTransporte']['transportista']['pais'] +
+            "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
+            constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }
+
+      jsonResult['cNacTrans'] = data['detalleTransporte']['transportista']['pais'];
+      jsonResult['dDesNacTrans'] = constanteService.paises.filter(
+        (pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
+      )[0]['descripcion'];
+    }
+    
     jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20);
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
     jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];

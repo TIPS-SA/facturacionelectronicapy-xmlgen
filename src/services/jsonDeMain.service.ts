@@ -194,18 +194,6 @@ class JSonDeMainService {
     if (data.cliente?.numero_casa) {
       data.cliente.numeroCasa = data.cliente.numero_casa;
     }
-    if (data.cliente?.departamento_descripcion) {
-      data.cliente.departamentoDescripcion = data.cliente.departamento_descripcion;
-    }
-    if (data.cliente?.distrito_descripcion) {
-      data.cliente.distritoDescripcion = data.cliente.distrito_descripcion;
-    }
-    if (data.cliente?.ciudad_descripcion) {
-      data.cliente.ciudadDescripcion = data.cliente.ciudad_descripcion;
-    }
-    if (data.cliente?.pais_descripcion) {
-      data.cliente.paisDescripcion = data.cliente.pais_descripcion;
-    }
     if (data.cliente?.tipo_contribuyente) {
       data.cliente.tipoContribuyente = data.cliente.tipo_contribuyente;
     }
@@ -244,30 +232,6 @@ class JSonDeMainService {
 
     if (data.autoFactura?.documento_numero) {
       data.autoFactura.documentoNumero = data.autoFactura.documento_numero;
-    }
-
-    if (data.autoFactura?.departamento_descripcion) {
-      data.autoFactura.departamentoDescripcion = data.autoFactura.departamento_descripcion;
-    }
-
-    if (data.autoFactura?.distrito_descripcion) {
-      data.autoFactura.distritoDescripcion = data.autoFactura.distrito_descripcion;
-    }
-
-    if (data.autoFactura?.ciudad_descripcion) {
-      data.autoFactura.ciudadDescripcion = data.autoFactura.ciudad_descripcion;
-    }
-
-    if (data.autoFactura?.ubicacion?.departamento_descripcion) {
-      data.autoFactura.ubicacion.departamentoDescripcion = data.autoFactura.ubicacion.departamento_descripcion;
-    }
-
-    if (data.autoFactura?.ubicacion?.distrito_descripcion) {
-      data.autoFactura.ubicacion.distritoDescripcion = data.autoFactura.ubicacion.distrito_descripcion;
-    }
-
-    if (data.autoFactura?.ubicacion?.ciudad_descripcion) {
-      data.autoFactura.ubicacion.ciudadDescripcion = data.autoFactura.ubicacion.ciudad_descripcion;
     }
 
     //Remision
@@ -820,13 +784,17 @@ class JSonDeMainService {
         'complementoDireccion2'
       ],
       cDepEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
-      dDesDepEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
-        'departamentoDescripcion'
-      ],
+      dDesDepEmi: constanteService.departamentos.filter(
+        (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
+      )[0]['descripcion'],
       cDisEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
-      dDesDisEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distritoDescripcion'],
+      dDesDisEmi: constanteService.distritos.filter(
+        (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
+      )[0]['descripcion'],
       cCiuEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
-      dDesCiuEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudadDescripcion'],
+      dDesCiuEmi: constanteService.ciudades.filter(
+        (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
+      )[0]['descripcion'],
       dTelEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'],
       dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
       dDenSuc: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['denominacion'],
@@ -1022,29 +990,45 @@ class JSonDeMainService {
 
     if (data['cliente']['direccion']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'];
+
+      //Si tiene dirección hay que completar numero de casa.
+      if (!data['cliente']['numeroCasa']) {
+          throw new Error("Debe informar el Número de casa del Receptor en data.cliente.numeroCasa");          
+      }
     }
 
     if (data['cliente']['numeroCasa']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = data['cliente']['numeroCasa'];
     }
-    if (data['cliente']['departamento'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = data['cliente']['departamento'];
+    if (data['cliente']['tipoOperacion'] != 4) {
+      if (!data['cliente']['departamento']) {
+        throw new Error("Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4");
+      }
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
+        (td) => td.codigo === +data['cliente']['departamento'],
+      )[0]['descripcion'];
     }
-    if (data['cliente']['departamentoDescripcion'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = data['cliente']['departamentoDescripcion'];
+    if (data['cliente']['tipoOperacion'] != 4) {
+      if (!data['cliente']['distrito']) {
+        throw new Error("Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4");
+      }
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = +data['cliente']['distrito'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = constanteService.distritos.filter(
+        (td) => td.codigo === +data['cliente']['distrito'],
+      )[0]['descripcion'];
     }
-    if (data['cliente']['distrito'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = data['cliente']['distrito'];
+    if (data['cliente']['tipoOperacion'] != 4) {
+      if (!data['cliente']['ciudad']) {
+        throw new Error("Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4");
+      }
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
+        (td) => td.codigo === +data['cliente']['ciudad']
+      )[0]['descripcion'];
     }
-    if (data['cliente']['distritoDescripcion'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = data['cliente']['distritoDescripcion'];
-    }
-    if (data['cliente']['ciudad'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = data['cliente']['ciudad'];
-    }
-    if (data['cliente']['ciudadDescripcion'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = data['cliente']['ciudadDescripcion'];
-    }
+    
+    constanteService.validateDepartamentoDistritoCiudad("data.cliente", +data['cliente']['departamento'], +data['cliente']['distrito'], +data['cliente']['ciudad']);
 
     //Asignar null a departamento, distrito y ciudad si tipoOperacion = 4
     /*    if (data['cliente']['tipoOperacion'] === 4) {
@@ -1214,20 +1198,37 @@ class JSonDeMainService {
       dNomVen: data['autoFactura']['nombre'],
       dDirVen: data['autoFactura']['direccion'],
       dNumCasVen: data['autoFactura']['numeroCasa'],
-      cDepVen: data['autoFactura']['departamento'],
-      dDesDepVen: data['autoFactura']['departamentoDescripcion'],
-      cDisVen: data['autoFactura']['distrito'],
-      dDesDisVen: data['autoFactura']['distritoDescripcion'],
-      cCiuVen: data['autoFactura']['ciudad'],
-      dDesCiuVen: data['autoFactura']['ciudadDescripcion'],
+
+      cDepVen: +data['autoFactura']['departamento'],
+      dDesDepVen: constanteService.departamentos.filter(
+        (td) => td.codigo === +data['autoFactura']['departamento']
+      )[0]['descripcion'],
+      cDisVen: +data['autoFactura']['distrito'],
+      dDesDisVen: constanteService.distritos.filter(
+        (td) => td.codigo === +data['autoFactura']['distrito']
+      )[0]['descripcion'],
+      cCiuVen: +data['autoFactura']['ciudad'],
+      dDesCiuVen: constanteService.ciudades.filter(
+        (td) => td.codigo === +data['autoFactura']['ciudad']
+      )[0]['descripcion'],
       dDirProv: data['autoFactura']['ubicacion']['lugar'],
-      cDepProv: data['autoFactura']['ubicacion']['departamento'],
-      dDesDepProv: data['autoFactura']['ubicacion']['departamentoDescripcion'],
-      cDisProv: data['autoFactura']['ubicacion']['distrito'],
-      dDesDisProv: data['autoFactura']['ubicacion']['distritoDescripcion'],
-      cCiuProv: data['autoFactura']['ubicacion']['ciudad'],
-      dDesCiuProv: data['autoFactura']['ubicacion']['ciudadDescripcion'],
+      cDepProv: +data['autoFactura']['ubicacion']['departamento'],
+      dDesDepProv: constanteService.departamentos.filter(
+        (td) => td.codigo === +data['autoFactura']['ubicacion']['departamento']
+      )[0]['descripcion'],
+      cDisProv: +data['autoFactura']['ubicacion']['distrito'],
+      dDesDisProv: constanteService.distritos.filter(
+        (td) => td.codigo === +data['autoFactura']['ubicacion']['distrito']
+      )[0]['descripcion'],
+      cCiuProv: +data['autoFactura']['ubicacion']['ciudad'],
+      dDesCiuProv: constanteService.ciudades.filter(
+        (td) => td.codigo === +data['autoFactura']['ubicacion']['ciudad']
+      )[0]['descripcion'],
     };
+
+    constanteService.validateDepartamentoDistritoCiudad("data.autoFactura", +data['autoFactura']['departamento'], +data['autoFactura']['distrito'], +data['autoFactura']['ciudad']);
+    constanteService.validateDepartamentoDistritoCiudad("data.autoFactura.ubicacion", +data['autoFactura']['ubicacion']['departamento'], +data['autoFactura']['ubicacion']['distrito'], +data['autoFactura']['ubicacion']['ciudad']);
+
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
@@ -1360,10 +1361,19 @@ class JSonDeMainService {
             'descripcion'
           ],
           dMonTiPag: dataEntrega['monto'],
-          cMoneTiPag: dataEntrega['moneda'],
-          dDMoneTiPag: dataEntrega['monedaDescripcion'],
+          //cMoneTiPag: dataEntrega['moneda'],
+          //dDMoneTiPag: dataEntrega['monedaDescripcion'],
           //dTiCamTiPag : dataEntrega['cambio'],
         };
+
+        if (!dataEntrega['moneda']) {
+          throw new Error('Moneda es obligatorio en data.condicion.entregas[' +
+          i +
+          '].moneda');
+        }
+
+        cuotaInicialEntrega['cMoneTiPag'] = dataEntrega['moneda'];
+        cuotaInicialEntrega['dDMoneTiPag'] = dataEntrega['monedaDescripcion'];
 
         if (dataEntrega['moneda'] != 'PYG') {
           if (dataEntrega['cambio']) {
