@@ -138,6 +138,10 @@ class JSonDeMainService {
     if (typeof data['cliente']['contribuyente'] == 'undefined') {
       throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
     }
+    
+    if (typeof data['cliente']['contribuyente'] == 'undefined') {
+      throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+    }
 
     if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
       throw new Error('data.cliente.contribuyente debe ser true|false');
@@ -209,7 +213,7 @@ class JSonDeMainService {
       data.usuario.documentoTipo = data.usuario.documento_tipo;
     }
     if (data.usuario?.documento_numero) {
-      data.usuario.documentoNumero = data.cliente.documento_numero;
+      data.usuario.documentoNumero = data.usuario.documento_numero;
     }
 
     //Factura
@@ -852,7 +856,7 @@ class JSonDeMainService {
     if (data['usuario']['documentoNumero']) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
     } else {
-      throw new Error('El Documento del responsable en data.usuario.documento no puede ser vacio');
+      throw new Error('El Documento del responsable en data.usuario.documentoNumero no puede ser vacio');
     }
 
     if (data['usuario']['nombre']) {
@@ -1155,6 +1159,18 @@ class JSonDeMainService {
     if (!data['autoFactura']) {
       throw new Error('Para tipoDocumento = 4 debe proveer los datos de Autofactura en data.autoFactura');
     }
+    if (!data['autoFactura']['ubicacion']) {
+      throw new Error('Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion');
+    }
+
+    if (!data['autoFactura']['tipoVendedor']) {
+      throw new Error('Debe especificar la Naturaleza  del Vendedor en data.autoFactura.tipoVendedor');
+    }
+
+    if (!data['autoFactura']['documentoTipo']) {
+      throw new Error('Debe especificar el Tipo de Documento del Vendedor en data.autoFactura.documentoTipo');
+    }
+
     if (
       constanteService.naturalezaVendedorAutofactura.filter(
         (um: any) => um.codigo === data['autoFactura']['tipoVendedor'],
@@ -1183,6 +1199,39 @@ class JSonDeMainService {
 
     if (!data['autoFactura']['ubicacion']) {
       throw new Error('Debe especificar la ubicación de la transacción en data.autoFactura.ubicacion');
+    }
+
+    if (!data['autoFactura']['documentoNumero']) {
+      throw new Error('Debe especificar el Nro. de Documento del Vendedor en data.autoFactura.documentoNumero');
+    }
+    if (!data['autoFactura']['nombre']) {
+      throw new Error('Debe especificar el Nombre del Vendedor en data.autoFactura.nombre');
+    }
+    if (!data['autoFactura']['direccion']) {
+      throw new Error('Debe especificar la Dirección del Vendedor en data.autoFactura.direccion');
+    }
+    if (!data['autoFactura']['numeroCasa']) {
+      throw new Error('Debe especificar el Número de Casa del Vendedor en data.autoFactura.numeroCasa');
+    }
+    
+    if (!data['autoFactura']['departamento']) {
+      throw new Error('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
+    }
+    if (!data['autoFactura']['distrito']) {
+      throw new Error('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
+    }
+    if (!data['autoFactura']['ciudad']) {
+      throw new Error('Debe especificar la Ciudad del Vendedor en data.autoFactura.ciudad');
+    }
+
+    if (!data['autoFactura']['ubicacion']['departamento']) {
+      throw new Error('Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento');
+    }
+    if (!data['autoFactura']['ubicacion']['distrito']) {
+      throw new Error('Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito');
+    }
+    if (!data['autoFactura']['ubicacion']['ciudad']) {
+      throw new Error('Debe especificar la Ciudad del Lugar de la Transacción en data.autoFactura.ubicacion.ciudad');
     }
 
     this.json['rDE']['DE']['gDtipDE']['gCamAE'] = {
