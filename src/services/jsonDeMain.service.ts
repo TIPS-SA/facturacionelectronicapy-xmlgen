@@ -935,14 +935,17 @@ class JSonDeMainService {
       );
     }
 
+    if (data['tipoDocumento'] == 4) {
+      if (data['cliente']['tipoOperacion'] != 4) {
+        throw new Error('El Tipo de Operación debe ser 4-B2C para el Tipo de Documento AutoFactura');
+      }
+    }
+    
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec'] = {
       iNatRec: data['cliente']['contribuyente'] ? 1 : 2,
       iTiOpe: data['cliente']['tipoOperacion'],
       cPaisRec: data['cliente']['pais'],
       dDesPaisRe: constanteService.paises.filter((pais) => pais.codigo === data['cliente']['pais'])[0]['descripcion'],
-      //iTiContRec: data['cliente']['contribuyente'] ? data['cliente']['tipoContribuyente'] : null,
-      //dRucRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[0] : null,
-      //dDVRec: data['cliente']['contribuyente'] ? data['cliente']['ruc'].split('-')[1] : null,
     };
 
     if (data['cliente']['contribuyente']) {
@@ -1064,6 +1067,11 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['codigo']) {
+
+      if (!(data['cliente']['codigo'].length >= 3)) {
+        throw new Error("El código del Cliente '" + data['cliente']['codigo'] + "' en data.cliente.codigo debe tener al menos 3 caracteres");
+        
+      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = data['cliente']['codigo'];
     }
   }
