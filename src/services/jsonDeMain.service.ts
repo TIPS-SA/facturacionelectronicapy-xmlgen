@@ -936,8 +936,8 @@ class JSonDeMainService {
     }
 
     if (data['tipoDocumento'] == 4) {
-      if (data['cliente']['tipoOperacion'] != 4) {
-        throw new Error('El Tipo de Operación debe ser 4-B2C para el Tipo de Documento AutoFactura');
+      if (data['cliente']['tipoOperacion'] != 2) {
+        throw new Error('El Tipo de Operación debe ser 2-B2C para el Tipo de Documento AutoFactura');
       }
     }
 
