@@ -88,6 +88,15 @@ class JSonDeMainService {
     }
 
     if (
+      data['tipoDocumento'] == 4 ||
+      data['tipoDocumento'] == 5 ||
+      data['tipoDocumento'] == 6
+    ) {
+      if (!data['documentoAsociado']) {
+        throw new Error("Documento asociado es obligatorio para el tipo de documento electrónico (" + data['tipoDocumento'] + ") seleccionado");
+      }
+    }
+    if (
       data['tipoDocumento'] == 1 ||
       data['tipoDocumento'] == 4 ||
       data['tipoDocumento'] == 5 ||
