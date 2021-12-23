@@ -116,20 +116,25 @@ class JSonDteTransporteService {
 
       cDepSal: +data['detalleTransporte']['salida']['departamento'],
       dDesDepSal: constanteService.departamentos.filter(
-        (td) => td.codigo === +data['detalleTransporte']['salida']['departamento']
+        (td) => td.codigo === +data['detalleTransporte']['salida']['departamento'],
       )[0]['descripcion'],
       cDisSal: +data['detalleTransporte']['salida']['distrito'],
       dDesDisSal: constanteService.distritos.filter(
-        (td) => td.codigo === +data['detalleTransporte']['salida']['distrito']
+        (td) => td.codigo === +data['detalleTransporte']['salida']['distrito'],
       )[0]['descripcion'],
       cCiuSal: +data['detalleTransporte']['salida']['ciudad'],
       dDesCiuSal: constanteService.ciudades.filter(
-        (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad']
+        (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad'],
       )[0]['descripcion'],
       //dTelSal : data['detalleTransporte']['salida']['telefonoContacto'],
     };
 
-    constanteService.validateDepartamentoDistritoCiudad("data.detalleTransporte.salida", +data['autoFactura']['departamento'], +data['autoFactura']['distrito'], +data['autoFactura']['ciudad']);
+    constanteService.validateDepartamentoDistritoCiudad(
+      'data.detalleTransporte.salida',
+      +data['autoFactura']['departamento'],
+      +data['autoFactura']['distrito'],
+      +data['autoFactura']['ciudad'],
+    );
 
     if (
       data['detalleTransporte'] &&
@@ -285,10 +290,10 @@ class JSonDteTransporteService {
     }
 
     if (data['detalleTransporte']['transportista'] && data['detalleTransporte']['transportista']['pais']) {
-
       if (
-        constanteService.paises.filter((pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'])
-          .length == 0
+        constanteService.paises.filter(
+          (pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
+        ).length == 0
       ) {
         throw new Error(
           "Pais '" +
@@ -303,7 +308,7 @@ class JSonDteTransporteService {
         (pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
       )[0]['descripcion'];
     }
-    
+
     jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20);
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
     jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];

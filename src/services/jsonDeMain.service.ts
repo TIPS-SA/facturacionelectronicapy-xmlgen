@@ -138,7 +138,7 @@ class JSonDeMainService {
     if (typeof data['cliente']['contribuyente'] == 'undefined') {
       throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
     }
-    
+
     if (typeof data['cliente']['contribuyente'] == 'undefined') {
       throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
     }
@@ -789,11 +789,13 @@ class JSonDeMainService {
       ],
       cDepEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
       dDesDepEmi: constanteService.departamentos.filter(
-        (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
+        (td) =>
+          td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
       )[0]['descripcion'],
       cDisEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
       dDesDisEmi: constanteService.distritos.filter(
-        (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
+        (td) =>
+          td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
       )[0]['descripcion'],
       cCiuEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
       dDesCiuEmi: constanteService.ciudades.filter(
@@ -997,7 +999,7 @@ class JSonDeMainService {
 
       //Si tiene dirección hay que completar numero de casa.
       if (!data['cliente']['numeroCasa']) {
-          throw new Error("Debe informar el Número de casa del Receptor en data.cliente.numeroCasa");          
+        throw new Error('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
     }
 
@@ -1006,7 +1008,9 @@ class JSonDeMainService {
     }
     if (data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['departamento']) {
-        throw new Error("Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4");
+        throw new Error(
+          'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
+        );
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
@@ -1015,7 +1019,7 @@ class JSonDeMainService {
     }
     if (data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['distrito']) {
-        throw new Error("Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4");
+        throw new Error('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = +data['cliente']['distrito'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = constanteService.distritos.filter(
@@ -1024,15 +1028,20 @@ class JSonDeMainService {
     }
     if (data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['ciudad']) {
-        throw new Error("Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4");
+        throw new Error('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
-        (td) => td.codigo === +data['cliente']['ciudad']
+        (td) => td.codigo === +data['cliente']['ciudad'],
       )[0]['descripcion'];
     }
-    
-    constanteService.validateDepartamentoDistritoCiudad("data.cliente", +data['cliente']['departamento'], +data['cliente']['distrito'], +data['cliente']['ciudad']);
+
+    constanteService.validateDepartamentoDistritoCiudad(
+      'data.cliente',
+      +data['cliente']['departamento'],
+      +data['cliente']['distrito'],
+      +data['cliente']['ciudad'],
+    );
 
     //Asignar null a departamento, distrito y ciudad si tipoOperacion = 4
     /*    if (data['cliente']['tipoOperacion'] === 4) {
@@ -1160,7 +1169,9 @@ class JSonDeMainService {
       throw new Error('Para tipoDocumento = 4 debe proveer los datos de Autofactura en data.autoFactura');
     }
     if (!data['autoFactura']['ubicacion']) {
-      throw new Error('Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion');
+      throw new Error(
+        'Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion',
+      );
     }
 
     if (!data['autoFactura']['tipoVendedor']) {
@@ -1213,7 +1224,7 @@ class JSonDeMainService {
     if (!data['autoFactura']['numeroCasa']) {
       throw new Error('Debe especificar el Número de Casa del Vendedor en data.autoFactura.numeroCasa');
     }
-    
+
     if (!data['autoFactura']['departamento']) {
       throw new Error('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
     }
@@ -1225,7 +1236,9 @@ class JSonDeMainService {
     }
 
     if (!data['autoFactura']['ubicacion']['departamento']) {
-      throw new Error('Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento');
+      throw new Error(
+        'Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento',
+      );
     }
     if (!data['autoFactura']['ubicacion']['distrito']) {
       throw new Error('Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito');
@@ -1249,35 +1262,44 @@ class JSonDeMainService {
       dNumCasVen: data['autoFactura']['numeroCasa'],
 
       cDepVen: +data['autoFactura']['departamento'],
-      dDesDepVen: constanteService.departamentos.filter(
-        (td) => td.codigo === +data['autoFactura']['departamento']
-      )[0]['descripcion'],
+      dDesDepVen: constanteService.departamentos.filter((td) => td.codigo === +data['autoFactura']['departamento'])[0][
+        'descripcion'
+      ],
       cDisVen: +data['autoFactura']['distrito'],
-      dDesDisVen: constanteService.distritos.filter(
-        (td) => td.codigo === +data['autoFactura']['distrito']
-      )[0]['descripcion'],
+      dDesDisVen: constanteService.distritos.filter((td) => td.codigo === +data['autoFactura']['distrito'])[0][
+        'descripcion'
+      ],
       cCiuVen: +data['autoFactura']['ciudad'],
-      dDesCiuVen: constanteService.ciudades.filter(
-        (td) => td.codigo === +data['autoFactura']['ciudad']
-      )[0]['descripcion'],
+      dDesCiuVen: constanteService.ciudades.filter((td) => td.codigo === +data['autoFactura']['ciudad'])[0][
+        'descripcion'
+      ],
       dDirProv: data['autoFactura']['ubicacion']['lugar'],
       cDepProv: +data['autoFactura']['ubicacion']['departamento'],
       dDesDepProv: constanteService.departamentos.filter(
-        (td) => td.codigo === +data['autoFactura']['ubicacion']['departamento']
+        (td) => td.codigo === +data['autoFactura']['ubicacion']['departamento'],
       )[0]['descripcion'],
       cDisProv: +data['autoFactura']['ubicacion']['distrito'],
       dDesDisProv: constanteService.distritos.filter(
-        (td) => td.codigo === +data['autoFactura']['ubicacion']['distrito']
+        (td) => td.codigo === +data['autoFactura']['ubicacion']['distrito'],
       )[0]['descripcion'],
       cCiuProv: +data['autoFactura']['ubicacion']['ciudad'],
       dDesCiuProv: constanteService.ciudades.filter(
-        (td) => td.codigo === +data['autoFactura']['ubicacion']['ciudad']
+        (td) => td.codigo === +data['autoFactura']['ubicacion']['ciudad'],
       )[0]['descripcion'],
     };
 
-    constanteService.validateDepartamentoDistritoCiudad("data.autoFactura", +data['autoFactura']['departamento'], +data['autoFactura']['distrito'], +data['autoFactura']['ciudad']);
-    constanteService.validateDepartamentoDistritoCiudad("data.autoFactura.ubicacion", +data['autoFactura']['ubicacion']['departamento'], +data['autoFactura']['ubicacion']['distrito'], +data['autoFactura']['ubicacion']['ciudad']);
-
+    constanteService.validateDepartamentoDistritoCiudad(
+      'data.autoFactura',
+      +data['autoFactura']['departamento'],
+      +data['autoFactura']['distrito'],
+      +data['autoFactura']['ciudad'],
+    );
+    constanteService.validateDepartamentoDistritoCiudad(
+      'data.autoFactura.ubicacion',
+      +data['autoFactura']['ubicacion']['departamento'],
+      +data['autoFactura']['ubicacion']['distrito'],
+      +data['autoFactura']['ubicacion']['ciudad'],
+    );
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
@@ -1416,9 +1438,7 @@ class JSonDeMainService {
         };
 
         if (!dataEntrega['moneda']) {
-          throw new Error('Moneda es obligatorio en data.condicion.entregas[' +
-          i +
-          '].moneda');
+          throw new Error('Moneda es obligatorio en data.condicion.entregas[' + i + '].moneda');
         }
 
         cuotaInicialEntrega['cMoneTiPag'] = dataEntrega['moneda'];

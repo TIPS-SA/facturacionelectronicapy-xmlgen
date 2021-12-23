@@ -7954,7 +7954,6 @@ class ConstanteService {
   ];
 
   validateDepartamentoDistritoCiudad(field: string, departamentoId: number, distritoId: number, ciudadId: number) {
-
     /*if (ciudadId) {
       throw new Error("Debe especificar la Ciudad en " + field + ".ciudad");
     }
@@ -7966,23 +7965,19 @@ class ConstanteService {
     }*/
 
     if (ciudadId) {
-      let distritoCiudadId = this.ciudades.filter(
-        (td) => td.codigo === ciudadId,
-      )[0]['distrito'];
-  
+      let distritoCiudadId = this.ciudades.filter((td) => td.codigo === ciudadId)[0]['distrito'];
+
       if (distritoId != distritoCiudadId) {
-        throw new Error("El distrito pasado no pertenece a la Ciudad especificada en " + field + ".distrito");
+        throw new Error('El distrito pasado no pertenece a la Ciudad especificada en ' + field + '.distrito');
       }
     }
-    
+
     if (distritoId) {
-      console.log("distritoId", distritoId);
-      let departamentoDistritoId = this.distritos.filter(
-        (td) => td.codigo === distritoId,
-      )[0]['departamento'];
-  
+      console.log('distritoId', distritoId);
+      let departamentoDistritoId = this.distritos.filter((td) => td.codigo === distritoId)[0]['departamento'];
+
       if (departamentoId != departamentoDistritoId) {
-        throw new Error("El departamento pasado no pertenece al Distrito especificado en " + field + ".departamento");
+        throw new Error('El departamento pasado no pertenece al Distrito especificado en ' + field + '.departamento');
       }
     }
   }
