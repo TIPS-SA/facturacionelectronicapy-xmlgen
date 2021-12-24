@@ -781,7 +781,7 @@ class ConstanteService {
     },
     {
       codigo: 2,
-      descripcion: 'Cuotas',
+      descripcion: 'Cuota',
     },
   ];
 
