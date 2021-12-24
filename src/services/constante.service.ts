@@ -387,7 +387,7 @@ class ConstanteService {
     { codigo: 'ZWL', descripcion: 'Zimbabwe Dollar' },
     { codigo: 'ZAR', descripcion: 'Rand' },
     { codigo: 'ZMK', descripcion: 'Kwacha' },
-    { codigo: 'ZWD', descripcion: 'Zimbabwe Dollar' }
+    { codigo: 'ZWD', descripcion: 'Zimbabwe Dollar' },
   ];
 
   globalPorItem = [

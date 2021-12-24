@@ -87,13 +87,13 @@ class JSonDeMainService {
       );
     }
 
-    if (
-      data['tipoDocumento'] == 4 ||
-      data['tipoDocumento'] == 5 ||
-      data['tipoDocumento'] == 6
-    ) {
+    if (data['tipoDocumento'] == 4 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
       if (!data['documentoAsociado']) {
-        throw new Error("Documento asociado es obligatorio para el tipo de documento electrónico (" + data['tipoDocumento'] + ") seleccionado");
+        throw new Error(
+          'Documento asociado es obligatorio para el tipo de documento electrónico (' +
+            data['tipoDocumento'] +
+            ') seleccionado',
+        );
       }
     }
     if (
@@ -1076,8 +1076,8 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['codigo']) {
-      console.log("Longitud", data['cliente']['codigo'],data['cliente']['codigo'].length );
-      if (!((data['cliente']['codigo']+"").length >= 3)) {
+      console.log('Longitud', data['cliente']['codigo'], data['cliente']['codigo'].length);
+      if (!((data['cliente']['codigo'] + '').length >= 3)) {
         throw new Error(
           "El código del Cliente '" +
             data['cliente']['codigo'] +
@@ -1534,9 +1534,10 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE_Credito(params: any, data: any) {
-
     if (!data['condicion']['credito']['tipo']) {
-      throw new Error("El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condicion posee créditos");
+      throw new Error(
+        'El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condicion posee créditos',
+      );
     }
 
     if (
@@ -1565,11 +1566,12 @@ class JSonDeMainService {
     if (data['condicion']['credito']['plazo']) {
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['tipo'] = data['condicion']['credito']['plazo'];
     }
-    
+
     if (data['condicion']['credito']['montoEntrega']) {
-      this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dMonEnt'] = data['condicion']['credito']['montoEntrega'];
+      this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dMonEnt'] =
+        data['condicion']['credito']['montoEntrega'];
     }
-    
+
     if (+data['condicion']['credito']['tipo'] === 2) {
       if (data['condicion']['credito']['cuotas']) {
         this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dCuotas'] = data['condicion']['credito']['cuotas'];
@@ -1584,23 +1586,20 @@ class JSonDeMainService {
         for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
           const infoCuota = data['condicion']['credito']['infoCuotas'][i];
 
-          if (
-            constanteService.monedas.filter((um: any) => um.codigo === infoCuota['moneda'])
-              .length == 0
-          ) {
+          if (constanteService.monedas.filter((um: any) => um.codigo === infoCuota['moneda']).length == 0) {
             throw new Error(
               "Moneda '" +
                 infoCuota['moneda'] +
-                "' en data.condicion.credito.infoCuotas[" + i + "].moneda no encontrado. Valores: " +
+                "' en data.condicion.credito.infoCuotas[" +
+                i +
+                '].moneda no encontrado. Valores: ' +
                 constanteService.monedas.map((a: any) => a.codigo + '-' + a.descripcion),
             );
           }
-      
+
           const gCuotas = {
             cMoneCuo: infoCuota['moneda'],
-            dDMoneCuo: constanteService.monedas.filter(
-              (co) => co.codigo === infoCuota['moneda'],
-            )[0]['descripcion'],
+            dDMoneCuo: constanteService.monedas.filter((co) => co.codigo === infoCuota['moneda'])[0]['descripcion'],
             dMonCuota: infoCuota['monto'],
             dVencCuo: infoCuota['vencimiento'],
           };
