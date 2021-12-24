@@ -1018,6 +1018,7 @@ class JSonDeMainService {
     if (data['cliente']['numeroCasa']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = data['cliente']['numeroCasa'];
     }
+    
     if (data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['departamento']) {
         throw new Error(
