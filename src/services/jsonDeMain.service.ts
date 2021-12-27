@@ -1558,14 +1558,16 @@ class JSonDeMainService {
       dDCondCred: constanteService.condicionesCreditosTipos.filter(
         (co) => co.codigo === +data['condicion']['credito']['tipo'],
       )[0]['descripcion'],
-      //dPlazoCre: data['condicion']['credito']['tipo'] === 1 ? data['condicion']['credito']['plazo'] : null,
-      //dCuotas : data['condicion']['credito']['tipo'] === 2 ? data['condicion']['credito']['cuotas'] : null,
-      //dMonEnt: data['condicion']['credito']['montoEntrega'],
-      //gCuotas: [],
     };
 
     if (data['condicion']['credito']['plazo']) {
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['tipo'] = data['condicion']['credito']['plazo'];
+    }
+
+    if (+data['condicion']['credito']['tipo'] === 2) {
+      if (data['condicion']['credito']['cuotas']) {
+        this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dCuotas'] = +data['condicion']['credito']['cuotas'];
+      }
     }
 
     if (data['condicion']['credito']['montoEntrega']) {
@@ -1573,11 +1575,6 @@ class JSonDeMainService {
         data['condicion']['credito']['montoEntrega'];
     }
 
-    if (+data['condicion']['credito']['tipo'] === 2) {
-      if (data['condicion']['credito']['cuotas']) {
-        this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dCuotas'] = data['condicion']['credito']['cuotas'];
-      }
-    }
 
     //Recorrer array de infoCuotas e informar en el JSON
     if (data['condicion']['credito']['tipo'] === 2) {
