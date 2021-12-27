@@ -1018,7 +1018,7 @@ class JSonDeMainService {
     if (data['cliente']['numeroCasa']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = data['cliente']['numeroCasa'];
     }
-    
+
     if (data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['departamento']) {
         throw new Error(
@@ -1574,7 +1574,6 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dMonEnt'] =
         data['condicion']['credito']['montoEntrega'];
     }
-
 
     //Recorrer array de infoCuotas e informar en el JSON
     if (data['condicion']['credito']['tipo'] === 2) {
