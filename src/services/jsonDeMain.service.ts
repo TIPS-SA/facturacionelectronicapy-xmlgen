@@ -1528,6 +1528,7 @@ class JSonDeMainService {
                 : constanteService.tarjetasCreditosTipos.filter(
                     (co) => co.codigo === dataEntrega['infoTarjeta']['tipo'],
                   )[0]['descripcion'],
+/*
             dRSProTar: dataEntrega['infoTarjeta']['razonSocial'],
             dRUCProTar: dataEntrega['infoTarjeta']['ruc'].split('-')[0],
             dDVProTar: dataEntrega['infoTarjeta']['ruc'].split('-')[1],
@@ -1535,8 +1536,42 @@ class JSonDeMainService {
             iForProPa: dataEntrega['infoTarjeta']['medioPago'], //Ver constante.tarjetasCreditosFormasProcesamiento
             dCodAuOpe: dataEntrega['infoTarjeta']['codigoAutorizacion'],
             dNomTit: dataEntrega['infoTarjeta']['titular'],
-            dNumTarj: dataEntrega['infoTarjeta']['numero'],
+            dNumTarj: dataEntrega['infoTarjeta']['numero'],*/
           };
+
+          if (dataEntrega['infoTarjeta']['razonSocial'] && dataEntrega['infoTarjeta']['ruc']) {
+            //Solo si se envia éste dato
+            cuotaInicialEntrega['gPagTarCD']['dRSProTar'] = dataEntrega['infoTarjeta']['razonSocial'];
+            cuotaInicialEntrega['gPagTarCD']['dRUCProTar'] = dataEntrega['infoTarjeta']['ruc'].split('-')[0];
+            cuotaInicialEntrega['gPagTarCD']['dDVProTar'] = dataEntrega['infoTarjeta']['ruc'].split('-')[1];
+          }
+          
+
+          cuotaInicialEntrega['gPagTarCD']['iForProPa'] = dataEntrega['infoTarjeta']['medioPago'];
+
+          if (dataEntrega['infoTarjeta']['codigoAutorizacion']) {
+            if ( !( (dataEntrega['infoTarjeta']['codigoAutorizacion']+"").length >= 6 && (dataEntrega['infoTarjeta']['codigoAutorizacion']+"").length <= 10) ) {
+              throw new Error('El código de Autorización en data.condicion.entregas[' +
+              i +
+              '].infoTarjeta.codigoAutorizacion debe tener de 6 y 10 caracteres');              
+            }
+            cuotaInicialEntrega['gPagTarCD']['dCodAuOpe'] = +dataEntrega['infoTarjeta']['codigoAutorizacion'];
+          }
+          
+          if (dataEntrega['infoTarjeta']['titular']) {
+            cuotaInicialEntrega['gPagTarCD']['dNomTit'] = dataEntrega['infoTarjeta']['titular'];
+          }
+
+          if (dataEntrega['infoTarjeta']['numero']) { 
+            if ( !( (dataEntrega['infoTarjeta']['codigoAutorizacion']+"").length == 4) ) {
+              throw new Error('El código de Autorización en data.condicion.entregas[' +
+              i +
+              '].infoTarjeta.numero debe tener de 4 caracteres');              
+            }
+
+            cuotaInicialEntrega['gPagTarCD']['dNumTarj'] = dataEntrega['infoTarjeta']['numero'];
+          }
+
         }
 
         //Verificar si el Pago es con Cheque
