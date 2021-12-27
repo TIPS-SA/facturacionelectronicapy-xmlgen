@@ -513,11 +513,11 @@ class JSonDeMainService {
 
     var reg = new RegExp(/^\d+$/);
     if (!reg.test(rucEmisor)) {
-        throw new Error("El RUC debe ser numérico");
+      throw new Error('El RUC debe ser numérico');
     }
     if (!reg.test(dvEmisor)) {
-        throw new Error("El DV del RUC debe ser numérico");
-    }    
+      throw new Error('El DV del RUC debe ser numérico');
+    }
     const id = this.codigoControl;
     //const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
@@ -941,15 +941,15 @@ class JSonDeMainService {
         throw new Error('RUC debe contener dígito verificador en data.cliente.ruc');
       }
 
-      const rucCliente = data['cliente']['ruc'].split("-");
-      
+      const rucCliente = data['cliente']['ruc'].split('-');
+
       var reg = new RegExp(/^\d+$/);
       if (!reg.test(rucCliente[0])) {
-          throw new Error("El RUC debe ser numérico");
+        throw new Error('El RUC debe ser numérico');
       }
       if (!reg.test(rucCliente[1])) {
-          throw new Error("El DV del RUC debe ser numérico");
-      }    
+        throw new Error('El DV del RUC debe ser numérico');
+      }
     }
 
     if (constanteService.paises.filter((pais: any) => pais.codigo === data['cliente']['pais']).length == 0) {
@@ -1490,11 +1490,12 @@ class JSonDeMainService {
 
         //Verificar si el Pago es con Tarjeta de crédito
         if (dataEntrega['tipo'] === 3 || dataEntrega['tipo'] === 4) {
-
           if (!dataEntrega['infoTarjeta']) {
-            throw new Error('Debe informar sobre la tarjeta en data.condicion.entregas[' +
-            i +
-            '].infoTarjeta si la forma de Pago es a Tarjeta');
+            throw new Error(
+              'Debe informar sobre la tarjeta en data.condicion.entregas[' +
+                i +
+                '].infoTarjeta si la forma de Pago es a Tarjeta',
+            );
           }
 
           if (
@@ -1540,11 +1541,12 @@ class JSonDeMainService {
 
         //Verificar si el Pago es con Cheque
         if (dataEntrega['tipo'] === 2) {
-
           if (!dataEntrega['infoCheque']) {
-            throw new Error('Debe informar sobre el cheque en data.condicion.entregas[' +
-            i +
-            '].infoCheque si la forma de Pago es 2-Cheques');
+            throw new Error(
+              'Debe informar sobre el cheque en data.condicion.entregas[' +
+                i +
+                '].infoCheque si la forma de Pago es 2-Cheques',
+            );
           }
 
           cuotaInicialEntrega['gPagCheq'] = {
