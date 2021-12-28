@@ -1615,12 +1615,6 @@ class JSonDeMainService {
       );
     }
 
-    if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
-      if (!(data['condicion']['credito']['montoEntrega'] > 0)) {
-        throw new Error('Debe especificar el monto de la Entrega en condicion.credito.montoEntrega');
-      }
-    }
-
     if (
       constanteService.condicionesCreditosTipos.filter((um: any) => um.codigo === data['condicion']['credito']['tipo'])
         .length == 0
@@ -1650,9 +1644,15 @@ class JSonDeMainService {
       }
     }
 
-    if (data['condicion']['credito']['montoEntrega']) {
-      this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dMonEnt'] =
-        data['condicion']['credito']['montoEntrega'];
+    if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
+      let sumaEntregas = 0;
+      //Obtiene la sumatoria 
+      for (let i = 0; i < data['condicion']['entregas'].length; i++) {
+        const entrega = data['condicion']['entregas'][i];
+        sumaEntregas += entrega['monto']; //Y cuando es de moneda diferente ? como hace?
+      }
+
+      this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dMonEnt'] = sumaEntregas;
     }
 
     //Recorrer array de infoCuotas e informar en el JSON
