@@ -90,7 +90,7 @@ class JSonDteTotalesService {
       dTotAntItem += item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0;
       dTotAnt += item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0;
       dDescTotal +=
-        (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) +
+        ((item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer']) +
         (item['gValorItem']['gValorRestaItem']['dTotDescGlotem'] || 0);
       dAnticipo +=
         (item['gValorItem']['gValorRestaItem']['dTotAntItem'] || 0) +

@@ -540,6 +540,17 @@ class ConstanteService {
     },
   ];
 
+  tipoReceptor = [
+    {
+      codigo: 1,
+      descripcion: 'Contribuyente',
+    },
+    {
+      codigo: 2,
+      descripcion: 'No Contribuyente',
+    },
+  ];
+
   naturalezaVendedorAutofactura = [
     {
       codigo: 1,

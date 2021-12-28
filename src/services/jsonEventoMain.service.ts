@@ -52,6 +52,7 @@ class JSonEventoMainService {
     this.json['gGroupGesEve']['rGesEve']['rEve']['dVerFor'] = params.version;
     this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = {};
 
+    //Emisor
     if (data.tipoEvento == 1) {
       this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosEmisorCancelacion(params, data);
     }
@@ -60,22 +61,22 @@ class JSonEventoMainService {
       this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosEmisorInutilizacion(params, data);
     }
 
-    if (data.tipoEvento == 3) {
+    //if (data.tipoEvento == 3) {
       //this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventos(params, data);
-    }
+    //}
 
-    //Receptor
-    if (data.tipoEvento == 10) {
-      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
-    }
+    //Receptor (empieza en 11)
     if (data.tipoEvento == 11) {
-      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorConformidad(params, data);
     }
     if (data.tipoEvento == 12) {
-      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorDisconformidad(params, data);
     }
     if (data.tipoEvento == 13) {
-      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorDesconocimiento(params, data);
+    }
+    if (data.tipoEvento == 14) {
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacionRecepcion(params, data);
     }
     var builder = new xml2js.Builder({
       xmldec: {
@@ -132,6 +133,19 @@ class JSonEventoMainService {
   }
 
   private eventosEmisorCancelacion(params: any, data: any) {
+
+    if (!data['cdc']) {
+      throw new Error("Debe proporcionar el CDC en data.cdc");
+    }
+
+    if (!(data['cdc'].length == 44)) {
+      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+    }
+
+    if (!data['motivo']) {
+      throw new Error("Debe proporcionar el Motivo de la Disconformidad en data.motivo");
+    }
+
     const jsonResult: any = {};
     jsonResult['rGeVeCan'] = {
       Id: data['cdc'],
@@ -163,74 +177,35 @@ class JSonEventoMainService {
     return jsonResult;
   }
 
-  private eventosReceptorNotificacion(params: any, data: any) {
-    const jsonResult: any = {};
-    jsonResult['rGeVeNotRec'] = {
-      $: {
-        Id: data['Id'],
-      },
-      dFecEmi: data['dFecEmi'],
-      dFecRecep: data['dFecRecep'],
-      iTipRec: data['iTipRec'],
-      dNomRec: data['dNomRec'],
-    };
-
-    if (data['iTipRec'] == 1) {
-      if (data['dRucRec'].indexOf('-') == -1) {
-        throw new Error('RUC del Receptor debe contener dígito verificador en data.dRucRec');
-      }
-      const rucEmisor = data['dRucRec'].split('-')[0];
-      const dvEmisor = data['dRucRec'].split('-')[1];
-
-      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
-      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
-    }
-
-    if (data['iTipRec'] == 2) {
-      if (
-        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['dTipIDRec']).length == 0
-      ) {
-        throw new Error(
-          "Tipo de Documento '" +
-            data['dTipIDRec'] +
-            "' en data.dTipIdRec no encontrado. Valores: " +
-            constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
-        );
-      }
-
-      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['dTipIDRec'];
-      jsonResult['rGeVeNotRec']['dNumID'] = data['dNumID'];
-    }
-
-    jsonResult['rGeVeNotRec']['dTotalGs'] = data['dTotalGs'];
-
-    return jsonResult;
-  }
+  //---
+  //---
+  //---
 
   private eventosReceptorConformidad(params: any, data: any) {
     const jsonResult: any = {};
 
-    if (constanteService.eventoConformidadTipo.filter((um: any) => um.codigo === data['iTipConf']).length == 0) {
+    if (constanteService.eventoConformidadTipo.filter((um: any) => um.codigo === data['tipoConformidad']).length == 0) {
       throw new Error(
-        "Tipo de Documento '" +
-          data['iTipConf'] +
-          "' en data.iTipConf no encontrado. Valores: " +
+        "Tipo de Conformidad '" +
+          data['tipoConformidad'] +
+          "' en data.tipoConformidad no encontrado. Valores: " +
           constanteService.eventoConformidadTipo.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
 
     jsonResult['rGeVeConf'] = {
       $: {
-        Id: data['Id'],
+        Id: data['cdc'],
       },
-      iTipConf: data['iTipConf'],
-      dFecRecep: data['dFecRecep'],
+      iTipConf: data['tipoConformidad'],
     };
 
-    if (data['iTipConf'] == 2) {
-      if (!data['dFecRecep']) {
-        throw new Error('Obligatorio proporcionar Fecha estimada de recepción en data.dFecRecep');
+    if (data['tipoConformidad'] == 2) {
+
+      if (!data['fechaRecepcion']) {
+        throw new Error('Obligatorio proporcionar Fecha estimada de recepción en data.fechaRecepcion');
       }
+      jsonResult['rGeVeConf']['dFecRecep'] = data['fechaRecepcion'];
     }
 
     return jsonResult;
@@ -239,11 +214,23 @@ class JSonEventoMainService {
   private eventosReceptorDisconformidad(params: any, data: any) {
     const jsonResult: any = {};
 
+    if (!data['cdc']) {
+      throw new Error("Debe proporcionar el CDC en data.cdc");
+    }
+
+    if (!(data['cdc'].length == 44)) {
+      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+    }
+
+    if (!data['motivo']) {
+      throw new Error("Debe proporcionar el Motivo de la Disconformidad en data.motivo");
+    }
+
     jsonResult['rGeVeDisconf'] = {
       $: {
-        Id: data['Id'],
+        Id: data['cdc'],
       },
-      mOtEve: data['mOtEve'],
+      mOtEve: data['motivo'],
     };
 
     return jsonResult;
@@ -252,44 +239,143 @@ class JSonEventoMainService {
   private eventosReceptorDesconocimiento(params: any, data: any) {
     const jsonResult: any = {};
 
+    if (!data['cdc']) {
+      throw new Error("Debe proporcionar el CDC en data.cdc");
+    }
+
+    if (!(data['cdc'].length == 44)) {
+      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+    }
+
+    if (!data['motivo']) {
+      throw new Error("Debe proporcionar el Motivo de la Disconformidad en data.motivo");
+    }
+
+    if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
+      throw new Error(
+        "Tipo de Receptor '" +
+          data['tipoReceptor'] +
+          "' en data.tipoReceptor no encontrado. Valores: " +
+          constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    if (!data['nombre']) {
+      throw new Error("Debe especificar el Nombre/Razón Social del receptor en data.nombre");
+    }
+
     jsonResult['rGeVeDescon'] = {
       $: {
-        Id: data['Id'],
+        Id: data['cdc'],
       },
-      dFecEmi: data['dFecEmi'],
-      dFecRecep: data['dFecRecep'],
-      iTipRec: data['iTipRec'],
-      dNomRec: data['dNomRec'],
+      dFecEmi: data['fechaEmision'],
+      dFecRecep: data['fechaRecepcion'],
+      iTipRec: +data['tipoReceptor'],
+      dNomRec: data['nombre'],
     };
 
-    if (data['iTipRec'] == 1) {
-      if (data['dRucRec'].indexOf('-') == -1) {
-        throw new Error('RUC del Receptor debe contener dígito verificador en data.dRucRec');
+    if (+data['tipoReceptor'] == 1) {
+      if (data['ruc'].indexOf('-') == -1) {
+        throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
       }
-      const rucEmisor = data['dRucRec'].split('-')[0];
-      const dvEmisor = data['dRucRec'].split('-')[1];
+      const rucEmisor = data['ruc'].split('-')[0];
+      const dvEmisor = data['ruc'].split('-')[1];
 
       jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
       jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
     }
 
-    if (data['iTipRec'] == 2) {
+    if (+data['tipoReceptor'] == 2) {
       if (
-        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['dTipIDRec']).length == 0
+        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
       ) {
         throw new Error(
           "Tipo de Documento '" +
-            data['dTipIDRec'] +
-            "' en data.dTipIdRec no encontrado. Valores: " +
+            data['documentoTipo'] +
+            "' en data.documentoTipo no encontrado. Valores: " +
             constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
 
-      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['dTipIDRec'];
-      jsonResult['rGeVeNotRec']['dNumID'] = data['dNumID'];
+      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
+
+      if (!data['documentoNumero']) {
+        throw new Error("Debe especificar el Número de Documento del receptor en data.documentoNumero");
+      }
+      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
     }
 
-    jsonResult['rGeVeNotRec']['mOtEve'] = data['mOtEve'];
+    jsonResult['rGeVeNotRec']['mOtEve'] = data['motivo'];
+    return jsonResult;
+  }
+
+  private eventosReceptorNotificacionRecepcion(params: any, data: any) {
+    const jsonResult: any = {};
+
+    if (!data['cdc']) {
+      throw new Error("Debe proporcionar el CDC en data.cdc");
+    }
+
+    if (!(data['cdc'].length == 44)) {
+      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+    }
+
+    if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
+      throw new Error(
+        "Tipo de Receptor '" +
+          data['tipoReceptor'] +
+          "' en data.tipoReceptor no encontrado. Valores: " +
+          constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    if (!data['nombre']) {
+      throw new Error("Debe especificar el Nombre/Razón Social del receptor en data.nombre");
+    }
+
+    jsonResult['rGeVeNotRec'] = {
+      $: {
+        Id: data['cdc'],
+      },
+      dFecEmi: data['fechaEmision'],
+      dFecRecep: data['fechaRecepcion'],
+      iTipRec: +data['tipoReceptor'],
+      dNomRec: data['nombre'],
+    };
+
+    if (+data['tipoReceptor'] == 1) {
+      if (data['ruc'].indexOf('-') == -1) {
+        throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
+      }
+      const rucEmisor = data['ruc'].split('-')[0];
+      const dvEmisor = data['ruc'].split('-')[1];
+
+      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
+      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
+    }
+
+    if (+data['tipoReceptor'] == 2) {
+      if (
+        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
+      ) {
+        throw new Error(
+          "Tipo de Documento '" +
+            data['documentoTipo'] +
+            "' en data.documentoTipo no encontrado. Valores: " +
+            constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }
+
+      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
+
+      if (!data['documentoNumero']) {
+        throw new Error("Debe especificar el Número de Documento del receptor en data.documentoNumero");
+      }
+      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
+    }
+
+    jsonResult['rGeVeNotRec']['dTotalGs'] = data['totalPYG'];
+
     return jsonResult;
   }
 
