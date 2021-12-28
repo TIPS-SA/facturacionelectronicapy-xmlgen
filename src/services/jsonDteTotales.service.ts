@@ -85,10 +85,10 @@ class JSonDteTotalesService {
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
       console.log('Cantidaddddddddddddddddddddddddddd...', item, item['dCantProSer']);
-      dTotDesc += ((item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer']);
+      dTotDesc += (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'];
       dTotDescGlotem += item.gValorItem?.gValorRestaItem?.dDescGloItem || 0;
       dTotAntItem += item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0;
-      dTotAnt += ((item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0) * item['dCantProSer']);
+      dTotAnt += (item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0) * item['dCantProSer'];
       dDescTotal +=
         (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'] +
         (item['gValorItem']['gValorRestaItem']['dTotDescGlotem'] || 0);
