@@ -62,7 +62,7 @@ class JSonEventoMainService {
     }
 
     //if (data.tipoEvento == 3) {
-      //this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventos(params, data);
+    //this.json['gGroupGesEve']['rGesEve']['gGroupTiEvt'] = this.eventos(params, data);
     //}
 
     //Receptor (empieza en 11)
@@ -76,7 +76,10 @@ class JSonEventoMainService {
       this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorDesconocimiento(params, data);
     }
     if (data.tipoEvento == 14) {
-      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacionRecepcion(params, data);
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventosReceptorNotificacionRecepcion(
+        params,
+        data,
+      );
     }
     var builder = new xml2js.Builder({
       xmldec: {
@@ -133,17 +136,16 @@ class JSonEventoMainService {
   }
 
   private eventosEmisorCancelacion(params: any, data: any) {
-
     if (!data['cdc']) {
-      throw new Error("Debe proporcionar el CDC en data.cdc");
+      throw new Error('Debe proporcionar el CDC en data.cdc');
     }
 
     if (!(data['cdc'].length == 44)) {
-      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+      throw new Error('El CDC en data.cdc debe tener 44 caracteres');
     }
 
     if (!data['motivo']) {
-      throw new Error("Debe proporcionar el Motivo de la Disconformidad en data.motivo");
+      throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
     const jsonResult: any = {};
@@ -201,7 +203,6 @@ class JSonEventoMainService {
     };
 
     if (data['tipoConformidad'] == 2) {
-
       if (!data['fechaRecepcion']) {
         throw new Error('Obligatorio proporcionar Fecha estimada de recepción en data.fechaRecepcion');
       }
@@ -215,15 +216,15 @@ class JSonEventoMainService {
     const jsonResult: any = {};
 
     if (!data['cdc']) {
-      throw new Error("Debe proporcionar el CDC en data.cdc");
+      throw new Error('Debe proporcionar el CDC en data.cdc');
     }
 
     if (!(data['cdc'].length == 44)) {
-      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+      throw new Error('El CDC en data.cdc debe tener 44 caracteres');
     }
 
     if (!data['motivo']) {
-      throw new Error("Debe proporcionar el Motivo de la Disconformidad en data.motivo");
+      throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
     jsonResult['rGeVeDisconf'] = {
@@ -240,15 +241,15 @@ class JSonEventoMainService {
     const jsonResult: any = {};
 
     if (!data['cdc']) {
-      throw new Error("Debe proporcionar el CDC en data.cdc");
+      throw new Error('Debe proporcionar el CDC en data.cdc');
     }
 
     if (!(data['cdc'].length == 44)) {
-      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+      throw new Error('El CDC en data.cdc debe tener 44 caracteres');
     }
 
     if (!data['motivo']) {
-      throw new Error("Debe proporcionar el Motivo de la Disconformidad en data.motivo");
+      throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
@@ -261,7 +262,7 @@ class JSonEventoMainService {
     }
 
     if (!data['nombre']) {
-      throw new Error("Debe especificar el Nombre/Razón Social del receptor en data.nombre");
+      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
     }
 
     jsonResult['rGeVeDescon'] = {
@@ -300,7 +301,7 @@ class JSonEventoMainService {
       jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
 
       if (!data['documentoNumero']) {
-        throw new Error("Debe especificar el Número de Documento del receptor en data.documentoNumero");
+        throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
       }
       jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
     }
@@ -313,11 +314,11 @@ class JSonEventoMainService {
     const jsonResult: any = {};
 
     if (!data['cdc']) {
-      throw new Error("Debe proporcionar el CDC en data.cdc");
+      throw new Error('Debe proporcionar el CDC en data.cdc');
     }
 
     if (!(data['cdc'].length == 44)) {
-      throw new Error("El CDC en data.cdc debe tener 44 caracteres");
+      throw new Error('El CDC en data.cdc debe tener 44 caracteres');
     }
 
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
@@ -330,7 +331,7 @@ class JSonEventoMainService {
     }
 
     if (!data['nombre']) {
-      throw new Error("Debe especificar el Nombre/Razón Social del receptor en data.nombre");
+      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
     }
 
     jsonResult['rGeVeNotRec'] = {
@@ -369,7 +370,7 @@ class JSonEventoMainService {
       jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
 
       if (!data['documentoNumero']) {
-        throw new Error("Debe especificar el Número de Documento del receptor en data.documentoNumero");
+        throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
       }
       jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
     }
