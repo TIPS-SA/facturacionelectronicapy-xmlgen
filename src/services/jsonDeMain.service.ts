@@ -1094,7 +1094,6 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['codigo']) {
-      console.log('Longitud', data['cliente']['codigo'], data['cliente']['codigo'].length);
       if (!((data['cliente']['codigo'] + '').length >= 3)) {
         throw new Error(
           "El código del Cliente '" +
@@ -1610,10 +1609,19 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE_Credito(params: any, data: any) {
+
     if (!data['condicion']['credito']['tipo']) {
       throw new Error(
         'El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condicion posee créditos',
       );
+    }
+
+    if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
+      if ( ! (data['condicion']['credito']['montoEntrega'] > 0)) {
+        throw new Error(
+          'Debe especificar el monto de la Entrega en condicion.credito.montoEntrega',
+        );
+      }
     }
 
     if (

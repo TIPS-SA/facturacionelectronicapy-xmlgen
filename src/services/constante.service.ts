@@ -8168,7 +8168,6 @@ class ConstanteService {
     }
 
     if (distritoId) {
-      console.log('distritoId', distritoId);
       let departamentoDistritoId = this.distritos.filter((td) => td.codigo === distritoId)[0]['departamento'];
 
       if (departamentoId != departamentoDistritoId) {

@@ -79,12 +79,9 @@ class JSonDteTotalesService {
         }
       }
       //---
-      //console.log("td", data['tipoDocumento']);
       if (data['tipoDocumento'] == 4) {
-        //console.log("dTotOpeItem", item);
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
-      console.log('Cantidaddddddddddddddddddddddddddd...', item, item['dCantProSer']);
       dTotDesc += (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'];
       dTotDescGlotem += item.gValorItem?.gValorRestaItem?.dDescGloItem || 0;
       dTotAntItem += item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0;

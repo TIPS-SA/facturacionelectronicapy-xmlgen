@@ -158,7 +158,6 @@ class JSonEventoMainService {
   }
 
   private eventosEmisorInutilizacion(params: any, data: any) {
-    //console.log("---", data['timbrado'], data['timbrado'].length, new String(data['timbrado']).length);
     if (!data['timbrado']) {
       throw new Error('Falta el Timbrado en data.timbrado');
     }
