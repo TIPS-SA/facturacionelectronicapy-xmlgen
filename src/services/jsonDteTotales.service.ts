@@ -84,13 +84,13 @@ class JSonDteTotalesService {
         //console.log("dTotOpeItem", item);
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
-      console.log("Cantidaddddddddddddddddddddddddddd..." + item, item['dCantProSer']);
+      console.log('Cantidaddddddddddddddddddddddddddd...' + item, item['dCantProSer']);
       dTotDesc += item['gValorItem']['gValorRestaItem']['dDescItem'] || 0;
       dTotDescGlotem += item.gValorItem?.gValorRestaItem?.dDescGloItem || 0;
       dTotAntItem += item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0;
       dTotAnt += item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0;
       dDescTotal +=
-        ((item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer']) +
+        (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'] +
         (item['gValorItem']['gValorRestaItem']['dTotDescGlotem'] || 0);
       dAnticipo +=
         (item['gValorItem']['gValorRestaItem']['dTotAntItem'] || 0) +
