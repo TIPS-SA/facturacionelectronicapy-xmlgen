@@ -1646,7 +1646,7 @@ class JSonDeMainService {
 
     if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
       let sumaEntregas = 0;
-      //Obtiene la sumatoria 
+      //Obtiene la sumatoria
       for (let i = 0; i < data['condicion']['entregas'].length; i++) {
         const entrega = data['condicion']['entregas'][i];
         sumaEntregas += entrega['monto']; //Y cuando es de moneda diferente ? como hace?
