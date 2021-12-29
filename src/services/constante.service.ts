@@ -42,7 +42,7 @@ class ConstanteService {
     },
   ];
 
-/*  tiposEventos = [
+  /*  tiposEventos = [
     {
       codigo: 1,
       descripcion: 'Cancelación',
