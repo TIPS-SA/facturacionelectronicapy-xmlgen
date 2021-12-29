@@ -42,7 +42,7 @@ class ConstanteService {
     },
   ];
 
-  tiposEventos = [
+/*  tiposEventos = [
     {
       codigo: 1,
       descripcion: 'Cancelación',
@@ -79,7 +79,7 @@ class ConstanteService {
       situacion: 0,
     },
   ];
-
+*/
   tiposEmisiones = [
     {
       codigo: 1,

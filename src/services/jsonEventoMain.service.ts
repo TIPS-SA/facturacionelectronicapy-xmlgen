@@ -105,7 +105,7 @@ class JSonEventoMainService {
    * @param data
    */
   private addDefaultValues(data: any) {
-    if (constanteService.tiposEventos.filter((um) => um.codigo === data['tipoEvento']).length == 0) {
+    /*if (constanteService.tiposEventos.filter((um) => um.codigo === data['tipoEvento']).length == 0) {
       throw (
         new Error("Tipo de Evento '" + data['tipoEvento']) +
         "' en data.tipoEvento no válido. Valores: " +
@@ -114,7 +114,7 @@ class JSonEventoMainService {
     }
     data['tipoEventoDescripcion'] = constanteService.tiposEventos.filter((td) => td.codigo == data['tipoEvento'])[0][
       'descripcion'
-    ];
+    ];*/
   }
 
   /**
@@ -281,8 +281,8 @@ class JSonEventoMainService {
       const rucEmisor = data['ruc'].split('-')[0];
       const dvEmisor = data['ruc'].split('-')[1];
 
-      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
-      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
+      jsonResult['rGeVeDescon']['dRucRec'] = rucEmisor;
+      jsonResult['rGeVeDescon']['dDVRec'] = dvEmisor;
     }
 
     if (+data['tipoReceptor'] == 2) {
@@ -297,15 +297,15 @@ class JSonEventoMainService {
         );
       }
 
-      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
+      jsonResult['rGeVeDescon']['dTipIDRec'] = data['documentoTipo'];
 
       if (!data['documentoNumero']) {
         throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
       }
-      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
+      jsonResult['rGeVeDescon']['dNumID'] = data['documentoNumero'];
     }
 
-    jsonResult['rGeVeNotRec']['mOtEve'] = data['motivo'];
+    jsonResult['rGeVeDescon']['mOtEve'] = data['motivo'];
     return jsonResult;
   }
 
