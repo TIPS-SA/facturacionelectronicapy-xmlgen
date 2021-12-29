@@ -1008,9 +1008,12 @@ class JSonDeMainService {
       }
     }
 
-    this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] =
-      data['cliente']['documentoTipo'] === 5 ? 'Sin Nombre' : data['cliente']['razonSocial'];
+    this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = data['cliente']['razonSocial'];
 
+    if (+data['cliente']['documentoTipo'] === 5) {
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = 'Sin Nombre';
+    }
+    
     //if (data['cliente']['documentoTipo'] === 5) {
     if (data['cliente']['nombreFantasia']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
