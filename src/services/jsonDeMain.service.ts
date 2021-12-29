@@ -1013,7 +1013,7 @@ class JSonDeMainService {
     if (+data['cliente']['documentoTipo'] === 5) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = 'Sin Nombre';
     }
-    
+
     //if (data['cliente']['documentoTipo'] === 5) {
     if (data['cliente']['nombreFantasia']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
