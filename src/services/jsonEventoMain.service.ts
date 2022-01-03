@@ -217,7 +217,7 @@ class JSonEventoMainService {
       if (new String(data['fechaRecepcion']).length != 19) {
         throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
       }
-  
+
       jsonResult['rGeVeConf']['dFecRecep'] = data['fechaRecepcion'];
     }
 
@@ -244,7 +244,7 @@ class JSonEventoMainService {
     }
 
     jsonResult['rGeVeDisconf'] = {
-      Id : data['cdc'],
+      Id: data['cdc'],
       mOtEve: data['motivo'],
     };
 
