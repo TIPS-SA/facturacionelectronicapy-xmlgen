@@ -1,4 +1,5 @@
 import constanteService from './Constante.service';
+import stringUtilService from './StringUtil.service';
 
 class JSonDteIdentificacionDocumentoService {
   /**
@@ -64,15 +65,23 @@ class JSonDteIdentificacionDocumentoService {
       //H002 = Impreso
       if (data['documentoAsociado']['timbrado']) {
         jsonResult['dNTimDI'] = data['documentoAsociado']['timbrado'];
+      } else {
+        throw new Error("Debe especificar el Timbrado del Documento Asociado en data.documentoAsociado.timbrado");
       }
       if (data['documentoAsociado']['establecimiento']) {
-        jsonResult['dEstDocAso'] = data['documentoAsociado']['establecimiento'];
+        jsonResult['dEstDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['establecimiento'] + '', 3);
+      } else {
+        throw new Error("Debe especificar el Establecimiento del Documento Asociado en data.documentoAsociado.establecimiento");
       }
       if (data['documentoAsociado']['punto']) {
-        jsonResult['dPExpDocAso'] = data['documentoAsociado']['punto'];
+        jsonResult['dPExpDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['punto'] + '', 3);
+      } else {
+        throw new Error("Debe especificar el Punto del Documento Asociado en data.documentoAsociado.punto");
       }
       if (data['documentoAsociado']['numero']) {
-        jsonResult['dNumDocAso'] = data['documentoAsociado']['numero'];
+        jsonResult['dNumDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['numero'] + '', 7);
+      } else {
+        throw new Error("Debe especificar el Número del Documento Asociado en data.documentoAsociado.numero");
       }
       if (data['documentoAsociado']['tipoDocumentoImpreso']) {
         jsonResult['iTipoDocAso'] = data['documentoAsociado']['tipoDocumentoImpreso'];
