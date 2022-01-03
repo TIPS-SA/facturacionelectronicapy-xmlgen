@@ -66,7 +66,9 @@ class JSonDteIdentificacionDocumentoService {
       if (data['documentoAsociado']['timbrado']) {
         jsonResult['dNTimDI'] = data['documentoAsociado']['timbrado'];
       } else {
-        throw new Error('Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado');
+        throw new Error(
+          'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
+        );
       }
       if (data['documentoAsociado']['establecimiento']) {
         jsonResult['dEstDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['establecimiento'] + '', 3);
@@ -91,7 +93,9 @@ class JSonDteIdentificacionDocumentoService {
           (td) => td.codigo === data['documentoAsociado']['tipoDocumentoImpreso'],
         )[0]['descripcion'];
       } else {
-        throw new Error('Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso');
+        throw new Error(
+          'Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso',
+        );
       }
       if (data['documentoAsociado']['fecha']) {
         jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
