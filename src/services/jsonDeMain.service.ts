@@ -1002,7 +1002,7 @@ class JSonDeMainService {
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
       }
 
-      if ((data['cliente']['documentoTipo'] = 5)) {
+      if (+data['cliente']['documentoTipo'] === 5) {
         //Si es innominado completar con cero
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
       }
