@@ -194,10 +194,19 @@ class JSonEventoMainService {
       );
     }
 
+    if (!data['cdc']) {
+      throw new Error('Debe proporcionar el CDC en data.cdc');
+    }
+
+    if (new String(data['cdc']).length != 44) {
+      throw new Error('El CDC en data.cdc debe tener una longitud de 44 caracteres');
+    }
+
     jsonResult['rGeVeConf'] = {
-      $: {
-        Id: data['cdc'],
-      },
+      /*$: {
+        ,
+      },*/
+      Id: data['cdc'],
       iTipConf: data['tipoConformidad'],
     };
 
@@ -205,6 +214,10 @@ class JSonEventoMainService {
       if (!data['fechaRecepcion']) {
         throw new Error('Obligatorio proporcionar Fecha estimada de recepción en data.fechaRecepcion');
       }
+      if (new String(data['fechaRecepcion']).length != 19) {
+        throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+      }
+  
       jsonResult['rGeVeConf']['dFecRecep'] = data['fechaRecepcion'];
     }
 
@@ -226,10 +239,12 @@ class JSonEventoMainService {
       throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
+    if (!(data['motivo'].length >= 5)) {
+      throw new Error('El Motivo en data.motivo debe tener una longitud mínima de 5 caracteres');
+    }
+
     jsonResult['rGeVeDisconf'] = {
-      $: {
-        Id: data['cdc'],
-      },
+      Id : data['cdc'],
       mOtEve: data['motivo'],
     };
 
@@ -251,6 +266,10 @@ class JSonEventoMainService {
       throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
+    if (!(data['motivo'].length >= 5)) {
+      throw new Error('El Motivo en data.motivo debe tener una longitud mínima de 5 caracteres');
+    }
+
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
       throw new Error(
         "Tipo de Receptor '" +
@@ -264,10 +283,20 @@ class JSonEventoMainService {
       throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
     }
 
+    if (!(data['nombre'].length >= 4)) {
+      throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de emisión debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
     jsonResult['rGeVeDescon'] = {
-      $: {
-        Id: data['cdc'],
-      },
+      Id: data['cdc'],
       dFecEmi: data['fechaEmision'],
       dFecRecep: data['fechaRecepcion'],
       iTipRec: +data['tipoReceptor'],
@@ -333,10 +362,20 @@ class JSonEventoMainService {
       throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
     }
 
+    if (!(data['nombre'].length >= 4)) {
+      throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de emisión debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
     jsonResult['rGeVeNotRec'] = {
-      $: {
-        Id: data['cdc'],
-      },
+      Id: data['cdc'],
       dFecEmi: data['fechaEmision'],
       dFecRecep: data['fechaRecepcion'],
       iTipRec: +data['tipoReceptor'],
