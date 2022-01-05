@@ -98,6 +98,9 @@ class JSonDteIdentificacionDocumentoService {
         );
       }
       if (data['documentoAsociado']['fecha']) {
+        if ((data['documentoAsociado']['fecha']+'').length != 10) {
+          throw new Error('La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres');
+        }
         jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
       } else {
         throw new Error('Debe especificar la Fecha del Documento impreso Asociado en data.documentoAsociado.fecha');
@@ -137,7 +140,7 @@ class JSonDteIdentificacionDocumentoService {
         jsonResult['dDesTipCons'] = constanteService.tiposConstancias.filter(
           (tc) => tc.codigo === data['documentoAsociado']['constanciaTipo'],
         )[0]['descripcion'];
-        jsonResult['dNumCons'] = data['documentoAsociado']['constanciaNumero'];
+        jsonResult['dNumCons'] = +data['documentoAsociado']['constanciaNumero'];
         jsonResult['dNumControl'] = data['documentoAsociado']['constanciaControl'];
       }
     }
