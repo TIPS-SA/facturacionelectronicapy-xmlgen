@@ -15,6 +15,7 @@ class JSonDeMainService {
   codigoSeguridad: any = null;
   codigoControl: any = null;
   json: any = {};
+  validateError = false;
 
   public generateXMLDE(params: any, data: any, defaultValues?: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -144,16 +145,19 @@ class JSonDeMainService {
    * @param data
    */
   private validateValues(data: any) {
-    if (typeof data['cliente']['contribuyente'] == 'undefined') {
-      throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
-    }
 
-    if (typeof data['cliente']['contribuyente'] == 'undefined') {
-      throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
-    }
+    if (this.validateError) {
+      if (typeof data['cliente']['contribuyente'] == 'undefined') {
+        throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+      }
 
-    if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
-      throw new Error('data.cliente.contribuyente debe ser true|false');
+      if (typeof data['cliente']['contribuyente'] == 'undefined') {
+        throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+      }
+
+      if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
+        throw new Error('data.cliente.contribuyente debe ser true|false');
+      }
     }
   }
 
@@ -511,28 +515,26 @@ class JSonDeMainService {
     const rucEmisor = params['ruc'].split('-')[0];
     const dvEmisor = params['ruc'].split('-')[1];
 
-    var reg = new RegExp(/^\d+$/);
-    if (!reg.test(rucEmisor)) {
-      throw new Error('El RUC debe ser numérico');
-    }
-    if (!reg.test(dvEmisor)) {
-      throw new Error('El DV del RUC debe ser numérico');
+    if (this.validateError) {
+      var reg = new RegExp(/^\d+$/);
+      if (!reg.test(rucEmisor)) {
+        throw new Error('El RUC debe ser numérico');
+      }
+      if (!reg.test(dvEmisor)) {
+        throw new Error('El DV del RUC debe ser numérico');
+      }
     }
     const id = this.codigoControl;
-    //const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11 );
 
-    //if (!(params.fechaFirmaDigital && params.fechaFirmaDigital.length >= 10)) {
-    //            throw new Error("Debe proveer la fecha de la firma digital en params.fechaFirmaDigital");
-    //}
     const fechaFirmaDigital = new Date(params.fechaFirmaDigital);
 
     let digitoVerificadorString = this.codigoControl + '';
+
     const jsonResult = {
       $: {
         Id: id,
       },
       dDVId: digitoVerificadorString.substring(digitoVerificadorString.length - 1, digitoVerificadorString.length),
-      //dFecFirma : fechaUtilService.convertToJSONFormat(fechaFirmaDigital), //Fecha de la Firma Digital
       dFecFirma: fechaUtilService.convertToJSONFormat(new Date()),
       dSisFact: 1,
     };
@@ -579,8 +581,6 @@ class JSonDeMainService {
       iTipEmi: data['tipoEmision'],
       dDesTipEmi: constanteService.tiposEmisiones.filter((td) => td.codigo == data['tipoEmision'])[0]['descripcion'],
       dCodSeg: codigoSeguridadAleatorio,
-      //dInfoEmi: data['observacion'],
-      //dInfoFisc: data['descripcion'], //Este es obligatorio cuando es Nota de Remision
     };
 
     if (data['observacion'] && data['observacion'].length > 0) {
@@ -594,8 +594,10 @@ class JSonDeMainService {
     //Validar aqui "dInfoFisc"
     if (data['tipoDocumento'] == 7) {
       //Nota de Remision
-      if (!(data['descripcion'] && data['descripcion'].length > 0)) {
-        throw new Error('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
+      if (this.validateError) {
+        if (!(data['descripcion'] && data['descripcion'].length > 0)) {
+          throw new Error('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
+        }
       }
     }
   }
@@ -775,7 +777,7 @@ class JSonDeMainService {
 
     //Validar si el establecimiento viene en params
     let establecimiento = stringUtilService.leftZero(data['establecimiento'], 3);
-    let punto = stringUtilService.leftZero(data['punto'], 3);
+    //let punto = stringUtilService.leftZero(data['punto'], 3);
 
     if (params.establecimientos.filter((um: any) => um.codigo === establecimiento).length == 0) {
       throw new Error(
@@ -820,10 +822,6 @@ class JSonDeMainService {
       dTelEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'],
       dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
       dDenSuc: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['denominacion'],
-      /*gActEco : {
-                cActEco : params["actividadEconomica"],
-                dDesActEco : params["actividadEconomicaDescripcion"]
-            }*/
     };
 
     if (params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0) {
@@ -866,27 +864,26 @@ class JSonDeMainService {
       dDTipIDRespDE: constanteService.tiposDocumentosIdentidades.filter(
         (td) => td.codigo === data['usuario']['documentoTipo'],
       )[0]['descripcion'],
-      //dNumIDRespDE: data['usuario']['documentoNumero'],
-      //dNomRespDE: data['usuario']['nombre'],
-      //dCarRespDE: data['usuario']['cargo'],
     };
 
-    if (data['usuario']['documentoNumero']) {
-      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
-    } else {
-      throw new Error('El Documento del responsable en data.usuario.documentoNumero no puede ser vacio');
-    }
+    if (this.validateError) {
+      if (data['usuario']['documentoNumero']) {
+        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
+      } else {
+        throw new Error('El Documento del responsable en data.usuario.documentoNumero no puede ser vacio');
+      }
+    
+      if (data['usuario']['nombre']) {
+        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
+      } else {
+        throw new Error('El Nombre del responsable en data.usuario.nombre no puede ser vacio');
+      }
 
-    if (data['usuario']['nombre']) {
-      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
-    } else {
-      throw new Error('El Nombre del responsable en data.usuario.nombre no puede ser vacio');
-    }
-
-    if (data['usuario']['cargo']) {
-      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dCarRespDE'] = data['usuario']['cargo'];
-    } else {
-      throw new Error('El Cargo del responsable en data.usuario.cargo no puede ser vacio');
+      if (data['usuario']['cargo']) {
+        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dCarRespDE'] = data['usuario']['cargo'];
+      } else {
+        throw new Error('El Cargo del responsable en data.usuario.cargo no puede ser vacio');
+      }
     }
   }
 
@@ -933,22 +930,25 @@ class JSonDeMainService {
         );
       }
     }
+
     if (data['cliente']['contribuyente']) {
-      if (!data['cliente']['ruc']) {
-        throw new Error('Debe proporcionar el RUC en data.cliente.ruc');
-      }
-      if (data['cliente']['ruc'].indexOf('-') == -1) {
-        throw new Error('RUC debe contener dígito verificador en data.cliente.ruc');
-      }
+      if (this.validateError) {
+        if (!data['cliente']['ruc']) {
+          throw new Error('Debe proporcionar el RUC en data.cliente.ruc');
+        }
+        if (data['cliente']['ruc'].indexOf('-') == -1) {
+          throw new Error('RUC debe contener dígito verificador en data.cliente.ruc');
+        }
 
-      const rucCliente = data['cliente']['ruc'].split('-');
+        const rucCliente = data['cliente']['ruc'].split('-');
 
-      var reg = new RegExp(/^\d+$/);
-      if (!reg.test(rucCliente[0])) {
-        throw new Error('El RUC debe ser numérico');
-      }
-      if (!reg.test(rucCliente[1])) {
-        throw new Error('El DV del RUC debe ser numérico');
+        var reg = new RegExp(/^\d+$/);
+        if (!reg.test(rucCliente[0])) {
+          throw new Error('El RUC debe ser numérico');
+        }
+        if (!reg.test(rucCliente[1])) {
+          throw new Error('El DV del RUC debe ser numérico');
+        }
       }
     }
 
@@ -962,8 +962,10 @@ class JSonDeMainService {
     }
 
     if (data['tipoDocumento'] == 4) {
-      if (data['cliente']['tipoOperacion'] != 2) {
-        throw new Error('El Tipo de Operación debe ser 2-B2C para el Tipo de Documento AutoFactura');
+      if (this.validateError) {
+        if (data['cliente']['tipoOperacion'] != 2) {
+          throw new Error('El Tipo de Operación debe ser 2-B2C para el Tipo de Documento AutoFactura');
+        }
       }
     }
 
@@ -981,30 +983,31 @@ class JSonDeMainService {
     }
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
-      if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
-        throw new Error('Debe informar el número de documento en data.cliente.documentoNumero');
-      }
-      //iTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? data['cliente']['documentoTipo'] : null,
-      //dDTipIDRec : (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) ? constanteService.tiposDocumentosReceptor.filter(tdr => { tdr.codigo === data['cliente']['documentoTipo']})[0]["descripcion"]  : null,
-      //dNumIDRec : null,   //Sera Sobreescito D210
+      
+      if (this.validateError) {
+        if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
+         throw new Error('Debe informar el número de documento en data.cliente.documentoNumero');
+        }
+      
 
-      if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
-        if (!data['cliente']['documentoTipo']) {
-          throw new Error('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');
+        if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
+          if (!data['cliente']['documentoTipo']) {
+            throw new Error('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');
+          }
+
+          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
+
+          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
+            constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === data['cliente']['documentoTipo'])[0][
+              'descripcion'
+            ];
+          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
         }
 
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
-
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-          constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === data['cliente']['documentoTipo'])[0][
-            'descripcion'
-          ];
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
-      }
-
-      if (+data['cliente']['documentoTipo'] === 5) {
-        //Si es innominado completar con cero
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
+        if (+data['cliente']['documentoTipo'] === 5) {
+          //Si es innominado completar con cero
+          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
+        }
       }
     }
 
@@ -1040,19 +1043,24 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['tipoOperacion'] != 4) {
-      if (!data['cliente']['departamento']) {
-        throw new Error(
-          'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
-        );
+      if (this.validateError) {
+        if (!data['cliente']['departamento']) {
+          throw new Error(
+            'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
+          );
+        }
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
         (td) => td.codigo === +data['cliente']['departamento'],
       )[0]['descripcion'];
     }
+
     if (data['cliente']['tipoOperacion'] != 4) {
-      if (!data['cliente']['distrito']) {
-        throw new Error('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
+      if (this.validateError) {
+        if (!data['cliente']['distrito']) {
+          throw new Error('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
+        }
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = +data['cliente']['distrito'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = constanteService.distritos.filter(
@@ -1060,8 +1068,10 @@ class JSonDeMainService {
       )[0]['descripcion'];
     }
     if (data['cliente']['tipoOperacion'] != 4) {
-      if (!data['cliente']['ciudad']) {
-        throw new Error('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
+      if (this.validateError) {
+        if (!data['cliente']['ciudad']) {
+          throw new Error('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
+        }
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
@@ -1097,12 +1107,14 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['codigo']) {
-      if (!((data['cliente']['codigo'] + '').length >= 3)) {
-        throw new Error(
-          "El código del Cliente '" +
-            data['cliente']['codigo'] +
-            "' en data.cliente.codigo debe tener al menos 3 caracteres",
-        );
+      if (this.validateError) {
+        if (!((data['cliente']['codigo'] + '').length >= 3)) {
+          throw new Error(
+            "El código del Cliente '" +
+              data['cliente']['codigo'] +
+              "' en data.cliente.codigo debe tener al menos 3 caracteres",
+          );
+        }
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = data['cliente']['codigo'];
     }
@@ -1205,21 +1217,23 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
-    if (!data['autoFactura']) {
-      throw new Error('Para tipoDocumento = 4 debe proveer los datos de Autofactura en data.autoFactura');
-    }
-    if (!data['autoFactura']['ubicacion']) {
-      throw new Error(
-        'Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion',
-      );
-    }
+    if (this.validateError) {
+      if (!data['autoFactura']) {
+        throw new Error('Para tipoDocumento = 4 debe proveer los datos de Autofactura en data.autoFactura');
+      }
+      if (!data['autoFactura']['ubicacion']) {
+        throw new Error(
+          'Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion',
+        );
+      }
+    
+      if (!data['autoFactura']['tipoVendedor']) {
+        throw new Error('Debe especificar la Naturaleza del Vendedor en data.autoFactura.tipoVendedor');
+      }
 
-    if (!data['autoFactura']['tipoVendedor']) {
-      throw new Error('Debe especificar la Naturaleza  del Vendedor en data.autoFactura.tipoVendedor');
-    }
-
-    if (!data['autoFactura']['documentoTipo']) {
-      throw new Error('Debe especificar el Tipo de Documento del Vendedor en data.autoFactura.documentoTipo');
+      if (!data['autoFactura']['documentoTipo']) {
+        throw new Error('Debe especificar el Tipo de Documento del Vendedor en data.autoFactura.documentoTipo');
+      }
     }
 
     if (
@@ -1248,43 +1262,45 @@ class JSonDeMainService {
       );
     }
 
-    if (!data['autoFactura']['ubicacion']) {
-      throw new Error('Debe especificar la ubicación de la transacción en data.autoFactura.ubicacion');
-    }
+    if (this.validateError) {
+      if (!data['autoFactura']['ubicacion']) {
+        throw new Error('Debe especificar la ubicación de la transacción en data.autoFactura.ubicacion');
+      }
 
-    if (!data['autoFactura']['documentoNumero']) {
-      throw new Error('Debe especificar el Nro. de Documento del Vendedor en data.autoFactura.documentoNumero');
-    }
-    if (!data['autoFactura']['nombre']) {
-      throw new Error('Debe especificar el Nombre del Vendedor en data.autoFactura.nombre');
-    }
-    if (!data['autoFactura']['direccion']) {
-      throw new Error('Debe especificar la Dirección del Vendedor en data.autoFactura.direccion');
-    }
-    if (!data['autoFactura']['numeroCasa']) {
-      throw new Error('Debe especificar el Número de Casa del Vendedor en data.autoFactura.numeroCasa');
-    }
+      if (!data['autoFactura']['documentoNumero']) {
+        throw new Error('Debe especificar el Nro. de Documento del Vendedor en data.autoFactura.documentoNumero');
+      }
+      if (!data['autoFactura']['nombre']) {
+        throw new Error('Debe especificar el Nombre del Vendedor en data.autoFactura.nombre');
+      }
+      if (!data['autoFactura']['direccion']) {
+        throw new Error('Debe especificar la Dirección del Vendedor en data.autoFactura.direccion');
+      }
+      if (!data['autoFactura']['numeroCasa']) {
+        throw new Error('Debe especificar el Número de Casa del Vendedor en data.autoFactura.numeroCasa');
+      }
 
-    if (!data['autoFactura']['departamento']) {
-      throw new Error('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
-    }
-    if (!data['autoFactura']['distrito']) {
-      throw new Error('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
-    }
-    if (!data['autoFactura']['ciudad']) {
-      throw new Error('Debe especificar la Ciudad del Vendedor en data.autoFactura.ciudad');
-    }
+      if (!data['autoFactura']['departamento']) {
+        throw new Error('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
+      }
+      if (!data['autoFactura']['distrito']) {
+        throw new Error('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
+      }
+      if (!data['autoFactura']['ciudad']) {
+        throw new Error('Debe especificar la Ciudad del Vendedor en data.autoFactura.ciudad');
+      }
 
-    if (!data['autoFactura']['ubicacion']['departamento']) {
-      throw new Error(
-        'Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento',
-      );
-    }
-    if (!data['autoFactura']['ubicacion']['distrito']) {
-      throw new Error('Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito');
-    }
-    if (!data['autoFactura']['ubicacion']['ciudad']) {
-      throw new Error('Debe especificar la Ciudad del Lugar de la Transacción en data.autoFactura.ubicacion.ciudad');
+      if (!data['autoFactura']['ubicacion']['departamento']) {
+        throw new Error(
+          'Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento',
+        );
+      }
+      if (!data['autoFactura']['ubicacion']['distrito']) {
+        throw new Error('Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito');
+      }
+      if (!data['autoFactura']['ubicacion']['ciudad']) {
+        throw new Error('Debe especificar la Ciudad del Lugar de la Transacción en data.autoFactura.ubicacion.ciudad');
+      }
     }
 
     this.json['rDE']['DE']['gDtipDE']['gCamAE'] = {
@@ -1343,8 +1359,10 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
-    if (!data['notaCreditoDebito']['motivo']) {
-      throw new Error('Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo');
+    if (this.validateError) {
+      if (!data['notaCreditoDebito']['motivo']) {
+        throw new Error('Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo');
+      }
     }
     if (
       constanteService.notasCreditosMotivos.filter((um: any) => um.codigo === data['notaCreditoDebito']['motivo'])
@@ -1367,13 +1385,14 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_RemisionElectronica(params: any, data: any) {
-    if (!(data['remision'] && data['remision']['motivo'])) {
-      throw new Error('No fue pasado el Motivo de la Remisión en data.remision.motivo.');
+    if (this.validateError) {
+      if (!(data['remision'] && data['remision']['motivo'])) {
+        throw new Error('No fue pasado el Motivo de la Remisión en data.remision.motivo.');
+      }
+      if (!(data['remision'] && data['remision']['tipoResponsable'])) {
+        throw new Error('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');
+      }
     }
-    if (!(data['remision'] && data['remision']['tipoResponsable'])) {
-      throw new Error('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');
-    }
-
     if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === data['remision']['motivo']).length == 0) {
       throw new Error(
         "Motivo de la Remisión '" +
@@ -1530,15 +1549,7 @@ class JSonDeMainService {
                 : constanteService.tarjetasCreditosTipos.filter(
                     (co) => co.codigo === dataEntrega['infoTarjeta']['tipo'],
                   )[0]['descripcion'],
-            /*
-            dRSProTar: dataEntrega['infoTarjeta']['razonSocial'],
-            dRUCProTar: dataEntrega['infoTarjeta']['ruc'].split('-')[0],
-            dDVProTar: dataEntrega['infoTarjeta']['ruc'].split('-')[1],
-
-            iForProPa: dataEntrega['infoTarjeta']['medioPago'], //Ver constante.tarjetasCreditosFormasProcesamiento
-            dCodAuOpe: dataEntrega['infoTarjeta']['codigoAutorizacion'],
-            dNomTit: dataEntrega['infoTarjeta']['titular'],
-            dNumTarj: dataEntrega['infoTarjeta']['numero'],*/
+           
           };
 
           if (dataEntrega['infoTarjeta']['razonSocial'] && dataEntrega['infoTarjeta']['ruc']) {
