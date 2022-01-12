@@ -866,24 +866,22 @@ class JSonDeMainService {
     };
 
     if (this.validateError) {
-      if (data['usuario']['documentoNumero']) {
-        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
-      } else {
+      if (!data['usuario']['documentoNumero']) {
         throw new Error('El Documento del responsable en data.usuario.documentoNumero no puede ser vacio');
       }
 
-      if (data['usuario']['nombre']) {
-        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
-      } else {
+      if (!data['usuario']['nombre']) {
         throw new Error('El Nombre del responsable en data.usuario.nombre no puede ser vacio');
       }
 
-      if (data['usuario']['cargo']) {
-        this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dCarRespDE'] = data['usuario']['cargo'];
-      } else {
+      if (!data['usuario']['cargo']) {
         throw new Error('El Cargo del responsable en data.usuario.cargo no puede ser vacio');
       }
     }
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNumIDRespDE'] = data['usuario']['documentoNumero'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dCarRespDE'] = data['usuario']['cargo'];
+
   }
 
   /**
