@@ -446,17 +446,21 @@ class JSonDteItemService {
 
     if (item['sectorAutomotor']['chasis']) {
       if (item['sectorAutomotor']['chasis'].length != 17) {
-        throw new Error("El Chasis '" + item['sectorAutomotor']['chasis'] + "' en data.items[" +
-        i +
-        "] debe tener 17 caracteres");
+        throw new Error(
+          "El Chasis '" + item['sectorAutomotor']['chasis'] + "' en data.items[" + i + '] debe tener 17 caracteres',
+        );
       }
     }
 
     if (item['sectorAutomotor']['cilindradas']) {
       if (item['sectorAutomotor']['cilindradas'].length != 4) {
-        throw new Error("La Cilindradas '" + item['sectorAutomotor']['cilindradas'] + "' en data.items[" +
-        i +
-        "] debe tener 4 caracteres");
+        throw new Error(
+          "La Cilindradas '" +
+            item['sectorAutomotor']['cilindradas'] +
+            "' en data.items[" +
+            i +
+            '] debe tener 4 caracteres',
+        );
       }
     }
 
