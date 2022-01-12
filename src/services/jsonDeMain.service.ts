@@ -145,7 +145,6 @@ class JSonDeMainService {
    * @param data
    */
   private validateValues(data: any) {
-
     if (this.validateError) {
       if (typeof data['cliente']['contribuyente'] == 'undefined') {
         throw new Error('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
@@ -872,7 +871,7 @@ class JSonDeMainService {
       } else {
         throw new Error('El Documento del responsable en data.usuario.documentoNumero no puede ser vacio');
       }
-    
+
       if (data['usuario']['nombre']) {
         this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE']['dNomRespDE'] = data['usuario']['nombre'];
       } else {
@@ -983,12 +982,11 @@ class JSonDeMainService {
     }
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
-      
+
       if (this.validateError) {
         if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
-         throw new Error('Debe informar el número de documento en data.cliente.documentoNumero');
+          throw new Error('Debe informar el número de documento en data.cliente.documentoNumero');
         }
-      
 
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
           if (!data['cliente']['documentoTipo']) {
@@ -998,9 +996,9 @@ class JSonDeMainService {
           this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
 
           this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-            constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === data['cliente']['documentoTipo'])[0][
-              'descripcion'
-            ];
+            constanteService.tiposDocumentosReceptor.filter(
+              (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
+            )[0]['descripcion'];
           this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
         }
 
@@ -1226,7 +1224,7 @@ class JSonDeMainService {
           'Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion',
         );
       }
-    
+
       if (!data['autoFactura']['tipoVendedor']) {
         throw new Error('Debe especificar la Naturaleza del Vendedor en data.autoFactura.tipoVendedor');
       }
@@ -1296,7 +1294,9 @@ class JSonDeMainService {
         );
       }
       if (!data['autoFactura']['ubicacion']['distrito']) {
-        throw new Error('Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito');
+        throw new Error(
+          'Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito',
+        );
       }
       if (!data['autoFactura']['ubicacion']['ciudad']) {
         throw new Error('Debe especificar la Ciudad del Lugar de la Transacción en data.autoFactura.ubicacion.ciudad');
@@ -1549,7 +1549,6 @@ class JSonDeMainService {
                 : constanteService.tarjetasCreditosTipos.filter(
                     (co) => co.codigo === dataEntrega['infoTarjeta']['tipo'],
                   )[0]['descripcion'],
-           
           };
 
           if (dataEntrega['infoTarjeta']['razonSocial'] && dataEntrega['infoTarjeta']['ruc']) {

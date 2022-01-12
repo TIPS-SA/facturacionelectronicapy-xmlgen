@@ -98,8 +98,10 @@ class JSonDteIdentificacionDocumentoService {
         );
       }
       if (data['documentoAsociado']['fecha']) {
-        if ((data['documentoAsociado']['fecha']+'').length != 10) {
-          throw new Error('La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres');
+        if ((data['documentoAsociado']['fecha'] + '').length != 10) {
+          throw new Error(
+            'La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres',
+          );
         }
         jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
       } else {
