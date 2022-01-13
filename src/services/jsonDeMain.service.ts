@@ -1466,6 +1466,13 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE_Contado(params: any, data: any) {
+
+    if (data['condicion']['tipo'] === 1) {
+      if (!(data['condicion']['entregas'] && data['condicion']['entregas'].length > 0)) {
+        throw new Error("El Tipo de Condición es 1 en data.condicion.tipo pero no se encontraron entregas en data.condicion.entregas");
+      }
+    }
+
     if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
       const entregas = [];
       for (let i = 0; i < data['condicion']['entregas'].length; i++) {
