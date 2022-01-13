@@ -319,6 +319,7 @@ class JSonDteItemService {
             [EA008 * (E733/100)] / 1,05 si la tasa es del 5%
         Si E731 = 2 o 3 este campo es igual 0
     */
+    jsonResult['dBasGravIVA'] = 0;
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
       if (item['iva'] == 10) {
         jsonResult['dBasGravIVA'] =
@@ -343,6 +344,7 @@ class JSonDteItemService {
       E735 * ( E734 / 100 )
       Si E731 = 2 o 3 este campo es igual 0 
     */
+    jsonResult['dLiqIVAItem'] = 0;
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
       jsonResult['dLiqIVAItem'] = (jsonResult['dBasGravIVA'] * item['iva']) / 100;
 
