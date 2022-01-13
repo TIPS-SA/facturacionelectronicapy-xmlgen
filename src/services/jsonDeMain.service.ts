@@ -15,7 +15,7 @@ class JSonDeMainService {
   codigoSeguridad: any = null;
   codigoControl: any = null;
   json: any = {};
-  validateError = false;
+  validateError = true;
 
   public generateXMLDE(params: any, data: any, defaultValues?: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
