@@ -453,7 +453,7 @@ class JSonDteItemService {
     }
 
     if (item['sectorAutomotor']['cilindradas']) {
-      if ((item['sectorAutomotor']['cilindradas']+"").length != 4) {
+      if ((item['sectorAutomotor']['cilindradas'] + '').length != 4) {
         throw new Error(
           "La Cilindradas '" +
             item['sectorAutomotor']['cilindradas'] +
@@ -488,7 +488,7 @@ class JSonDteItemService {
     };
 
     if (item['sectorAutomotor']['cilindradas']) {
-      jsonResult['dCilin'] = item['sectorAutomotor']['cilindradas'] + "";
+      jsonResult['dCilin'] = item['sectorAutomotor']['cilindradas'] + '';
     }
 
     //Se puede hacer todo por if, para no enviar null
