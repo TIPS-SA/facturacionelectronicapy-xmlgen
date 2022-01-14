@@ -131,9 +131,9 @@ class JSonDteTransporteService {
 
     constanteService.validateDepartamentoDistritoCiudad(
       'data.detalleTransporte.salida',
-      +data['autoFactura']['departamento'],
-      +data['autoFactura']['distrito'],
-      +data['autoFactura']['ciudad'],
+      +data['detalleTransporte']['salida']['departamento'],
+      +data['detalleTransporte']['salida']['distrito'],
+      +data['detalleTransporte']['salida']['ciudad'],
     );
 
     if (
