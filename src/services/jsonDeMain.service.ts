@@ -1092,20 +1092,32 @@ class JSonDeMainService {
         }
     */
     if (data['cliente']['telefono']) {
-      if (! ( data['cliente']['telefono'].length >= 6 && data['cliente']['telefono'].length <= 15) ) {
-        throw new Error("El valor '" + data['cliente']['telefono'] + "' en data.cliente.telefono debe tener una longitud de 6 a 15 caracteres");
+      if (!(data['cliente']['telefono'].length >= 6 && data['cliente']['telefono'].length <= 15)) {
+        throw new Error(
+          "El valor '" +
+            data['cliente']['telefono'] +
+            "' en data.cliente.telefono debe tener una longitud de 6 a 15 caracteres",
+        );
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = data['cliente']['telefono'];
     }
     if (data['cliente']['celular']) {
-      if (! ( data['cliente']['celular'].length >= 10 && data['cliente']['celular'].length <= 20) ) {
-        throw new Error("El valor '" + data['cliente']['celular'] + "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres");
+      if (!(data['cliente']['celular'].length >= 10 && data['cliente']['celular'].length <= 20)) {
+        throw new Error(
+          "El valor '" +
+            data['cliente']['celular'] +
+            "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres",
+        );
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = data['cliente']['celular'];
     }
     if (data['cliente']['email']) {
-      if (! ( data['cliente']['email'].length >= 3 && data['cliente']['email'].length <= 80) ) {
-        throw new Error("El valor '" + data['cliente']['email'] + "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres");
+      if (!(data['cliente']['email'].length >= 3 && data['cliente']['email'].length <= 80)) {
+        throw new Error(
+          "El valor '" +
+            data['cliente']['email'] +
+            "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres",
+        );
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dEmailRec = data['cliente']['email'];
     }
@@ -1183,8 +1195,11 @@ class JSonDeMainService {
       let fechaEnvio = new Date(data['factura']['fechaEnvio']);
 
       if (fechaFactura.getTime() > fechaEnvio.getTime()) {
-        throw new Error("La Fecha de envío '" + data['factura']['fechaEnvio'] + "'en data.factura.fechaEnvio, debe ser despues de la fecha de Factura");
-        
+        throw new Error(
+          "La Fecha de envío '" +
+            data['factura']['fechaEnvio'] +
+            "'en data.factura.fechaEnvio, debe ser despues de la fecha de Factura",
+        );
       }
       this.json['rDE']['DE']['gDtipDE']['gCamFE']['dFecEmNR'] = data['factura']['fechaEnvio'];
     }
@@ -1668,8 +1683,9 @@ class JSonDeMainService {
       )[0]['descripcion'],
     };
 
-    if (+data['condicion']['credito']['tipo'] === 1) {  //Plazo
-      if (! data['condicion']['credito']['plazo']) {
+    if (+data['condicion']['credito']['tipo'] === 1) {
+      //Plazo
+      if (!data['condicion']['credito']['plazo']) {
         throw new Error(
           'El tipo de Crédito en data.condicion.credito.tipo es 1 entonces data.condicion.credito.plazo es obligatorio',
         );
@@ -1677,15 +1693,15 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dPlazoCre'] = data['condicion']['credito']['plazo'];
     }
 
-    if (+data['condicion']['credito']['tipo'] === 2) {  //Cuota
-      if (! data['condicion']['credito']['cuotas']) {
+    if (+data['condicion']['credito']['tipo'] === 2) {
+      //Cuota
+      if (!data['condicion']['credito']['cuotas']) {
         throw new Error(
           'El tipo de Crédito en data.condicion.credito.tipo es 2 entonces data.condicion.credito.cuotas es obligatorio',
         );
       }
-      
+
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dCuotas'] = +data['condicion']['credito']['cuotas'];
-      
     }
 
     if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
