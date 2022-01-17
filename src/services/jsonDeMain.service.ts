@@ -927,6 +927,7 @@ class JSonDeMainService {
       }
     }
 
+    var regExpOnlyNumber = new RegExp(/^\d+$/);
     if (data['cliente']['contribuyente']) {
       if (this.validateError) {
         if (!data['cliente']['ruc']) {
@@ -938,11 +939,10 @@ class JSonDeMainService {
 
         const rucCliente = data['cliente']['ruc'].split('-');
 
-        var reg = new RegExp(/^\d+$/);
-        if (!reg.test(rucCliente[0])) {
+        if (!regExpOnlyNumber.test(rucCliente[0])) {
           throw new Error('El RUC debe ser numérico');
         }
-        if (!reg.test(rucCliente[1])) {
+        if (!regExpOnlyNumber.test(rucCliente[1])) {
           throw new Error('El DV del RUC debe ser numérico');
         }
       }
@@ -1034,6 +1034,9 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['numeroCasa']) {
+      if (!regExpOnlyNumber.test(data['cliente']['numeroCasa'])) {
+        throw new Error('El Número de Casa en data.cliente.numeroCasa debe ser numérico');
+      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = data['cliente']['numeroCasa'];
     }
 
