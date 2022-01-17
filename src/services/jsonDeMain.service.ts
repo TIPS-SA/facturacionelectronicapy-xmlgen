@@ -42,7 +42,6 @@ class JSonDeMainService {
 
     this.json = {};
 
-    this.generateCodigoSeguridad(params, data); //Primero genera el codigo de seguridad aleatorio único
     this.generateCodigoControl(params, data); //Luego genera el código de Control
 
     this.generateRte(params);
@@ -124,11 +123,6 @@ class JSonDeMainService {
     return this.normalizeXML(xml); //Para firmar tiene que estar normalizado
   }
 
-  generateCodigoSeguridad(params: any, data: any) {
-    //this.codigoSeguridad = oThis.generateCodigoSeguridadAleatorio(params, data);
-    this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
-  }
-
   /**
    * Genera el CDC para la Factura
    * Corresponde al Id del DE
@@ -137,7 +131,14 @@ class JSonDeMainService {
    * @param data
    */
   generateCodigoControl(params: any, data: any) {
-    this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
+    if (data.cdc && (data.cdc+'').length == 44) {
+      //Caso ya se le pase el CDC
+      this.codigoSeguridad = data.cdc.substring(34, 43);
+      this.codigoControl = data.cdc;
+    } else {
+      this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
+      this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);  
+    }
   }
 
   /**
