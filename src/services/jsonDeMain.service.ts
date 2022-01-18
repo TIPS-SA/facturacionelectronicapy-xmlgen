@@ -131,7 +131,7 @@ class JSonDeMainService {
    * @param data
    */
   generateCodigoControl(params: any, data: any) {
-    if (data.cdc && (data.cdc+'').length == 44) {
+    if (data.cdc && (data.cdc + '').length == 44) {
       //Caso ya se le pase el CDC
       this.codigoSeguridad = data.cdc.substring(34, 43);
       this.codigoControl = data.cdc;
@@ -148,38 +148,69 @@ class JSonDeMainService {
       const tipoEmisionCDC = this.codigoControl.substring(33, 34);
 
       if (+data['tipoDocumento'] != +tipoDocumentoCDC) {
-        throw new Error("El Tipo de Documento '" + data['tipoDocumento'] + "' en data.tipoDocumento debe coincidir con el CDC reutilizado (" + (+tipoDocumentoCDC) + ")");
+        throw new Error(
+          "El Tipo de Documento '" +
+            data['tipoDocumento'] +
+            "' en data.tipoDocumento debe coincidir con el CDC reutilizado (" +
+            +tipoDocumentoCDC +
+            ')',
+        );
       }
 
       const establecimiento = stringUtilService.leftZero(data['establecimiento'], 3);
       if (establecimiento != establecimientoCDC) {
-        throw new Error("El Establecimiento '" + establecimiento + "'en data.establecimiento debe coincidir con el CDC reutilizado (" + establecimientoCDC + ")");
+        throw new Error(
+          "El Establecimiento '" +
+            establecimiento +
+            "'en data.establecimiento debe coincidir con el CDC reutilizado (" +
+            establecimientoCDC +
+            ')',
+        );
       }
 
       const punto = stringUtilService.leftZero(data['punto'], 3);
       if (punto != puntoCDC) {
-        throw new Error("El Punto '" + punto + "' en data.punto debe coincidir con el CDC reutilizado (" + puntoCDC + ")");
+        throw new Error(
+          "El Punto '" + punto + "' en data.punto debe coincidir con el CDC reutilizado (" + puntoCDC + ')',
+        );
       }
 
       const numero = stringUtilService.leftZero(data['numero'], 7);
       if (numero != numeroCDC) {
-        throw new Error("El Numero de Documento '" + numero + "'en data.numero debe coincidir con el CDC reutilizado (" + numeroCDC + ")");
+        throw new Error(
+          "El Numero de Documento '" +
+            numero +
+            "'en data.numero debe coincidir con el CDC reutilizado (" +
+            numeroCDC +
+            ')',
+        );
       }
 
       /*if (+data['tipoContribuyente'] != +tipoContribuyenteCDC) {
         throw new Error("El Tipo de Contribuyente '" + data['tipoContribuyente'] + "' en data.tipoContribuyente debe coincidir con el CDC reutilizado (" + tipoContribuyenteCDC + ")");
       }*/
-      const fecha = (data['fecha']+'').substring(0, 4) + (data['fecha']+'').substring(5, 7) + (data['fecha']+'').substring(8, 10);
+      const fecha =
+        (data['fecha'] + '').substring(0, 4) +
+        (data['fecha'] + '').substring(5, 7) +
+        (data['fecha'] + '').substring(8, 10);
       if (fecha != fechaCDC) {
-        throw new Error("La fecha '" + fecha + "' en data.fecha debe coincidir con el CDC reutilizado (" + fechaCDC + ")");
+        throw new Error(
+          "La fecha '" + fecha + "' en data.fecha debe coincidir con el CDC reutilizado (" + fechaCDC + ')',
+        );
       }
 
       if (+data['tipoEmision'] != +tipoEmisionCDC) {
-        throw new Error("El Tipo de Emisión '" + data['tipoEmision'] + "' en data.tipoEmision debe coincidir con el CDC reutilizado (" + tipoEmisionCDC + ")");
+        throw new Error(
+          "El Tipo de Emisión '" +
+            data['tipoEmision'] +
+            "' en data.tipoEmision debe coincidir con el CDC reutilizado (" +
+            tipoEmisionCDC +
+            ')',
+        );
       }
     } else {
       this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
-      this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);  
+      this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
     }
   }
 
