@@ -125,11 +125,11 @@ class JSonDteTotalesService {
 
     //---
     //Corresponde al cálculo aritmético F008 - F013 + F025 
+    let dTotGralOpe = dTotOpe - dRedon + (data['comision'] || 0);
     //Si C002 = 1, 5 o 6, entonces dTotGralOpe(F014) = F008 - F011 - F012 - F013
-    let dTotGralOpe = dTotOpe - dDescTotal + (data['comision'] || 0);
-    if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
+    /*if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
       dTotGralOpe = dTotOpe - dDescTotal - dAnticipo - dRedon;
-    }
+    }*/
     //---
 
     //Asignar al JSON DATA
