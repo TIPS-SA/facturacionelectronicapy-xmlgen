@@ -143,7 +143,7 @@ class JSonDeMainService {
       const establecimientoCDC = this.codigoControl.substring(11, 14);
       const puntoCDC = this.codigoControl.substring(14, 17);
       const numeroCDC = this.codigoControl.substring(17, 24);
-      const tipoContribuyenteCDC = this.codigoControl.substring(24, 25);
+      //const tipoContribuyenteCDC = this.codigoControl.substring(24, 25);
       const fechaCDC = this.codigoControl.substring(25, 33);
       const tipoEmisionCDC = this.codigoControl.substring(33, 34);
 
@@ -166,10 +166,10 @@ class JSonDeMainService {
         throw new Error("El Numero de Documento '" + numero + "'en data.numero debe coincidir con el CDC reutilizado (" + numeroCDC + ")");
       }
 
-      if (+data['tipoContribuyente'] != +tipoContribuyenteCDC) {
+      /*if (+data['tipoContribuyente'] != +tipoContribuyenteCDC) {
         throw new Error("El Tipo de Contribuyente '" + data['tipoContribuyente'] + "' en data.tipoContribuyente debe coincidir con el CDC reutilizado (" + tipoContribuyenteCDC + ")");
-      }
-      const fecha = (data['fecha']+'').substring(0, 10);
+      }*/
+      const fecha = (data['fecha']+'').substring(0, 4) + (data['fecha']+'').substring(5, 7) + (data['fecha']+'').substring(8, 10);
       if (fecha != fechaCDC) {
         throw new Error("La fecha '" + fecha + "' en data.fecha debe coincidir con el CDC reutilizado (" + fechaCDC + ")");
       }
