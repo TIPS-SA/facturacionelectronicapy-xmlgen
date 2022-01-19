@@ -797,10 +797,13 @@ class JSonDeMainService {
 
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
       //Obligatorio informar iTipTra D011
+      if (!data['tipoTransaccion']) {
+        throw new Error("Debe proveer el Tipo de Transacción en data.tipoTransaccion");
+      }
       this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['iTipTra'] = data['tipoTransaccion'];
       this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dDesTipTra'] = constanteService.tiposTransacciones.filter(
         (tt) => tt.codigo == data['tipoTransaccion'],
-      )[0]['descripcion'];
+      )[0]['descripcion'];     
     }
 
     this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['iTImp'] = data['tipoImpuesto']; //D013
