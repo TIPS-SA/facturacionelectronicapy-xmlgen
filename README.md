@@ -187,13 +187,11 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             "tipo" : 1,
             "monto" : "150000",
             "moneda" : "PYG",
-            "monedaDescripcion" : "Guarani",
             "cambio" : 0
         }, { 
             "tipo" : 3,
             "monto" : "150000",
             "moneda" : "PYG",
-            "monedaDescripcion" : "Guarani",
             "cambio" : 0,
             "infoTarjeta" : {
                 "tipo" : 1,
@@ -209,7 +207,6 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             "tipo" : 2,
             "monto" : "150000",
             "moneda" : "PYG",
-            "monedaDescripcion" : "Guarani",
             "cambio" : 0,
             "infoCheque" : {
                 "numeroCheque": "32323232",

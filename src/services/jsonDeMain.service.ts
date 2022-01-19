@@ -1605,7 +1605,6 @@ class JSonDeMainService {
           ],
           dMonTiPag: dataEntrega['monto'],
           //cMoneTiPag: dataEntrega['moneda'],
-          //dDMoneTiPag: dataEntrega['monedaDescripcion'],
           //dTiCamTiPag : dataEntrega['cambio'],
         };
 
@@ -1613,8 +1612,18 @@ class JSonDeMainService {
           throw new Error('Moneda es obligatorio en data.condicion.entregas[' + i + '].moneda');
         }
 
+        if (constanteService.monedas.filter((um) => um.codigo === dataEntrega['moneda']).length == 0) {
+          throw (
+            new Error("Moneda '" + dataEntrega['moneda']) +
+            "' data.condicion.entregas[" + i + "].moneda no válido. Valores: " +
+            constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion)
+          );
+        }
+
         cuotaInicialEntrega['cMoneTiPag'] = dataEntrega['moneda'];
-        cuotaInicialEntrega['dDMoneTiPag'] = dataEntrega['monedaDescripcion'];
+        cuotaInicialEntrega['dDMoneTiPag'] = constanteService.monedas.filter(
+          (m) => m.codigo == dataEntrega['moneda'],
+        )[0]['descripcion'];;
 
         if (dataEntrega['moneda'] != 'PYG') {
           if (dataEntrega['cambio']) {
