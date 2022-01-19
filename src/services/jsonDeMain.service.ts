@@ -1615,7 +1615,9 @@ class JSonDeMainService {
         if (constanteService.monedas.filter((um) => um.codigo === dataEntrega['moneda']).length == 0) {
           throw (
             new Error("Moneda '" + dataEntrega['moneda']) +
-            "' data.condicion.entregas[" + i + "].moneda no válido. Valores: " +
+            "' data.condicion.entregas[" +
+            i +
+            '].moneda no válido. Valores: ' +
             constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion)
           );
         }
@@ -1623,7 +1625,7 @@ class JSonDeMainService {
         cuotaInicialEntrega['cMoneTiPag'] = dataEntrega['moneda'];
         cuotaInicialEntrega['dDMoneTiPag'] = constanteService.monedas.filter(
           (m) => m.codigo == dataEntrega['moneda'],
-        )[0]['descripcion'];;
+        )[0]['descripcion'];
 
         if (dataEntrega['moneda'] != 'PYG') {
           if (dataEntrega['cambio']) {
