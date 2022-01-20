@@ -1016,10 +1016,10 @@ class JSonDeMainService {
 
         const rucCliente = data['cliente']['ruc'].split('-');
 
-        if (!regExpOnlyNumber.test((rucCliente[0]+'').trim())) {
+        if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
           throw new Error("El RUC del Cliente '" + rucCliente[0] + "' en data.cliente.ruc debe ser numérico");
         }
-        if (!regExpOnlyNumber.test((rucCliente[1]+'').trim())) {
+        if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
           throw new Error("El DV del RUC del Cliente '" + rucCliente[1] + "' en data.cliente.ruc debe ser numérico");
         }
       }
@@ -1051,8 +1051,8 @@ class JSonDeMainService {
 
     if (data['cliente']['contribuyente']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTiContRec'] = data['cliente']['tipoContribuyente'];
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dRucRec'] = (data['cliente']['ruc'].split('-')[0]+'').trim();
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDVRec'] = (data['cliente']['ruc'].split('-')[1]+'').trim();
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dRucRec'] = (data['cliente']['ruc'].split('-')[0] + '').trim();
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDVRec'] = (data['cliente']['ruc'].split('-')[1] + '').trim();
     }
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
