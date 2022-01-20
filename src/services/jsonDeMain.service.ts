@@ -1073,7 +1073,8 @@ class JSonDeMainService {
             constanteService.tiposDocumentosReceptor.filter(
               (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
             )[0]['descripcion'];
-          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'];
+
+          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim();
         }
 
         if (+data['cliente']['documentoTipo'] === 5) {
@@ -1083,7 +1084,7 @@ class JSonDeMainService {
       }
     }
 
-    this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = data['cliente']['razonSocial'];
+    this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = data['cliente']['razonSocial'].trim();
 
     if (+data['cliente']['documentoTipo'] === 5) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = 'Sin Nombre';
@@ -1091,7 +1092,7 @@ class JSonDeMainService {
 
     //if (data['cliente']['documentoTipo'] === 5) {
     if (data['cliente']['nombreFantasia']) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'].trim();
     }
     //}
 
@@ -1102,7 +1103,7 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['direccion']) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'].trim();
 
       //Si tiene dirección hay que completar numero de casa.
       if (!data['cliente']['numeroCasa']) {
@@ -1114,7 +1115,7 @@ class JSonDeMainService {
       if (!regExpOnlyNumber.test(data['cliente']['numeroCasa'])) {
         throw new Error('El Número de Casa en data.cliente.numeroCasa debe ser numérico');
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = data['cliente']['numeroCasa'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = (data['cliente']['numeroCasa'] + '').trim();
     }
 
     if (data['cliente']['tipoOperacion'] != 4) {
@@ -1179,7 +1180,7 @@ class JSonDeMainService {
             "' en data.cliente.telefono debe tener una longitud de 6 a 15 caracteres",
         );
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = data['cliente']['telefono'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = data['cliente']['telefono'].trim();
     }
     if (data['cliente']['celular']) {
       if (!(data['cliente']['celular'].length >= 10 && data['cliente']['celular'].length <= 20)) {
@@ -1189,7 +1190,7 @@ class JSonDeMainService {
             "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres",
         );
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = data['cliente']['celular'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = data['cliente']['celular'].trim();
     }
     if (data['cliente']['email']) {
       if (!(data['cliente']['email'].length >= 3 && data['cliente']['email'].length <= 80)) {
@@ -1199,7 +1200,7 @@ class JSonDeMainService {
             "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres",
         );
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dEmailRec = data['cliente']['email'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dEmailRec = data['cliente']['email'].trim();
     }
 
     if (data['cliente']['codigo']) {
@@ -1212,7 +1213,7 @@ class JSonDeMainService {
           );
         }
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = data['cliente']['codigo'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = (data['cliente']['codigo']+'').trim();
     }
   }
 
