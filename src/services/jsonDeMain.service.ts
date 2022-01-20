@@ -1213,7 +1213,7 @@ class JSonDeMainService {
           );
         }
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = (data['cliente']['codigo']+'').trim();
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = (data['cliente']['codigo'] + '').trim();
     }
   }
 
