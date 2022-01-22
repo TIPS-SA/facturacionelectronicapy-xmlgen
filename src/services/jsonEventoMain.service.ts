@@ -148,7 +148,7 @@ class JSonEventoMainService {
       throw new Error('Debe proporcionar el Motivo de la Cancelación en data.motivo');
     }
 
-    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+    if (!((data['motivo'] + '').length >= 5 && (data['motivo'] + '').length <= 500)) {
       throw new Error('El Motivo de la Cancelación en data.motivo debe contener de [5-500] caracteres');
     }
 
@@ -196,7 +196,7 @@ class JSonEventoMainService {
     if (!data['motivo']) {
       throw new Error('Falta el Motivo de la Cancelación en data.motivo');
     }
-    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+    if (!((data['motivo'] + '').length >= 5 && (data['motivo'] + '').length <= 500)) {
       throw new Error('El Motivo de la Inutilización en data.motivo debe contener de [5-500] caracteres');
     }
 
@@ -275,7 +275,7 @@ class JSonEventoMainService {
       throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
-    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+    if (!((data['motivo'] + '').length >= 5 && (data['motivo'] + '').length <= 500)) {
       throw new Error('El Motivo de la Disconformidad en data.motivo debe contener de [5-500] caracteres');
     }
 
@@ -302,7 +302,7 @@ class JSonEventoMainService {
       throw new Error('Debe proporcionar el Motivo del Desconocimiento en data.motivo');
     }
 
-    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+    if (!((data['motivo'] + '').length >= 5 && (data['motivo'] + '').length <= 500)) {
       throw new Error('El Motivo del Desconocimiento en data.motivo debe contener de [5-500] caracteres');
     }
 

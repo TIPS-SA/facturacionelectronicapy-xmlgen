@@ -192,20 +192,18 @@ class JSonDteItemService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any, i: number) {
-    const jsonResult: any = {
-    };
+    const jsonResult: any = {};
 
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
       jsonResult['dDescItem'] = item['descuento'];
 
-    /*  if ( ! (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) ) {
+      /*  if ( ! (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) ) {
         throw new Error("Debe proveer el Porcentaje de Descuento del Item en data.item[" + i + "].descuentoPorcentaje");
       }*/
 
       //Calcula solo el % Descuento
-      jsonResult['dPorcDesIt'] = Math.round(parseFloat(item['descuento']) * 100 / parseFloat(item['precioUnitario']));
-
+      jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
     }
 
     /*jsonResult['dPorcDesIt'] = 0;
