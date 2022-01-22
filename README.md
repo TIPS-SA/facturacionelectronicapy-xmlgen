@@ -240,7 +240,6 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "precioUnitario": 10800,
         "cambio": 0,
         "descuento": 0,
-        "descuentoPorcentaje": 0,
         "anticipo": 0,
         "pais" : "PY",
         "paisDescripcion" : "Paraguay",

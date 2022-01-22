@@ -124,7 +124,7 @@ class JSonDteItemService {
 
         if (data['tipoDocumento'] != 7) {
           //Oblitatorio informar
-          gCamItem['gValorItem'] = this.generateDatosItemsOperacionPrecioTipoCambioTotal(params, data, item);
+          gCamItem['gValorItem'] = this.generateDatosItemsOperacionPrecioTipoCambioTotal(params, data, item, i);
         }
 
         if (
@@ -169,7 +169,7 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionPrecioTipoCambioTotal(params: any, data: any, item: any) {
+  private generateDatosItemsOperacionPrecioTipoCambioTotal(params: any, data: any, item: any, i: number) {
     const jsonResult: any = {
       dPUniProSer: item['precioUnitario'],
       //dTiCamIt : data['condicionTipoCambio'] == 2 ? item['cambio'] : null,    //E725
@@ -178,7 +178,7 @@ class JSonDteItemService {
     if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
       jsonResult['dTiCamIt'] = item['cambio'];
     }
-    jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(params, data, item);
+    jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(params, data, item, i);
 
     return jsonResult;
   }
@@ -191,22 +191,27 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any) {
+  private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any, i: number) {
     const jsonResult: any = {
-      /*dDescItem: item['descuento'],
-      dPorcDesIt: item['descuentoPorcentaje'],
-      dAntPreUniIt: item['anticipo'], //Valor del anticipo del item ya emitido en una FE anterior. tipoOperacion=9 Anticipo*/
     };
 
     jsonResult['dDescItem'] = 0;
-    if (item['descuento'] && item['descuento'] > 0) {
+    if (item['descuento'] && +item['descuento'] > 0) {
       jsonResult['dDescItem'] = item['descuento'];
+
+    /*  if ( ! (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) ) {
+        throw new Error("Debe proveer el Porcentaje de Descuento del Item en data.item[" + i + "].descuentoPorcentaje");
+      }*/
+
+      //Calcula solo el % Descuento
+      jsonResult['dPorcDesIt'] = Math.round(parseFloat(item['descuento']) * 100 / parseFloat(item['precioUnitario']));
+
     }
 
-    jsonResult['dPorcDesIt'] = 0;
+    /*jsonResult['dPorcDesIt'] = 0;
     if (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) {
       jsonResult['dPorcDesIt'] = item['descuentoPorcentaje'];
-    }
+    }*/
 
     jsonResult['dAntPreUniIt'] = 0;
     if (item['anticipo'] && item['anticipo'] > 0) {
