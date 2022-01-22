@@ -145,7 +145,11 @@ class JSonEventoMainService {
     }
 
     if (!data['motivo']) {
-      throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
+      throw new Error('Debe proporcionar el Motivo de la Cancelación en data.motivo');
+    }
+
+    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+      throw new Error('El Motivo de la Cancelación en data.motivo debe contener de [5-500] caracteres');
     }
 
     const jsonResult: any = {};
@@ -161,9 +165,41 @@ class JSonEventoMainService {
     if (!data['timbrado']) {
       throw new Error('Falta el Timbrado en data.timbrado');
     }
+    if (!data['establecimiento']) {
+      throw new Error('Falta el Establecimiento en data.establecimiento');
+    }
+    if (new String(data['establecimiento']).length != 3) {
+      throw new Error('El establecimiento debe tener una longitud de 3 caracteres');
+    }
+    if (!data['punto']) {
+      throw new Error('Falta el Punto en data.punto');
+    }
+    if (new String(data['punto']).length != 3) {
+      throw new Error('El punto debe tener una longitud de 3 caracteres');
+    }
+
+    if (!data['desde']) {
+      throw new Error('Falta el valor inicial Desde en data.desde');
+    }
+    if (!data['hasta']) {
+      throw new Error('Falta el valor final hasta en data.hasta');
+    }
+    if (+data['desde'] > +data['hasta']) {
+      throw new Error('El valor inicial en data.desde debe ser inferior o igual al valor final en data.hasta');
+    }
+    if (!data['tipoDocumento']) {
+      throw new Error('Falta el Tipo de Documento en data.tipoDocumento');
+    }
     if (new String(data['timbrado']).length != 8) {
       throw new Error('El timbrado debe tener una longitud de 8 caracteres');
     }
+    if (!data['motivo']) {
+      throw new Error('Falta el Motivo de la Cancelación en data.motivo');
+    }
+    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+      throw new Error('El Motivo de la Inutilización en data.motivo debe contener de [5-500] caracteres');
+    }
+
     const jsonResult: any = {};
     jsonResult['rGeVeInu'] = {
       dNumTim: stringUtilService.leftZero(data['timbrado'], 8),
@@ -239,8 +275,8 @@ class JSonEventoMainService {
       throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
     }
 
-    if (!(data['motivo'].length >= 5)) {
-      throw new Error('El Motivo en data.motivo debe tener una longitud mínima de 5 caracteres');
+    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+      throw new Error('El Motivo de la Disconformidad en data.motivo debe contener de [5-500] caracteres');
     }
 
     jsonResult['rGeVeDisconf'] = {
@@ -263,11 +299,11 @@ class JSonEventoMainService {
     }
 
     if (!data['motivo']) {
-      throw new Error('Debe proporcionar el Motivo de la Disconformidad en data.motivo');
+      throw new Error('Debe proporcionar el Motivo del Desconocimiento en data.motivo');
     }
 
-    if (!(data['motivo'].length >= 5)) {
-      throw new Error('El Motivo en data.motivo debe tener una longitud mínima de 5 caracteres');
+    if ( ! ( (data['motivo']+'').length >= 5 && (data['motivo']+'').length <= 500 ) ) {
+      throw new Error('El Motivo del Desconocimiento en data.motivo debe contener de [5-500] caracteres');
     }
 
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
