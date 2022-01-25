@@ -96,11 +96,11 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 ## Estructura completa del `data` JSON de Ejemplo
 ``` json
 {
-	"tipoDocumento" : 1,
-	"ruc" : "80069563-1",
-	"establecimiento" : "001",
+    "tipoDocumento" : 1,
+    "ruc" : "80069563-1",
+    "establecimiento" : "001",
     "codigoSeguridadAleatorio" : 29838,
-	"punto" : "001",
+    "punto" : "001",
     "numero" : "", 
     "descripcion" : "Aparece en el documento",
     "observacion" : "Cualquier informacion de interes",
@@ -528,11 +528,11 @@ Para más información sobre el proceso que llevó a la generación de éste mó
 
 
 ## Todos los proyectos
-[Generación de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlgen)
-[Firma de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlsign)
-[Generación de QR](https://www.npmjs.com/package/facturacionelectronicapy-qrgen)
-[API de la SET](https://www.npmjs.com/package/facturacionelectronicapy-setapi)
-[Generación KUDE](https://www.npmjs.com/package/facturacionelectronicapy-kude)
+[Generación de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlgen)<br/>
+[Firma de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlsign)<br/>
+[Generación de QR](https://www.npmjs.com/package/facturacionelectronicapy-qrgen)<br/>
+[API de la SET](https://www.npmjs.com/package/facturacionelectronicapy-setapi)<br/>
+[Generación KUDE](https://www.npmjs.com/package/facturacionelectronicapy-kude)<br/>
 
 
 ## Empresas que utilizan éstos proyectos
