@@ -15,6 +15,7 @@ El módulo está preparado de forma a proveer una fácil integración dentro de 
 - Implementa el Algoritmo del dígito verificador del CDC
 - Permite sobreescribir la funcion para calcular el código de seguridad, de acuerdo a las necesidades del usuario
 - Realiza la validación del XSD, llamando a una API de Java para emitir el error en la estructura del XML
+- Valida los valores de los campos, según el manual técnico, emitiendo el error correspondiente.
 
 ## Instalación
 
@@ -27,11 +28,12 @@ El método requiere 2 argumentos tipo **JSON** para general el XML. El primero e
 
 La promesa devuelve el documento XML con los datos generados.
 
-Ejemplo de Uso:
+Ejemplos de Uso:
 
 Javascript:
 ``` js
   const xmlgen = require('facturacionelectronicapy-xmlgen');
+  //O const xmlgen = require('facturacionelectronicapy-xmlgen').default;
   
   xmlgen.generateXMLDE(params, data).then(xml => {
       console.log(xml);
@@ -64,8 +66,10 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
   "ruc" : "80069563-1",
   "razonSocial" : "DE generado en ambiente de prueba - sin valor comercial ni fiscal",
   "nombreFantasia" : "TIPS S.A. TECNOLOGIA Y SERVICIOS",
-  "actividadEconomica" : "",  
-  "actividadEconomicaDescripcion" : "", 
+  "actividadesEconomicas" : [{
+    "codigo": "1254",
+    "descripcion": "Desarrollo de Software",
+  }],   
   "timbradoNumero" : "12558946",
   "timbradoFecha" : "2021-08-25T00:00:00",
   "tipoContribuyente" : 2, 
@@ -97,7 +101,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 	"establecimiento" : "001",
 	"punto" : "001",
 	"numero" : "", 
-  "descripcion" : "Aparece en el documento",
+    "descripcion" : "Aparece en el documento",
     "observacion" : "Cualquier informacion de interes",
 	"tipoContribuyente" : 1,
 	"fecha" : "2020-09-14T10:11:00",
@@ -122,13 +126,13 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
         "ciudad" : 3344,
         "ciudadDescripcion" : "PASO ITA (INDIGENA)",
-        "pais" : "PY",
+        "pais" : "PRY",
         "paisDescripcion" : "Paraguay",
         "tipoContribuyente" : 1,
         "documentoTipo" : 1,
         "documentoNumero" : "2324234",
-        "telefono" : "xyz",
-        "celular" : "xyz",
+        "telefono" : "061-575903",
+        "celular" : "0973-809103",
         "email" : "cliente@cliente.com",
         "codigo" : "1548"
     },
@@ -241,7 +245,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "cambio": 0,
         "descuento": 0,
         "anticipo": 0,
-        "pais" : "PY",
+        "pais" : "PRY",
         "paisDescripcion" : "Paraguay",
         "tolerancia" : 1,
         "toleranciaCantidad" : 1,
@@ -254,7 +258,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             "codigoNivelPaquete" : "12345678"
         },
         "ivaTipo" : 1,
-        "ivaBase" : 30,
+        "ivaBase" : 100,
         "iva" : 5,
         "lote" : "A-001",
         "vencimiento" : "2022-10-30",
@@ -270,7 +274,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         },
         "sectorAutomotor" : {
             "tipo" : 1,
-            "chasis" : "4525234523542353245",
+            "chasis" : "45252345235423532",
             "color" : "Rojo",
             "potencia" : 1500,
             "capacidadMotor" : 5,
@@ -283,7 +287,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             "capacidadTraccion" : 151.01,
             "año" : 2009,
             "tipoVehiculo" : "Camioneta",
-            "cilindradas" : "Camioneta"
+            "cilindradas" : "3500"
         }
     }],
     "sectorEnergiaElectrica" : {
@@ -311,7 +315,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "donacionDescripcion" : "Donado para la caridad"
     },
     "sectorAdicional" : {
-        "ciclo" : "Mensualidad Pago",
+        "ciclo" : "Mensualidad",
         "inicioCiclo" : "2021-09-01",
         "finCiclo" : "2021-10-01",
         "vencimientoPago" : "2021-11-01",
@@ -322,12 +326,12 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "tipo" : 1,
         "modalidad" : 1,
         "tipoResponsable" : 1,
-        "condicionNegociacion" : "ABC",
+        "condicionNegociacion" : "CFR",
         "numeroManifiesto" : "AF-2541",
         "numeroDespachoImportacion" : "153223232332",
         "inicioEstimadoTranslado" : "2021-11-01",
         "finEstimadoTranslado" : "2021-11-01",
-        "paisDestino" : "PY", 
+        "paisDestino" : "PRY", 
         "paisDestinoNombre" : "Paraguay",
         "salida" : {
             "direccion" : "Paraguay",
@@ -340,7 +344,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
             "ciudad" : 3344,
             "ciudadDescripcion" : "PASO ITA (INDIGENA)",
-            "pais" : "PY",
+            "pais" : "PRY",
             "paisDescripcion" : "Paraguay",
             "telefonoContacto" : "097x"
         },
@@ -355,7 +359,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
             "ciudad" : 3344,
             "ciudadDescripcion" : "PASO ITA (INDIGENA)",
-            "pais" : "PY",
+            "pais" : "PRY",
             "paisDescripcion" : "Paraguay",
             "telefonoContacto" : "097x"
         },
@@ -371,12 +375,12 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "transportista" : {
             "contribuyente" : true,
             "nombre" : "Paraguay",
-            "ruc" : "Entre calle 2", 
+            "ruc" : "80068684-1", 
             "documentoTipo" : 1,
-            "documentoNumero" : "y Calle 7",
+            "documentoNumero" : "99714584",
             "direccion" : "y Calle 7",
             "obs" : 11,
-            "pais" : "PY",
+            "pais" : "PRY",
             "paisDescripcion" : "Paraguay",
             "chofer" : {
                 "documentoNumero" : "",
@@ -385,7 +389,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
             },
             "agente" : {
                 "nombre" : "Jose Benitez",
-                "ruc" : "Jose Benitez",
+                "ruc" : "515415-1",
                 "direccion" : "Jose Benitez"
             }
         }
@@ -402,7 +406,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     },
     "documentoAsociado" : {
         "formato" : 1,
-        "cdc" : "44digitos",
+        "cdc" : "01800695631001001000000612021112917595714694",
         "tipo" : 1,
         "timbrado" : "32323",
         "establecimiento" : "001",
@@ -418,9 +422,116 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     }
 }
 ```
+
+## Eventos
+Para la invocación de Eventos de la SET se debe utilizar como primer parámetro, el mismo `params` utilizado en la Generación de XML.
+
+El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiendo del evento a ser invocado. A continuación los ejemplos para cada evento.
+
+## Evento de Cancelación
+``` json
+{
+    "cdc": "01800695631001001000000612021112917595714694",
+    "motivo": "Se cancela este CDC"
+};
+```
+
+## Evento de Inutilización
+``` json
+{
+    "tipoDocumento": 1,
+    "establecimiento": "001",
+    "punto": "001",
+    "desde": 10,
+    "hasta": 12,
+    "motivo": "Se inutiliza la numeración"
+};
+```
+
+## Evento de Conformidad
+``` json
+{
+    "cdc": "01800695631001001000000812021112910953738413",
+    "tipoConformidad": 1, //1-Parcial o 2-Total,
+    "fechaRecepcion": "2020-01-31T00:01:01"
+};
+```
+
+## Evento de Disconformidad
+``` json
+{
+    "cdc": "01800695631001001000000812021112910953738413",
+    "motivo": "Se informa de una disconformidad"
+};
+```
+
+## Evento de Desconocimiento
+``` json
+{
+    "cdc": "01800695631001003000013712022010619364760029",    //DE o DTE    
+    "fechaEmision" : "2020-01-31T00:01:01",    //Fecha pasada
+    "fechaRecepcion" : "2020-01-31T00:01:01",    //Fecha despues
+    "tipoReceptor" : 1,
+    "nombre": "BRASIL CRESCENCIO",
+    "ruc": "50062360-0",
+    "documentoTipo": 1,
+    "documentoNumero" : "",
+    "motivo": "teste"
+};
+```
+
+## Evento de Notificación
+``` json
+{
+    "cdc": "01800695631001003000013712022010619364760029",    //DE o DTE    
+    "fechaEmision" : "2020-01-31T00:01:01",    //Fecha pasada
+    "fechaRecepcion" : "2020-01-31T00:01:01",    //Fecha despues
+    "tipoReceptor" : 1,
+    "nombre": "BRASIL CRESCENCIO",
+    "ruc": "50062360-0",
+    "documentoTipo": 1,
+    "documentoNumero" : "",
+    "totalPYG": 1550000
+};
+```
+
+Ejemplos de Uso de invocación de eventos:
+
+Javascript:
+``` js
+  const xmlgen = require('facturacionelectronicapy-xmlgen');
+  // O const xmlgen = require('facturacionelectronicapy-xmlgen').default;
+  
+  xmlgen.generateXMLEvento(params, data).then(xml => {
+      console.log(xml);
+  }).catch(error => {
+      console.log(error);
+  });     
+```
+
+TypeScript:
+``` ts
+  import xmlgen from 'facturacionelectronicapy-xmlgen';
+
+  xmlgen.generateXMLEvento(params, data).then(xml => {
+      console.log(xml);
+  }).catch(error => {
+      console.log(error);
+  }); 
+```
+
+
 ## Serie Técnica sobre Facturación Electrónica - YouTube
 
 Para más información sobre el proceso que llevó a la generación de éste módulo visite la lista de reproducción "Serie técnica sobre Facturación Electrónica" en el canal de youtube del autor  https://www.youtube.com/channel/UC05xmdC5i3Ob7XnYbQDiBTQ
+
+
+## Todos los proyectos
+https://www.npmjs.com/package/facturacionelectronicapy-xmlgen
+https://www.npmjs.com/package/facturacionelectronicapy-xmlsign
+https://www.npmjs.com/package/facturacionelectronicapy-qrgen
+https://www.npmjs.com/package/facturacionelectronicapy-setapi
+https://www.npmjs.com/package/facturacionelectronicapy-kude
 
 * * *
 
