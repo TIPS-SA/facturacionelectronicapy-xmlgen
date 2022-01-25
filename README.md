@@ -99,16 +99,17 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 	"tipoDocumento" : 1,
 	"ruc" : "80069563-1",
 	"establecimiento" : "001",
+    "codigoSeguridadAleatorio" : 29838,
 	"punto" : "001",
-	"numero" : "", 
+    "numero" : "", 
     "descripcion" : "Aparece en el documento",
     "observacion" : "Cualquier informacion de interes",
-	"tipoContribuyente" : 1,
-	"fecha" : "2020-09-14T10:11:00",
-	"tipoEmision" : 1,
+    "tipoContribuyente" : 1,
+    "fecha" : "2020-09-14T10:11:00",
+    "tipoEmision" : 1,
     "tipoTransaccion" : 1,
     "tipoImpuesto" : 1,
-	"moneda" : "PYG",
+    "moneda" : "PYG",
     "condicionAnticipo" : 1,
     "condicionTipoCambio": 1,
     "cambio": 6700,
@@ -433,7 +434,7 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
 {
     "cdc": "01800695631001001000000612021112917595714694",
     "motivo": "Se cancela este CDC"
-};
+}
 ```
 
 ## Evento de Inutilización
@@ -445,16 +446,16 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
     "desde": 10,
     "hasta": 12,
     "motivo": "Se inutiliza la numeración"
-};
+}
 ```
 
 ## Evento de Conformidad
 ``` json
 {
     "cdc": "01800695631001001000000812021112910953738413",
-    "tipoConformidad": 1, //1-Parcial o 2-Total,
+    "tipoConformidad": 1,
     "fechaRecepcion": "2020-01-31T00:01:01"
-};
+}
 ```
 
 ## Evento de Disconformidad
@@ -462,37 +463,37 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
 {
     "cdc": "01800695631001001000000812021112910953738413",
     "motivo": "Se informa de una disconformidad"
-};
+}
 ```
 
 ## Evento de Desconocimiento
 ``` json
 {
-    "cdc": "01800695631001003000013712022010619364760029",    //DE o DTE    
-    "fechaEmision" : "2020-01-31T00:01:01",    //Fecha pasada
-    "fechaRecepcion" : "2020-01-31T00:01:01",    //Fecha despues
+    "cdc": "01800695631001003000013712022010619364760029",
+    "fechaEmision" : "2020-01-31T00:01:01",
+    "fechaRecepcion" : "2020-01-31T00:01:01",
     "tipoReceptor" : 1,
     "nombre": "BRASIL CRESCENCIO",
     "ruc": "50062360-0",
     "documentoTipo": 1,
     "documentoNumero" : "",
     "motivo": "teste"
-};
+}
 ```
 
 ## Evento de Notificación
 ``` json
 {
-    "cdc": "01800695631001003000013712022010619364760029",    //DE o DTE    
-    "fechaEmision" : "2020-01-31T00:01:01",    //Fecha pasada
-    "fechaRecepcion" : "2020-01-31T00:01:01",    //Fecha despues
+    "cdc": "01800695631001003000013712022010619364760029",  
+    "fechaEmision" : "2020-01-31T00:01:01",
+    "fechaRecepcion" : "2020-01-31T00:01:01",
     "tipoReceptor" : 1,
     "nombre": "BRASIL CRESCENCIO",
     "ruc": "50062360-0",
     "documentoTipo": 1,
     "documentoNumero" : "",
     "totalPYG": 1550000
-};
+}
 ```
 
 Ejemplos de Uso de invocación de eventos:
@@ -506,7 +507,7 @@ Javascript:
       console.log(xml);
   }).catch(error => {
       console.log(error);
-  });     
+  });
 ```
 
 TypeScript:
@@ -527,11 +528,15 @@ Para más información sobre el proceso que llevó a la generación de éste mó
 
 
 ## Todos los proyectos
-https://www.npmjs.com/package/facturacionelectronicapy-xmlgen
-https://www.npmjs.com/package/facturacionelectronicapy-xmlsign
-https://www.npmjs.com/package/facturacionelectronicapy-qrgen
-https://www.npmjs.com/package/facturacionelectronicapy-setapi
-https://www.npmjs.com/package/facturacionelectronicapy-kude
+[Generación de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlgen)
+[Firma de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlsign)
+[Generación de QR](https://www.npmjs.com/package/facturacionelectronicapy-qrgen)
+[API de la SET](https://www.npmjs.com/package/facturacionelectronicapy-setapi)
+[Generación KUDE](https://www.npmjs.com/package/facturacionelectronicapy-kude)
+
+
+## Empresas que utilizan éstos proyectos
+[JR Ingeniería y Servicios](https://jringenieriayservicios.com/)
 
 * * *
 
