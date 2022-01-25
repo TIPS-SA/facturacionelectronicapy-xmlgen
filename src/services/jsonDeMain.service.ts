@@ -567,14 +567,13 @@ class JSonDeMainService {
       (td) => td.codigo == data['tipoDocumento'],
     )[0]['descripcion'];
 
-    if ( ! data['tipoEmision']) {
+    if (!data['tipoEmision']) {
       data['tipoEmision'] = 1;
     }
 
-    if ( ! data['tipoTransaccion']) {
+    if (!data['tipoTransaccion']) {
       data['tipoTransaccion'] = 1;
     }
-
   }
 
   private generateRte(params: any) {
@@ -649,7 +648,7 @@ class JSonDeMainService {
     const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11);
 
     if (id.length != 44) {
-      throw new Error("Por alguna razón no se pudo generar correctamente el CDC. Verifique los datos de entrada");
+      throw new Error('Por alguna razón no se pudo generar correctamente el CDC. Verifique los datos de entrada');
     }
 
     const codigoSeguridadAleatorio = this.codigoSeguridad;
