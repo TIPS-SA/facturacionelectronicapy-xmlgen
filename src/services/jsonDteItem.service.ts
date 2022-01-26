@@ -70,12 +70,23 @@ class JSonDteItemService {
           gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
         }
 
+        if (!item['descripcion']) {
+          throw new Error("La descripción del item en data.items[" +
+          i +
+          "].descripcion no puede ser null");
+        }
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
+        
         gCamItem['cUniMed'] = unidadMedida;
         gCamItem['dDesUniMed'] = constanteService.unidadesMedidas
           .filter((um) => um.codigo === unidadMedida)[0]
           ['representacion'].trim();
 
+        if (+item['cantidad'] <= 0) {
+          throw new Error("La cantidad del item en data.items[" +
+          i +
+          "].cantidad debe ser mayor a cero");
+        }
         gCamItem['dCantProSer'] = item['cantidad'];
 
         if (item['pais']) {
@@ -83,7 +94,7 @@ class JSonDteItemService {
             throw new Error(
               "Pais '" +
                 item['pais'] +
-                "' del Cliente en data.items[" +
+                "' del Producto en data.items[" +
                 i +
                 '].pais no encontrado. Valores: ' +
                 constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
