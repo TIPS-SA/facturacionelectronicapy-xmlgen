@@ -1137,7 +1137,11 @@ class JSonDeMainService {
             'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
           );
         }
-        if (constanteService.departamentos.filter((departamento: any) => departamento.codigo === +data['cliente']['departamento']).length == 0) {
+        if (
+          constanteService.departamentos.filter(
+            (departamento: any) => departamento.codigo === +data['cliente']['departamento'],
+          ).length == 0
+        ) {
           throw new Error(
             "Departamento '" +
               data['cliente']['departamento'] +
@@ -1157,8 +1161,11 @@ class JSonDeMainService {
         if (!data['cliente']['distrito']) {
           throw new Error('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
         }
-      
-        if (constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito']).length == 0) {
+
+        if (
+          constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito'])
+            .length == 0
+        ) {
           throw new Error(
             "Distrito '" +
               data['cliente']['distrito'] +
@@ -1177,7 +1184,9 @@ class JSonDeMainService {
         if (!data['cliente']['ciudad']) {
           throw new Error('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
         }
-        if (constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0) {
+        if (
+          constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0
+        ) {
           throw new Error(
             "Ciudad '" +
               data['cliente']['ciudad'] +
@@ -1230,30 +1239,22 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = data['cliente']['celular'].trim();
     }
     if (data['cliente']['email']) {
-      console.log("email vale", data['cliente']['email']);
+      console.log('email vale', data['cliente']['email']);
       let email = new String(data['cliente']['email']); //Hace una copia, para no alterar.
-      
+
       //Verificar si tiene varios correos.
-      if (email.indexOf(",") > -1) {
+      if (email.indexOf(',') > -1) {
         //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que la SET no acepta Comas
-        email = email.split(",")[0].trim();
+        email = email.split(',')[0].trim();
       }
 
       //Verificar espacios
-      if (email.indexOf(" ") > -1) {
-        throw new Error(
-          "El valor '" +
-            email +
-            "' en data.cliente.email no puede poseer espacios",
-        );
+      if (email.indexOf(' ') > -1) {
+        throw new Error("El valor '" + email + "' en data.cliente.email no puede poseer espacios");
       }
 
       if (!(email.length >= 3 && email.length <= 80)) {
-        throw new Error(
-          "El valor '" +
-            email +
-            "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres",
-        );
+        throw new Error("El valor '" + email + "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres");
       }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dEmailRec = email.trim();
     }
