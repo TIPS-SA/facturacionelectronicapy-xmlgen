@@ -768,12 +768,14 @@ class JSonDeMainService {
       return; //No informa si el tipo de documento es 7
     }
 
+    if ( ! data['tipoImpuesto']) {
+      throw new Error("Debe especificar el Tipo de Impuesto en data.tipoImpuesto");
+    }
+
     if (constanteService.tiposImpuestos.filter((um) => um.codigo === data['tipoImpuesto']).length == 0) {
-      throw (
-        new Error("Tipo de Impuesto '" + data['tipoImpuesto']) +
+      throw new Error("Tipo de Impuesto '" + data['tipoImpuesto'] +
         "' en data.tipoImpuesto no válido. Valores: " +
-        constanteService.tiposImpuestos.map((a) => a.codigo + '-' + a.descripcion)
-      );
+        constanteService.tiposImpuestos.map((a) => a.codigo + '-' + a.descripcion));
     }
 
     let moneda = data['moneda'];
@@ -783,25 +785,25 @@ class JSonDeMainService {
 
     if (constanteService.monedas.filter((um) => um.codigo === moneda).length == 0) {
       throw (
-        new Error("Moneda '" + moneda) +
+        new Error("Moneda '" + moneda +
         "' en data.moneda no válido. Valores: " +
-        constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion)
+        constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion))
       );
     }
     if (data['condicionAnticipo']) {
       if (constanteService.globalPorItem.filter((um) => um.codigo === data['condicionAnticipo']).length == 0) {
         throw (
-          new Error("Condición de Anticipo '" + data['condicionAnticipo']) +
+          new Error("Condición de Anticipo '" + data['condicionAnticipo'] +
           "' en data.condicionAnticipo no válido. Valores: " +
-          constanteService.globalPorItem.map((a) => a.codigo + '-Anticipo ' + a.descripcion)
+          constanteService.globalPorItem.map((a) => a.codigo + '-Anticipo ' + a.descripcion))
         );
       }
     }
     if (constanteService.tiposTransacciones.filter((um) => um.codigo === data['tipoTransaccion']).length == 0) {
       throw (
-        new Error("Tipo de Transacción '" + data['tipoTransaccion']) +
+        new Error("Tipo de Transacción '" + data['tipoTransaccion'] +
         "' en data.tipoTransaccion no válido. Valores: " +
-        constanteService.tiposTransacciones.map((a) => a.codigo + '-' + a.descripcion)
+        constanteService.tiposTransacciones.map((a) => a.codigo + '-' + a.descripcion))
       );
     }
 

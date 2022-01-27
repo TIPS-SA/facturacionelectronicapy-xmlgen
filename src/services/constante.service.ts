@@ -182,7 +182,7 @@ class ConstanteService {
     },
     {
       codigo: 5,
-      descripcion: 'IVA - Rent',
+      descripcion: 'IVA - Renta',
       situacion: 0,
     },
   ];
