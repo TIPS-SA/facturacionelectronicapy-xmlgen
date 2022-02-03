@@ -203,6 +203,34 @@ class JSonDteItemService {
 
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
+
+      //Validar que si el descuento es mayor al precio
+      if (+item['descuento'] > +item['precioUnitario']) {
+        throw new Error(
+          "Descuento '" +
+            item['descuento'] +
+            "' del Producto en data.items[" +
+            i +
+            "].descuento supera al Precio Unitario '" + item['precioUnitario'] );
+      }
+
+      if (+item['descuento'] == +item['precioUnitario']) {
+        //Validar IVA
+        //Quiere decir que no va a ir nada en exenta, gravada5 y gravada10, para este item.
+        if (item['ivaTipo'] != 3) {
+          throw new Error(
+          "Descuento igual a Precio Unitario corresponde tener Tipo de Iva = 3-Exento en data.items[" +
+            i +
+            "].ivaTipo");
+          
+          //console.log("=================>>>>>>>>>>>>>>>>>>>>>>>> se asigna iva tipo = 3 tres");
+          /*item['ivaTipo'] = 3;  //Exenta
+          item['ivaBase'] = 0;
+          item['iva'] = 0;*/
+        }
+
+      }
+
       jsonResult['dDescItem'] = item['descuento'];
 
       /*  if ( ! (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) ) {
@@ -301,6 +329,28 @@ class JSonDteItemService {
         );
       }
     }
+    if (item['ivaTipo'] == 3) { //Exento
+      if (item['ivaBase'] != 0) {
+        throw new Error(
+          'Valor de "ivaBase"=' +
+            item['ivaBase'] +
+            ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' +
+            i +
+            '].ivaBase',
+        );
+      }
+    
+      if (item['iva'] != 0) {
+        throw new Error(
+          'Valor de "iva"=' +
+            item['iva'] +
+            ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' +
+            i +
+            '].iva',
+        );
+      }
+    }
+    
     if (item['iva'] == 0) {
       if (item['ivaTipo'] != 2 && item['ivaTipo'] != 3) {
         throw new Error(
