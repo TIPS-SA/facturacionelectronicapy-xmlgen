@@ -73,6 +73,21 @@ class JSonDteItemService {
         if (!item['descripcion']) {
           throw new Error('La descripción del item en data.items[' + i + '].descripcion no puede ser null');
         }
+
+        if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 120)) {
+          throw new Error(
+            "La descripción del item (" + item['descripcion'] + ") en data.items[" + i + "].descripcion debe tener una longitud de 1 a 120 caracteres",
+          );
+        }
+
+        //.replaceAll("<[^>]*>", " ")
+        let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
+        if (regexp.test(item['descripcion'])) {
+          throw new Error(
+            "La descripción del item (" + item['descripcion'] + ") en data.items[" + i + "].descripcion contiene valores inválidos",
+          );
+        }
+
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
 
         gCamItem['cUniMed'] = unidadMedida;
@@ -104,6 +119,17 @@ class JSonDteItemService {
         }
 
         if (item['observacion']) {
+
+          if (!(item['observacion'].length >= 1 && item['observacion'].length <= 500)) {
+            throw new Error(
+              "La observación del item (" + item['observacion'] + ") en data.items[" + i + "].observacion debe tener una longitud de 1 a 500 caracteres",
+            );
+          }
+          if (regexp.test(item['observacion'])) {
+            throw new Error(
+              "La observación del item (" + item['observacion'] + ") en data.items[" + i + "].observacion contiene valores inválidos",
+            );
+          }
           gCamItem['dInfItem'] = item['observacion'];
         }
 
