@@ -76,7 +76,11 @@ class JSonDteItemService {
 
         if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 120)) {
           throw new Error(
-            "La descripción del item (" + item['descripcion'] + ") en data.items[" + i + "].descripcion debe tener una longitud de 1 a 120 caracteres",
+            'La descripción del item (' +
+              item['descripcion'] +
+              ') en data.items[' +
+              i +
+              '].descripcion debe tener una longitud de 1 a 120 caracteres',
           );
         }
 
@@ -84,7 +88,11 @@ class JSonDteItemService {
         let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
         if (regexp.test(item['descripcion'])) {
           throw new Error(
-            "La descripción del item (" + item['descripcion'] + ") en data.items[" + i + "].descripcion contiene valores inválidos",
+            'La descripción del item (' +
+              item['descripcion'] +
+              ') en data.items[' +
+              i +
+              '].descripcion contiene valores inválidos',
           );
         }
 
@@ -119,15 +127,22 @@ class JSonDteItemService {
         }
 
         if (item['observacion']) {
-
           if (!(item['observacion'].length >= 1 && item['observacion'].length <= 500)) {
             throw new Error(
-              "La observación del item (" + item['observacion'] + ") en data.items[" + i + "].observacion debe tener una longitud de 1 a 500 caracteres",
+              'La observación del item (' +
+                item['observacion'] +
+                ') en data.items[' +
+                i +
+                '].observacion debe tener una longitud de 1 a 500 caracteres',
             );
           }
           if (regexp.test(item['observacion'])) {
             throw new Error(
-              "La observación del item (" + item['observacion'] + ") en data.items[" + i + "].observacion contiene valores inválidos",
+              'La observación del item (' +
+                item['observacion'] +
+                ') en data.items[' +
+                i +
+                '].observacion contiene valores inválidos',
             );
           }
           gCamItem['dInfItem'] = item['observacion'];
@@ -229,7 +244,6 @@ class JSonDteItemService {
 
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
-
       //Validar que si el descuento es mayor al precio
       if (+item['descuento'] > +item['precioUnitario']) {
         throw new Error(
@@ -237,7 +251,9 @@ class JSonDteItemService {
             item['descuento'] +
             "' del Producto en data.items[" +
             i +
-            "].descuento supera al Precio Unitario '" + item['precioUnitario'] );
+            "].descuento supera al Precio Unitario '" +
+            item['precioUnitario'],
+        );
       }
 
       if (+item['descuento'] == +item['precioUnitario']) {
@@ -245,16 +261,16 @@ class JSonDteItemService {
         //Quiere decir que no va a ir nada en exenta, gravada5 y gravada10, para este item.
         if (item['ivaTipo'] != 3) {
           throw new Error(
-          "Descuento igual a Precio Unitario corresponde tener Tipo de Iva = 3-Exento en data.items[" +
-            i +
-            "].ivaTipo");
-          
+            'Descuento igual a Precio Unitario corresponde tener Tipo de Iva = 3-Exento en data.items[' +
+              i +
+              '].ivaTipo',
+          );
+
           //console.log("=================>>>>>>>>>>>>>>>>>>>>>>>> se asigna iva tipo = 3 tres");
           /*item['ivaTipo'] = 3;  //Exenta
           item['ivaBase'] = 0;
           item['iva'] = 0;*/
         }
-
       }
 
       jsonResult['dDescItem'] = item['descuento'];
@@ -355,7 +371,8 @@ class JSonDteItemService {
         );
       }
     }
-    if (item['ivaTipo'] == 3) { //Exento
+    if (item['ivaTipo'] == 3) {
+      //Exento
       if (item['ivaBase'] != 0) {
         throw new Error(
           'Valor de "ivaBase"=' +
@@ -365,18 +382,14 @@ class JSonDteItemService {
             '].ivaBase',
         );
       }
-    
+
       if (item['iva'] != 0) {
         throw new Error(
-          'Valor de "iva"=' +
-            item['iva'] +
-            ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' +
-            i +
-            '].iva',
+          'Valor de "iva"=' + item['iva'] + ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' + i + '].iva',
         );
       }
     }
-    
+
     if (item['iva'] == 0) {
       if (item['ivaTipo'] != 2 && item['ivaTipo'] != 3) {
         throw new Error(
