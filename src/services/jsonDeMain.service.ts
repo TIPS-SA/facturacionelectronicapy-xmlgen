@@ -842,7 +842,7 @@ class JSonDeMainService {
       //Obligatorio informar dCondTiCam D017
       this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['dCondTiCam'] = data['condicionTipoCambio'];
     }
-    if (data['cambio'] == 1 && moneda != 'PYG') {
+    if (data['condicionTipoCambio'] == 1 && moneda != 'PYG') {
       if (!(data['cambio'] && data['cambio'] > 0)) {
         throw new Error('Debe informar el valor del Cambio en data.cambio');
       }
