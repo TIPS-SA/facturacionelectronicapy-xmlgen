@@ -259,11 +259,10 @@ class JSonDteTotalesService {
     let aComparar: any = parseFloat((resta * 100).toFixed(2));
 
     if (aComparar == 50) {
-
       return 0;
     } else if (aComparar > 50) {
       var diferencia = aComparar - 50;
-      
+
       return diferencia;
     } else {
       //Redondear a 000
