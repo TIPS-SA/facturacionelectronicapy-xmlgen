@@ -254,16 +254,21 @@ class JSonDteTotalesService {
   public redondeo(numero: any) {
     let parteDecimal: number = parseFloat((numero / 100).toFixed(2));
     let parteEntera: number = (numero / 100.0) | 0;
-    let resta: any = parteDecimal - parteEntera;
-    let aComparar: any = resta.toFixed(2) * 100;
+    let resta: any = parseFloat((parteDecimal - parteEntera).toFixed(2));
+
+    let aComparar: any = parseFloat((resta * 100).toFixed(2));
+
     if (aComparar == 50) {
+
       return 0;
     } else if (aComparar > 50) {
       var diferencia = aComparar - 50;
+      
       return diferencia;
     } else {
       //Redondear a 000
       var diferencia = 50 - (50 - aComparar);
+
       return diferencia;
     }
   }
