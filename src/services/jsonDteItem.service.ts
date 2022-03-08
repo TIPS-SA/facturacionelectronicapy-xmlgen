@@ -221,8 +221,16 @@ class JSonDteItemService {
     const jsonResult: any = {
       dPUniProSer: item['precioUnitario'],
       //dTiCamIt : data['condicionTipoCambio'] == 2 ? item['cambio'] : null,    //E725
-      dTotBruOpeItem: parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']),
+      //dTotBruOpeItem: parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']),
     };
+
+
+    jsonResult['dTotBruOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
+    jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(2));
+    if (data.moneda === 'PYG') {
+      jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(0));
+    }
+
     if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
       jsonResult['dTiCamIt'] = item['cambio'];
     }
@@ -319,10 +327,21 @@ class JSonDteItemService {
         parseFloat(jsonResult['dAntGloPreUniIt'] || 0);
 
       jsonResult['dTotOpeItem'] = parseFloat(valores + '') * parseFloat(item['cantidad']);
+
+      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(2));
+      if (data.moneda === 'PYG') {
+        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
+      }
+
     }
     if (data['tipoDocumento'] == 4) {
       //Si es Autofactura
       jsonResult['dTotOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
+
+      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(2));
+      if (data.moneda === 'PYG') {
+        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
+      }
     }
 
     if (data['condicionTipoCambio'] == 2) {
