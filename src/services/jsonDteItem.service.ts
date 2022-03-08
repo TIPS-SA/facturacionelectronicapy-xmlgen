@@ -224,7 +224,6 @@ class JSonDteItemService {
       //dTotBruOpeItem: parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']),
     };
 
-
     jsonResult['dTotBruOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(2));
     if (data.moneda === 'PYG') {
@@ -332,7 +331,6 @@ class JSonDteItemService {
       if (data.moneda === 'PYG') {
         jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
       }
-
     }
     if (data['tipoDocumento'] == 4) {
       //Si es Autofactura
