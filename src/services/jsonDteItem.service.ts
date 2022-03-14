@@ -126,7 +126,7 @@ class JSonDteItemService {
           ];
         }
 
-        if (item['observacion']) {
+        if (item['observacion'] && item['observacion'].trim().length > 0) {
           if (!(item['observacion'].length >= 1 && item['observacion'].length <= 500)) {
             throw new Error(
               'La observación del item (' +
@@ -145,7 +145,7 @@ class JSonDteItemService {
                 '].observacion contiene valores inválidos',
             );
           }
-          gCamItem['dInfItem'] = item['observacion'];
+          gCamItem['dInfItem'] = item['observacion'].trim();
         }
 
         if (data['tipoDocumento'] === 7) {
