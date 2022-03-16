@@ -40,12 +40,10 @@
   "dependencies": {
     "copyfiles": "^2.4.1",
     "fs": "0.0.1-security",
-    "xml2js": "^0.4.23",
-    "xsd-schema-validator": "^0.7.0"
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@types/xml2js": "^0.4.9",
-    "@types/xsd-schema-validator": "^0.5.4",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-mocha": "^8.1.0",
