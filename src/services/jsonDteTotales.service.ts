@@ -111,12 +111,14 @@ class JSonDteTotalesService {
     if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) {
       //No debe existir si D013 != 1 o D013 != 5
       if (dIVA5 > 0) {
-        dLiqTotIVA5 = (dIVA5 - this.redondeo(dIVA5)) / 1.05; //Consultar
+        //dLiqTotIVA5 = (dIVA5 - this.redondeo(dIVA5)) / 1.05; //Consultar //31/03/2022
+        dLiqTotIVA5 = (dRedon / 1.05); //Consultar
         dLiqTotIVA5 = Math.round(dLiqTotIVA5);
       }
 
       if (dIVA10 > 0) {
-        dLiqTotIVA10 = (dIVA10 - this.redondeo(dIVA10)) / 1.1;
+        //dLiqTotIVA10 = (dIVA10 - this.redondeo(dIVA10)) / 1.1; //31/03/2022
+        dLiqTotIVA10 = (dRedon / 1.1);
         dLiqTotIVA10 = Math.round(dLiqTotIVA10);
       }
     }
