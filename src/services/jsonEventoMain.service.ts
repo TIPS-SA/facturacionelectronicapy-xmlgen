@@ -19,14 +19,11 @@ class JSonEventoMainService {
   }*/
 
   public generateXMLEventoCancelacion(id: number, params: any, data: any): Promise<any> {
-    data.tipoEvento = 1;  //Cancelacion
-    return new Promise( async(resolve, reject) => {
+    data.tipoEvento = 1; //Cancelacion
+    return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
-        xml = xml.replace(
-          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-          ""
-        );
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
         /*let soapXMLData = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
                             <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
                                 <env:Header/>\n\
@@ -38,7 +35,7 @@ class JSonEventoMainService {
                                 </env:Body>\n\
                             </env:Envelope>\n`;*/
 
-        let soapXMLData = this.envelopeEvent(id, xml);                            
+        let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
       } catch (error) {
         reject(error);
@@ -47,14 +44,11 @@ class JSonEventoMainService {
   }
 
   public generateXMLEventoInutilizacion(id: number, params: any, data: any): Promise<any> {
-    data.tipoEvento = 2;  //Inutilizacion
-    return new Promise( async(resolve, reject) => {
+    data.tipoEvento = 2; //Inutilizacion
+    return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
-        xml = xml.replace(
-          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-          ""
-        );
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
         /*let soapXMLData = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
                             <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
                                 <env:Header/>\n\
@@ -75,15 +69,12 @@ class JSonEventoMainService {
   }
 
   public generateXMLEventoConformidad(id: number, params: any, data: any): Promise<any> {
-    data.tipoEvento = 11;  //Conformidad
-    return new Promise( async(resolve, reject) => {
+    data.tipoEvento = 11; //Conformidad
+    return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
-        xml = xml.replace(
-          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-          ""
-        );
-        
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
+
         let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
       } catch (error) {
@@ -93,15 +84,12 @@ class JSonEventoMainService {
   }
 
   public generateXMLEventoDisconformidad(id: number, params: any, data: any): Promise<any> {
-    data.tipoEvento = 12;  //Disconformidad
-    return new Promise( async(resolve, reject) => {
+    data.tipoEvento = 12; //Disconformidad
+    return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
-        xml = xml.replace(
-          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-          ""
-        );
-        
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
+
         let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
       } catch (error) {
@@ -111,15 +99,12 @@ class JSonEventoMainService {
   }
 
   public generateXMLEventoDesconocimiento(id: number, params: any, data: any): Promise<any> {
-    data.tipoEvento = 13;  //Desconocimiento
-    return new Promise( async(resolve, reject) => {
+    data.tipoEvento = 13; //Desconocimiento
+    return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
-        xml = xml.replace(
-          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-          ""
-        );
-        
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
+
         let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
       } catch (error) {
@@ -129,15 +114,12 @@ class JSonEventoMainService {
   }
 
   public generateXMLEventoNotificacion(id: number, params: any, data: any): Promise<any> {
-    data.tipoEvento = 14;  //Notificacion
-    return new Promise( async(resolve, reject) => {
+    data.tipoEvento = 14; //Notificacion
+    return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
-        xml = xml.replace(
-          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-          ""
-        );
-        
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
+
         let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
       } catch (error) {
