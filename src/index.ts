@@ -5,8 +5,32 @@ class DE {
     return deService.generateXMLDE(params, data, defaultValues);
   };
 
-  generateXMLEvento = (params: any, data: any): Promise<any> => {
+  /*generateXMLEvento = (params: any, data: any): Promise<any> => {
     return eventoService.generateXMLEvento(params, data);
+  };*/
+
+  generateXMLEventoCancelacion = (id: number, params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEventoCancelacion(id, params, data);
+  };
+
+  generateXMLEventoInutilizacion = (id: number, params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEventoInutilizacion(id, params, data);
+  };
+
+  generateXMLEventoConformidad = (id: number, params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEventoConformidad(id, params, data);
+  };
+
+  generateXMLEventoDisconformidad = (id: number, params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEventoDisconformidad(id, params, data);
+  };
+
+  generateXMLEventoDesconocimiento = (id: number, params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEventoDesconocimiento(id, params, data);
+  };
+
+  generateXMLEventoNotificacion = (id: number, params: any, data: any): Promise<any> => {
+    return eventoService.generateXMLEventoNotificacion(id, params, data);
   };
 
   consultarDepartamentos = (): Promise<any> => {

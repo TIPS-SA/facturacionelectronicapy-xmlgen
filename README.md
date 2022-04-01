@@ -425,6 +425,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 ```
 
 ## Eventos
+
 Para la invocación de Eventos de la SET se debe utilizar como primer parámetro, el mismo `params` utilizado en la Generación de XML.
 
 El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiendo del evento a ser invocado. A continuación los ejemplos para cada evento.
@@ -496,14 +497,14 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
 }
 ```
 
-Ejemplos de Uso de invocación de eventos:
+Ejemplos de Uso de invocación de evento de Cancelación:
 
 Javascript:
 ``` js
   const xmlgen = require('facturacionelectronicapy-xmlgen');
   // O const xmlgen = require('facturacionelectronicapy-xmlgen').default;
   
-  xmlgen.generateXMLEvento(params, data).then(xml => {
+  xmlgen.generateXMLEventoCancelacion(id, params, data).then(xml => {
       console.log(xml);
   }).catch(error => {
       console.log(error);
@@ -514,12 +515,23 @@ TypeScript:
 ``` ts
   import xmlgen from 'facturacionelectronicapy-xmlgen';
 
-  xmlgen.generateXMLEvento(params, data).then(xml => {
+  xmlgen.generateXMLEventoCancelacion(id, params, data).then(xml => {
       console.log(xml);
   }).catch(error => {
       console.log(error);
   }); 
 ```
+Siendo, los demás eventos disponibles:
+
+generateXMLEventoInutilizacion(id, params, data);
+
+generateXMLEventoConformidad(id, params, data);
+
+generateXMLEventoDisconformidad(id, params, data);
+
+generateXMLEventoDesconocimiento(id, params, data);
+
+generateXMLEventoNotificacion(id, params, data);
 
 
 ## Serie Técnica sobre Facturación Electrónica - YouTube

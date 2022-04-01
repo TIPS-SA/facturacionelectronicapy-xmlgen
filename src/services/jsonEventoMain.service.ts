@@ -8,7 +8,7 @@ class JSonEventoMainService {
   codigoControl: any = null;
   json: any = {};
 
-  public generateXMLEvento(params: any, data: any): Promise<any> {
+  /*public generateXMLEvento(params: any, data: any): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         resolve(this.generateXMLEventoService(params, data));
@@ -16,6 +16,147 @@ class JSonEventoMainService {
         reject(error);
       }
     });
+  }*/
+
+  public generateXMLEventoCancelacion(id: number, params: any, data: any): Promise<any> {
+    data.tipoEvento = 1;  //Cancelacion
+    return new Promise( async(resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace(
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+          ""
+        );
+        /*let soapXMLData = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                            <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
+                                <env:Header/>\n\
+                                <env:Body>\n\
+                                    <rEnviEventoDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">\n\
+                                      <dId>${id}</dId>\n\
+                                      <dEvReg>${xml}</dEvReg>\n\
+                                    </rEnviEventoDe>\n\
+                                </env:Body>\n\
+                            </env:Envelope>\n`;*/
+
+        let soapXMLData = this.envelopeEvent(id, xml);                            
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public generateXMLEventoInutilizacion(id: number, params: any, data: any): Promise<any> {
+    data.tipoEvento = 2;  //Inutilizacion
+    return new Promise( async(resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace(
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+          ""
+        );
+        /*let soapXMLData = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                            <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
+                                <env:Header/>\n\
+                                <env:Body>\n\
+                                    <rEnviEventoDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">\n\
+                                      <dId>${id}</dId>\n\
+                                      <dEvReg>${xml}</dEvReg>\n\
+                                    </rEnviEventoDe>\n\
+                                </env:Body>\n\
+                            </env:Envelope>\n`;
+                            */
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public generateXMLEventoConformidad(id: number, params: any, data: any): Promise<any> {
+    data.tipoEvento = 11;  //Conformidad
+    return new Promise( async(resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace(
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+          ""
+        );
+        
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public generateXMLEventoDisconformidad(id: number, params: any, data: any): Promise<any> {
+    data.tipoEvento = 12;  //Disconformidad
+    return new Promise( async(resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace(
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+          ""
+        );
+        
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public generateXMLEventoDesconocimiento(id: number, params: any, data: any): Promise<any> {
+    data.tipoEvento = 13;  //Desconocimiento
+    return new Promise( async(resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace(
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+          ""
+        );
+        
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public generateXMLEventoNotificacion(id: number, params: any, data: any): Promise<any> {
+    data.tipoEvento = 14;  //Notificacion
+    return new Promise( async(resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace(
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+          ""
+        );
+        
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  private envelopeEvent(id: number, xml: string) {
+    return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
+                <env:Header/>\n\
+                <env:Body>\n\
+                    <rEnviEventoDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">\n\
+                      <dId>${id}</dId>\n\
+                      <dEvReg>${xml}</dEvReg>\n\
+                    </rEnviEventoDe>\n\
+                </env:Body>\n\
+            </env:Envelope>\n`;
   }
 
   /**
