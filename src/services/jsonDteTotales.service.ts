@@ -229,7 +229,9 @@ class JSonDteTotalesService {
           toFixed = 0;
         }
 
-        jsonResult['dTBasGraIVA'] = parseFloat((dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0).toFixed(toFixed));
+        jsonResult['dTBasGraIVA'] = parseFloat(
+          (dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0).toFixed(toFixed),
+        );
       }
     }
     if (moneda != 'PYG' && data['condicionTipoCambio'] == 1) {
