@@ -230,7 +230,7 @@ class JSonDteTotalesService {
         }
 
         jsonResult['dTBasGraIVA'] = parseFloat(
-          (dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0).toFixed(toFixed),
+          ((dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0)).toFixed(toFixed),
         );
       }
     }
