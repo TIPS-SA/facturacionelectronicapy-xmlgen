@@ -230,7 +230,7 @@ class JSonDteTotalesService {
     if (moneda != 'PYG' && data['condicionTipoCambio'] == 1) {
       if (!data['cambio']) {
         throw new Error(
-        "Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global"
+          'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
         );
       }
       //Por el Global
