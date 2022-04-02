@@ -648,7 +648,6 @@ class JSonDeMainService {
     const digitoVerificador = jsonDteAlgoritmos.calcularDigitoVerificador(rucEmisor, 11);
 
     if (id.length != 44) {
-      throw new Error('Por alguna razón no se pudo generar correctamente el CDC. Verifique los datos de entrada');
     }
 
     const codigoSeguridadAleatorio = this.codigoSeguridad;
