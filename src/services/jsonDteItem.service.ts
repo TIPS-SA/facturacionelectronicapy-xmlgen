@@ -290,7 +290,6 @@ class JSonDteItemService {
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
     }
 
-
     jsonResult['dDescGloItem'] = 0;
     if (data['porcentajeDescuento'] && data['porcentajeDescuento'] > 0) {
       jsonResult['dDescGloItem'] = (data['porcentajeDescuento'] * parseFloat(item['precioUnitario'])) / 100;

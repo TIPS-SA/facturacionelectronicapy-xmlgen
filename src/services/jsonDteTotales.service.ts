@@ -89,7 +89,6 @@ class JSonDteTotalesService {
       dDescTotal += dTotDesc + dTotDescGlotem;
       dAnticipo += dTotAntItem + dTotAnt;
       dTotOpeGs += item['gValorItem']['gValorRestaItem']['dTotOpeGs']; //Suma del monto total en Gs.
-      
     } //end-for
 
     if (
