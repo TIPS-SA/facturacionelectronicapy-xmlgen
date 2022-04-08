@@ -290,10 +290,11 @@ class JSonDteItemService {
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
     }
 
-    /*jsonResult['dPorcDesIt'] = 0;
-    if (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) {
-      jsonResult['dPorcDesIt'] = item['descuentoPorcentaje'];
-    }*/
+
+    jsonResult['dDescGloItem'] = 0;
+    if (data['porcentajeDescuento'] && data['porcentajeDescuento'] > 0) {
+      jsonResult['dDescGloItem'] = (data['porcentajeDescuento'] * parseFloat(item['precioUnitario'])) / 100;
+    }
 
     jsonResult['dAntPreUniIt'] = 0;
     if (item['anticipo'] && item['anticipo'] > 0) {

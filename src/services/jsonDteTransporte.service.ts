@@ -216,9 +216,13 @@ class JSonDteTransporteService {
       jsonResult['dAdicVeh'] = data['detalleTransporte']['vehiculo']['obs'];
     }
     if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-      if (data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6) {
-        jsonResult['dNroMatVeh'] = data['detalleTransporte']['vehiculo']['numeroMatricula'].substring(0, 6);
+      if ( !(data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 && data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7) ) {
+        throw new Error(
+          "Número de Matricula '" +
+            data['detalleTransporte']['vehiculo']['numeroMatricula'] +
+            "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ");
       }
+      jsonResult['dNroMatVeh'] = data['detalleTransporte']['vehiculo']['numeroMatricula'];
     }
     if (data['detalleTransporte']['vehiculo']['numeroVuelo']) {
       if (data['detalleTransporte']['vehiculo']['numeroVuelo'].length >= 6) {

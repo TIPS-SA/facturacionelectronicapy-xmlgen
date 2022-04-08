@@ -1137,7 +1137,7 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumCasRec'] = (data['cliente']['numeroCasa'] + '').trim();
     }
 
-    if (data['cliente']['tipoOperacion'] != 4) {
+    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       if (this.validateError) {
         if (!data['cliente']['departamento']) {
           throw new Error(
@@ -1163,7 +1163,7 @@ class JSonDeMainService {
       )[0]['descripcion'];
     }
 
-    if (data['cliente']['tipoOperacion'] != 4) {
+    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       if (this.validateError) {
         if (!data['cliente']['distrito']) {
           throw new Error('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
@@ -1186,7 +1186,7 @@ class JSonDeMainService {
         (td) => td.codigo === +data['cliente']['distrito'],
       )[0]['descripcion'];
     }
-    if (data['cliente']['tipoOperacion'] != 4) {
+    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       if (this.validateError) {
         if (!data['cliente']['ciudad']) {
           throw new Error('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');

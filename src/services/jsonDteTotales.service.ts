@@ -83,16 +83,13 @@ class JSonDteTotalesService {
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
       dTotDesc += (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'];
-      dTotDescGlotem += item.gValorItem?.gValorRestaItem?.dDescGloItem || 0;
-      dTotAntItem += item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0;
+      dTotDescGlotem += (item.gValorItem?.gValorRestaItem?.dDescGloItem || 0) * item['dCantProSer'];
+      dTotAntItem += (item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0) * item['dCantProSer'];
       dTotAnt += (item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0) * item['dCantProSer'];
-      dDescTotal +=
-        (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'] +
-        (item['gValorItem']['gValorRestaItem']['dTotDescGlotem'] || 0);
-      dAnticipo +=
-        (item['gValorItem']['gValorRestaItem']['dTotAntItem'] || 0) * item['dCantProSer'] +
-        (item['gValorItem']['gValorRestaItem']['dTotAnt'] || 0);
+      dDescTotal += dTotDesc + dTotDescGlotem;
+      dAnticipo += dTotAntItem + dTotAnt;
       dTotOpeGs += item['gValorItem']['gValorRestaItem']['dTotOpeGs']; //Suma del monto total en Gs.
+      
     } //end-for
 
     if (
@@ -106,7 +103,7 @@ class JSonDteTotalesService {
       }
     }
     const dRedon = this.redondeo(dTotOpe);
-    const montoRedondeado = dTotOpe - dRedon;
+    //const montoRedondeado = dTotOpe - dRedon;
 
     if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) {
       //No debe existir si D013 != 1 o D013 != 5
@@ -128,6 +125,7 @@ class JSonDteTotalesService {
     //---
     //Corresponde al cálculo aritmético F008 - F013 + F025
     let dTotGralOpe = dTotOpe - dRedon + (data['comision'] || 0);
+    //dTotOpe + dRedon + dComi;
     //Si C002 = 1, 5 o 6, entonces dTotGralOpe(F014) = F008 - F011 - F012 - F013
     /*if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
       dTotGralOpe = dTotOpe - dDescTotal - dAnticipo - dRedon;
@@ -156,7 +154,7 @@ class JSonDteTotalesService {
       dTotDescGlotem: dTotDescGlotem,
       dTotAntItem: dTotAntItem,
       dTotAnt: dTotAnt,
-      dPorcDescTotal: 0.0, //TODO, ver de donde sale
+      dPorcDescTotal: data['porcentajeDescuento'] || 0,
       dDescTotal: dDescTotal,
       dAnticipo: dAnticipo,
       dRedon: dRedon, //F013
