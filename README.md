@@ -103,7 +103,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     "punto" : "001",
     "numero" : "", 
     "descripcion" : "Aparece en el documento",
-    "observacion" : "Cualquier informacion de interes",
+    "observacion" : "Cualquier informacion de marketing, publicidad, sorteos, promociones para el Receptor",
     "tipoContribuyente" : 1,
     "fecha" : "2020-09-14T10:11:00",
     "tipoEmision" : 1,
@@ -237,7 +237,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     "items" : [{
         "codigo" : "A-001",
         "descripcion": "Producto o Servicio", 
-        "observacion": "Cualquier informacion de interes", 
+        "observacion": "Información adicional o complementaria sobre el producto", 
         "partidaArancelaria" : 4444,
         "ncm": "ABCD1234",
         "unidadMedida": 77,
