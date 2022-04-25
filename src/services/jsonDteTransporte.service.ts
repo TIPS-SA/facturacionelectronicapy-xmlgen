@@ -129,12 +129,12 @@ class JSonDteTransporteService {
       //dTelSal : data['detalleTransporte']['salida']['telefonoContacto'],
     };
 
-    constanteService.validateDepartamentoDistritoCiudad(
+    /*constanteService.validateDepartamentoDistritoCiudad(
       'data.detalleTransporte.salida',
       +data['detalleTransporte']['salida']['departamento'],
       +data['detalleTransporte']['salida']['distrito'],
       +data['detalleTransporte']['salida']['ciudad'],
-    );
+    );*/
 
     if (
       data['detalleTransporte'] &&
