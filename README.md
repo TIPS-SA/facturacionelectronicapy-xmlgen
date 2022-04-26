@@ -548,9 +548,9 @@ Para más información sobre el proceso que llevó a la generación de éste mó
 
 
 ## Empresas que utilizan éstos proyectos
-[JHF Ingeniería Informática](https://jhf.com.py/)
-[JR Ingeniería y Servicios](https://jringenieriayservicios.com/)
-[FacturaSend](https://www.facturasend.com/)
+[JHF Ingeniería Informática](https://jhf.com.py/)<br/>
+[JR Ingeniería y Servicios](https://jringenieriayservicios.com/)<br/>
+[FacturaSend](https://www.facturasend.com/)<br/>
 
 * * * *
 
