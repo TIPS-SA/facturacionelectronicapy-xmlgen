@@ -35,7 +35,7 @@ Javascript:
   const xmlgen = require('facturacionelectronicapy-xmlgen');
   //O const xmlgen = require('facturacionelectronicapy-xmlgen').default;
   
-  xmlgen.generateXMLDE(params, data).then(xml => {
+  xmlgen.generateXMLDE(params, data, options).then(xml => {
       console.log(xml);
   }).catch(error => {
       console.log(error);
@@ -46,7 +46,7 @@ TypeScript:
 ``` ts
   import xmlgen from 'facturacionelectronicapy-xmlgen';
 
-  xmlgen.generateXMLDE(params, data).then(xml => {
+  xmlgen.generateXMLDE(params, data, options).then(xml => {
       console.log(xml);
   }).catch(error => {
       console.log(error);
