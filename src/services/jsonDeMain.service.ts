@@ -271,8 +271,10 @@ class JSonDeMainService {
     if (data.cliente?.tipo_operacion) {
       data.cliente.tipoOperacion = data.cliente.tipo_operacion;
     }
-    if (data.cliente?.numero_casa) {
-      data.cliente.numeroCasa = data.cliente.numero_casa;
+
+    //Campo que puede ser un numero = 0, hay que validar de esta forma
+    if (typeof data.cliente != 'undefined' && typeof data.cliente.numero_casa != 'undefined') {
+      data.cliente.numeroCasa = data.cliente.numero_casa + "";
     }
     if (data.cliente?.tipo_contribuyente) {
       data.cliente.tipoContribuyente = data.cliente.tipo_contribuyente;
@@ -1254,7 +1256,6 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = data['cliente']['celular'].trim();
     }
     if (data['cliente']['email']) {
-      console.log('email vale', data['cliente']['email']);
       let email = new String(data['cliente']['email']); //Hace una copia, para no alterar.
 
       //Verificar si tiene varios correos.
