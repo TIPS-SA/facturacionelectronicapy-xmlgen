@@ -576,9 +576,8 @@ class JSonDeMainService {
     if (data['items'] && data['items'].length > 0) {
       for (let i = 0; i < data['items'].length; i++) {
         const item = data['items'][i];
-        let unidadMedida: number = item['unidadMedida'];
-        if (!unidadMedida) {
-          unidadMedida = 77;
+        if (!item['unidadMedida']) {
+          item['unidadMedida'] = 77;
         }
       }
     }
