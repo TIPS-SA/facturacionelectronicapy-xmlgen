@@ -1,3 +1,5 @@
+import { XmlgenConfig } from "./type.interface.";
+
 class JSonDteTotalesService {
   /**
    * F. Campos que describen los subtotales y totales de la transacción documentada (F001-F099)
@@ -6,9 +8,9 @@ class JSonDteTotalesService {
    * @param data
    * @param options
    */
-  public generateDatosTotales(params: any, data: any, items: any[], defaultValues?: boolean) {
+  public generateDatosTotales(params: any, data: any, items: any[], config: XmlgenConfig) {
     let moneda = data['moneda'];
-    if (!moneda && defaultValues === true) {
+    if (!moneda && config.defaultValues === true) {
       moneda = 'PYG';
     }
 
@@ -101,19 +103,20 @@ class JSonDteTotalesService {
         dTotOpe = dSubExe + dSubExo + dSub5 + dSub10; // Suma (F002, F003, F004 y F005)
       }
     }
-    const dRedon = this.redondeo(dTotOpe);
-    //const montoRedondeado = dTotOpe - dRedon;
+
+    let dRedon = 0;
+    if (config.redondeoSedeco) {
+      dRedon = this.redondeoSedeco(dTotOpe);
+    }
 
     if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) {
       //No debe existir si D013 != 1 o D013 != 5
       if (dIVA5 > 0) {
-        //dLiqTotIVA5 = (dIVA5 - this.redondeo(dIVA5)) / 1.05; //Consultar //31/03/2022
         dLiqTotIVA5 = dRedon / 1.05; //Consultar
         dLiqTotIVA5 = Math.round(dLiqTotIVA5);
       }
 
       if (dIVA10 > 0) {
-        //dLiqTotIVA10 = (dIVA10 - this.redondeo(dIVA10)) / 1.1; //31/03/2022
         dLiqTotIVA10 = dRedon / 1.1;
         dLiqTotIVA10 = Math.round(dLiqTotIVA10);
       }
@@ -262,7 +265,7 @@ class JSonDteTotalesService {
    * @param numero
    * @returns
    */
-  public redondeo(numero: any) {
+  public redondeoSedeco(numero: any) {
     let parteDecimal: number = parseFloat((numero / 100).toFixed(2));
     let parteEntera: number = (numero / 100.0) | 0;
     let resta: any = parseFloat((parteDecimal - parteEntera).toFixed(2));

@@ -1,5 +1,6 @@
 import stringUtilService from './StringUtil.service';
 import constanteService from './Constante.service';
+import { XmlgenConfig } from './type.interface.';
 
 class JSonDteItemService {
   /**
@@ -9,7 +10,7 @@ class JSonDteItemService {
    * @param data
    * @param options
    */
-  public generateDatosItemsOperacion(params: any, data: any, defaultValues?: boolean) {
+  public generateDatosItemsOperacion(params: any, data: any, config: XmlgenConfig) {
     const jsonResult: any = [];
 
     //Recorrer array de infoCuotas e informar en el JSON
@@ -18,15 +19,15 @@ class JSonDteItemService {
         const item = data['items'][i];
 
         //Valores por defecto para el Detalle
-        let unidadMedida: number = item['unidadMedida'];
-        if (!unidadMedida && defaultValues === true) {
+        /*let unidadMedida: number = item['unidadMedida'];
+        if (!unidadMedida && config.defaultValues === true) {
           unidadMedida = 77;
-        }
+        }*/
         //Validaciones
-        if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
+        if (constanteService.unidadesMedidas.filter((um) => um.codigo === item['unidadMedida']).length == 0) {
           throw new Error(
             "Unidad de Medida '" +
-              unidadMedida +
+            item['unidadMedida'] +
               "' en data.items[" +
               i +
               '].unidadMedida no encontrado. Valores: ' +
@@ -98,9 +99,9 @@ class JSonDteItemService {
 
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
 
-        gCamItem['cUniMed'] = unidadMedida;
+        gCamItem['cUniMed'] = item['unidadMedida'];
         gCamItem['dDesUniMed'] = constanteService.unidadesMedidas
-          .filter((um) => um.codigo === unidadMedida)[0]
+          .filter((um) => um.codigo === item['unidadMedida'])[0]
           ['representacion'].trim();
 
         if (+item['cantidad'] <= 0) {

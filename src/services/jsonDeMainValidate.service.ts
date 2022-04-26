@@ -1,15 +1,7 @@
 import stringUtilService from './StringUtil.service';
-import fechaUtilService from './FechaUtil.service';
 import constanteService from './Constante.service';
-import jsonDteAlgoritmos from './jsonDteAlgoritmos.service';
-
 import jsonDteItemValidate from './jsonDteItemValidate.service';
-import jsonDteComplementarios from './jsonDteComplementario.service';
-import jsonDteTransporte from './jsonDteTransporte.service';
-import jsonDteTotales from './jsonDteTotales.service';
-import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.service';
-import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
-import jsonDeMainValidate from './jsonDeMainValidate.service';
+import { XmlgenConfig } from './type.interface.';
 
 class JSonDeMainValidateService {
 
@@ -22,7 +14,7 @@ class JSonDeMainValidateService {
    * Valida los datos ingresados en el data
    * @param data
    */
-  public validateValues(params: any, data: any) {
+  public validateValues(params: any, data: any, config: XmlgenConfig) {
     this.errors = new Array<string>();
 
     if (constanteService.tiposDocumentos.filter((um) => um.codigo === data['tipoDocumento']).length == 0) {
@@ -31,16 +23,22 @@ class JSonDeMainValidateService {
         constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion);
     }
 
-    if (typeof data['cliente']['contribuyente'] == 'undefined') {
-      this.errors.push('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+    if (typeof data['cliente'] == 'undefined') {
+      this.errors.push('Debe especificar los datos del Cliente en data.cliente');
     }
 
-    if (typeof data['cliente']['contribuyente'] == 'undefined') {
-      this.errors.push('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
-    }
-
-    if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
-      this.errors.push('data.cliente.contribuyente debe ser true|false');
+    if (data['cliente']) {
+      if (typeof data['cliente']['contribuyente'] == 'undefined') {
+        this.errors.push('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+      }
+  
+      if (typeof data['cliente']['contribuyente'] == 'undefined') {
+        this.errors.push('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+      }
+  
+      if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
+        this.errors.push('data.cliente.contribuyente debe ser true|false');
+      }
     }
     
     this.generateCodigoControlValidate(params, data);
@@ -117,15 +115,26 @@ class JSonDeMainValidateService {
       let errorExit: any = new Error();
 
       let msgErrorExit = "";
-      for (let i = 0; i < this.errors.length; i++) {
 
-        if (i < 3) {
-          const error = this.errors[i];
-          msgErrorExit += error + ", ";
-        }
+      let recorrerHasta = this.errors.length;
+      if ((config.errorLimit || 3) < recorrerHasta) {
+        recorrerHasta = (config.errorLimit || 3);
       }
 
-      errorExit.errorsArray = this.errors;
+      for (let i = 0; i < recorrerHasta; i++) {
+
+        const error = this.errors[i];
+        msgErrorExit += error;
+
+        if (i < recorrerHasta - 1) {
+          msgErrorExit += config.errorSeparator + "";
+        }
+        
+      }
+
+      errorExit.message = msgErrorExit;
+      /*errorExit.firstMessage = this.errors[0];
+      errorExit.errorsArray = this.errors;*/
       throw errorExit;
     }
 
@@ -271,15 +280,15 @@ class JSonDeMainValidateService {
 
     if (!data['tipoImpuesto']) {
       this.errors.push('Debe especificar el Tipo de Impuesto en data.tipoImpuesto');
-    }
-
-    if (constanteService.tiposImpuestos.filter((um) => um.codigo === data['tipoImpuesto']).length == 0) {
-      this.errors.push(
-        "Tipo de Impuesto '" +
-          data['tipoImpuesto'] +
-          "' en data.tipoImpuesto no válido. Valores: " +
-          constanteService.tiposImpuestos.map((a) => a.codigo + '-' + a.descripcion),
-      );
+    } else {
+      if (constanteService.tiposImpuestos.filter((um) => um.codigo === data['tipoImpuesto']).length == 0) {
+        this.errors.push(
+          "Tipo de Impuesto '" +
+            data['tipoImpuesto'] +
+            "' en data.tipoImpuesto no válido. Valores: " +
+            constanteService.tiposImpuestos.map((a) => a.codigo + '-' + a.descripcion),
+        );
+      }
     }
 
     let moneda = data['moneda'];
@@ -390,6 +399,10 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosGeneralesReceptorDEValidate(params: any, data: any) {
+    if (!data['cliente']) {
+      return; //El error de cliente vacio, ya fue validado arriba
+    }
+
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
       if (
         constanteService.tiposDocumentosReceptor.filter((um: any) => um.codigo === data['cliente']['documentoTipo'])
@@ -602,6 +615,11 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosEspecificosPorTipoDE_FacturaElectronicaValidate(params: any, data: any) {
+    if (!data['factura']) {
+      this.errors.push("Debe indicar los datos especificos de la Factura en data.factura");
+      return; // Termina el metodos
+    }
+
     if (
       constanteService.indicadoresPresencias.filter((um: any) => um.codigo === data['factura']['presencia']).length == 0
     ) {
@@ -810,6 +828,11 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosCondicionOperacionDEValidate(params: any, data: any) {
+    if (!data['condicion']) {
+      this.errors.push("Debe indicar los datos de la Condición de la Operación en data.condicion");
+      return; // sale metodo
+    }
+
     if (
       constanteService.condicionesOperaciones.filter((um: any) => um.codigo === data['condicion']['tipo']).length == 0
     ) {

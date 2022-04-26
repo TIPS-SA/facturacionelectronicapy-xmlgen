@@ -11,18 +11,29 @@ import jsonDteTotales from './jsonDteTotales.service';
 import jsonDteComplementarioComercial from './jsonDteComplementariosComerciales.service';
 import jsonDteIdentificacionDocumento from './jsonDteIdentificacionDocumento.service';
 import jsonDeMainValidate from './jsonDeMainValidate.service';
+import { XmlgenConfig } from './type.interface.';
 
 class JSonDeMainService {
   codigoSeguridad: any = null;
   codigoControl: any = null;
   json: any = {};
   validateError = true;
-  validateErrorLimit = 3;
 
-  public generateXMLDE(params: any, data: any, defaultValues?: boolean): Promise<any> {
+  public generateXMLDE(params: any, data: any, config?: XmlgenConfig): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
-        resolve(this.generateXMLDeService(params, data, defaultValues));
+
+        let defaultConfig: XmlgenConfig = {
+          defaultValues : true,
+          //arrayValuesSeparator : ', ',
+          errorSeparator : '; ',
+          errorLimit : 10,
+          redondeoSedeco : true,
+        };
+
+        defaultConfig = Object.assign(defaultConfig, config);
+
+        resolve(this.generateXMLDeService(params, data, defaultConfig));
       } catch (error) {
         reject(error);
       }
@@ -35,13 +46,15 @@ class JSonDeMainService {
    * @param data
    * @returns
    */
-  private generateXMLDeService(params: any, data: any, defaultValues?: boolean) {
+  private generateXMLDeService(params: any, data: any, config: XmlgenConfig) {
     this.removeUnderscoreAndPutCamelCase(data);
 
     this.addDefaultValues(data);
 
     if (this.validateError) {
-      jsonDeMainValidate.validateValues({...params}, {...data});
+      
+      jsonDeMainValidate.validateValues({...params}, {...data}, config);
+      
     }
 
     this.json = {};
@@ -54,7 +67,7 @@ class JSonDeMainService {
     //---
     this.generateDatosOperacion(params, data);
     this.generateDatosTimbrado(params, data);
-    this.generateDatosGenerales(params, data, defaultValues);
+    this.generateDatosGenerales(params, data, config);
     //---
     this.generateDatosEspecificosPorTipoDE(params, data);
 
@@ -66,7 +79,7 @@ class JSonDeMainService {
     this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(
       params,
       data,
-      defaultValues,
+      config,
     );
 
     this.json['rDE']['DE']['gDtipDE']['gCamEsp'] =
@@ -81,7 +94,7 @@ class JSonDeMainService {
 
     if (data['tipoDocumento'] != 7) {
       const items = this.json['rDE']['DE']['gDtipDE']['gCamItem'];
-      this.json['rDE']['DE']['gTotSub'] = jsonDteTotales.generateDatosTotales(params, data, items, defaultValues);
+      this.json['rDE']['DE']['gTotSub'] = jsonDteTotales.generateDatosTotales(params, data, items, config);
     }
 
     if (data['complementarios']) {
@@ -541,11 +554,11 @@ class JSonDeMainService {
    */
   private addDefaultValues(data: any) {
     if (constanteService.tiposDocumentos.filter((um) => um.codigo === data['tipoDocumento']).length == 0) {
-      /*throw (
-        new Error("Tipo de Documento '" + data['tipoDocumento']) +
+      //No quitar este throw
+      throw new Error("Tipo de Documento '" + data['tipoDocumento']) +
         "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion)
-      );*/
+        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion
+      );
     }
     data['tipoDocumentoDescripcion'] = constanteService.tiposDocumentos.filter(
       (td) => td.codigo == data['tipoDocumento'],
@@ -731,11 +744,11 @@ class JSonDeMainService {
      * @param data 
      * @param options 
      */
-  private generateDatosGenerales(params: any, data: any, defaultValues?: boolean) {
+  private generateDatosGenerales(params: any, data: any, config: XmlgenConfig) {
     this.json['rDE']['DE']['gDatGralOpe'] = {
       dFeEmiDE: data['fecha'],
     };
-    this.generateDatosGeneralesInherentesOperacion(params, data, defaultValues);
+    this.generateDatosGeneralesInherentesOperacion(params, data, config);
     this.generateDatosGeneralesEmisorDE(params, data);
     if (data['usuario']) {
       //No es obligatorio
@@ -760,7 +773,7 @@ class JSonDeMainService {
      * @param data 
      * @param options 
      */
-  private generateDatosGeneralesInherentesOperacion(params: any, data: any, defaultValues?: boolean) {
+  private generateDatosGeneralesInherentesOperacion(params: any, data: any, config: XmlgenConfig) {
     if (data['tipoDocumento'] == 7) {
       //C002
       return; //No informa si el tipo de documento es 7
@@ -780,7 +793,7 @@ class JSonDeMainService {
     }
 
     let moneda = data['moneda'];
-    if (!moneda && defaultValues === true) {
+    if (!moneda && config.defaultValues === true) {
       moneda = 'PYG';
     }
 
