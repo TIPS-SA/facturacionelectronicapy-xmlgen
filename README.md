@@ -552,6 +552,6 @@ Para más información sobre el proceso que llevó a la generación de éste mó
 [JR Ingeniería y Servicios](https://jringenieriayservicios.com/)
 [FacturaSend](https://www.facturasend.com/)
 
-* * *
+* * * *
 
 Todos los derechos reservados - 2021
