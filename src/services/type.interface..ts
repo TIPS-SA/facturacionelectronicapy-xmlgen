@@ -1,4 +1,3 @@
-
 interface XmlgenConfig {
   defaultValues?: boolean;
   arrayValuesSeparator?: string;
@@ -7,8 +6,4 @@ interface XmlgenConfig {
   redondeoSedeco?: boolean;
 }
 
-
-
-export {
-  XmlgenConfig
-};
+export { XmlgenConfig };

@@ -25,7 +25,7 @@ class JSonDteItemValidateService {
         const item = data['items'][i];
 
         let unidadMedida: number = item['unidadMedida'];
-       
+
         //Validaciones
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
           this.errors.push(
@@ -121,7 +121,7 @@ class JSonDteItemValidateService {
         //Tratamiento E719. Tiene relacion con generateDatosGeneralesInherentesOperacion
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
           if (data['tipoTransaccion'] === 9) {
-            if ( ! (item['cdcAnticipo']) ) {
+            if (!item['cdcAnticipo']) {
               this.errors.push('Debe informar data.items*.cdcAnticipo');
             }
           }
@@ -156,15 +156,12 @@ class JSonDteItemValidateService {
 
         //Automotores
         if (item['sectorAutomotor'] && item['sectorAutomotor']['tipo']) {
-         this.generateDatosItemsOperacionSectorAutomotoresValidate(params, data, item, i);
+          this.generateDatosItemsOperacionSectorAutomotoresValidate(params, data, item, i);
         }
-
       } //end-for
     }
     return this.errors;
   }
-
-
 
   /**
    * E8.1.1 Campos que describen los descuentos, anticipos y valor total por ítem (EA001-EA050)
@@ -202,7 +199,6 @@ class JSonDteItemValidateService {
         }
       }
     }
-
   }
 
   /**
@@ -289,9 +285,7 @@ class JSonDteItemValidateService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {
-    
-  }
+  private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {}
 
   /**
    * E8.5. Sector de automotores nuevos y usados (E770-E789)
@@ -353,7 +347,6 @@ class JSonDteItemValidateService {
         );
       }
     }
-
   }
 }
 

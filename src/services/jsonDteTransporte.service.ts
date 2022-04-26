@@ -199,10 +199,8 @@ class JSonDteTransporteService {
      * @param items Es el item actual del array de items de "data" que se está iterando
      */
   private generateDatosVehiculo(params: any, data: any) {
-
-    if ( ! (data['detalleTransporte'] &&
-        data['detalleTransporte']['vehiculo'] )) {
-        throw new Error ("Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados");
+    if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
+      throw new Error('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     }
     const jsonResult: any = {
       dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],

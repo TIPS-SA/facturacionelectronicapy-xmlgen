@@ -8148,7 +8148,7 @@ class ConstanteService {
     { codigo: 3, descripcion: 'SAN PEDRO' },
   ];
 
-/*  validateDepartamentoDistritoCiudad(field: string, departamentoId: number, distritoId: number, ciudadId: number) {
+  /*  validateDepartamentoDistritoCiudad(field: string, departamentoId: number, distritoId: number, ciudadId: number) {
 
 
     if (ciudadId) {
@@ -8168,9 +8168,13 @@ class ConstanteService {
     }
   }*/
 
-  validateDepartamentoDistritoCiudad(field: string, departamentoId: number, distritoId: number, ciudadId: number, errores: Array<string>) {
-  
-
+  validateDepartamentoDistritoCiudad(
+    field: string,
+    departamentoId: number,
+    distritoId: number,
+    ciudadId: number,
+    errores: Array<string>,
+  ) {
     if (ciudadId) {
       let distritoCiudadId = this.ciudades.filter((td) => td.codigo === ciudadId)[0]['distrito'];
 

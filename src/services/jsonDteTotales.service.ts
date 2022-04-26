@@ -1,4 +1,4 @@
-import { XmlgenConfig } from "./type.interface.";
+import { XmlgenConfig } from './type.interface.';
 
 class JSonDteTotalesService {
   /**

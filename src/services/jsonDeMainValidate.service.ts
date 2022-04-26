@@ -4,8 +4,7 @@ import jsonDteItemValidate from './jsonDteItemValidate.service';
 import { XmlgenConfig } from './type.interface.';
 
 class JSonDeMainValidateService {
-
-  errors : Array<string>;
+  errors: Array<string>;
 
   constructor() {
     this.errors = new Array<string>();
@@ -29,18 +28,22 @@ class JSonDeMainValidateService {
 
     if (data['cliente']) {
       if (typeof data['cliente']['contribuyente'] == 'undefined') {
-        this.errors.push('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+        this.errors.push(
+          'Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente',
+        );
       }
-  
+
       if (typeof data['cliente']['contribuyente'] == 'undefined') {
-        this.errors.push('Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente');
+        this.errors.push(
+          'Debe indicar si el Cliente es o no un Contribuyente true|false en data.cliente.contribuyente',
+        );
       }
-  
+
       if (!(data['cliente']['contribuyente'] === true || data['cliente']['contribuyente'] === false)) {
         this.errors.push('data.cliente.contribuyente debe ser true|false');
       }
     }
-    
+
     this.generateCodigoControlValidate(params, data);
 
     this.generateDeValidate(params, data);
@@ -55,11 +58,7 @@ class JSonDeMainValidateService {
       this.generateDatosCondicionOperacionDEValidate(params, data);
     }
 
-    this.errors = jsonDteItemValidate.generateDatosItemsOperacionValidate(
-      params,
-      data,
-      this.errors
-    );
+    this.errors = jsonDteItemValidate.generateDatosItemsOperacionValidate(params, data, this.errors);
 
     this.generateDatosComplementariosComercialesDeUsoEspecificosValidate(params, data);
 
@@ -75,10 +74,7 @@ class JSonDeMainValidateService {
     }
 
     if (data['complementarios']) {
-      this.generateDatosComercialesUsoGeneralValidate(
-        params,
-        data
-      );
+      this.generateDatosComercialesUsoGeneralValidate(params, data);
     }
 
     if (data['tipoDocumento'] == 4 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
@@ -98,38 +94,28 @@ class JSonDeMainValidateService {
       data['tipoDocumento'] == 7
     ) {
       if (data['documentoAsociado']) {
-        this.generateDatosDocumentoAsociadoValidate(
-          params,
-          data
-        );
+        this.generateDatosDocumentoAsociadoValidate(params, data);
       }
     }
-
-
-
-
-
 
     //Tratamiento Final, del Envio del Error, no tocar
     if (this.errors.length > 0) {
       let errorExit: any = new Error();
 
-      let msgErrorExit = "";
+      let msgErrorExit = '';
 
       let recorrerHasta = this.errors.length;
       if ((config.errorLimit || 3) < recorrerHasta) {
-        recorrerHasta = (config.errorLimit || 3);
+        recorrerHasta = config.errorLimit || 3;
       }
 
       for (let i = 0; i < recorrerHasta; i++) {
-
         const error = this.errors[i];
         msgErrorExit += error;
 
         if (i < recorrerHasta - 1) {
-          msgErrorExit += config.errorSeparator + "";
+          msgErrorExit += config.errorSeparator + '';
         }
-        
       }
 
       errorExit.message = msgErrorExit;
@@ -137,7 +123,6 @@ class JSonDeMainValidateService {
       errorExit.errorsArray = this.errors;*/
       throw errorExit;
     }
-
   }
 
   generateCodigoControlValidate(params: any, data: any) {
@@ -260,9 +245,7 @@ class JSonDeMainValidateService {
     }
   }
 
-
   private generateDatosGeneralesValidate(params: any, data: any, defaultValues?: boolean) {
-    
     this.generateDatosGeneralesInherentesOperacionValidate(params, data, defaultValues);
     this.generateDatosGeneralesEmisorDEValidate(params, data);
     if (data['usuario']) {
@@ -367,7 +350,7 @@ class JSonDeMainValidateService {
       this.errors.push('RUC debe contener dígito verificador en params.ruc');
     }
 
-    if ( ! ( params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0) ) {
+    if (!(params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0)) {
       this.errors.push('Debe proveer el array de actividades económicas en params.actividadesEconomicas');
     }
   }
@@ -419,7 +402,6 @@ class JSonDeMainValidateService {
 
     var regExpOnlyNumber = new RegExp(/^\d+$/);
     if (data['cliente']['contribuyente']) {
-      
       if (!data['cliente']['ruc']) {
         this.errors.push('Debe proporcionar el RUC en data.cliente.ruc');
       }
@@ -511,8 +493,8 @@ class JSonDeMainValidateService {
       }
 
       if (
-        constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito'])
-          .length == 0
+        constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito']).length ==
+        0
       ) {
         this.errors.push(
           "Distrito '" +
@@ -527,9 +509,7 @@ class JSonDeMainValidateService {
       if (!data['cliente']['ciudad']) {
         this.errors.push('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
       }
-      if (
-        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0
-      ) {
+      if (constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0) {
         this.errors.push(
           "Ciudad '" +
             data['cliente']['ciudad'] +
@@ -543,7 +523,8 @@ class JSonDeMainValidateService {
       'data.cliente',
       +data['cliente']['departamento'],
       +data['cliente']['distrito'],
-      +data['cliente']['ciudad'], this.errors
+      +data['cliente']['ciudad'],
+      this.errors,
     );
 
     if (data['cliente']['telefono']) {
@@ -597,7 +578,6 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosEspecificosPorTipoDEValidate(params: any, data: any) {
-
     if (data['tipoDocumento'] === 1) {
       this.generateDatosEspecificosPorTipoDE_FacturaElectronicaValidate(params, data);
     }
@@ -616,7 +596,7 @@ class JSonDeMainValidateService {
 
   private generateDatosEspecificosPorTipoDE_FacturaElectronicaValidate(params: any, data: any) {
     if (!data['factura']) {
-      this.errors.push("Debe indicar los datos especificos de la Factura en data.factura");
+      this.errors.push('Debe indicar los datos especificos de la Factura en data.factura');
       return; // Termina el metodos
     }
 
@@ -629,7 +609,7 @@ class JSonDeMainValidateService {
           "' en data.factura.presencia no encontrado. Valores: " +
           constanteService.indicadoresPresencias.map((a: any) => a.codigo + '-' + a.descripcion),
       );
-    };
+    }
 
     if (data['factura']['fechaEnvio']) {
       let fechaFactura = new Date(data['fecha']);
@@ -673,7 +653,6 @@ class JSonDeMainValidateService {
     if (!(data['dncp'] && data['dncp']['fecha'] && data['dncp']['fecha'].length > 0)) {
       this.errors.push('Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha');
     }
-
   }
 
   private generateDatosEspecificosPorTipoDE_AutofacturaValidate(params: any, data: any) {
@@ -765,14 +744,16 @@ class JSonDeMainValidateService {
       'data.autoFactura',
       +data['autoFactura']['departamento'],
       +data['autoFactura']['distrito'],
-      +data['autoFactura']['ciudad'], this.errors
+      +data['autoFactura']['ciudad'],
+      this.errors,
     );
 
     constanteService.validateDepartamentoDistritoCiudad(
       'data.autoFactura.ubicacion',
       +data['autoFactura']['ubicacion']['departamento'],
       +data['autoFactura']['ubicacion']['distrito'],
-      +data['autoFactura']['ubicacion']['ciudad'], this.errors
+      +data['autoFactura']['ubicacion']['ciudad'],
+      this.errors,
     );
   }
 
@@ -792,7 +773,6 @@ class JSonDeMainValidateService {
           constanteService.notasCreditosMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
-
   }
 
   private generateDatosEspecificosPorTipoDE_RemisionElectronicaValidate(params: any, data: any) {
@@ -824,12 +804,11 @@ class JSonDeMainValidateService {
           constanteService.remisionesResponsables.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
-
   }
 
   private generateDatosCondicionOperacionDEValidate(params: any, data: any) {
     if (!data['condicion']) {
-      this.errors.push("Debe indicar los datos de la Condición de la Operación en data.condicion");
+      this.errors.push('Debe indicar los datos de la Condición de la Operación en data.condicion');
       return; // sale metodo
     }
 
@@ -870,7 +849,6 @@ class JSonDeMainValidateService {
     }
 
     if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
-
       for (let i = 0; i < data['condicion']['entregas'].length; i++) {
         const dataEntrega = data['condicion']['entregas'][i];
 
@@ -965,7 +943,6 @@ class JSonDeMainValidateService {
                 '].infoCheque si la forma de Pago es 2-Cheques',
             );
           }
-
         }
       }
     }
@@ -1039,24 +1016,7 @@ class JSonDeMainValidateService {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   public generateDatosComplementariosComercialesDeUsoEspecificosValidate(params: any, data: any) {
-
     if (data['sectorEnergiaElectrica']) {
       this.generateDatosSectorEnergiaElectricaValidate(params, data);
     }
@@ -1118,7 +1078,6 @@ class JSonDeMainValidateService {
         dCodInt: data['sectorSeguros']['codigoInternoItem'],
       },
     };*/
-
   }
 
   /**
@@ -1213,115 +1172,107 @@ class JSonDeMainValidateService {
     }
   }
 
-
-
-
-
-
-
-
-
-    /**
+  /**
    * E10. Campos que describen el transporte de las mercaderías (E900-E999)
    *
    * @param params
    * @param data
    * @param options
    */
-     public generateDatosTransporteValidate(params: any, data: any) {
-      if (data['tipoDocumento'] == 7) {
-        if (!(data['detalleTransporte'] && data['detalleTransporte']['tipo'] && data['detalleTransporte']['tipo'] > 0)) {
-          this.errors.push('Obligatorio informar detalleTransporte.tipo');
-        }
-      }
-      if (data['detalleTransporte'] && data['detalleTransporte']['condicionNegociacion']) {
-        if (constanteService.condicionesNegociaciones.indexOf(data['detalleTransporte']['condicionNegociacion']) < -1) {
-          this.errors.push(
-            'detalleTransporte.condicionNegociación (' +
-              data['detalleTransporte']['condicionNegociacion'] +
-              ') no válido',
-          );
-        }
-      }
-      if (data['tipoDocumento'] == 7) {
-        if (data['inicioEstimadoTranslado']) {
-          this.errors.push('Obligatorio informar detalleTransporte.inicioEstimadoTranslado');
-        }
-      }
-      if (data['tipoDocumento'] == 7) {
-        if (data['finEstimadoTranslado']) {
-          this.errors.push('Obligatorio informar detalleTransporte.finEstimadoTranslado');
-        }
-      }
-      if (constanteService.tiposTransportes.filter((um) => um.codigo === data['detalleTransporte']['tipo']).length == 0) {
-        this.errors.push(
-          "Tipo de Transporte '" +
-            data['detalleTransporte']['tipo'] +
-            "' en data.detalleTransporte.tipo no encontrado. Valores: " +
-            constanteService.tiposTransportes.map((a) => a.codigo + '-' + a.descripcion),
-        );
-      }
-      if (
-        constanteService.modalidadesTransportes.filter((um) => um.codigo === data['detalleTransporte']['modalidad'])
-          .length == 0
-      ) {
-        this.errors.push(
-          "Modalidad de Transporte '" +
-            data['detalleTransporte']['modalidad'] +
-            "' en data.detalleTransporte.modalidad no encontrado. Valores: " +
-            constanteService.modalidadesTransportes.map((a) => a.codigo + '-' + a.descripcion),
-        );
-      }
-
-      if (
-        constanteService.condicionesNegociaciones.filter(
-          (um) => um.codigo === data['detalleTransporte']['condicionNegociacion'],
-        ).length == 0
-      ) {
-        this.errors.push(
-          "Condición de Negociación '" +
-            data['detalleTransporte']['condicionNegociacion'] +
-            "' en data.detalleTransporte.condicionNegociacion no encontrado. Valores: " +
-            constanteService.condicionesNegociaciones.map((a) => a.codigo + '-' + a.descripcion),
-        );
-      }
-      
-      this.generateDatosSalidaValidate(params, data);
-      this.generateDatosEntregaValidate(params, data);
-      this.generateDatosVehiculoValidate(params, data);
-      if (data['detalleTransporte']['transportista']) {
-        this.generateDatosTransportistaValidate(params, data);
+  public generateDatosTransporteValidate(params: any, data: any) {
+    if (data['tipoDocumento'] == 7) {
+      if (!(data['detalleTransporte'] && data['detalleTransporte']['tipo'] && data['detalleTransporte']['tipo'] > 0)) {
+        this.errors.push('Obligatorio informar detalleTransporte.tipo');
       }
     }
-  
-    /**
-     * E10.1. Campos que identifican el local de salida de las mercaderías (E920-E939)
-     *
-     * @param params
-     * @param data
-     * @param options
-     * @param items Es el item actual del array de items de "data" que se está iterando
-     */
-    private generateDatosSalidaValidate(params: any, data: any) {
-  
-      constanteService.validateDepartamentoDistritoCiudad(
-        'data.detalleTransporte.salida',
-        +data['detalleTransporte']['salida']['departamento'],
-        +data['detalleTransporte']['salida']['distrito'],
-        +data['detalleTransporte']['salida']['ciudad'], this.errors
+    if (data['detalleTransporte'] && data['detalleTransporte']['condicionNegociacion']) {
+      if (constanteService.condicionesNegociaciones.indexOf(data['detalleTransporte']['condicionNegociacion']) < -1) {
+        this.errors.push(
+          'detalleTransporte.condicionNegociación (' +
+            data['detalleTransporte']['condicionNegociacion'] +
+            ') no válido',
+        );
+      }
+    }
+    if (data['tipoDocumento'] == 7) {
+      if (data['inicioEstimadoTranslado']) {
+        this.errors.push('Obligatorio informar detalleTransporte.inicioEstimadoTranslado');
+      }
+    }
+    if (data['tipoDocumento'] == 7) {
+      if (data['finEstimadoTranslado']) {
+        this.errors.push('Obligatorio informar detalleTransporte.finEstimadoTranslado');
+      }
+    }
+    if (constanteService.tiposTransportes.filter((um) => um.codigo === data['detalleTransporte']['tipo']).length == 0) {
+      this.errors.push(
+        "Tipo de Transporte '" +
+          data['detalleTransporte']['tipo'] +
+          "' en data.detalleTransporte.tipo no encontrado. Valores: " +
+          constanteService.tiposTransportes.map((a) => a.codigo + '-' + a.descripcion),
       );
     }
-  
-    /**
-     * E10.2. Campos que identifican el local de entrega de las mercaderías (E940-E959)
-     *
-     * @param params
-     * @param data
-     * @param options
-     * @param items Es el item actual del array de items de "data" que se está iterando
-     */
-    private generateDatosEntregaValidate(params: any, data: any) {
-      /*
+    if (
+      constanteService.modalidadesTransportes.filter((um) => um.codigo === data['detalleTransporte']['modalidad'])
+        .length == 0
+    ) {
+      this.errors.push(
+        "Modalidad de Transporte '" +
+          data['detalleTransporte']['modalidad'] +
+          "' en data.detalleTransporte.modalidad no encontrado. Valores: " +
+          constanteService.modalidadesTransportes.map((a) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    if (
+      constanteService.condicionesNegociaciones.filter(
+        (um) => um.codigo === data['detalleTransporte']['condicionNegociacion'],
+      ).length == 0
+    ) {
+      this.errors.push(
+        "Condición de Negociación '" +
+          data['detalleTransporte']['condicionNegociacion'] +
+          "' en data.detalleTransporte.condicionNegociacion no encontrado. Valores: " +
+          constanteService.condicionesNegociaciones.map((a) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    this.generateDatosSalidaValidate(params, data);
+    this.generateDatosEntregaValidate(params, data);
+    this.generateDatosVehiculoValidate(params, data);
+    if (data['detalleTransporte']['transportista']) {
+      this.generateDatosTransportistaValidate(params, data);
+    }
+  }
+
+  /**
+   * E10.1. Campos que identifican el local de salida de las mercaderías (E920-E939)
+   *
+   * @param params
+   * @param data
+   * @param options
+   * @param items Es el item actual del array de items de "data" que se está iterando
+   */
+  private generateDatosSalidaValidate(params: any, data: any) {
+    constanteService.validateDepartamentoDistritoCiudad(
+      'data.detalleTransporte.salida',
+      +data['detalleTransporte']['salida']['departamento'],
+      +data['detalleTransporte']['salida']['distrito'],
+      +data['detalleTransporte']['salida']['ciudad'],
+      this.errors,
+    );
+  }
+
+  /**
+   * E10.2. Campos que identifican el local de entrega de las mercaderías (E940-E959)
+   *
+   * @param params
+   * @param data
+   * @param options
+   * @param items Es el item actual del array de items de "data" que se está iterando
+   */
+  private generateDatosEntregaValidate(params: any, data: any) {
+    /*
       const jsonResult: any = {
         dDirLocEnt: data['detalleTransporte']['entrega']['direccion'],
         dNumCasEnt: data['detalleTransporte']['entrega']['numeroCasa'],
@@ -1342,9 +1293,9 @@ class JSonDeMainValidateService {
         //dTelEnt : data['detalleTransporte']['entrega']['telefonoContacto'],
       };
     */
-    }
-  
-    /**
+  }
+
+  /**
        * E10.3. Campos que identifican el vehículo de traslado de mercaderías (E960-E979)
   
        * 
@@ -1353,126 +1304,103 @@ class JSonDeMainValidateService {
        * @param options 
        * @param items Es el item actual del array de items de "data" que se está iterando
        */
-    private generateDatosVehiculoValidate(params: any, data: any) {
-  
-      if ( ! (data['detalleTransporte'] &&
-          data['detalleTransporte']['vehiculo'] )) {
-          this.errors.push ("Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados");
-      }
-
-      if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-        if (
-          !(
-            data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
-            data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
-          )
-        ) {
-          this.errors.push(
-            "Número de Matricula '" +
-              data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-              "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
-          );
-        }
-      }
-
+  private generateDatosVehiculoValidate(params: any, data: any) {
+    if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
+      this.errors.push('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     }
-  
-    /**
-     * E10.4. Campos que identifican al transportista (persona física o jurídica) (E980-E999)
-     *
-     * @param params
-     * @param data
-     * @param options
-     * @param items Es el item actual del array de items de "data" que se está iterando
-     */
-    private generateDatosTransportistaValidate(params: any, data: any) {
+
+    if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
       if (
-        constanteService.tiposDocumentosIdentidades.filter(
-          (um) => um.codigo === data['detalleTransporte']['transportista']['documentoTipo'],
+        !(
+          data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
+          data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
+        )
+      ) {
+        this.errors.push(
+          "Número de Matricula '" +
+            data['detalleTransporte']['vehiculo']['numeroMatricula'] +
+            "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+        );
+      }
+    }
+  }
+
+  /**
+   * E10.4. Campos que identifican al transportista (persona física o jurídica) (E980-E999)
+   *
+   * @param params
+   * @param data
+   * @param options
+   * @param items Es el item actual del array de items de "data" que se está iterando
+   */
+  private generateDatosTransportistaValidate(params: any, data: any) {
+    if (
+      constanteService.tiposDocumentosIdentidades.filter(
+        (um) => um.codigo === data['detalleTransporte']['transportista']['documentoTipo'],
+      ).length == 0
+    ) {
+      this.errors.push(
+        "Tipo de Documento '" +
+          data['detalleTransporte']['transportista']['documentoTipo'] +
+          "' en data.detalleTransporte.transportista.documentoTipo no encontrado. Valores: " +
+          constanteService.tiposDocumentosIdentidades.map((a) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    if (
+      data['detalleTransporte'] &&
+      data['detalleTransporte']['transportista'] &&
+      data['detalleTransporte']['transportista']['ruc']
+    ) {
+      if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
+        this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.ruc');
+      }
+    }
+
+    if (
+      data['detalleTransporte'] &&
+      data['detalleTransporte']['transportista'] &&
+      data['detalleTransporte']['transportista']['agente'] &&
+      data['detalleTransporte']['transportista']['agente']['ruc']
+    ) {
+      if (data['detalleTransporte']['transportista']['agente']['ruc'].indexOf('-') == -1) {
+        this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.agente.ruc');
+      }
+    }
+
+    if (data['detalleTransporte']['transportista'] && data['detalleTransporte']['transportista']['pais']) {
+      if (
+        constanteService.paises.filter(
+          (pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
         ).length == 0
       ) {
         this.errors.push(
-          "Tipo de Documento '" +
-            data['detalleTransporte']['transportista']['documentoTipo'] +
-            "' en data.detalleTransporte.transportista.documentoTipo no encontrado. Valores: " +
-            constanteService.tiposDocumentosIdentidades.map((a) => a.codigo + '-' + a.descripcion),
+          "Pais '" +
+            data['detalleTransporte']['transportista']['pais'] +
+            "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
+            constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
-  
-      if (
-        data['detalleTransporte'] &&
-        data['detalleTransporte']['transportista'] &&
-        data['detalleTransporte']['transportista']['ruc']
-      ) {
-        if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
-          this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.ruc');
-        }
-      }
-  
-      if (
-        data['detalleTransporte'] &&
-        data['detalleTransporte']['transportista'] &&
-        data['detalleTransporte']['transportista']['agente'] &&
-        data['detalleTransporte']['transportista']['agente']['ruc']
-      ) {
-        if (data['detalleTransporte']['transportista']['agente']['ruc'].indexOf('-') == -1) {
-          this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.agente.ruc');
-        }
-      }
-        
-      if (data['detalleTransporte']['transportista'] && data['detalleTransporte']['transportista']['pais']) {
-        if (
-          constanteService.paises.filter(
-            (pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
-          ).length == 0
-        ) {
-          this.errors.push(
-            "Pais '" +
-              data['detalleTransporte']['transportista']['pais'] +
-              "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
-              constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
-          );
-        }
-      }
-  
     }
+  }
 
-
-
-
-
-
-
-
-
-    public generateDatosTotalesValidate(params: any, data: any) {
-      
-      if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {
-        if (!data['cambio']) {
-          this.errors.push(
-            'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
-          );
-        }
+  public generateDatosTotalesValidate(params: any, data: any) {
+    if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {
+      if (!data['cambio']) {
+        this.errors.push(
+          'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
+        );
       }
-
     }
-  
-
-
-
-
-
-
-
-
+  }
 
   /**
-     * G. Campos complementarios comerciales de uso general (G001-G049)
-     *
-     * @param params
-     * @param data
-     * @param options
-     */
+   * G. Campos complementarios comerciales de uso general (G001-G049)
+   *
+   * @param params
+   * @param data
+   * @param options
+   */
   public generateDatosComercialesUsoGeneralValidate(params: any, data: any) {
     const jsonResult: any = {
       //dOrdCompra : data['complementarios']['ordenCompra'],
@@ -1480,7 +1408,6 @@ class JSonDeMainValidateService {
       //dAsiento : data['complementarios']['numeroAsiento']
     };
 
-   
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 7) {
       //Opcional si 1 o 7
       if (
@@ -1551,7 +1478,7 @@ class JSonDeMainValidateService {
         );
       }
     }
-    
+
     if (
       data['complementarios'] &&
       data['complementarios']['carga'] &&
@@ -1571,7 +1498,7 @@ class JSonDeMainValidateService {
       }
 
       if (data['complementarios']['carga']['caracteristicaCarga'] == 3) {
-        if ( ! (data['complementarios']['carga']['caracteristicaCargaDescripcion']) ) {
+        if (!data['complementarios']['carga']['caracteristicaCargaDescripcion']) {
           this.errors.push(
             'Para data.complementarios.carga.caracteristicaCarga = 3 debe informar el campo data.complementarios.carga.caracteristicaCargaDescripcion',
           );
@@ -1580,18 +1507,7 @@ class JSonDeMainValidateService {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-    /**
+  /**
    * H. Campos que identifican al documento asociado (H001-H049)
    *
    * @param params
@@ -1599,7 +1515,6 @@ class JSonDeMainValidateService {
    * @param options
    */
   public generateDatosDocumentoAsociadoValidate(params: any, data: any) {
-    
     if (data['tipoTransaccion'] == 11 && !data['documentoAsociado']['resolucionCreditoFiscal']) {
       this.errors.push('Obligatorio informar data.documentoAsociado.resolucionCreditoFiscal');
     }
@@ -1634,32 +1549,32 @@ class JSonDeMainValidateService {
 
     if (data['documentoAsociado']['formato'] == 1) {
       //H002 = Electronico
-      if ( ! (data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44 ) ) {
+      if (!(data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44)) {
         this.errors.push('Debe indicar el CDC asociado en data.documentoAsociado.cdc');
       }
     }
 
     if (data['documentoAsociado']['formato'] == 2) {
       //H002 = Impreso
-      if ( ! (data['documentoAsociado']['timbrado']) ) {
+      if (!data['documentoAsociado']['timbrado']) {
         this.errors.push(
           'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
         );
       }
-      if ( ! ( data['documentoAsociado']['establecimiento'] ) ) {
+      if (!data['documentoAsociado']['establecimiento']) {
         this.errors.push(
           'Debe especificar el Establecimiento del Documento impreso Asociado en data.documentoAsociado.establecimiento',
         );
       }
-      if ( ! (data['documentoAsociado']['punto'] )) {
+      if (!data['documentoAsociado']['punto']) {
         this.errors.push('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');
       }
 
-      if ( ! (data['documentoAsociado']['numero']) ) {
+      if (!data['documentoAsociado']['numero']) {
         this.errors.push('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');
       }
 
-      if ( ! (data['documentoAsociado']['tipoDocumentoImpreso']) ) {
+      if (!data['documentoAsociado']['tipoDocumentoImpreso']) {
         this.errors.push(
           'Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso',
         );
@@ -1693,10 +1608,6 @@ class JSonDeMainValidateService {
       }
     }
   }
-
-
-
-    
 }
 
 export default new JSonDeMainValidateService();

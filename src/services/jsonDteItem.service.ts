@@ -27,7 +27,7 @@ class JSonDteItemService {
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === item['unidadMedida']).length == 0) {
           throw new Error(
             "Unidad de Medida '" +
-            item['unidadMedida'] +
+              item['unidadMedida'] +
               "' en data.items[" +
               i +
               '].unidadMedida no encontrado. Valores: ' +

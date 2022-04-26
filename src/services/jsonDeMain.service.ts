@@ -22,13 +22,12 @@ class JSonDeMainService {
   public generateXMLDE(params: any, data: any, config?: XmlgenConfig): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
-
         let defaultConfig: XmlgenConfig = {
-          defaultValues : true,
+          defaultValues: true,
           //arrayValuesSeparator : ', ',
-          errorSeparator : '; ',
-          errorLimit : 10,
-          redondeoSedeco : true,
+          errorSeparator: '; ',
+          errorLimit: 10,
+          redondeoSedeco: true,
         };
 
         defaultConfig = Object.assign(defaultConfig, config);
@@ -52,9 +51,7 @@ class JSonDeMainService {
     this.addDefaultValues(data);
 
     if (this.validateError) {
-      
-      jsonDeMainValidate.validateValues({...params}, {...data}, config);
-      
+      jsonDeMainValidate.validateValues({ ...params }, { ...data }, config);
     }
 
     this.json = {};
@@ -76,11 +73,7 @@ class JSonDeMainService {
     }
 
     //['gDtipDE']=E001
-    this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(
-      params,
-      data,
-      config,
-    );
+    this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(params, data, config);
 
     this.json['rDE']['DE']['gDtipDE']['gCamEsp'] =
       jsonDteComplementarios.generateDatosComplementariosComercialesDeUsoEspecificos(params, data);
@@ -555,9 +548,10 @@ class JSonDeMainService {
   private addDefaultValues(data: any) {
     if (constanteService.tiposDocumentos.filter((um) => um.codigo === data['tipoDocumento']).length == 0) {
       //No quitar este throw
-      throw new Error("Tipo de Documento '" + data['tipoDocumento']) +
+      throw (
+        new Error("Tipo de Documento '" + data['tipoDocumento']) +
         "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion
+        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion)
       );
     }
     data['tipoDocumentoDescripcion'] = constanteService.tiposDocumentos.filter(
