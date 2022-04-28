@@ -59,7 +59,7 @@ class JSonDteIdentificacionDocumentoService {
       //H002 = Electronico
       if (data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44) {
         jsonResult['dCdCDERef'] = data['documentoAsociado']['cdc'];
-      /*} else {
+        /*} else {
         throw new Error('Debe indicar el CDC asociado en data.documentoAsociado.cdc');*/
       }
     }
@@ -67,26 +67,26 @@ class JSonDteIdentificacionDocumentoService {
       //H002 = Impreso
       if (data['documentoAsociado']['timbrado']) {
         jsonResult['dNTimDI'] = data['documentoAsociado']['timbrado'];
-      /*} else {
+        /*} else {
         throw new Error(
           'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
         );*/
       }
       if (data['documentoAsociado']['establecimiento']) {
         jsonResult['dEstDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['establecimiento'] + '', 3);
-      /*} else {
+        /*} else {
         throw new Error(
           'Debe especificar el Establecimiento del Documento impreso Asociado en data.documentoAsociado.establecimiento',
         );*/
       }
       if (data['documentoAsociado']['punto']) {
         jsonResult['dPExpDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['punto'] + '', 3);
-      /*} else {
+        /*} else {
         throw new Error('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');*/
       }
       if (data['documentoAsociado']['numero']) {
         jsonResult['dNumDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['numero'] + '', 7);
-      /*} else {
+        /*} else {
         throw new Error('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');*/
       }
       if (data['documentoAsociado']['tipoDocumentoImpreso']) {
@@ -94,7 +94,7 @@ class JSonDteIdentificacionDocumentoService {
         jsonResult['dDTipoDocAso'] = constanteService.tiposDocumentosImpresos.filter(
           (td) => td.codigo === data['documentoAsociado']['tipoDocumentoImpreso'],
         )[0]['descripcion'];
-      /*} else {
+        /*} else {
         throw new Error(
           'Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso',
         );*/
@@ -106,7 +106,7 @@ class JSonDteIdentificacionDocumentoService {
           );
         }*/
         jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
-      /*} else {
+        /*} else {
         throw new Error('Debe especificar la Fecha del Documento impreso Asociado en data.documentoAsociado.fecha');*/
       }
     }

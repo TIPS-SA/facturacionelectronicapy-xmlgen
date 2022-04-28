@@ -110,7 +110,6 @@ class JSonDteItemService {
         }*/
         gCamItem['dCantProSer'] = item['cantidad'];
 
-        
         if (item['pais']) {
           /*if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
             throw new Error(
@@ -168,7 +167,7 @@ class JSonDteItemService {
           if (data['tipoTransaccion'] === 9) {
             if (item['cdcAnticipo']) {
               gCamItem['dCDCAnticipo'] = item['cdcAnticipo'];
-            /*} else {
+              /*} else {
               throw new Error('Debe informar data.items*.cdcAnticipo');*/
             }
           }
@@ -276,7 +275,6 @@ class JSonDteItemService {
               i +
               '].ivaTipo',
           );*/
-
           //console.log("=================>>>>>>>>>>>>>>>>>>>>>>>> se asigna iva tipo = 3 tres");
           /*item['ivaTipo'] = 3;  //Exenta
           item['ivaBase'] = 0;

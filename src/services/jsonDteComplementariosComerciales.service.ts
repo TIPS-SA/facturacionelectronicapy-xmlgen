@@ -138,7 +138,7 @@ class JSonDteComplementariosComercialesService {
       if (data['complementarios']['carga']['caracteristicaCarga'] == 3) {
         if (data['complementarios']['carga']['caracteristicaCargaDescripcion']) {
           jsonResult['dDesCarCarga'] = data['complementarios']['carga']['caracteristicaCargaDescripcion'];
-        /*} else {
+          /*} else {
           throw new Error(
             'Para data.complementarios.carga.caracteristicaCarga = 3 debe informar el campo data.complementarios.carga.caracteristicaCargaDescripcion',
           );*/

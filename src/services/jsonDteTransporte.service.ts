@@ -327,10 +327,13 @@ class JSonDteTransporteService {
     jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];
     jsonResult['dDirChof'] = data['detalleTransporte']['transportista']['chofer']['direccion'];
 
-    if (data['detalleTransporte']['transportista']['agente'] && data['detalleTransporte']['transportista']['agente']['ruc']) {
+    if (
+      data['detalleTransporte']['transportista']['agente'] &&
+      data['detalleTransporte']['transportista']['agente']['ruc']
+    ) {
       jsonResult['dNombAg'] = data['detalleTransporte']['transportista']['agente']['nombre'];
       jsonResult['dRucAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[0];
-      jsonResult['dDVAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[1];  
+      jsonResult['dDVAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[1];
       jsonResult['dDirAge'] = data['detalleTransporte']['transportista']['agente']['direccion'];
     }
 

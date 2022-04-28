@@ -85,7 +85,6 @@ class JSonDeMainValidateService {
       }
     }
 
-
     if (data['tipoDocumento'] == 4 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
       if (!data['documentoAsociado']) {
         this.errors.push(
