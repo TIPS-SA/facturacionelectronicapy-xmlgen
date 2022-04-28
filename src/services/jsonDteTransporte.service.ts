@@ -12,58 +12,58 @@ class JSonDteTransporteService {
   public generateDatosTransporte(params: any, data: any) {
     if (data['tipoDocumento'] == 7) {
       if (!(data['detalleTransporte'] && data['detalleTransporte']['tipo'] && data['detalleTransporte']['tipo'] > 0)) {
-        throw new Error('Obligatorio informar detalleTransporte.tipo');
+        //throw new Error('Obligatorio informar detalleTransporte.tipo');
       }
     }
     if (data['detalleTransporte'] && data['detalleTransporte']['condicionNegociacion']) {
       if (constanteService.condicionesNegociaciones.indexOf(data['detalleTransporte']['condicionNegociacion']) < -1) {
-        throw new Error(
+        /*throw new Error(
           'detalleTransporte.condicionNegociación (' +
             data['detalleTransporte']['condicionNegociacion'] +
             ') no válido',
-        );
+        );*/
       }
     }
     if (data['tipoDocumento'] == 7) {
       if (data['inicioEstimadoTranslado']) {
-        throw new Error('Obligatorio informar detalleTransporte.inicioEstimadoTranslado');
+        //throw new Error('Obligatorio informar detalleTransporte.inicioEstimadoTranslado');
       }
     }
     if (data['tipoDocumento'] == 7) {
       if (data['finEstimadoTranslado']) {
-        throw new Error('Obligatorio informar detalleTransporte.finEstimadoTranslado');
+        //throw new Error('Obligatorio informar detalleTransporte.finEstimadoTranslado');
       }
     }
     if (constanteService.tiposTransportes.filter((um) => um.codigo === data['detalleTransporte']['tipo']).length == 0) {
-      throw new Error(
+      /*throw new Error(
         "Tipo de Transporte '" +
           data['detalleTransporte']['tipo'] +
           "' en data.detalleTransporte.tipo no encontrado. Valores: " +
           constanteService.tiposTransportes.map((a) => a.codigo + '-' + a.descripcion),
-      );
+      );*/
     }
     if (
       constanteService.modalidadesTransportes.filter((um) => um.codigo === data['detalleTransporte']['modalidad'])
         .length == 0
     ) {
-      throw new Error(
+      /*throw new Error(
         "Modalidad de Transporte '" +
           data['detalleTransporte']['modalidad'] +
           "' en data.detalleTransporte.modalidad no encontrado. Valores: " +
           constanteService.modalidadesTransportes.map((a) => a.codigo + '-' + a.descripcion),
-      );
+      );*/
     }
     if (
       constanteService.condicionesNegociaciones.filter(
         (um) => um.codigo === data['detalleTransporte']['condicionNegociacion'],
       ).length == 0
     ) {
-      throw new Error(
+      /*throw new Error(
         "Condicion de Negociacion '" +
           data['detalleTransporte']['condicionNegociacion'] +
           "' en data.detalleTransporte.condicionNegociacion no encontrado. Valores: " +
           constanteService.condicionesNegociaciones.map((a) => a.codigo + '-' + a.descripcion),
-      );
+      );*/
     }
     const jsonResult: any = {
       iTipTrans: data['detalleTransporte']['tipo'],
@@ -200,7 +200,7 @@ class JSonDteTransporteService {
      */
   private generateDatosVehiculo(params: any, data: any) {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
-      throw new Error('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
+      //throw new Error('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     }
     const jsonResult: any = {
       dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
@@ -225,11 +225,11 @@ class JSonDteTransporteService {
           data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
         )
       ) {
-        throw new Error(
+        /*throw new Error(
           "Número de Matricula '" +
             data['detalleTransporte']['vehiculo']['numeroMatricula'] +
             "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
-        );
+        );*/
       }
       jsonResult['dNroMatVeh'] = data['detalleTransporte']['vehiculo']['numeroMatricula'];
     }
@@ -255,12 +255,12 @@ class JSonDteTransporteService {
         (um) => um.codigo === data['detalleTransporte']['transportista']['documentoTipo'],
       ).length == 0
     ) {
-      throw new Error(
+      /*throw new Error(
         "Tipo de Documento '" +
           data['detalleTransporte']['transportista']['documentoTipo'] +
           "' en data.detalleTransporte.transportista.documentoTipo no encontrado. Valores: " +
           constanteService.tiposDocumentosIdentidades.map((a) => a.codigo + '-' + a.descripcion),
-      );
+      );*/
     }
 
     if (
@@ -269,7 +269,7 @@ class JSonDteTransporteService {
       data['detalleTransporte']['transportista']['ruc']
     ) {
       if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
-        throw new Error('RUC debe contener dígito verificador en data.detalleTransporte.transportista.ruc');
+        //throw new Error('RUC debe contener dígito verificador en data.detalleTransporte.transportista.ruc');
       }
     }
 
@@ -280,7 +280,7 @@ class JSonDteTransporteService {
       data['detalleTransporte']['transportista']['agente']['ruc']
     ) {
       if (data['detalleTransporte']['transportista']['agente']['ruc'].indexOf('-') == -1) {
-        throw new Error('RUC debe contener dígito verificador en data.detalleTransporte.transportista.agente.ruc');
+        //throw new Error('RUC debe contener dígito verificador en data.detalleTransporte.transportista.agente.ruc');
       }
     }
 
@@ -308,12 +308,12 @@ class JSonDteTransporteService {
           (pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
         ).length == 0
       ) {
-        throw new Error(
+        /*throw new Error(
           "Pais '" +
             data['detalleTransporte']['transportista']['pais'] +
             "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
             constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
-        );
+        );*/
       }
 
       jsonResult['cNacTrans'] = data['detalleTransporte']['transportista']['pais'];
@@ -326,10 +326,13 @@ class JSonDteTransporteService {
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
     jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];
     jsonResult['dDirChof'] = data['detalleTransporte']['transportista']['chofer']['direccion'];
-    jsonResult['dNombAg'] = data['detalleTransporte']['transportista']['agente']['nombre'];
-    jsonResult['dRucAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[0];
-    jsonResult['dDVAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[1];
-    jsonResult['dDirAge'] = data['detalleTransporte']['transportista']['agente']['direccion'];
+
+    if (data['detalleTransporte']['transportista']['agente'] && data['detalleTransporte']['transportista']['agente']['ruc']) {
+      jsonResult['dNombAg'] = data['detalleTransporte']['transportista']['agente']['nombre'];
+      jsonResult['dRucAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[0];
+      jsonResult['dDVAg'] = data['detalleTransporte']['transportista']['agente']['ruc'].split('-')[1];  
+      jsonResult['dDirAge'] = data['detalleTransporte']['transportista']['agente']['direccion'];
+    }
 
     return jsonResult;
   }

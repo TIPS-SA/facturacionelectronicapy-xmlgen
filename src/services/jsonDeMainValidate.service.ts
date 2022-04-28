@@ -77,6 +77,15 @@ class JSonDeMainValidateService {
       this.generateDatosComercialesUsoGeneralValidate(params, data);
     }
 
+    if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {
+      if (!data['cambio']) {
+        this.errors.push(
+          'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
+        );
+      }
+    }
+
+
     if (data['tipoDocumento'] == 4 || data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6) {
       if (!data['documentoAsociado']) {
         this.errors.push(

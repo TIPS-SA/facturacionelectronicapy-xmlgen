@@ -236,9 +236,9 @@ class JSonDteTotalesService {
     }
     if (moneda != 'PYG' && data['condicionTipoCambio'] == 1) {
       if (!data['cambio']) {
-        throw new Error(
+        /*throw new Error(
           'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
-        );
+        );*/
       }
       //Por el Global
       jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(2));

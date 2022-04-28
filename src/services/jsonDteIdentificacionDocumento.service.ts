@@ -10,12 +10,12 @@ class JSonDteIdentificacionDocumentoService {
    * @param options
    */
   public generateDatosDocumentoAsociado(params: any, data: any) {
-    if (data['tipoTransaccion'] == 11 && !data['documentoAsociado']['resolucionCreditoFiscal']) {
+    /*if (data['tipoTransaccion'] == 11 && !data['documentoAsociado']['resolucionCreditoFiscal']) {
       throw new Error('Obligatorio informar data.documentoAsociado.resolucionCreditoFiscal');
-    }
+    }*/
 
     //Validaciones
-    if (
+    /*if (
       constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === data['documentoAsociado']['formato'])
         .length == 0
     ) {
@@ -25,7 +25,8 @@ class JSonDteIdentificacionDocumentoService {
           "' en data.documentoAsociado.formato no encontrado. Valores: " +
           constanteService.tiposDocumentosAsociados.map((a) => a.codigo + '-' + a.descripcion),
       );
-    }
+    }*/
+    /*
     if (data['documentoAsociado']['tipo'] == 2) {
       if (
         constanteService.tiposDocumentosImpresos.filter(
@@ -40,6 +41,7 @@ class JSonDteIdentificacionDocumentoService {
         );
       }
     }
+    */
     /*        if (data['documentoAsociado']['tipo'] == 3) {
             if (constanteService.tiposConstancias.filter(um => um.codigo === data['documentoAsociado']['constanciaTipo']).length == 0){
                 throw new Error("Tipo de Constancia '" + data['documentoAsociado']['constanciaTipo'] + "' en data.documentoAsociado.constanciaTipo no encontrado. Valores: " + constanteService.tiposConstancias.map(a=>a.codigo + '-' + a.descripcion));
@@ -57,55 +59,55 @@ class JSonDteIdentificacionDocumentoService {
       //H002 = Electronico
       if (data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44) {
         jsonResult['dCdCDERef'] = data['documentoAsociado']['cdc'];
-      } else {
-        throw new Error('Debe indicar el CDC asociado en data.documentoAsociado.cdc');
+      /*} else {
+        throw new Error('Debe indicar el CDC asociado en data.documentoAsociado.cdc');*/
       }
     }
     if (data['documentoAsociado']['formato'] == 2) {
       //H002 = Impreso
       if (data['documentoAsociado']['timbrado']) {
         jsonResult['dNTimDI'] = data['documentoAsociado']['timbrado'];
-      } else {
+      /*} else {
         throw new Error(
           'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
-        );
+        );*/
       }
       if (data['documentoAsociado']['establecimiento']) {
         jsonResult['dEstDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['establecimiento'] + '', 3);
-      } else {
+      /*} else {
         throw new Error(
           'Debe especificar el Establecimiento del Documento impreso Asociado en data.documentoAsociado.establecimiento',
-        );
+        );*/
       }
       if (data['documentoAsociado']['punto']) {
         jsonResult['dPExpDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['punto'] + '', 3);
-      } else {
-        throw new Error('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');
+      /*} else {
+        throw new Error('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');*/
       }
       if (data['documentoAsociado']['numero']) {
         jsonResult['dNumDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['numero'] + '', 7);
-      } else {
-        throw new Error('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');
+      /*} else {
+        throw new Error('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');*/
       }
       if (data['documentoAsociado']['tipoDocumentoImpreso']) {
         jsonResult['iTipoDocAso'] = data['documentoAsociado']['tipoDocumentoImpreso'];
         jsonResult['dDTipoDocAso'] = constanteService.tiposDocumentosImpresos.filter(
           (td) => td.codigo === data['documentoAsociado']['tipoDocumentoImpreso'],
         )[0]['descripcion'];
-      } else {
+      /*} else {
         throw new Error(
           'Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso',
-        );
+        );*/
       }
       if (data['documentoAsociado']['fecha']) {
-        if ((data['documentoAsociado']['fecha'] + '').length != 10) {
+        /*if ((data['documentoAsociado']['fecha'] + '').length != 10) {
           throw new Error(
             'La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres',
           );
-        }
+        }*/
         jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
-      } else {
-        throw new Error('Debe especificar la Fecha del Documento impreso Asociado en data.documentoAsociado.fecha');
+      /*} else {
+        throw new Error('Debe especificar la Fecha del Documento impreso Asociado en data.documentoAsociado.fecha');*/
       }
     }
     if (
@@ -126,7 +128,7 @@ class JSonDteIdentificacionDocumentoService {
     if (data['documentoAsociado']['formato'] == 3) {
       //H002 = Constancia electronica
       if (data['documentoAsociado']['constanciaTipo']) {
-        if (
+        /*if (
           constanteService.tiposConstancias.filter((um) => um.codigo === data['documentoAsociado']['constanciaTipo'])
             .length == 0
         ) {
@@ -136,7 +138,7 @@ class JSonDteIdentificacionDocumentoService {
               "' en data.documentoAsociado.constanciaTipo no encontrado. Valores: " +
               constanteService.tiposConstancias.map((a) => a.codigo + '-' + a.descripcion),
           );
-        }
+        }*/
 
         jsonResult['iTipCons'] = data['documentoAsociado']['constanciaTipo'];
         jsonResult['dDesTipCons'] = constanteService.tiposConstancias.filter(

@@ -64,7 +64,7 @@ class JSonDteComplementariosComercialesService {
       data['complementarios']['carga'] &&
       data['complementarios']['carga']['unidadMedidaVolumenTotal']
     ) {
-      if (
+      /*if (
         constanteService.unidadesMedidas.filter(
           (um) => um.codigo === data['complementarios']['carga']['unidadMedidaVolumenTotal'],
         ).length == 0
@@ -75,7 +75,7 @@ class JSonDteComplementariosComercialesService {
             "' en data.complementarios.carga.unidadMedidaVolumenTotal no válido. Valores: " +
             constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
         );
-      }
+      }*/
       jsonResult['cUniMedTotVol'] = data['complementarios']['carga']['unidadMedidaVolumenTotal'];
       jsonResult['dDesUniMedTotVol'] = constanteService.unidadesMedidas.filter(
         (td) => td.codigo == data['complementarios']['carga']['unidadMedidaVolumenTotal'],
@@ -93,7 +93,7 @@ class JSonDteComplementariosComercialesService {
       data['complementarios']['carga'] &&
       data['complementarios']['carga']['unidadMedidaPesoTotal']
     ) {
-      if (
+      /*if (
         constanteService.unidadesMedidas.filter(
           (um) => um.codigo === data['complementarios']['carga']['unidadMedidaPesoTotal'],
         ).length == 0
@@ -104,7 +104,7 @@ class JSonDteComplementariosComercialesService {
             "' en data.complementarios.carga.unidadMedidaPesoTotal no válido. Valores: " +
             constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
         );
-      }
+      }*/
       jsonResult['cUniMedTotPes'] = data['complementarios']['carga']['unidadMedidaPesoTotal'];
       jsonResult['dDesUniMedTotPes'] = constanteService.unidadesMedidas.filter(
         (td) => td.codigo == data['complementarios']['carga']['unidadMedidaPesoTotal'],
@@ -118,7 +118,7 @@ class JSonDteComplementariosComercialesService {
       data['complementarios']['carga'] &&
       data['complementarios']['carga']['caracteristicaCarga']
     ) {
-      if (
+      /*if (
         constanteService.caracteristicasCargas.filter(
           (um) => um.codigo === data['complementarios']['carga']['caracteristicaCarga'],
         ).length == 0
@@ -129,7 +129,7 @@ class JSonDteComplementariosComercialesService {
             "' en data.complementarios.carga.caracteristicaCarga no válido. Valores: " +
             constanteService.caracteristicasCargas.map((a) => a.codigo + '-' + a.descripcion),
         );
-      }
+      }*/
       jsonResult['iCarCarga'] = data['complementarios']['carga']['caracteristicaCarga'];
       jsonResult['dDesCarCarga'] = constanteService.caracteristicasCargas.filter(
         (td) => td.codigo == data['complementarios']['carga']['caracteristicaCarga'],
@@ -138,10 +138,10 @@ class JSonDteComplementariosComercialesService {
       if (data['complementarios']['carga']['caracteristicaCarga'] == 3) {
         if (data['complementarios']['carga']['caracteristicaCargaDescripcion']) {
           jsonResult['dDesCarCarga'] = data['complementarios']['carga']['caracteristicaCargaDescripcion'];
-        } else {
+        /*} else {
           throw new Error(
             'Para data.complementarios.carga.caracteristicaCarga = 3 debe informar el campo data.complementarios.carga.caracteristicaCargaDescripcion',
-          );
+          );*/
         }
       }
     }

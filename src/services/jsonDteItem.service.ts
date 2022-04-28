@@ -24,6 +24,7 @@ class JSonDteItemService {
           unidadMedida = 77;
         }*/
         //Validaciones
+        /*
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === item['unidadMedida']).length == 0) {
           throw new Error(
             "Unidad de Medida '" +
@@ -51,7 +52,7 @@ class JSonDteItemService {
             );
           }
         }
-
+        */
         const gCamItem: any = {
           dCodInt: item['codigo'],
         };
@@ -71,7 +72,7 @@ class JSonDteItemService {
           gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
         }
 
-        if (!item['descripcion']) {
+        /*if (!item['descripcion']) {
           throw new Error('La descripción del item en data.items[' + i + '].descripcion no puede ser null');
         }
 
@@ -83,10 +84,10 @@ class JSonDteItemService {
               i +
               '].descripcion debe tener una longitud de 1 a 120 caracteres',
           );
-        }
+        }*/
 
         //.replaceAll("<[^>]*>", " ")
-        let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
+        /*let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
         if (regexp.test(item['descripcion'])) {
           throw new Error(
             'La descripción del item (' +
@@ -95,7 +96,7 @@ class JSonDteItemService {
               i +
               '].descripcion contiene valores inválidos',
           );
-        }
+        }*/
 
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
 
@@ -104,13 +105,14 @@ class JSonDteItemService {
           .filter((um) => um.codigo === item['unidadMedida'])[0]
           ['representacion'].trim();
 
-        if (+item['cantidad'] <= 0) {
+        /*if (+item['cantidad'] <= 0) {
           throw new Error('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
-        }
+        }*/
         gCamItem['dCantProSer'] = item['cantidad'];
 
+        
         if (item['pais']) {
-          if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
+          /*if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
             throw new Error(
               "Pais '" +
                 item['pais'] +
@@ -120,7 +122,7 @@ class JSonDteItemService {
                 constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
             );
           }
-
+          */
           gCamItem['cPaisOrig'] = item['pais'];
           gCamItem['dDesPaisOrig'] = constanteService.paises.filter((pais) => pais.codigo === item['pais'])[0][
             'descripcion'
@@ -128,7 +130,7 @@ class JSonDteItemService {
         }
 
         if (item['observacion'] && item['observacion'].trim().length > 0) {
-          if (!(item['observacion'].length >= 1 && item['observacion'].length <= 500)) {
+          /*if (!(item['observacion'].length >= 1 && item['observacion'].length <= 500)) {
             throw new Error(
               'La observación del item (' +
                 item['observacion'] +
@@ -136,7 +138,8 @@ class JSonDteItemService {
                 i +
                 '].observacion debe tener una longitud de 1 a 500 caracteres',
             );
-          }
+          }*/
+          /*
           if (regexp.test(item['observacion'])) {
             throw new Error(
               'La observación del item (' +
@@ -145,7 +148,7 @@ class JSonDteItemService {
                 i +
                 '].observacion contiene valores inválidos',
             );
-          }
+          }*/
           gCamItem['dInfItem'] = item['observacion'].trim();
         }
 
@@ -165,8 +168,8 @@ class JSonDteItemService {
           if (data['tipoTransaccion'] === 9) {
             if (item['cdcAnticipo']) {
               gCamItem['dCDCAnticipo'] = item['cdcAnticipo'];
-            } else {
-              throw new Error('Debe informar data.items*.cdcAnticipo');
+            /*} else {
+              throw new Error('Debe informar data.items*.cdcAnticipo');*/
             }
           }
         }
@@ -253,7 +256,7 @@ class JSonDteItemService {
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
       //Validar que si el descuento es mayor al precio
-      if (+item['descuento'] > +item['precioUnitario']) {
+      /*if (+item['descuento'] > +item['precioUnitario']) {
         throw new Error(
           "Descuento '" +
             item['descuento'] +
@@ -262,17 +265,17 @@ class JSonDteItemService {
             "].descuento supera al Precio Unitario '" +
             item['precioUnitario'],
         );
-      }
+      }*/
 
       if (+item['descuento'] == +item['precioUnitario']) {
         //Validar IVA
         //Quiere decir que no va a ir nada en exenta, gravada5 y gravada10, para este item.
         if (item['ivaTipo'] != 3) {
-          throw new Error(
+          /*throw new Error(
             'Descuento igual a Precio Unitario corresponde tener Tipo de Iva = 3-Exento en data.items[' +
               i +
               '].ivaTipo',
-          );
+          );*/
 
           //console.log("=================>>>>>>>>>>>>>>>>>>>>>>>> se asigna iva tipo = 3 tres");
           /*item['ivaTipo'] = 3;  //Exenta
@@ -358,7 +361,7 @@ class JSonDteItemService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosItemsOperacionIVA(params: any, data: any, item: any, i: number, gCamItem: any) {
-    if (constanteService.codigosAfectaciones.filter((um) => um.codigo === item['ivaTipo']).length == 0) {
+    /*if (constanteService.codigosAfectaciones.filter((um) => um.codigo === item['ivaTipo']).length == 0) {
       throw new Error(
         "Tipo de IVA '" +
           item['ivaTipo'] +
@@ -367,7 +370,7 @@ class JSonDteItemService {
           '].ivaTipo no encontrado. Valores: ' +
           constanteService.codigosAfectaciones.map((a) => a.codigo + '-' + a.descripcion),
       );
-    }
+    }*/
 
     const jsonResult: any = {
       iAfecIVA: item['ivaTipo'], //E731
@@ -378,7 +381,7 @@ class JSonDteItemService {
       //dLiqIVAItem : 0             //E736 Sera sobreescrito
     };
 
-    if (item['ivaTipo'] == 1) {
+    /*if (item['ivaTipo'] == 1) {
       if (item['ivaBase'] != 100) {
         throw new Error(
           'Valor de "ivaBase"=' +
@@ -388,8 +391,9 @@ class JSonDteItemService {
             '].ivaBase',
         );
       }
-    }
-    if (item['ivaTipo'] == 3) {
+    }*/
+
+    /*if (item['ivaTipo'] == 3) {
       //Exento
       if (item['ivaBase'] != 0) {
         throw new Error(
@@ -406,9 +410,9 @@ class JSonDteItemService {
           'Valor de "iva"=' + item['iva'] + ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' + i + '].iva',
         );
       }
-    }
+    }*/
 
-    if (item['iva'] == 0) {
+    /*if (item['iva'] == 0) {
       if (item['ivaTipo'] != 2 && item['ivaTipo'] != 3) {
         throw new Error(
           '"Iva" = 0 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva',
@@ -428,7 +432,7 @@ class JSonDteItemService {
           '"Iva" = 10 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva',
         );
       }
-    }
+    }*/
 
     /*  Calculo para E735
         Si E731 = 1 o 4 este campo es igual al resultado del cálculo 
@@ -536,7 +540,7 @@ class JSonDteItemService {
       return null;
     }
 
-    if (
+    /*if (
       constanteService.tiposOperacionesVehiculos.filter((um) => um.codigo === item['sectorAutomotor']['tipo']).length ==
       0
     ) {
@@ -561,17 +565,17 @@ class JSonDteItemService {
           '].sectorAutomotor.tipoCombustible no encontrado. Valores: ' +
           constanteService.tiposCombustibles.map((a) => a.codigo + '-' + a.descripcion),
       );
-    }
+    }*/
 
-    if (item['sectorAutomotor']['chasis']) {
+    /*if (item['sectorAutomotor']['chasis']) {
       if (item['sectorAutomotor']['chasis'].length != 17) {
         throw new Error(
           "El Chasis '" + item['sectorAutomotor']['chasis'] + "' en data.items[" + i + '] debe tener 17 caracteres',
         );
       }
-    }
+    }*/
 
-    if (item['sectorAutomotor']['cilindradas']) {
+    /*if (item['sectorAutomotor']['cilindradas']) {
       if ((item['sectorAutomotor']['cilindradas'] + '').length != 4) {
         throw new Error(
           "La Cilindradas '" +
@@ -581,7 +585,7 @@ class JSonDteItemService {
             '] debe tener 4 caracteres',
         );
       }
-    }
+    }*/
 
     const jsonResult: any = {
       iTipOpVN: item['sectorAutomotor']['tipo'],

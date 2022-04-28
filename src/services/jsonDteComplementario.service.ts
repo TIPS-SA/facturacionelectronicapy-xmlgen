@@ -52,9 +52,9 @@ class JSonDteComplementariosService {
       dConKwh: data['sectorEnergiaElectrica']['lecturaActual'] - data['sectorEnergiaElectrica']['lecturaAnterior'],
     };
 
-    if (data['lecturaAnterior'] > data['lecturaActual']) {
+    /*if (data['lecturaAnterior'] > data['lecturaActual']) {
       throw new Error('Sector Energia Electrica lecturaActual debe ser mayor a lecturaAnterior');
-    }
+    }*/
     return jsonResult;
   }
 
@@ -120,51 +120,51 @@ class JSonDteComplementariosService {
     };
 
     if (data['sectorAdicional']['ciclo']) {
-      if (
+      /*if (
         !((data['sectorAdicional']['ciclo'] + '').length >= 1 && (data['sectorAdicional']['ciclo'] + '').length <= 15)
       ) {
         throw new Error('El Ciclo en data.sectorAdicional.ciclo debe contener entre 1 y 15 caracteres ');
-      }
+      }*/
 
       jsonResult['dCiclo'] = data['sectorAdicional']['ciclo'];
     }
 
     if (data['sectorAdicional']['inicioCiclo']) {
-      if (!((data['sectorAdicional']['inicioCiclo'] + '').length == 10)) {
+      /*if (!((data['sectorAdicional']['inicioCiclo'] + '').length == 10)) {
         throw new Error('El Inicio de Ciclo en data.sectorAdicional.inicioCiclo debe contener 10 caracteres ');
-      }
+      }*/
 
       jsonResult['dFecIniC'] = data['sectorAdicional']['inicioCiclo'];
     }
 
     if (data['sectorAdicional']['finCiclo']) {
-      if (!((data['sectorAdicional']['finCiclo'] + '').length == 10)) {
+      /*if (!((data['sectorAdicional']['finCiclo'] + '').length == 10)) {
         throw new Error('El Fin de Ciclo en data.sectorAdicional.finCiclo debe contener 10 caracteres ');
-      }
+      }*/
 
       jsonResult['dFecFinC'] = data['sectorAdicional']['finCiclo'];
     }
 
     if (data['sectorAdicional']['vencimientoPago']) {
-      if (!((data['sectorAdicional']['vencimientoPago'] + '').length == 10)) {
+      /*if (!((data['sectorAdicional']['vencimientoPago'] + '').length == 10)) {
         throw new Error('La fecha de Pago en data.sectorAdicional.vencimientoPago debe contener 10 caracteres ');
-      }
+      }*/
 
       let fecha = new Date(data.fecha);
       let fechaPago = new Date(data['sectorAdicional']['vencimientoPago']);
-      if (fecha.getTime() > fechaPago.getTime()) {
+      /*if (fecha.getTime() > fechaPago.getTime()) {
         throw new Error(
           "La fecha de pago '" +
             data['sectorAdicional']['vencimientoPago'] +
             "' en data.sectorAdicional.vencimientoPago debe ser despues de la Fecha del Documento",
         );
-      }
+      }*/
 
       jsonResult['dVencPag'] = data['sectorAdicional']['vencimientoPago'];
     }
 
     if (data['sectorAdicional']['numeroContrato']) {
-      if (
+      /*if (
         !(
           (data['sectorAdicional']['numeroContrato'] + '').length >= 1 &&
           (data['sectorAdicional']['numeroContrato'] + '').length <= 30
@@ -173,7 +173,7 @@ class JSonDteComplementariosService {
         throw new Error(
           'El numero de Contrato en data.sectorAdicional.numeroContrato debe contener entre 1 y 30 caracteres ',
         );
-      }
+      }*/
 
       jsonResult['dContrato'] = data['sectorAdicional']['numeroContrato'];
     }
