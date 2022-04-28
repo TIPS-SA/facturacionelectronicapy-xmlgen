@@ -1604,9 +1604,16 @@ class JSonDeMainService {
       dDesRespEmiNR: constanteService.remisionesResponsables.filter(
         (nv) => nv.codigo === data['remision']['tipoResponsable'],
       )[0]['descripcion'],
-      dKmR: data['remision']['kms'],
-      dFecEm: data['remision']['fechaFactura'],
+      //dKmR: data['remision']['kms'],
+      //dFecEm: data['remision']['fechaFactura'],
     };
+
+    if (data['remision']['kms']) {
+      this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dKmR'] = data['remision']['kms'];
+    }
+    if (data['remision']['fechaFactura']) {
+      this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dFecEm'] = data['remision']['fechaFactura'];
+    }
   }
 
   /**

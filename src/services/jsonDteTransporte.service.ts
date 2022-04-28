@@ -76,19 +76,37 @@ class JSonDteTransporteService {
       )[0]['descripcion'],
       iRespFlete: data['detalleTransporte']['tipoResponsable'],
       cCondNeg: data['detalleTransporte']['condicionNegociacion'],
-      dNuManif: data['detalleTransporte']['numeroManifiesto'],
+      //dNuManif: data['detalleTransporte']['numeroManifiesto'],
       //dNuDespImp : data['detalleTransporte']['numeroDespachoImportacion'].substring(0, 16),
-      dIniTras: data['detalleTransporte']['inicioEstimadoTranslado'],
-      dFinTras: data['detalleTransporte']['finEstimadoTranslado'],
-      cPaisDest: data['detalleTransporte']['paisDestino'],
-      dDesPaisDest: data['detalleTransporte']['paisDestinoNombre'],
+      //dIniTras: data['detalleTransporte']['inicioEstimadoTranslado'],
+      //dFinTras: data['detalleTransporte']['finEstimadoTranslado'],
+      //cPaisDest: data['detalleTransporte']['paisDestino'],
+      //dDesPaisDest: data['detalleTransporte']['paisDestinoNombre'],
     };
 
+    if (data['detalleTransporte']['numeroManifiesto']) {
+      jsonResult['dNuManif'] = data['detalleTransporte']['numeroManifiesto'];
+    }
     if (data['detalleTransporte'] && data['detalleTransporte']['numeroDespachoImportacion']) {
       if (data['detalleTransporte']['numeroDespachoImportacion'].length >= 16) {
         jsonResult['dNuDespImp'] = data['detalleTransporte']['numeroDespachoImportacion'].substring(0, 16);
       }
     }
+    if (data['detalleTransporte']['numeroManifiesto']) {
+      jsonResult['dIniTras'] = data['detalleTransporte']['inicioEstimadoTranslado'];
+    }
+    if (data['detalleTransporte']['numeroManifiesto']) {
+      jsonResult['dFinTras'] = data['detalleTransporte']['finEstimadoTranslado'];
+    }
+    if (data['detalleTransporte']['numeroManifiesto']) {
+      jsonResult['cPaisDest'] = data['detalleTransporte']['paisDestino'];
+      jsonResult['dDesPaisDest'] = constanteService.paises.filter(
+        (pais) => pais.codigo === data['detalleTransporte']['paisDestino'],
+      )[0]['descripcion'];
+    }
+  
+
+
     jsonResult['gCamSal'] = this.generateDatosSalida(params, data);
     jsonResult['gCamEnt'] = this.generateDatosEntrega(params, data);
     jsonResult['gVehTras'] = this.generateDatosVehiculo(params, data);
@@ -110,24 +128,38 @@ class JSonDteTransporteService {
   private generateDatosSalida(params: any, data: any) {
     const jsonResult: any = {
       dDirLocSal: data['detalleTransporte']['salida']['direccion'],
-      dNumCasSal: data['detalleTransporte']['salida']['numeroCasa'],
-      dComp1Sal: data['detalleTransporte']['salida']['complementoDireccion1'],
-      dComp2Sal: data['detalleTransporte']['salida']['complementoDireccion1'],
-
-      cDepSal: +data['detalleTransporte']['salida']['departamento'],
-      dDesDepSal: constanteService.departamentos.filter(
-        (td) => td.codigo === +data['detalleTransporte']['salida']['departamento'],
-      )[0]['descripcion'],
-      cDisSal: +data['detalleTransporte']['salida']['distrito'],
-      dDesDisSal: constanteService.distritos.filter(
-        (td) => td.codigo === +data['detalleTransporte']['salida']['distrito'],
-      )[0]['descripcion'],
-      cCiuSal: +data['detalleTransporte']['salida']['ciudad'],
-      dDesCiuSal: constanteService.ciudades.filter(
-        (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad'],
-      )[0]['descripcion'],
-      //dTelSal : data['detalleTransporte']['salida']['telefonoContacto'],
+      
     };
+
+    if (!data['detalleTransporte']['salida']['numeroCasa']) {
+      data['detalleTransporte']['salida']['numeroCasa'] = "0";
+    }
+    jsonResult['dNumCasSal'] = data['detalleTransporte']['salida']['numeroCasa'];
+    
+    if (data['detalleTransporte']['salida']['complementoDireccion1']) {
+      jsonResult['dComp1Sal'] = data['detalleTransporte']['salida']['complementoDireccion1'];
+    }
+
+    if (data['detalleTransporte']['salida']['complementoDireccion2']) {
+      jsonResult['dComp2Sal'] = data['detalleTransporte']['salida']['complementoDireccion2'];
+    }
+
+    jsonResult['cDepSal'] = +data['detalleTransporte']['salida']['departamento'];
+    jsonResult['dDesDepSal'] = constanteService.departamentos.filter(
+      (td) => td.codigo === +data['detalleTransporte']['salida']['departamento'],
+    )[0]['descripcion'];
+
+    jsonResult['cDisSal'] = data['detalleTransporte']['salida']['distrito'];
+    jsonResult['dDesDisSal'] = constanteService.distritos.filter(
+                              (td) => td.codigo === +data['detalleTransporte']['salida']['distrito'],
+                            )[0]['descripcion'];
+
+
+    jsonResult['cCiuSal'] = +data['detalleTransporte']['salida']['ciudad'];
+    jsonResult['dDesCiuSal'] = constanteService.ciudades.filter(
+                              (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad'],
+                            )[0]['descripcion'];
+    
 
     /*constanteService.validateDepartamentoDistritoCiudad(
       'data.detalleTransporte.salida',
@@ -158,24 +190,36 @@ class JSonDteTransporteService {
    */
   private generateDatosEntrega(params: any, data: any) {
     const jsonResult: any = {
-      dDirLocEnt: data['detalleTransporte']['entrega']['direccion'],
-      dNumCasEnt: data['detalleTransporte']['entrega']['numeroCasa'],
-      dComp1Ent: data['detalleTransporte']['entrega']['complementoDireccion1'],
-      dComp2Ent: data['detalleTransporte']['entrega']['complementoDireccion1'],
-      cDepEnt: data['detalleTransporte']['entrega']['departamento'],
-      dDesDepEnt: constanteService.departamentos.filter(
-        (td) => td.codigo === data['detalleTransporte']['entrega']['departamento'],
-      )[0]['descripcion'],
-      cDisEnt: data['detalleTransporte']['entrega']['distrito'],
-      dDesDisEnt: constanteService.distritos.filter(
-        (td) => td.codigo === data['detalleTransporte']['entrega']['distrito'],
-      )[0]['descripcion'],
-      cCiuEnt: data['detalleTransporte']['entrega']['ciudad'],
-      dDesCiuEnt: constanteService.ciudades.filter(
-        (td) => td.codigo === data['detalleTransporte']['entrega']['ciudad'],
-      )[0]['descripcion'],
-      //dTelEnt : data['detalleTransporte']['entrega']['telefonoContacto'],
+      dDirLocEnt: data['detalleTransporte']['entrega']['direccion']
     };
+
+
+    if (!data['detalleTransporte']['entrega']['numeroCasa']) {
+      data['detalleTransporte']['entrega']['numeroCasa'] = '0';
+    }
+    jsonResult['dNumCasEnt'] = data['detalleTransporte']['entrega']['numeroCasa'];
+
+    if (data['detalleTransporte']['entrega']['complementoDireccion1']) {
+      jsonResult['dComp1Ent'] = data['detalleTransporte']['entrega']['complementoDireccion1'];
+    }
+    if (data['detalleTransporte']['entrega']['complementoDireccion2']) {      
+      jsonResult['dComp2Ent'] = data['detalleTransporte']['entrega']['complementoDireccion2'];
+    }
+
+    jsonResult['cDepEnt'] = data['detalleTransporte']['entrega']['departamento'];
+
+    jsonResult['dDesDepEnt'] = constanteService.departamentos.filter(
+      (td) => td.codigo === data['detalleTransporte']['entrega']['departamento'],
+    )[0]['descripcion'];
+    jsonResult['cDisEnt'] = data['detalleTransporte']['entrega']['distrito'];
+    jsonResult['dDesDisEnt'] = constanteService.distritos.filter(
+      (td) => td.codigo === data['detalleTransporte']['entrega']['distrito'],
+    )[0]['descripcion'];
+    jsonResult['cCiuEnt'] = data['detalleTransporte']['entrega']['ciudad'];
+    jsonResult['dDesCiuEnt'] = constanteService.ciudades.filter(
+      (td) => td.codigo === data['detalleTransporte']['entrega']['ciudad'],
+    )[0]['descripcion'];
+
 
     if (
       data['detalleTransporte'] &&
@@ -203,14 +247,21 @@ class JSonDteTransporteService {
       //throw new Error('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     }
     const jsonResult: any = {
-      dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
+      //dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
+      dTiVehTras: constanteService.modalidadesTransportes.filter(
+        (td) => td.codigo === +data['detalleTransporte']['vehiculo']['tipo'],
+      )[0]['descripcion'],
       dMarVeh: data['detalleTransporte']['vehiculo']['marca'],
-      dTipIdenVeh: data['detalleTransporte']['vehiculo']['documentoTipo'],
-      dNroIDVeh: data['detalleTransporte']['vehiculo']['documentoNumero'],
-      //dAdicVeh : data['detalleTransporte']['vehiculo']['obs'],
-      //dNroMatVeh : data['detalleTransporte']['vehiculo']['numeroMatricula'].substring(0, 6),
-      //dNroVuelo : data['detalleTransporte']['vehiculo']['numeroVuelo'].substring(0, 6)
+     
     };
+
+    if (data['detalleTransporte']['vehiculo']['documentoTipo']) {
+      jsonResult['dTipIdenVeh'] = data['detalleTransporte']['vehiculo']['documentoTipo']
+    }
+
+    if (data['detalleTransporte']['vehiculo']['documentoTipo']) {
+      jsonResult['dNroIDVeh'] = data['detalleTransporte']['vehiculo']['documentoNumero']
+    }
     if (
       data['detalleTransporte'] &&
       data['detalleTransporte']['vehiculo'] &&
