@@ -801,7 +801,7 @@ class JSonDeMainValidateService {
       );
     }
 
-    if ((data['remision'] && data['remision']['motivo'] == 7 )) {
+    if (data['remision'] && data['remision']['motivo'] == 7) {
       if (data['cliente']['ruc'] != params['ruc']) {
         this.errors.push('RUC del receptor no coincidente con el RUC del emisor');
       }
@@ -1223,9 +1223,9 @@ class JSonDeMainValidateService {
       if (data['detalleTransporte']['inicioEstimadoTranslado'] && data['detalleTransporte']['finEstimadoTranslado']) {
         let fechaInicio = new Date(data['detalleTransporte']['inicioEstimadoTranslado']);
         let fechaFin = new Date(data['detalleTransporte']['finEstimadoTranslado']);
-        
-        console.log("fechaHoy a", new Date().toISOString());
-        console.log("fechaHoy b", new Date().toISOString().slice(0, -14));
+
+        console.log('fechaHoy a', new Date().toISOString());
+        console.log('fechaHoy b', new Date().toISOString().slice(0, -14));
 
         let fechaHoy = new Date(new Date().toISOString().slice(0, -14));
         fechaHoy.setHours(0);
@@ -1233,10 +1233,9 @@ class JSonDeMainValidateService {
         fechaHoy.setSeconds(0);
         fechaHoy.setMilliseconds(0);
 
-        console.log("fechaHoy", fechaHoy);
-        console.log("fechaInicio", fechaInicio);
-        console.log("fechaFin", fechaFin);
-
+        console.log('fechaHoy', fechaHoy);
+        console.log('fechaInicio', fechaInicio);
+        console.log('fechaFin', fechaFin);
 
         if (fechaInicio.getTime() < fechaHoy.getTime()) {
           //this.errors.push('La fecha de inicio de translado en data.detalleTransporte.inicioEstimadoTranslado debe ser mayor a la Fecha de la Transacción');

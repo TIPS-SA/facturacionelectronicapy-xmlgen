@@ -75,7 +75,7 @@ class JSonDteTransporteService {
         (mt) => mt.codigo == data['detalleTransporte']['modalidad'],
       )[0]['descripcion'],
       iRespFlete: data['detalleTransporte']['tipoResponsable'],
-      cCondNeg: data['detalleTransporte']['condicionNegociacion']
+      cCondNeg: data['detalleTransporte']['condicionNegociacion'],
     };
 
     if (data['detalleTransporte']['numeroManifiesto']) {
@@ -120,14 +120,13 @@ class JSonDteTransporteService {
   private generateDatosSalida(params: any, data: any) {
     const jsonResult: any = {
       dDirLocSal: data['detalleTransporte']['salida']['direccion'],
-      
     };
 
     if (!data['detalleTransporte']['salida']['numeroCasa']) {
-      data['detalleTransporte']['salida']['numeroCasa'] = "0";
+      data['detalleTransporte']['salida']['numeroCasa'] = '0';
     }
     jsonResult['dNumCasSal'] = data['detalleTransporte']['salida']['numeroCasa'];
-    
+
     if (data['detalleTransporte']['salida']['complementoDireccion1']) {
       jsonResult['dComp1Sal'] = data['detalleTransporte']['salida']['complementoDireccion1'];
     }
@@ -143,15 +142,13 @@ class JSonDteTransporteService {
 
     jsonResult['cDisSal'] = data['detalleTransporte']['salida']['distrito'];
     jsonResult['dDesDisSal'] = constanteService.distritos.filter(
-                              (td) => td.codigo === +data['detalleTransporte']['salida']['distrito'],
-                            )[0]['descripcion'];
-
+      (td) => td.codigo === +data['detalleTransporte']['salida']['distrito'],
+    )[0]['descripcion'];
 
     jsonResult['cCiuSal'] = +data['detalleTransporte']['salida']['ciudad'];
     jsonResult['dDesCiuSal'] = constanteService.ciudades.filter(
-                              (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad'],
-                            )[0]['descripcion'];
-    
+      (td) => td.codigo === +data['detalleTransporte']['salida']['ciudad'],
+    )[0]['descripcion'];
 
     /*constanteService.validateDepartamentoDistritoCiudad(
       'data.detalleTransporte.salida',
@@ -182,9 +179,8 @@ class JSonDteTransporteService {
    */
   private generateDatosEntrega(params: any, data: any) {
     const jsonResult: any = {
-      dDirLocEnt: data['detalleTransporte']['entrega']['direccion']
+      dDirLocEnt: data['detalleTransporte']['entrega']['direccion'],
     };
-
 
     if (!data['detalleTransporte']['entrega']['numeroCasa']) {
       data['detalleTransporte']['entrega']['numeroCasa'] = '0';
@@ -194,7 +190,7 @@ class JSonDteTransporteService {
     if (data['detalleTransporte']['entrega']['complementoDireccion1']) {
       jsonResult['dComp1Ent'] = data['detalleTransporte']['entrega']['complementoDireccion1'];
     }
-    if (data['detalleTransporte']['entrega']['complementoDireccion2']) {      
+    if (data['detalleTransporte']['entrega']['complementoDireccion2']) {
       jsonResult['dComp2Ent'] = data['detalleTransporte']['entrega']['complementoDireccion2'];
     }
 
@@ -211,7 +207,6 @@ class JSonDteTransporteService {
     jsonResult['dDesCiuEnt'] = constanteService.ciudades.filter(
       (td) => td.codigo === data['detalleTransporte']['entrega']['ciudad'],
     )[0]['descripcion'];
-
 
     if (
       data['detalleTransporte'] &&
@@ -244,15 +239,14 @@ class JSonDteTransporteService {
         (td) => td.codigo === +data['detalleTransporte']['vehiculo']['tipo'],
       )[0]['descripcion'],
       dMarVeh: data['detalleTransporte']['vehiculo']['marca'],
-     
     };
 
     if (data['detalleTransporte']['vehiculo']['documentoTipo']) {
-      jsonResult['dTipIdenVeh'] = data['detalleTransporte']['vehiculo']['documentoTipo']
+      jsonResult['dTipIdenVeh'] = data['detalleTransporte']['vehiculo']['documentoTipo'];
     }
 
     if (data['detalleTransporte']['vehiculo']['documentoNumero']) {
-      jsonResult['dNroIDVeh'] = data['detalleTransporte']['vehiculo']['documentoNumero']
+      jsonResult['dNroIDVeh'] = data['detalleTransporte']['vehiculo']['documentoNumero'];
     }
     if (
       data['detalleTransporte'] &&
@@ -365,17 +359,20 @@ class JSonDteTransporteService {
       )[0]['descripcion'];
     }
 
-    if (data['detalleTransporte']['transportista']['chofer']['documentoNumero']) {      
-      jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(0, 20);
+    if (data['detalleTransporte']['transportista']['chofer']['documentoNumero']) {
+      jsonResult['dNumIDChof'] = data['detalleTransporte']['transportista']['chofer']['documentoNumero'].substring(
+        0,
+        20,
+      );
     }
-    
+
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
-    
+
     if (data['detalleTransporte']['transportista']['direccion']) {
       jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];
     }
-    
-    if (data['detalleTransporte']['transportista']['chofer']['direccion']) {      
+
+    if (data['detalleTransporte']['transportista']['chofer']['direccion']) {
       jsonResult['dDirChof'] = data['detalleTransporte']['transportista']['chofer']['direccion'];
     }
 
