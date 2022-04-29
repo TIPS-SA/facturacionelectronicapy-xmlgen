@@ -97,11 +97,10 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 ``` json
 {
     "tipoDocumento" : 1,
-    "ruc" : "80069563-1",
     "establecimiento" : "001",
-    "codigoSeguridadAleatorio" : 29838,
+    "codigoSeguridadAleatorio" : "298398",
     "punto" : "001",
-    "numero" : "", 
+    "numero" : "0000001", 
     "descripcion" : "Aparece en el documento",
     "observacion" : "Cualquier informacion de marketing, publicidad, sorteos, promociones para el Receptor",
     "tipoContribuyente" : 1,
