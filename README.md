@@ -13,9 +13,8 @@ El módulo está preparado de forma a proveer una fácil integración dentro de 
 ## Características
 - Genera el CDC automáticamente de acuerdo a los datos del documento electrónico
 - Implementa el Algoritmo del dígito verificador del CDC
-- Permite sobreescribir la funcion para calcular el código de seguridad, de acuerdo a las necesidades del usuario
-- Realiza la validación del XSD, llamando a una API de Java para emitir el error en la estructura del XML
-- Valida los valores de los campos, según el manual técnico, emitiendo el error correspondiente.
+- Permite sobreescribir el valor del código de seguridad, de acuerdo a las necesidades del implementador
+- Realiza la validación de los datos de entrada conforme el menual técnico de la SET
 
 ## Instalación
 
