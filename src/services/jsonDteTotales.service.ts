@@ -106,7 +106,19 @@ class JSonDteTotalesService {
 
     let dRedon = 0;
     if (config.redondeoSedeco) {
-      dRedon = this.redondeoSedeco(dTotOpe);
+      if (data.moneda === 'PYG') {
+        dRedon = this.redondeoSedeco(dTotOpe);
+      } else {
+        //Observación: Para monedas extranjeras o cualquier otro cálculo que contenga decimales, las reglas de validación
+        //aceptarán redondeos de 50 céntimos (por encima o por debajo)
+        if (dTotOpe % 1 != 0) {
+          //Es moneda extranjera, en decimal
+          console.log("Moneda extranjera decimal " + dTotOpe);
+          
+        }
+
+      }
+      
     }
 
     if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) {
