@@ -113,12 +113,9 @@ class JSonDteTotalesService {
         //aceptarán redondeos de 50 céntimos (por encima o por debajo)
         if (dTotOpe % 1 != 0) {
           //Es moneda extranjera, en decimal
-          console.log("Moneda extranjera decimal " + dTotOpe);
-          
+          console.log('Moneda extranjera decimal ' + dTotOpe);
         }
-
       }
-      
     }
 
     if (!(data['tipoImpuesto'] != 1 && data['tipoImpuesto'] != 5)) {
