@@ -162,7 +162,7 @@ class JSonDteTotalesService {
         jsonResult['dSub5'] = dSub5;
 
         if (data.moneda != 'PYG') {
-          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(2))
+          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(2));
         }
       }
 
@@ -170,7 +170,7 @@ class JSonDteTotalesService {
         jsonResult['dSub10'] = dSub10;
 
         if (data.moneda != 'PYG') {
-          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(2))
+          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(2));
         }
       }
     }
