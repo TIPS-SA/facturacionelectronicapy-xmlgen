@@ -54,6 +54,10 @@ class JSonDeMainValidateService {
 
     this.generateDatosEspecificosPorTipoDEValidate(params, data);
 
+    if (data['tipoDocumento'] == 4) {
+      this.generateDatosAutofacturaValidate(params, data);
+    }
+
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
       this.generateDatosCondicionOperacionDEValidate(params, data);
     }
@@ -818,6 +822,65 @@ class JSonDeMainValidateService {
           constanteService.remisionesResponsables.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
+  }
+
+  private generateDatosAutofacturaValidate(params: any, data: any) {
+    if (!data['autoFactura']) {
+      this.errors.push('Debe especificar los datos de Autofactura en data.autoFactura para el Tipo de Documento = 4');
+      return;
+    }
+    
+    if (!data['autoFactura']['documentoNumero']) {
+      this.errors.push('Debe especificar el Documento del Vendedor para la AutoFactura en data.autoFactura.documentoNumero');
+    } else {
+      if (
+        !((data['autoFactura']['documentoNumero'] + '').length >= 1 && (data['autoFactura']['documentoNumero'] + '').length <= 20)
+      ) {
+        this.errors.push('El Numero de Documento del Vendedor en data.autoFactura.numeroDocuemnto debe contener entre 1 y 20 caracteres ');
+      }
+
+      if (
+        new RegExp(/[a-zA-Z]/g).test(data['autoFactura']['documentoNumero']) || new RegExp(/\./g).test(data['autoFactura']['documentoNumero'])
+      ) {
+        this.errors.push('El Numero de Documento del Vendedor "' + data['autoFactura']['documentoNumero'] + '" en data.autoFactura.numeroDocuemnto no puede contener Letras ni puntos');
+      }
+      
+    }
+
+    if (!data['documentoAsociado']) {
+      this.errors.push('Debe indicar el Documento Asociado en data.documentoAsociado para el Tipo de Documento = 4');
+    } else {
+      if ( ! (data['documentoAsociado']['constanciaControl'] && data['documentoAsociado']['constanciaControl'].length > 0) ) {
+        this.errors.push('Debe indicar el Número de Control de la Constancia en data.documentoAsociado.constanciaControl');
+      } else {
+        if (
+          (data['documentoAsociado']['constanciaControl'] + '').length != 8
+        ) {
+          this.errors.push('El Numero de Control de la Constancia "' + data['documentoAsociado']['constanciaControl'] + '" en data.documentoAsociado.constanciaControl debe contener 8 caracteres ');
+        }
+      }
+  
+      if ( ! (data['documentoAsociado']['constanciaNumero'] && data['documentoAsociado']['constanciaNumero'].length > 0) ) {
+        this.errors.push('Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero');
+      } else {
+        if (
+          isNaN(data['documentoAsociado']['constanciaNumero'])
+        ) {
+          this.errors.push('El Numero de la Constancia "' + data['documentoAsociado']['constanciaNumero'] + '" en data.documentoAsociado.constanciaNumero debe ser numérico ');
+        }
+        if (
+          (data['documentoAsociado']['constanciaNumero'] + '').length != 11
+        ) {
+          this.errors.push('El Numero de la Constancia "' + data['documentoAsociado']['constanciaNumero'] + '" en data.documentoAsociado.constanciaNumero debe contener 11 caracteres ');
+        }
+      }
+
+      if ( data['cliente']['contribuyente'] != 1 ) {
+        this.errors.push('El Cliente de una Autofactura debe ser Contribuyente=1 en data.cliente.tipoContribuyente');
+      }
+
+    }
+
   }
 
   private generateDatosCondicionOperacionDEValidate(params: any, data: any) {
