@@ -10,7 +10,6 @@ class JSonDteIdentificacionDocumentoService {
    * @param options
    */
   public generateDatosDocumentoAsociado(params: any, data: any) {
-
     const jsonResult: any = {
       iTipDocAso: data['documentoAsociado']['formato'],
       dDesTipDocAso: constanteService.tiposDocumentosAsociados.filter(
