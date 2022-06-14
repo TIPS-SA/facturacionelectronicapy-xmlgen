@@ -1,4 +1,5 @@
 import stringUtilService from './StringUtil.service';
+import fechaUtilService from './FechaUtil.service';
 import constanteService from './Constante.service';
 import jsonDteItemValidate from './jsonDteItemValidate.service';
 import { XmlgenConfig } from './type.interface.';
@@ -43,6 +44,7 @@ class JSonDeMainValidateService {
         this.errors.push('data.cliente.contribuyente debe ser true|false');
       }
     }
+
 
     this.generateCodigoControlValidate(params, data);
 
@@ -271,6 +273,14 @@ class JSonDeMainValidateService {
     if (data['tipoDocumento'] == 7) {
       //C002
       return; //No informa si el tipo de documento es 7
+    }
+
+    if ( ! fechaUtilService.isIsoDate(data['fecha'] ) ) {
+      this.errors.push(
+        "Valor de la Fecha '" +
+          data['fecha'] +
+          "' en data.fecha no válido. Formato: yyyy-MM-ddTHH:mm:ss"
+      );
     }
 
     if (!data['tipoImpuesto']) {
