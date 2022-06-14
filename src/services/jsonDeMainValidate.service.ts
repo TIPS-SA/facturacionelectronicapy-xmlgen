@@ -224,7 +224,7 @@ class JSonDeMainValidateService {
     if (params['ruc'].indexOf('-') == -1) {
       this.errors.push('RUC debe contener dígito verificador en params.ruc');
     }
-    const rucEmisor = params['ruc'].split('-')[0];
+    let rucEmisor = params['ruc'].split('-')[0];
     const dvEmisor = params['ruc'].split('-')[1];
 
     var reg = new RegExp(/^\d+$/);
@@ -233,6 +233,14 @@ class JSonDeMainValidateService {
     }
     if (!reg.test(dvEmisor)) {
       this.errors.push("El DV del RUC '" + dvEmisor + "' debe ser numérico");
+    }
+
+    if (rucEmisor.length > 8) {
+      this.errors.push("El RUC '" + rucEmisor + "' debe contener de 1 a 8 caracteres");
+    }
+
+    if (dvEmisor > 9) {
+      this.errors.push("El DV del RUC '" + dvEmisor + "' debe ser del 1 al 9");
     }
   }
 
@@ -439,6 +447,15 @@ class JSonDeMainValidateService {
       if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
         this.errors.push("El DV del RUC del Cliente '" + rucCliente[1] + "' en data.cliente.ruc debe ser numérico");
       }
+
+      if (rucCliente[0].length > 8) {
+        this.errors.push("El RUC '" + rucCliente[0] + "' debe contener de 1 a 8 caracteres");
+      }
+  
+      if (rucCliente[1] > 9) {
+        this.errors.push("El DV del RUC '" + rucCliente[1] + "' debe ser del 1 al 9");
+      }
+
     }
 
     if (constanteService.paises.filter((pais: any) => pais.codigo === data['cliente']['pais']).length == 0) {
