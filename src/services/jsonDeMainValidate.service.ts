@@ -45,7 +45,6 @@ class JSonDeMainValidateService {
       }
     }
 
-
     this.generateCodigoControlValidate(params, data);
 
     this.generateDeValidate(params, data);
@@ -283,11 +282,9 @@ class JSonDeMainValidateService {
       return; //No informa si el tipo de documento es 7
     }
 
-    if ( ! fechaUtilService.isIsoDate(data['fecha'] ) ) {
+    if (!fechaUtilService.isIsoDate(data['fecha'])) {
       this.errors.push(
-        "Valor de la Fecha '" +
-          data['fecha'] +
-          "' en data.fecha no válido. Formato: yyyy-MM-ddTHH:mm:ss"
+        "Valor de la Fecha '" + data['fecha'] + "' en data.fecha no válido. Formato: yyyy-MM-ddTHH:mm:ss",
       );
     }
 
@@ -451,11 +448,10 @@ class JSonDeMainValidateService {
       if (rucCliente[0].length > 8) {
         this.errors.push("El RUC '" + rucCliente[0] + "' debe contener de 1 a 8 caracteres");
       }
-  
+
       if (rucCliente[1] > 9) {
         this.errors.push("El DV del RUC '" + rucCliente[1] + "' debe ser del 1 al 9");
       }
-
     }
 
     if (constanteService.paises.filter((pais: any) => pais.codigo === data['cliente']['pais']).length == 0) {
