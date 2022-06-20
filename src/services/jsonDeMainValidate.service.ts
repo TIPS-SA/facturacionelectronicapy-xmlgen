@@ -1456,22 +1456,23 @@ class JSonDeMainValidateService {
   private generateDatosVehiculoValidate(params: any, data: any) {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
       this.errors.push('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
-    }
-
-    if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-      if (
-        !(
-          data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
-          data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
-        )
-      ) {
-        this.errors.push(
-          "Número de Matricula '" +
-            data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-            "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
-        );
+    } else {
+      if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
+        if (
+          !(
+            data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
+            data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
+          )
+        ) {
+          this.errors.push(
+            "Número de Matricula '" +
+              data['detalleTransporte']['vehiculo']['numeroMatricula'] +
+              "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+          );
+        }
       }
     }
+
   }
 
   /**
