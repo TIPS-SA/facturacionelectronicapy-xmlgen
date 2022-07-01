@@ -88,7 +88,8 @@ class JSonDteTotalesService {
       dTotDescGlotem += (item.gValorItem?.gValorRestaItem?.dDescGloItem || 0) * item['dCantProSer'];
       dTotAntItem += (item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0) * item['dCantProSer'];
       dTotAnt += (item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0) * item['dCantProSer'];
-      dDescTotal += dTotDesc + dTotDescGlotem;
+      console.log('dTotDesc', dTotDesc, ', dTotDescGlotem', dTotDescGlotem);
+      dDescTotal = dTotDesc + dTotDescGlotem;
       dAnticipo += dTotAntItem + dTotAnt;
       dTotOpeGs += item['gValorItem']['gValorRestaItem']['dTotOpeGs']; //Suma del monto total en Gs.
     } //end-for
