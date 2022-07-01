@@ -175,6 +175,26 @@ class JSonDteTotalesService {
       }
     }
 
+    if (data.moneda != 'PYG') {
+      dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals));
+    } else {
+      dTotOpe = parseFloat(dTotOpe.toFixed(0));
+    }
+    if (data.moneda != 'PYG') {
+      dTotDesc = parseFloat(dTotDesc.toFixed(config.decimals));
+    } else {
+      dTotDesc = parseFloat(dTotDesc.toFixed(0));
+    }
+    if (data.moneda != 'PYG') {
+      dTotDescGlotem = parseFloat(dTotDescGlotem.toFixed(config.decimals));
+    } else {
+      dTotDescGlotem = parseFloat(dTotDescGlotem.toFixed(0));
+    }
+    if (data.moneda != 'PYG') {
+      dDescTotal = parseFloat(dDescTotal.toFixed(config.decimals));
+    } else {
+      dDescTotal = parseFloat(dDescTotal.toFixed(0));
+    }
     jsonResult = Object.assign(jsonResult, {
       dTotOpe: dTotOpe, //F008
       dTotDesc: dTotDesc,

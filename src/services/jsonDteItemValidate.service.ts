@@ -82,6 +82,16 @@ class JSonDteItemValidateService {
           );
         }
 
+        if ((item['cantidad'] + '').split('.')[1]?.length > 8) {
+          this.errors.push(
+            'La Cantidad del item "' +
+              item['cantidad'] +
+              '" en data.items[' +
+              i +
+              '].cantidad, no puede contener mas de 4 decimales',
+          );
+        }
+
         if ((item['precioUnitario'] + '').split('.')[1]?.length > 8) {
           this.errors.push(
             'El Precio Unitario del item "' +
