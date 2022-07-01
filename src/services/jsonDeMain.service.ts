@@ -28,6 +28,7 @@ class JSonDeMainService {
           errorSeparator: '; ',
           errorLimit: 10,
           redondeoSedeco: true,
+          decimals : 2,
         };
 
         defaultConfig = Object.assign(defaultConfig, config);
@@ -66,7 +67,7 @@ class JSonDeMainService {
     this.generateDatosTimbrado(params, data);
     this.generateDatosGenerales(params, data, config);
     //---
-    this.generateDatosEspecificosPorTipoDE(params, data);
+    this.generateDatosEspecificosPorTipoDE(params, data, config);
 
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
       this.generateDatosCondicionOperacionDE(params, data);
@@ -1296,11 +1297,11 @@ class JSonDeMainService {
    * @param data
    * @param options
    */
-  private generateDatosEspecificosPorTipoDE(params: any, data: any) {
+  private generateDatosEspecificosPorTipoDE(params: any, data: any, config: XmlgenConfig) {
     this.json['rDE']['DE']['gDtipDE'] = {};
 
     if (data['tipoDocumento'] === 1) {
-      this.generateDatosEspecificosPorTipoDE_FacturaElectronica(params, data);
+      this.generateDatosEspecificosPorTipoDE_FacturaElectronica(params, data, config);
     }
     if (data['tipoDocumento'] === 4) {
       this.generateDatosEspecificosPorTipoDE_Autofactura(params, data);
@@ -1322,7 +1323,7 @@ class JSonDeMainService {
    * @param data
    * @param options
    */
-  private generateDatosEspecificosPorTipoDE_FacturaElectronica(params: any, data: any) {
+  private generateDatosEspecificosPorTipoDE_FacturaElectronica(params: any, data: any, config: XmlgenConfig) {
     if (
       constanteService.indicadoresPresencias.filter((um: any) => um.codigo === data['factura']['presencia']).length == 0
     ) {

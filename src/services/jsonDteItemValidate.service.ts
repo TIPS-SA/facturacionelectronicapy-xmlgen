@@ -1,5 +1,6 @@
 import stringUtilService from './StringUtil.service';
 import constanteService from './Constante.service';
+import { XmlgenConfig } from './type.interface.';
 
 class JSonDteItemValidateService {
   errors: Array<string>;
@@ -7,6 +8,7 @@ class JSonDteItemValidateService {
   constructor() {
     this.errors = new Array();
   }
+
   /**
    * E8. Campos que describen los ítems de la operación (E700-E899)
    *
@@ -14,7 +16,7 @@ class JSonDteItemValidateService {
    * @param data
    * @param options
    */
-  public generateDatosItemsOperacionValidate(params: any, data: any, errors: Array<string>) {
+  public generateDatosItemsOperacionValidate(params: any, data: any, config: XmlgenConfig, errors: Array<string>) {
     this.errors = errors;
 
     const jsonResult: any = [];
@@ -78,6 +80,14 @@ class JSonDteItemValidateService {
               i +
               '].descripcion contiene valores inválidos',
           );
+        }
+
+        if ( ((item['precioUnitario']+"").split(".")[1])?.length > 8 ) {
+          this.errors.push('El Precio Unitario del item "' + item['precioUnitario'] + '" en data.items[' + i + '].precioUnitario, no puede contener mas de 8 decimales');
+        }
+
+        if ( ((item['descuento']+"").split(".")[1])?.length > 8 ) {
+          this.errors.push('El Descuento del item "' + item['descuento'] + '" en data.items[' + i + '].descuento, no puede contener mas de 8 decimales');
         }
 
         if (+item['cantidad'] <= 0) {

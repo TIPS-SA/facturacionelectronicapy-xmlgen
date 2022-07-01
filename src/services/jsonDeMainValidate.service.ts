@@ -63,7 +63,7 @@ class JSonDeMainValidateService {
       this.generateDatosCondicionOperacionDEValidate(params, data);
     }
 
-    this.errors = jsonDteItemValidate.generateDatosItemsOperacionValidate(params, data, this.errors);
+    this.errors = jsonDteItemValidate.generateDatosItemsOperacionValidate(params, data, config, this.errors);
 
     this.generateDatosComplementariosComercialesDeUsoEspecificosValidate(params, data);
 

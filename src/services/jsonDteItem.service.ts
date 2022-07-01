@@ -18,41 +18,6 @@ class JSonDteItemService {
       for (let i = 0; i < data['items'].length; i++) {
         const item = data['items'][i];
 
-        //Valores por defecto para el Detalle
-        /*let unidadMedida: number = item['unidadMedida'];
-        if (!unidadMedida && config.defaultValues === true) {
-          unidadMedida = 77;
-        }*/
-        //Validaciones
-        /*
-        if (constanteService.unidadesMedidas.filter((um) => um.codigo === item['unidadMedida']).length == 0) {
-          throw new Error(
-            "Unidad de Medida '" +
-              item['unidadMedida'] +
-              "' en data.items[" +
-              i +
-              '].unidadMedida no encontrado. Valores: ' +
-              constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
-          );
-        }
-        if (data['tipoDocumento'] === 7) {
-          if (!item['tolerancia']) {
-            throw new Error(
-              'La Tolerancia es obligatoria para el Tipo de Documento = 7 en data.items[' + i + '].tolerancia',
-            );
-          }
-          if (constanteService.relevanciasMercaderias.filter((um) => um.codigo === item['tolerancia']).length == 0) {
-            throw new Error(
-              "Tolerancia de Mercaderia '" +
-                item['tolerancia'] +
-                "' en data.items[" +
-                i +
-                '].tolerancia no encontrado. Valores: ' +
-                constanteService.relevanciasMercaderias.map((a) => a.codigo + '-' + a.descripcion),
-            );
-          }
-        }
-        */
         const gCamItem: any = {
           dCodInt: item['codigo'],
         };
@@ -72,32 +37,6 @@ class JSonDteItemService {
           gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
         }
 
-        /*if (!item['descripcion']) {
-          throw new Error('La descripción del item en data.items[' + i + '].descripcion no puede ser null');
-        }
-
-        if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 120)) {
-          throw new Error(
-            'La descripción del item (' +
-              item['descripcion'] +
-              ') en data.items[' +
-              i +
-              '].descripcion debe tener una longitud de 1 a 120 caracteres',
-          );
-        }*/
-
-        //.replaceAll("<[^>]*>", " ")
-        /*let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
-        if (regexp.test(item['descripcion'])) {
-          throw new Error(
-            'La descripción del item (' +
-              item['descripcion'] +
-              ') en data.items[' +
-              i +
-              '].descripcion contiene valores inválidos',
-          );
-        }*/
-
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
 
         gCamItem['cUniMed'] = item['unidadMedida'];
@@ -105,23 +44,9 @@ class JSonDteItemService {
           .filter((um) => um.codigo === item['unidadMedida'])[0]
           ['representacion'].trim();
 
-        /*if (+item['cantidad'] <= 0) {
-          throw new Error('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
-        }*/
         gCamItem['dCantProSer'] = item['cantidad'];
 
         if (item['pais']) {
-          /*if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
-            throw new Error(
-              "Pais '" +
-                item['pais'] +
-                "' del Producto en data.items[" +
-                i +
-                '].pais no encontrado. Valores: ' +
-                constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
-            );
-          }
-          */
           gCamItem['cPaisOrig'] = item['pais'];
           gCamItem['dDesPaisOrig'] = constanteService.paises.filter((pais) => pais.codigo === item['pais'])[0][
             'descripcion'
@@ -129,25 +54,6 @@ class JSonDteItemService {
         }
 
         if (item['observacion'] && item['observacion'].trim().length > 0) {
-          /*if (!(item['observacion'].length >= 1 && item['observacion'].length <= 500)) {
-            throw new Error(
-              'La observación del item (' +
-                item['observacion'] +
-                ') en data.items[' +
-                i +
-                '].observacion debe tener una longitud de 1 a 500 caracteres',
-            );
-          }*/
-          /*
-          if (regexp.test(item['observacion'])) {
-            throw new Error(
-              'La observación del item (' +
-                item['observacion'] +
-                ') en data.items[' +
-                i +
-                '].observacion contiene valores inválidos',
-            );
-          }*/
           gCamItem['dInfItem'] = item['observacion'].trim();
         }
 
@@ -167,15 +73,13 @@ class JSonDteItemService {
           if (data['tipoTransaccion'] === 9) {
             if (item['cdcAnticipo']) {
               gCamItem['dCDCAnticipo'] = item['cdcAnticipo'];
-              /*} else {
-              throw new Error('Debe informar data.items*.cdcAnticipo');*/
             }
           }
         }
 
         if (data['tipoDocumento'] != 7) {
           //Oblitatorio informar
-          gCamItem['gValorItem'] = this.generateDatosItemsOperacionPrecioTipoCambioTotal(params, data, item, i);
+          gCamItem['gValorItem'] = this.generateDatosItemsOperacionPrecioTipoCambioTotal(params, data, item, i, config);
         }
 
         if (
@@ -185,7 +89,7 @@ class JSonDteItemService {
           data['tipoImpuesto'] == 5
         ) {
           if (data['tipoDocumento'] != 4 && data['tipoDocumento'] != 7) {
-            gCamItem['gCamIVA'] = this.generateDatosItemsOperacionIVA(params, data, item, i, { ...gCamItem });
+            gCamItem['gCamIVA'] = this.generateDatosItemsOperacionIVA(params, data, item, i, { ...gCamItem }, config);
           }
         }
 
@@ -220,15 +124,13 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionPrecioTipoCambioTotal(params: any, data: any, item: any, i: number) {
+  private generateDatosItemsOperacionPrecioTipoCambioTotal(params: any, data: any, item: any, i: number, config: XmlgenConfig) {
     const jsonResult: any = {
       dPUniProSer: item['precioUnitario'],
-      //dTiCamIt : data['condicionTipoCambio'] == 2 ? item['cambio'] : null,    //E725
-      //dTotBruOpeItem: parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']),
     };
 
     jsonResult['dTotBruOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
-    jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(2));
+    jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.decimals));
     if (data.moneda === 'PYG') {
       jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(0));
     }
@@ -236,7 +138,7 @@ class JSonDteItemService {
     if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
       jsonResult['dTiCamIt'] = item['cambio'];
     }
-    jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(params, data, item, i);
+    jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(params, data, item, i, config);
 
     return jsonResult;
   }
@@ -249,22 +151,12 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any, i: number) {
+  private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any, i: number, config: XmlgenConfig) {
     const jsonResult: any = {};
 
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
       //Validar que si el descuento es mayor al precio
-      /*if (+item['descuento'] > +item['precioUnitario']) {
-        throw new Error(
-          "Descuento '" +
-            item['descuento'] +
-            "' del Producto en data.items[" +
-            i +
-            "].descuento supera al Precio Unitario '" +
-            item['precioUnitario'],
-        );
-      }*/
 
       if (+item['descuento'] == +item['precioUnitario']) {
         //Validar IVA
@@ -282,11 +174,7 @@ class JSonDteItemService {
         }
       }
 
-      jsonResult['dDescItem'] = item['descuento'];
-
-      /*  if ( ! (item['descuentoPorcentaje'] && item['descuentoPorcentaje'] > 0) ) {
-        throw new Error("Debe proveer el Porcentaje de Descuento del Item en data.item[" + i + "].descuentoPorcentaje");
-      }*/
+      jsonResult['dDescItem'] = parseFloat(item['descuento']).toFixed(config.decimals);
 
       //Calcula solo el % Descuento
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
@@ -294,7 +182,9 @@ class JSonDteItemService {
 
     jsonResult['dDescGloItem'] = 0;
     if (data['porcentajeDescuento'] && data['porcentajeDescuento'] > 0) {
+      //Si hay un descuento global, entonces FacturaSend prorratea entre los items
       jsonResult['dDescGloItem'] = (data['porcentajeDescuento'] * parseFloat(item['precioUnitario'])) / 100;
+      jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.decimals);
     }
 
     jsonResult['dAntPreUniIt'] = 0;
@@ -329,7 +219,7 @@ class JSonDteItemService {
 
       jsonResult['dTotOpeItem'] = parseFloat(valores + '') * parseFloat(item['cantidad']);
 
-      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(2));
+      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
       if (data.moneda === 'PYG') {
         jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
       }
@@ -338,7 +228,7 @@ class JSonDteItemService {
       //Si es Autofactura
       jsonResult['dTotOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
 
-      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(2));
+      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
       if (data.moneda === 'PYG') {
         jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
       }
@@ -358,79 +248,14 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionIVA(params: any, data: any, item: any, i: number, gCamItem: any) {
-    /*if (constanteService.codigosAfectaciones.filter((um) => um.codigo === item['ivaTipo']).length == 0) {
-      throw new Error(
-        "Tipo de IVA '" +
-          item['ivaTipo'] +
-          "' en data.items[" +
-          i +
-          '].ivaTipo no encontrado. Valores: ' +
-          constanteService.codigosAfectaciones.map((a) => a.codigo + '-' + a.descripcion),
-      );
-    }*/
+  private generateDatosItemsOperacionIVA(params: any, data: any, item: any, i: number, gCamItem: any, config: XmlgenConfig) {
 
     const jsonResult: any = {
       iAfecIVA: item['ivaTipo'], //E731
       dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === item['ivaTipo'])[0]['descripcion'],
       dPropIVA: item['ivaBase'], //E733
       dTasaIVA: item['iva'], //E734
-      //dBasGravIVA : 0,            //E735 Sera sobreescrito
-      //dLiqIVAItem : 0             //E736 Sera sobreescrito
     };
-
-    /*if (item['ivaTipo'] == 1) {
-      if (item['ivaBase'] != 100) {
-        throw new Error(
-          'Valor de "ivaBase"=' +
-            item['ivaBase'] +
-            ' debe ser igual a 100 para "ivaTipo" = 1 en data.items[' +
-            i +
-            '].ivaBase',
-        );
-      }
-    }*/
-
-    /*if (item['ivaTipo'] == 3) {
-      //Exento
-      if (item['ivaBase'] != 0) {
-        throw new Error(
-          'Valor de "ivaBase"=' +
-            item['ivaBase'] +
-            ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' +
-            i +
-            '].ivaBase',
-        );
-      }
-
-      if (item['iva'] != 0) {
-        throw new Error(
-          'Valor de "iva"=' + item['iva'] + ' debe ser igual a 0 para "ivaTipo" = 3 en data.items[' + i + '].iva',
-        );
-      }
-    }*/
-
-    /*if (item['iva'] == 0) {
-      if (item['ivaTipo'] != 2 && item['ivaTipo'] != 3) {
-        throw new Error(
-          '"Iva" = 0 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva',
-        );
-      }
-    }
-    if (item['iva'] == 5) {
-      if (item['ivaTipo'] != 1 && item['ivaTipo'] != 4) {
-        throw new Error(
-          '"Iva" = 5 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva',
-        );
-      }
-    }
-    if (item['iva'] == 10) {
-      if (item['ivaTipo'] != 1 && item['ivaTipo'] != 4) {
-        throw new Error(
-          '"Iva" = 10 no se admite para "ivaTipo"=' + item['ivaTipo'] + ' proporcionado en data.items[' + i + '].iva',
-        );
-      }
-    }*/
 
     /*  Calculo para E735
         Si E731 = 1 o 4 este campo es igual al resultado del cálculo 
@@ -451,7 +276,7 @@ class JSonDteItemService {
 
       //Redondeo inicial a 2 decimales
       if (jsonResult['dBasGravIVA']) {
-        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(2));
+        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.decimals));
         if (data.moneda === 'PYG') {
           jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(0));
         }
@@ -468,7 +293,7 @@ class JSonDteItemService {
       jsonResult['dLiqIVAItem'] = (jsonResult['dBasGravIVA'] * item['iva']) / 100;
 
       //Redondeo
-      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(2));
+      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.decimals));
       if (data.moneda === 'PYG') {
         jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(0));
       }

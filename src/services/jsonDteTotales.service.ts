@@ -105,7 +105,7 @@ class JSonDteTotalesService {
     }
 
     if (data.moneda != 'PYG') {
-      dTotOpe = parseFloat(dTotOpe.toFixed(2));
+      dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals));
     }
 
     let dRedon = 0;
@@ -141,7 +141,7 @@ class JSonDteTotalesService {
     //Corresponde al cálculo aritmético F008 - F013 + F025
     let dTotGralOpe = dTotOpe - dRedon + (data['comision'] || 0);
     if (data.moneda != 'PYG') {
-      dTotGralOpe = parseFloat(dTotGralOpe.toFixed(2));
+      dTotGralOpe = parseFloat(dTotGralOpe.toFixed(config.decimals));
     }
     //dTotOpe + dRedon + dComi;
     //Si C002 = 1, 5 o 6, entonces dTotGralOpe(F014) = F008 - F011 - F012 - F013
@@ -162,7 +162,7 @@ class JSonDteTotalesService {
         jsonResult['dSub5'] = dSub5;
 
         if (data.moneda != 'PYG') {
-          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(2));
+          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.decimals));
         }
       }
 
@@ -170,7 +170,7 @@ class JSonDteTotalesService {
         jsonResult['dSub10'] = dSub10;
 
         if (data.moneda != 'PYG') {
-          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(2));
+          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.decimals));
         }
       }
     }
@@ -196,10 +196,10 @@ class JSonDteTotalesService {
     });
 
     //Redondeo
-    dIVA5 = parseFloat(dIVA5.toFixed(2));
-    dIVA10 = parseFloat(dIVA10.toFixed(2));
-    dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(2));
-    dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(2));
+    dIVA5 = parseFloat(dIVA5.toFixed(config.decimals));
+    dIVA10 = parseFloat(dIVA10.toFixed(config.decimals));
+    dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(config.decimals));
+    dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.decimals));
 
     if (data.moneda === 'PYG') {
       dIVA5 = parseFloat(dIVA5.toFixed(0));
@@ -227,13 +227,13 @@ class JSonDteTotalesService {
 
         //Redondeo
 
-        jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(2));
+        jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.decimals));
         if (data.moneda === 'PYG') {
           jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(0));
         }
       }
       if (dBaseGrav5 > 0) {
-        dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(2));
+        dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.decimals));
         if (data.moneda === 'PYG') {
           dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
         }
@@ -241,7 +241,7 @@ class JSonDteTotalesService {
         jsonResult['dBaseGrav5'] = dBaseGrav5;
       }
       if (dBaseGrav10 > 0) {
-        dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(2));
+        dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.decimals));
         if (data.moneda === 'PYG') {
           dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
         }
@@ -249,7 +249,7 @@ class JSonDteTotalesService {
         jsonResult['dBaseGrav10'] = dBaseGrav10;
       }
       if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
-        let toFixed = 2;
+        let toFixed = config.decimals;
         if (moneda == 'PYG') {
           toFixed = 0;
         }
@@ -265,8 +265,9 @@ class JSonDteTotalesService {
           'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
         );*/
       }
+
       //Por el Global
-      jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(2));
+      jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(0));
     }
     if (moneda != 'PYG' && data['condicionTipoCambio'] == 2) {
       //Por item
