@@ -28,7 +28,7 @@ class JSonDeMainService {
           errorSeparator: '; ',
           errorLimit: 10,
           redondeoSedeco: true,
-          decimals : 2,
+          decimals: 2,
         };
 
         defaultConfig = Object.assign(defaultConfig, config);

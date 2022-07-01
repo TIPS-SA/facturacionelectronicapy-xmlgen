@@ -124,7 +124,13 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionPrecioTipoCambioTotal(params: any, data: any, item: any, i: number, config: XmlgenConfig) {
+  private generateDatosItemsOperacionPrecioTipoCambioTotal(
+    params: any,
+    data: any,
+    item: any,
+    i: number,
+    config: XmlgenConfig,
+  ) {
     const jsonResult: any = {
       dPUniProSer: item['precioUnitario'],
     };
@@ -138,7 +144,13 @@ class JSonDteItemService {
     if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
       jsonResult['dTiCamIt'] = item['cambio'];
     }
-    jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(params, data, item, i, config);
+    jsonResult['gValorRestaItem'] = this.generateDatosItemsOperacionDescuentoAnticipoValorTotal(
+      params,
+      data,
+      item,
+      i,
+      config,
+    );
 
     return jsonResult;
   }
@@ -151,7 +163,13 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionDescuentoAnticipoValorTotal(params: any, data: any, item: any, i: number, config: XmlgenConfig) {
+  private generateDatosItemsOperacionDescuentoAnticipoValorTotal(
+    params: any,
+    data: any,
+    item: any,
+    i: number,
+    config: XmlgenConfig,
+  ) {
     const jsonResult: any = {};
 
     jsonResult['dDescItem'] = 0;
@@ -248,8 +266,14 @@ class JSonDteItemService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionIVA(params: any, data: any, item: any, i: number, gCamItem: any, config: XmlgenConfig) {
-
+  private generateDatosItemsOperacionIVA(
+    params: any,
+    data: any,
+    item: any,
+    i: number,
+    gCamItem: any,
+    config: XmlgenConfig,
+  ) {
     const jsonResult: any = {
       iAfecIVA: item['ivaTipo'], //E731
       dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === item['ivaTipo'])[0]['descripcion'],
