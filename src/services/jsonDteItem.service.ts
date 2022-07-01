@@ -338,9 +338,7 @@ class JSonDteItemService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosItemsOperacionRastreoMercaderias(params: any, data: any, item: any, i: number) {
-    const jsonResult: any = {
-      
-    };
+    const jsonResult: any = {};
 
     if (item['lote']) {
       jsonResult['dNumLote'] = item['lote'];
