@@ -267,10 +267,10 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "importador" : {
             "nombre" : "Importadora Parana S.A.",
             "direccion" : "Importadora Parana S.A.",
-            "registroImportador" : "Importadora Parana S.A.",
-            "registroSenave" : "Importadora Parana S.A.",
-            "registroEntidadComercial" : "Importadora Parana S.A."
+            "registroImportador" : "Importadora Parana S.A."
         },
+        "registroSenave" : "323223",
+        "registroEntidadComercial" : "RI-32/22",
         "sectorAutomotor" : {
             "tipo" : 1,
             "chasis" : "45252345235423532",

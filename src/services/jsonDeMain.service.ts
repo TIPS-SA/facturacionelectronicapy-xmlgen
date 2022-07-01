@@ -439,12 +439,12 @@ class JSonDeMainService {
             item.importador.registroImportador = item.importador.registro_importador;
           }
 
-          if (item.importador.registro_senave) {
-            item.importador.registroSenave = item.importador.registro_senave;
+          if (item.registro_senave) {
+            item.registroSenave = item.registro_senave;
           }
 
-          if (item.importador.registro_entidad_comercial) {
-            item.importador.registroEntidadComercial = item.importador.registro_entidad_comercial;
+          if (item.registro_entidad_comercial) {
+            item.registroEntidadComercial = item.registro_entidad_comercial;
           }
         }
         //Sector Automotor

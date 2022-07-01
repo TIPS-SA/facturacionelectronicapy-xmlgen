@@ -99,7 +99,9 @@ class JSonDteItemService {
           item['vencimiento'] ||
           item['numeroSerie'] ||
           item['numeroPedido'] ||
-          item['numeroSeguimiento']
+          item['numeroSeguimiento'] ||
+          item['registroSenave'] ||
+          item['registroEntidadComercial']
         ) {
           gCamItem['gRasMerc'] = this.generateDatosItemsOperacionRastreoMercaderias(params, data, item, i);
         }
@@ -337,16 +339,7 @@ class JSonDteItemService {
    */
   private generateDatosItemsOperacionRastreoMercaderias(params: any, data: any, item: any, i: number) {
     const jsonResult: any = {
-      //dNumLote: item['lote'],
-      //dVencMerc : item['vencimiento'],
-      //dNSerie : item['numeroSerie'],
-      /*dNumPedi : item['numeroPedido'],    
-            dNumSegui : item['numeroSeguimiento'], 
-            dNomImp : item['importador']['nombre'], 
-            dDirImp : item['importador']['direccion'],    
-            dNumFir : item['importador']['registroImportador'],    
-            dNumReg : item['importador']['registroSenave'],    
-            dNumRegEntCom : item['importador']['registroEntidadComercial']*/
+      
     };
 
     if (item['lote']) {
