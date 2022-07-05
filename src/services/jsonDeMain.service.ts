@@ -29,6 +29,7 @@ class JSonDeMainService {
           errorLimit: 10,
           redondeoSedeco: true,
           decimals: 2,
+          taxDecimals: 2,
         };
 
         defaultConfig = Object.assign(defaultConfig, config);

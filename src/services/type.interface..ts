@@ -5,6 +5,7 @@ interface XmlgenConfig {
   errorLimit?: number;
   redondeoSedeco?: boolean;
   decimals?: number;
+  taxDecimals?: number;
 }
 
 export { XmlgenConfig };

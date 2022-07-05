@@ -163,7 +163,7 @@ class JSonDteTotalesService {
         jsonResult['dSub5'] = dSub5;
 
         if (data.moneda != 'PYG') {
-          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.decimals));
+          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
         }
       }
 
@@ -171,7 +171,7 @@ class JSonDteTotalesService {
         jsonResult['dSub10'] = dSub10;
 
         if (data.moneda != 'PYG') {
-          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.decimals));
+          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.taxDecimals));
         }
       }
     }
@@ -217,10 +217,10 @@ class JSonDteTotalesService {
     });
 
     //Redondeo
-    dIVA5 = parseFloat(dIVA5.toFixed(config.decimals));
-    dIVA10 = parseFloat(dIVA10.toFixed(config.decimals));
-    dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(config.decimals));
-    dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.decimals));
+    dIVA5 = parseFloat(dIVA5.toFixed(config.taxDecimals));
+    dIVA10 = parseFloat(dIVA10.toFixed(config.taxDecimals));
+    dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(config.taxDecimals));
+    dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.taxDecimals));
 
     if (data.moneda === 'PYG') {
       dIVA5 = parseFloat(dIVA5.toFixed(0));
@@ -248,13 +248,13 @@ class JSonDteTotalesService {
 
         //Redondeo
 
-        jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.decimals));
+        jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.taxDecimals));
         if (data.moneda === 'PYG') {
           jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(0));
         }
       }
       if (dBaseGrav5 > 0) {
-        dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.decimals));
+        dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
         if (data.moneda === 'PYG') {
           dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
         }
@@ -262,7 +262,7 @@ class JSonDteTotalesService {
         jsonResult['dBaseGrav5'] = dBaseGrav5;
       }
       if (dBaseGrav10 > 0) {
-        dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.decimals));
+        dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
         if (data.moneda === 'PYG') {
           dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
         }
