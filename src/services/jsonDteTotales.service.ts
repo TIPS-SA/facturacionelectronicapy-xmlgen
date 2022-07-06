@@ -202,7 +202,7 @@ class JSonDteTotalesService {
       dTotDescGlotem: dTotDescGlotem,
       dTotAntItem: dTotAntItem,
       dTotAnt: dTotAnt,
-      dPorcDescTotal: data['porcentajeDescuento'] || 0,
+      dPorcDescTotal: 0,  //este no es obligatorio, pero se puede hacer un calculo en base al descuento por item + global y con relacion al precio
       dDescTotal: dDescTotal,
       dAnticipo: dAnticipo,
       dRedon: dRedon, //F013

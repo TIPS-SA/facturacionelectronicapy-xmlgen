@@ -386,9 +386,6 @@ class JSonDeMainService {
         if (item.precio_unitario) {
           item.precioUnitario = item.precio_unitario;
         }
-        if (item.descuento_porcentaje) {
-          item.descuentoPorcentaje = item.descuento_porcentaje;
-        }
         if (item.tolerancia_cantidad) {
           item.toleranciaCantidad = item.tolerancia_cantidad;
         }

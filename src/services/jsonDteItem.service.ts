@@ -178,39 +178,30 @@ class JSonDteItemService {
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
       //Validar que si el descuento es mayor al precio
-
-      if (+item['descuento'] == +item['precioUnitario']) {
-        //Validar IVA
-        //Quiere decir que no va a ir nada en exenta, gravada5 y gravada10, para este item.
-        if (item['ivaTipo'] != 3) {
-          /*throw new Error(
-            'Descuento igual a Precio Unitario corresponde tener Tipo de Iva = 3-Exento en data.items[' +
-              i +
-              '].ivaTipo',
-          );*/
-          //console.log("=================>>>>>>>>>>>>>>>>>>>>>>>> se asigna iva tipo = 3 tres");
-          /*item['ivaTipo'] = 3;  //Exenta
-          item['ivaBase'] = 0;
-          item['iva'] = 0;*/
-        }
-      }
-
       jsonResult['dDescItem'] = parseFloat(item['descuento']).toFixed(config.decimals);
 
-      //Calcula solo el % Descuento
+      //FacturaSend calcula solo el % Descuento, no hace falta informar
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
     }
 
     jsonResult['dDescGloItem'] = 0;
-    if (data['porcentajeDescuento'] && data['porcentajeDescuento'] > 0) {
+    if (data['descuentoGlobal'] && +data['descuentoGlobal'] > 0) {
+      jsonResult['dDescGloItem'] = parseFloat(item['descuentoGlobal']).toFixed(config.decimals);
+    }
+    /*if (data['porcentajeDescuento'] && data['porcentajeDescuento'] > 0) {
       //Si hay un descuento global, entonces FacturaSend prorratea entre los items
       jsonResult['dDescGloItem'] = (data['porcentajeDescuento'] * parseFloat(item['precioUnitario'])) / 100;
       jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.decimals);
-    }
+    }*/
 
     jsonResult['dAntPreUniIt'] = 0;
-    if (item['anticipo'] && item['anticipo'] > 0) {
-      jsonResult['dAntPreUniIt'] = item['anticipo'];
+    if (item['anticipo'] && +item['anticipo'] > 0) {
+      jsonResult['dAntPreUniIt'] = parseFloat(item['anticipo']).toFixed(config.decimals);
+    }
+
+    jsonResult['dAntGloPreUniIt'] = 0;
+    if (item['anticipoGlobal'] && +item['anticipoGlobal'] > 0) {
+      jsonResult['dAntGloPreUniIt'] = parseFloat(item['anticipoGlobal']).toFixed(config.decimals);
     }
 
     /* dTotOpeItem (EA008)
