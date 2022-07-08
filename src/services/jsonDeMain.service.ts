@@ -1716,40 +1716,11 @@ class JSonDeMainService {
 
         //Verificar si el Pago es con Tarjeta de crédito
         if (dataEntrega['tipo'] === 3 || dataEntrega['tipo'] === 4) {
-          if (!dataEntrega['infoTarjeta']) {
-            /*throw new Error(
-              'Debe informar sobre la tarjeta en data.condicion.entregas[' +
-                i +
-                '].infoTarjeta si la forma de Pago es a Tarjeta',
-            );*/
-          }
 
-          if (
-            constanteService.condicionesOperaciones.filter(
-              (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
-            ).length == 0
-          ) {
-            /*throw new Error(
-              "Tipo de Tarjeta de Crédito '" +
-                dataEntrega['infoTarjeta']['tipo'] +
-                "' en data.condicion.entregas[" +
-                i +
-                '].infoTarjeta.tipo no encontrado. Valores: ' +
-                constanteService.condicionesOperaciones.map((a: any) => a.codigo + '-' + a.descripcion),
-            );*/
-          }
-
-          if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
-            /*throw new Error(
-              'Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
-                i +
-                '].infoTarjeta.ruc',
-            );*/
-          }
           cuotaInicialEntrega['gPagTarCD'] = {
             iDenTarj: dataEntrega['infoTarjeta']['tipo'],
             dDesDenTarj:
-              dataEntrega['infoTarjeta']['tipo'] === 99
+              +dataEntrega['infoTarjeta']['tipo'] === 99
                 ? dataEntrega['infoTarjeta']['tipoDescripcion']
                 : constanteService.tarjetasCreditosTipos.filter(
                     (co) => co.codigo === dataEntrega['infoTarjeta']['tipo'],

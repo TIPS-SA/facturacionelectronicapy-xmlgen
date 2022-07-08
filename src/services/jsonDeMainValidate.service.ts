@@ -1007,7 +1007,7 @@ class JSonDeMainValidateService {
           }
 
           if (
-            constanteService.condicionesOperaciones.filter(
+            constanteService.tarjetasCreditosTipos.filter(
               (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
             ).length == 0
           ) {
@@ -1017,18 +1017,19 @@ class JSonDeMainValidateService {
                 "' en data.condicion.entregas[" +
                 i +
                 '].infoTarjeta.tipo no encontrado. Valores: ' +
-                constanteService.condicionesOperaciones.map((a: any) => a.codigo + '-' + a.descripcion),
+                constanteService.tarjetasCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
             );
           }
 
-          if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
-            this.errors.push(
-              'Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
-                i +
-                '].infoTarjeta.ruc',
-            );
+          if (dataEntrega['infoTarjeta']['ruc']) {
+            if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
+              this.errors.push(
+                'Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
+                  i +
+                  '].infoTarjeta.ruc',
+              );
+            }
           }
-
           if (dataEntrega['infoTarjeta']['codigoAutorizacion']) {
             if (
               !(
