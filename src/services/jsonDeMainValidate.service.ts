@@ -1007,9 +1007,8 @@ class JSonDeMainValidateService {
           }
 
           if (
-            constanteService.tarjetasCreditosTipos.filter(
-              (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
-            ).length == 0
+            constanteService.tarjetasCreditosTipos.filter((um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'])
+              .length == 0
           ) {
             this.errors.push(
               "Tipo de Tarjeta de Crédito '" +
