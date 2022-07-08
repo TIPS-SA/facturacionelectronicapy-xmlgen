@@ -1716,7 +1716,6 @@ class JSonDeMainService {
 
         //Verificar si el Pago es con Tarjeta de crédito
         if (dataEntrega['tipo'] === 3 || dataEntrega['tipo'] === 4) {
-
           cuotaInicialEntrega['gPagTarCD'] = {
             iDenTarj: dataEntrega['infoTarjeta']['tipo'],
             dDesDenTarj:

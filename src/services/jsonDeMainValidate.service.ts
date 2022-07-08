@@ -1006,8 +1006,9 @@ class JSonDeMainValidateService {
             );
           } else {
             if (
-              constanteService.tarjetasCreditosTipos.filter((um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'])
-                .length == 0
+              constanteService.tarjetasCreditosTipos.filter(
+                (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
+              ).length == 0
             ) {
               this.errors.push(
                 "Tipo de Tarjeta de Crédito '" +
@@ -1018,7 +1019,7 @@ class JSonDeMainValidateService {
                   constanteService.tarjetasCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
               );
             }
-  
+
             if (dataEntrega['infoTarjeta']['ruc']) {
               if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
                 this.errors.push(
@@ -1042,7 +1043,7 @@ class JSonDeMainValidateService {
                 );
               }
             }
-  
+
             if (dataEntrega['infoTarjeta']['numero']) {
               if (!((dataEntrega['infoTarjeta']['numero'] + '').length == 4)) {
                 this.errors.push(
@@ -1053,9 +1054,7 @@ class JSonDeMainValidateService {
               }
             }
           }
-          
         }
-
 
         //Verificar si el Pago es con Cheque
         if (dataEntrega['tipo'] === 2) {
