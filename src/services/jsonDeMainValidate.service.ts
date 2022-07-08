@@ -1004,56 +1004,58 @@ class JSonDeMainValidateService {
                 i +
                 '].infoTarjeta si la forma de Pago es a Tarjeta',
             );
-          }
-
-          if (
-            constanteService.tarjetasCreditosTipos.filter((um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'])
-              .length == 0
-          ) {
-            this.errors.push(
-              "Tipo de Tarjeta de Crédito '" +
-                dataEntrega['infoTarjeta']['tipo'] +
-                "' en data.condicion.entregas[" +
-                i +
-                '].infoTarjeta.tipo no encontrado. Valores: ' +
-                constanteService.tarjetasCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
-            );
-          }
-
-          if (dataEntrega['infoTarjeta']['ruc']) {
-            if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
-              this.errors.push(
-                'Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
-                  i +
-                  '].infoTarjeta.ruc',
-              );
-            }
-          }
-          if (dataEntrega['infoTarjeta']['codigoAutorizacion']) {
+          } else {
             if (
-              !(
-                (dataEntrega['infoTarjeta']['codigoAutorizacion'] + '').length >= 6 &&
-                (dataEntrega['infoTarjeta']['codigoAutorizacion'] + '').length <= 10
-              )
+              constanteService.tarjetasCreditosTipos.filter((um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'])
+                .length == 0
             ) {
               this.errors.push(
-                'El código de Autorización en data.condicion.entregas[' +
+                "Tipo de Tarjeta de Crédito '" +
+                  dataEntrega['infoTarjeta']['tipo'] +
+                  "' en data.condicion.entregas[" +
                   i +
-                  '].infoTarjeta.codigoAutorizacion debe tener de 6 y 10 caracteres',
+                  '].infoTarjeta.tipo no encontrado. Valores: ' +
+                  constanteService.tarjetasCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
               );
             }
-          }
-
-          if (dataEntrega['infoTarjeta']['numero']) {
-            if (!((dataEntrega['infoTarjeta']['numero'] + '').length == 4)) {
-              this.errors.push(
-                'El código de Autorización en data.condicion.entregas[' +
-                  i +
-                  '].infoTarjeta.numero debe tener de 4 caracteres',
-              );
+  
+            if (dataEntrega['infoTarjeta']['ruc']) {
+              if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
+                this.errors.push(
+                  'Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
+                    i +
+                    '].infoTarjeta.ruc',
+                );
+              }
+            }
+            if (dataEntrega['infoTarjeta']['codigoAutorizacion']) {
+              if (
+                !(
+                  (dataEntrega['infoTarjeta']['codigoAutorizacion'] + '').length >= 6 &&
+                  (dataEntrega['infoTarjeta']['codigoAutorizacion'] + '').length <= 10
+                )
+              ) {
+                this.errors.push(
+                  'El código de Autorización en data.condicion.entregas[' +
+                    i +
+                    '].infoTarjeta.codigoAutorizacion debe tener de 6 y 10 caracteres',
+                );
+              }
+            }
+  
+            if (dataEntrega['infoTarjeta']['numero']) {
+              if (!((dataEntrega['infoTarjeta']['numero'] + '').length == 4)) {
+                this.errors.push(
+                  'El código de Autorización en data.condicion.entregas[' +
+                    i +
+                    '].infoTarjeta.numero debe tener de 4 caracteres',
+                );
+              }
             }
           }
+          
         }
+
 
         //Verificar si el Pago es con Cheque
         if (dataEntrega['tipo'] === 2) {
