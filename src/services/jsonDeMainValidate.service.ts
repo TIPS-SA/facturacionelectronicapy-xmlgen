@@ -228,25 +228,25 @@ class JSonDeMainValidateService {
 
     var reg = new RegExp(/^\d+$/);
     if (!reg.test(rucEmisor)) {
-      this.errors.push("El RUC '" + rucEmisor + "' debe ser numérico");
+      this.errors.push("La parte que corresponde al RUC '" + params['ruc'] + "' en params.ruc debe ser numérico");
     }
-    if (!reg.test(dvEmisor)) {
-      this.errors.push("El DV del RUC '" + dvEmisor + "' debe ser numérico");
-    }
-
     if (rucEmisor.length > 8) {
-      this.errors.push("El RUC '" + rucEmisor + "' debe contener de 1 a 8 caracteres");
+      this.errors.push("La parte que corresponde al RUC '" + params['ruc'] + "' en params.ruc debe contener de 1 a 8 caracteres");
     }
 
-    if (dvEmisor > 9) {
-      this.errors.push("El DV del RUC '" + dvEmisor + "' debe ser del 1 al 9");
+    if (!reg.test(dvEmisor)) {
+      this.errors.push("La parte que corresponde al DV del RUC '" + params['ruc'] + "' en params.ruc debe ser numérico");
     }
+    if (dvEmisor > 9) {
+      this.errors.push("La parte que corresponde al DV del RUC '" + params['ruc'] + "' en params.ruc debe ser del 1 al 9");
+    }    
+
   }
 
   private generateDatosOperacionValidate(params: any, data: any) {
-    if (params['ruc'].indexOf('-') == -1) {
+    /*if (params['ruc'].indexOf('-') == -1) { //removido temporalmente, parece que no hace falta
       this.errors.push('RUC debe contener dígito verificador en params.ruc');
-    }
+    }*/
 
     if (constanteService.tiposEmisiones.filter((um) => um.codigo === data['tipoEmision']).length == 0) {
       this.errors.push(
@@ -373,9 +373,9 @@ class JSonDeMainValidateService {
       );
     }
 
-    if (params['ruc'].indexOf('-') == -1) {
+    /*if (params['ruc'].indexOf('-') == -1) { //Removido temporalmente, al parecer no hace falta
       this.errors.push('RUC debe contener dígito verificador en params.ruc');
-    }
+    }*/
 
     if (!(params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0)) {
       this.errors.push('Debe proveer el array de actividades económicas en params.actividadesEconomicas');
@@ -439,18 +439,18 @@ class JSonDeMainValidateService {
       const rucCliente = data['cliente']['ruc'].split('-');
 
       if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
-        this.errors.push("El RUC del Cliente '" + rucCliente[0] + "' en data.cliente.ruc debe ser numérico");
+        this.errors.push("La parte del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico");
       }
       if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
-        this.errors.push("El DV del RUC del Cliente '" + rucCliente[1] + "' en data.cliente.ruc debe ser numérico");
+        this.errors.push("La parte del DV del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico");
       }
 
       if (rucCliente[0].length > 8) {
-        this.errors.push("El RUC '" + rucCliente[0] + "' debe contener de 1 a 8 caracteres");
+        this.errors.push("La parte del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe contener de 1 a 8 caracteres");
       }
 
       if (rucCliente[1] > 9) {
-        this.errors.push("El DV del RUC '" + rucCliente[1] + "' debe ser del 1 al 9");
+        this.errors.push("La parte del DV del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser del 1 al 9");
       }
     }
 
@@ -828,9 +828,9 @@ class JSonDeMainValidateService {
       );
     }
 
-    if (data['remision'] && data['remision']['motivo'] == 7) {
+    if (data['remision'] && data['remision']['motivo'] == 7) {  //Motivo=7-Translado entre locales
       if (data['cliente']['ruc'] != params['ruc']) {
-        this.errors.push('RUC del receptor no coincidente con el RUC del emisor');
+        this.errors.push('RUC del receptor debe coincidir con el RUC del emisor');
       }
     }
 
@@ -1023,12 +1023,39 @@ class JSonDeMainValidateService {
             if (dataEntrega['infoTarjeta']['ruc']) {
               if (dataEntrega['infoTarjeta']['ruc'].indexOf('-') == -1) {
                 this.errors.push(
-                  'Ruc de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
+                  'RUC de Proveedor de Tarjeta debe contener digito verificador en data.condicion.entregas[' +
                     i +
                     '].infoTarjeta.ruc',
                 );
               }
+
+              var regExpOnlyNumber = new RegExp(/^\d+$/);
+              const rucCliente = dataEntrega['infoTarjeta']['ruc'].split('-');
+
+              if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+                this.errors.push("La parte del RUC del Cliente '" + dataEntrega['infoTarjeta']['ruc'] + "' en data.condicion.entregas[" +
+                    i +
+                    "].infoTarjeta.ruc debe ser numérico");
+              }
+              if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
+                this.errors.push("La parte del DV del RUC del Cliente '" + dataEntrega['infoTarjeta']['ruc'] + "' en data.condicion.entregas[" +
+                    i +
+                    "].infoTarjeta.ruc debe ser numérico");
+              }
+        
+              if (rucCliente[0].length > 8) {
+                this.errors.push("La parte del RUC '" + dataEntrega['infoTarjeta']['ruc'] + "' en data.condicion.entregas[" +
+                i +
+                "].infoTarjeta.ruc debe contener de 1 a 8 caracteres");
+              }
+        
+              if (rucCliente[1] > 9) {
+                this.errors.push("La parte del DV del RUC '" + dataEntrega['infoTarjeta']['ruc'] + "' en data.condicion.entregas[" +
+                i +
+                "].infoTarjeta.ruc debe ser del 1 al 9");
+              }
             }
+
             if (dataEntrega['infoTarjeta']['codigoAutorizacion']) {
               if (
                 !(
@@ -1505,6 +1532,24 @@ class JSonDeMainValidateService {
       if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
         this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.ruc');
       }
+
+      var regExpOnlyNumber = new RegExp(/^\d+$/);
+      const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
+
+      if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+        this.errors.push("La parte del RUC del Cliente '" + data['detalleTransporte']['transportista']['ruc'] + "' en data.detalleTransporte.transportista.ruc debe ser numérico");
+      }
+      if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
+        this.errors.push("La parte del DV del RUC del Cliente '" + data['detalleTransporte']['transportista']['ruc'] + "' en data.detalleTransporte.transportista.ruc debe ser numérico");
+      }
+
+      if (rucCliente[0].length > 8) {
+        this.errors.push("La parte del RUC '" + data['detalleTransporte']['transportista']['ruc'] + "' en data.detalleTransporte.transportista.ruc debe contener de 1 a 8 caracteres");
+      }
+
+      if (rucCliente[1] > 9) {
+        this.errors.push("La parte del DV del RUC '" + data['detalleTransporte']['transportista']['ruc'] + "' data.detalleTransporte.transportista.ruc debe ser del 1 al 9");
+      }
     }
 
     if (
@@ -1515,6 +1560,24 @@ class JSonDeMainValidateService {
     ) {
       if (data['detalleTransporte']['transportista']['agente']['ruc'].indexOf('-') == -1) {
         this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.agente.ruc');
+      }
+
+      var regExpOnlyNumber = new RegExp(/^\d+$/);
+      const rucCliente = data['detalleTransporte']['transportista']['agente']['ruc'].split('-');
+
+      if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+        this.errors.push("La parte del RUC del Cliente '" + data['detalleTransporte']['transportista']['agente']['ruc'] + "' en data.detalleTransporte.transportista.agente.ruc debe ser numérico");
+      }
+      if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
+        this.errors.push("La parte del DV del RUC del Cliente '" + data['detalleTransporte']['transportista']['agente']['ruc'] + "' en data.detalleTransporte.transportista.agente.ruc debe ser numérico");
+      }
+
+      if (rucCliente[0].length > 8) {
+        this.errors.push("La parte del RUC '" + data['detalleTransporte']['transportista']['agente']['ruc'] + "' en data.detalleTransporte.transportista.agente.ruc debe contener de 1 a 8 caracteres");
+      }
+
+      if (rucCliente[1] > 9) {
+        this.errors.push("La parte del DV del RUC '" + data['detalleTransporte']['transportista']['agente']['ruc'] + "' data.detalleTransporte.transportista.agente.ruc debe ser del 1 al 9");
       }
     }
 
