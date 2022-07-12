@@ -152,10 +152,13 @@ class JSonDteItemValidateService {
 
         //Tratamiento E719. Tiene relacion con generateDatosGeneralesInherentesOperacion
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
-          if (data['tipoTransaccion'] === 9) {
-            if (!item['cdcAnticipo']) {
-              this.errors.push('Debe informar data.items*.cdcAnticipo');
-            }
+          if (data['tipoTransaccion'] !== 9) {
+            /*if (data['documentoAsociado'] != null && tiene que ser tipo 9) {
+              if (!item['cdcAnticipo']) {
+                this.errors.push('Debe informar data.items*.cdcAnticipo');
+              }              
+            }*/
+
           }
         }
 
