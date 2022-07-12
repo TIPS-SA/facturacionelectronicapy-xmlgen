@@ -390,7 +390,6 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosGeneralesResponsableGeneracionDEValidate(params: any, data: any) {
-
     if (
       constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['usuario']['documentoTipo'])
         .length == 0
@@ -402,7 +401,6 @@ class JSonDeMainValidateService {
           constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
-
 
     if (!data['usuario']['documentoNumero']) {
       this.errors.push('El Documento del Responsable en data.usuario.documentoNumero no puede ser vacio');
@@ -435,11 +433,12 @@ class JSonDeMainValidateService {
         );
 
         if (data['cliente']['documentoTipo'] == 9) {
-          if ( ! data['cliente']['documentoTipoDescripcion']) {
-            this.errors.push('Debe especificar la Descripción para el tipo de Documento en data.cliente.documentoTipoDescripcion para documentoTipo=9');
+          if (!data['cliente']['documentoTipoDescripcion']) {
+            this.errors.push(
+              'Debe especificar la Descripción para el tipo de Documento en data.cliente.documentoTipoDescripcion para documentoTipo=9',
+            );
           }
         }
-    
       }
     }
 

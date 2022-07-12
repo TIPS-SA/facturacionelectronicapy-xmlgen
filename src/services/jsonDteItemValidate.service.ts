@@ -158,7 +158,6 @@ class JSonDteItemValidateService {
                 this.errors.push('Debe informar data.items*.cdcAnticipo');
               }              
             }*/
-
           }
         }
 
