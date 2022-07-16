@@ -834,16 +834,17 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosEspecificosPorTipoDE_RemisionElectronicaValidate(params: any, data: any) {
-    if ( !(data['remision'] && data['remision']['motivo']) ) {
+    if (!(data['remision'] && data['remision']['motivo'])) {
       this.errors.push('No fue pasado el Motivo de la Remisión en data.remision.motivo.');
     } else {
-      if ( +data['remision']['motivo'] == 99) {
+      if (+data['remision']['motivo'] == 99) {
         if (!(data['remision'] && data['remision']['motivoDescripcion'])) {
-          this.errors.push('Debe especificar la Descripción el Motivo de la Remisión en data.remision.motivoDescripcion para el motivo=99.');
+          this.errors.push(
+            'Debe especificar la Descripción el Motivo de la Remisión en data.remision.motivoDescripcion para el motivo=99.',
+          );
         }
       }
     }
-
 
     if (!(data['remision'] && data['remision']['tipoResponsable'])) {
       this.errors.push('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');

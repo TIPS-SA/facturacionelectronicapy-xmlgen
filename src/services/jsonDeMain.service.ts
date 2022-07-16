@@ -1480,7 +1480,6 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_RemisionElectronica(params: any, data: any) {
-
     this.json['rDE']['DE']['gDtipDE']['gCamNRE'] = {
       iMotEmiNR: +data['remision']['motivo'], //E501
       dDesMotEmiNR: constanteService.remisionesMotivos.filter((nv) => nv.codigo === data['remision']['motivo'])[0][
