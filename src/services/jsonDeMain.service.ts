@@ -1480,36 +1480,9 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_RemisionElectronica(params: any, data: any) {
-    if (this.validateError) {
-      if (!(data['remision'] && data['remision']['motivo'])) {
-        //throw new Error('No fue pasado el Motivo de la Remisión en data.remision.motivo.');
-      }
-      if (!(data['remision'] && data['remision']['tipoResponsable'])) {
-        //throw new Error('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');
-      }
-    }
-    if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === data['remision']['motivo']).length == 0) {
-      /*throw new Error(
-        "Motivo de la Remisión '" +
-          data['remision']['motivo'] +
-          "' en data.remision.motivo no encontrado. Valores: " +
-          constanteService.remisionesMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
-    if (
-      constanteService.remisionesResponsables.filter((um: any) => um.codigo === data['remision']['tipoResponsable'])
-        .length == 0
-    ) {
-      /*throw new Error(
-        "Tipo de Responsable '" +
-          data['remision']['tipoResponsable'] +
-          "' en data.remision.tipoResponsable no encontrado. Valores: " +
-          constanteService.remisionesResponsables.map((a: any) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
 
     this.json['rDE']['DE']['gDtipDE']['gCamNRE'] = {
-      iMotEmiNR: data['remision']['motivo'], //E501
+      iMotEmiNR: +data['remision']['motivo'], //E501
       dDesMotEmiNR: constanteService.remisionesMotivos.filter((nv) => nv.codigo === data['remision']['motivo'])[0][
         'descripcion'
       ],
@@ -1517,10 +1490,11 @@ class JSonDeMainService {
       dDesRespEmiNR: constanteService.remisionesResponsables.filter(
         (nv) => nv.codigo === data['remision']['tipoResponsable'],
       )[0]['descripcion'],
-      //dKmR: data['remision']['kms'],
-      //dFecEm: data['remision']['fechaFactura'],
     };
 
+    if (+data['remision']['motivo'] == 99) {
+      this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dDesMotEmiNR'] = data['remision']['motivoDescripcion'];
+    }
     if (data['remision']['kms']) {
       this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dKmR'] = data['remision']['kms'];
     }
