@@ -230,9 +230,7 @@ class JSonDteTransporteService {
      * @param items Es el item actual del array de items de "data" que se está iterando
      */
   private generateDatosVehiculo(params: any, data: any) {
-    if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
-      //throw new Error('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
-    }
+    
     const jsonResult: any = {
       //dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
       dTiVehTras: constanteService.modalidadesTransportes.filter(
@@ -256,18 +254,6 @@ class JSonDteTransporteService {
       jsonResult['dAdicVeh'] = data['detalleTransporte']['vehiculo']['obs'];
     }
     if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-      if (
-        !(
-          data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
-          data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
-        )
-      ) {
-        /*throw new Error(
-          "Número de Matricula '" +
-            data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-            "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
-        );*/
-      }
       jsonResult['dNroMatVeh'] = data['detalleTransporte']['vehiculo']['numeroMatricula'];
     }
     if (data['detalleTransporte']['vehiculo']['numeroVuelo']) {

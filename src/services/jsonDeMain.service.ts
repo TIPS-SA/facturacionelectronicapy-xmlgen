@@ -1578,16 +1578,8 @@ class JSonDeMainService {
           //dTiCamTiPag : dataEntrega['cambio'],
         };
 
-        if (!dataEntrega['moneda']) {
-          //throw new Error('Moneda es obligatorio en data.condicion.entregas[' + i + '].moneda');
-        }
-
-        if (constanteService.monedas.filter((um) => um.codigo === dataEntrega['moneda']).length == 0) {
-          /*throw new Error("Moneda '" + dataEntrega['moneda']) +
-            "' data.condicion.entregas[" +
-            i +
-            '].moneda no válido. Valores: ' +
-            constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion);*/
+        if (dataEntrega['tipo'] == 99) {
+          cuotaInicialEntrega['dDesTiPag'] = dataEntrega['tipoDescripcion'];
         }
 
         cuotaInicialEntrega['cMoneTiPag'] = dataEntrega['moneda'];
