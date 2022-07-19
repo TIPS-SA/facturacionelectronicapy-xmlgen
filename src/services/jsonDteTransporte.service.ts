@@ -230,7 +230,6 @@ class JSonDteTransporteService {
      * @param items Es el item actual del array de items de "data" que se está iterando
      */
   private generateDatosVehiculo(params: any, data: any) {
-    
     const jsonResult: any = {
       //dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
       dTiVehTras: constanteService.modalidadesTransportes.filter(

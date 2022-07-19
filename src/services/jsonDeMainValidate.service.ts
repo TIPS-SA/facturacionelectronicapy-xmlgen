@@ -1017,7 +1017,11 @@ class JSonDeMainValidateService {
         }
 
         if (dataEntrega['tipo'] == 99 && !dataEntrega['tipoDescripcion']) {
-          this.errors.push('Es obligatorio especificar la Descripción en data.condicion.entregas[' + i + '].tipoDescripcion para el tipo=99');
+          this.errors.push(
+            'Es obligatorio especificar la Descripción en data.condicion.entregas[' +
+              i +
+              '].tipoDescripcion para el tipo=99',
+          );
         }
 
         if (!dataEntrega['moneda']) {
@@ -1538,7 +1542,6 @@ class JSonDeMainValidateService {
       this.errors.push('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     } else {
       if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-        
         if (
           !(
             data['detalleTransporte']['vehiculo']['tipo'].length >= 4 &&
