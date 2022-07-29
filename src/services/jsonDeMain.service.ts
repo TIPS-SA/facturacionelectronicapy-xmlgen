@@ -1509,7 +1509,7 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE(params: any, data: any) {
-    if ( ! data['condicion']) {
+    if (!data['condicion']) {
       return;
     }
     if (
