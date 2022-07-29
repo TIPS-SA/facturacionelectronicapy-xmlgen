@@ -1509,6 +1509,9 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE(params: any, data: any) {
+    if ( ! data['condicion']) {
+      return;
+    }
     if (
       constanteService.condicionesOperaciones.filter((um: any) => um.codigo === data['condicion']['tipo']).length == 0
     ) {

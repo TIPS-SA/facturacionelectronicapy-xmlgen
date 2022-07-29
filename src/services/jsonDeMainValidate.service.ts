@@ -960,28 +960,44 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosCondicionOperacionDEValidate(params: any, data: any) {
-    if (!data['condicion']) {
-      this.errors.push('Debe indicar los datos de la Condición de la Operación en data.condicion');
-      return; // sale metodo
-    }
-
-    if (
-      constanteService.condicionesOperaciones.filter((um: any) => um.codigo === data['condicion']['tipo']).length == 0
-    ) {
-      this.errors.push(
-        "Condición de la Operación '" +
-          data['condicion']['tipo'] +
-          "' en data.condicion.tipo no encontrado. Valores: " +
-          constanteService.condicionesOperaciones.map((a: any) => a.codigo + '-' + a.descripcion),
-      );
-    }
-
-    //if (data['condicion']['tipo'] === 1) {
-    this.generateDatosCondicionOperacionDE_ContadoValidate(params, data);
-    //}
-
-    if (data['condicion']['tipo'] === 2) {
-      this.generateDatosCondicionOperacionDE_CreditoValidate(params, data);
+    const items = data['items'];
+    let sumaSubtotales = 0;
+    
+    /*
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      console.log()
+      //---
+      sumaSubtotales += (item['precioUnitario'] || 0) - 
+                        (item['descuento'] || 0) - 
+                        (item['descuentoGlobal'] || 0);
+    } //end-for
+    console.log("--- sumaSubtotales ", sumaSubtotales);
+    */
+    if (true){
+      if (!data['condicion']) {
+        this.errors.push('Debe indicar los datos de la Condición de la Operación en data.condicion');
+        return; // sale metodo
+      } else {
+        if (
+          constanteService.condicionesOperaciones.filter((um: any) => um.codigo === data['condicion']['tipo']).length == 0
+        ) {
+          this.errors.push(
+            "Condición de la Operación '" +
+              data['condicion']['tipo'] +
+              "' en data.condicion.tipo no encontrado. Valores: " +
+              constanteService.condicionesOperaciones.map((a: any) => a.codigo + '-' + a.descripcion),
+          );
+        }
+    
+        //if (data['condicion']['tipo'] === 1) {
+        this.generateDatosCondicionOperacionDE_ContadoValidate(params, data);
+        //}
+    
+        if (data['condicion']['tipo'] === 2) {
+          this.generateDatosCondicionOperacionDE_CreditoValidate(params, data);
+        }
+      }
     }
   }
 
