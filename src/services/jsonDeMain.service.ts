@@ -325,6 +325,11 @@ class JSonDeMainService {
     }
 
     //Remision
+    if (data.nota_credito_debito) {
+      data.notaCreditoDebito = data.nota_credito_debito;
+    }
+
+    //Remision
     if (data.remision?.tipo_responsable) {
       data.remision.tipoResponsable = data.remision.tipo_resonsable;
     }

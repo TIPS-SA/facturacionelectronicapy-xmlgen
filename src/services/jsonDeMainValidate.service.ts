@@ -816,7 +816,7 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebitoValidate(params: any, data: any) {
-    if (!data['notaCreditoDebito']['motivo']) {
+    if (!(data['notaCreditoDebito']['motivo'] && data['notaCreditoDebito']['motivo'])) {
       this.errors.push('Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo');
     }
 
