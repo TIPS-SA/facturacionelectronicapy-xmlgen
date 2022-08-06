@@ -513,7 +513,7 @@ class JSonDeMainValidateService {
       this.errors.push('El tipo de Operación debe ser 2-B2C para el Receptor "No Contribuyente"');
     }
 
-    if ((data['cliente']['tipoOperacion'] == 4 && data['cliente']['contribuyente'] == true)) {
+    if (data['cliente']['tipoOperacion'] == 4 && data['cliente']['contribuyente'] == true) {
       //Val.: 46. parrafo 2
       this.errors.push('La naturaleza del Receptor debe ser "No contribuyente" para el Tipo de Operación = 4-B2F');
     }
