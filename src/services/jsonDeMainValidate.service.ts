@@ -493,9 +493,12 @@ class JSonDeMainValidateService {
     }
 
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
+      //No es contribuyente
       //Obligatorio completar D210
 
+
       if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
+        //Este no tiene sentido por que en MT dice que si no es contribuyente, el tipo de Operacion debe ser 2
         this.errors.push('Debe informar el número de documento en data.cliente.documentoNumero');
       }
 
@@ -504,6 +507,16 @@ class JSonDeMainValidateService {
           this.errors.push('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');
         }
       }
+    }
+
+    if (!data['cliente']['contribuyente'] && data['tipoDocumento'] != 4 && data['cliente']['tipoOperacion'] != 2) {  
+      //Val.: 46. parrafo 1
+      this.errors.push('El tipo de Operación debe ser 2-B2C para el Receptor "No Contribuyente"');
+    }
+
+    if (data['cliente']['tipoOperacion'] = 4 && data['cliente']['contribuyente'] == true) {  
+      //Val.: 46. parrafo 2
+      this.errors.push('La naturaleza del Receptor debe ser "No contribuyente" para el Tipo de Operación = 4-B2F');
     }
 
     if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
