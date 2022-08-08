@@ -508,9 +508,11 @@ class JSonDeMainValidateService {
       }
     }
 
-    if (!data['cliente']['contribuyente'] && data['tipoDocumento'] != 4 && data['cliente']['tipoOperacion'] != 2) {
+    if (!data['cliente']['contribuyente'] && 
+        data['tipoDocumento'] != 4 && 
+        (data['cliente']['tipoOperacion'] != 2 && data['cliente']['tipoOperacion'] != 4) ) {
       //Val.: 46. parrafo 1
-      this.errors.push('El tipo de Operación debe ser 2-B2C para el Receptor "No Contribuyente"');
+      this.errors.push('El tipo de Operación debe ser 2-B2C o 4-B2F para el Receptor "No Contribuyente"');
     }
 
     if (data['cliente']['tipoOperacion'] == 4 && data['cliente']['contribuyente'] == true) {
@@ -554,6 +556,12 @@ class JSonDeMainValidateService {
             "' del Cliente en data.cliente.departamento no encontrado. Valores: " +
             constanteService.departamentos.map((a: any) => a.codigo + '-' + a.descripcion),
         );
+      }
+    }
+
+    if (data['cliente']['tipoOperacion'] == 4) {
+      if (data['cliente']['pais'] == 'PRY') {
+        this.errors.push('El tipo de Operación = 4-B2F requiere un pais diferente a PRY');
       }
     }
 

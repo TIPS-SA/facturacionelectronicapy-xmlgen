@@ -1051,6 +1051,10 @@ class JSonDeMainService {
           //Si es innominado completar con cero
           this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
         }
+        if (+data['cliente']['tipoOperacion'] == 4) {
+          //Si es innominado completar con cero
+          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
+        }
       }
     }
 
