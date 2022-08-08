@@ -508,9 +508,12 @@ class JSonDeMainValidateService {
       }
     }
 
-    if (!data['cliente']['contribuyente'] && 
-        data['tipoDocumento'] != 4 && 
-        (data['cliente']['tipoOperacion'] != 2 && data['cliente']['tipoOperacion'] != 4) ) {
+    if (
+      !data['cliente']['contribuyente'] &&
+      data['tipoDocumento'] != 4 &&
+      data['cliente']['tipoOperacion'] != 2 &&
+      data['cliente']['tipoOperacion'] != 4
+    ) {
       //Val.: 46. parrafo 1
       this.errors.push('El tipo de Operación debe ser 2-B2C o 4-B2F para el Receptor "No Contribuyente"');
     }
