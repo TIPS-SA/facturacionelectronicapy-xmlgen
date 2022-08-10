@@ -272,11 +272,10 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosGeneralesValidate(params: any, data: any, defaultValues?: boolean) {
-    
     this.generateDatosGeneralesInherentesOperacionValidate(params, data, defaultValues);
-    
+
     this.generateDatosGeneralesEmisorDEValidate(params, data);
-    
+
     if (data['usuario']) {
       //No es obligatorio
       this.generateDatosGeneralesResponsableGeneracionDEValidate(params, data);
@@ -501,7 +500,6 @@ class JSonDeMainValidateService {
       //Obligatorio completar D210
 
       if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
-
         if (!data['cliente']['documentoTipo']) {
           //Val.: 59
           this.errors.push('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');

@@ -1027,9 +1027,7 @@ class JSonDeMainService {
       //Obligatorio completar D210
 
       if (this.validateError) {
-     
         if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
-
           this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
             constanteService.tiposDocumentosReceptor.filter(
               (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
@@ -1044,7 +1042,7 @@ class JSonDeMainService {
         }
 
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim()
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim();
 
         if (+data['cliente']['documentoTipo'] === 5) {
           //Si es innominado completar con cero
