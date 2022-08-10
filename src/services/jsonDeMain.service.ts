@@ -618,15 +618,6 @@ class JSonDeMainService {
     const rucEmisor = params['ruc'].split('-')[0];
     const dvEmisor = params['ruc'].split('-')[1];
 
-    if (this.validateError) {
-      var reg = new RegExp(/^\d+$/);
-      if (!reg.test(rucEmisor)) {
-        //throw new Error("El RUC '" + rucEmisor + "' debe ser numérico");
-      }
-      if (!reg.test(dvEmisor)) {
-        //throw new Error("El DV del RUC '" + dvEmisor + "' debe ser numérico");
-      }
-    }
     const id = this.codigoControl;
 
     const fechaFirmaDigital = new Date(params.fechaFirmaDigital);
@@ -697,15 +688,6 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gOpeDE']['dInfoFisc'] = data['descripcion'];
     }
 
-    //Validar aqui "dInfoFisc"
-    if (data['tipoDocumento'] == 7) {
-      //Nota de Remision
-      if (this.validateError) {
-        if (!(data['descripcion'] && data['descripcion'].length > 0)) {
-          //throw new Error('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
-        }
-      }
-    }
   }
 
   /**
@@ -1026,33 +1008,27 @@ class JSonDeMainService {
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
 
-      if (this.validateError) {
-        if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
-          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-            constanteService.tiposDocumentosReceptor.filter(
-              (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
-            )[0]['descripcion'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
+        constanteService.tiposDocumentosReceptor.filter(
+          (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
+        )[0]['descripcion'];
 
-          if (data['cliente']['documentoTipo'] == 9) {
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-              data['cliente']['documentoTipoDescripcion'];
-          }
+      if (data['cliente']['documentoTipo'] == 9) {
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
+          data['cliente']['documentoTipoDescripcion'];
+      }
 
-          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim();
-        }
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim();
 
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim();
-
-        if (+data['cliente']['documentoTipo'] === 5) {
-          //Si es innominado completar con cero
-          this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
-        }
-        if (+data['cliente']['tipoOperacion'] == 4) {
-          //Si es innominado completar con cero
-          //this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
-          //this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim()
-        }
+      if (+data['cliente']['documentoTipo'] === 5) {
+        //Si es innominado completar con cero
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
+      }
+      if (+data['cliente']['tipoOperacion'] == 4) {
+        //Si es innominado completar con cero
+        //this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
+        //this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim()
       }
     }
 
@@ -1095,40 +1071,12 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-      if (this.validateError) {
-        if (
-          constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito'])
-            .length == 0
-        ) {
-          /*throw new Error(
-            "Distrito '" +
-              data['cliente']['distrito'] +
-              "' del Cliente en data.cliente.distrito no encontrado. Valores: " +
-              constanteService.distritos.map((a: any) => a.codigo + '-' + a.descripcion),
-          );*/
-        }
-      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = +data['cliente']['distrito'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = constanteService.distritos.filter(
         (td) => td.codigo === +data['cliente']['distrito'],
       )[0]['descripcion'];
     }
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-      if (this.validateError) {
-        if (!data['cliente']['ciudad']) {
-          //throw new Error('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
-        }
-        if (
-          constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0
-        ) {
-          /*throw new Error(
-            "Ciudad '" +
-              data['cliente']['ciudad'] +
-              "' del Cliente en data.cliente.ciudad no encontrado. Valores: " +
-              constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
-          );*/
-        }
-      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
         (td) => td.codigo === +data['cliente']['ciudad'],
@@ -1195,15 +1143,6 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['codigo']) {
-      if (this.validateError) {
-        if (!((data['cliente']['codigo'] + '').length >= 3)) {
-          /*throw new Error(
-            "El código del Cliente '" +
-              data['cliente']['codigo'] +
-              "' en data.cliente.codigo debe tener al menos 3 caracteres",
-          );*/
-        }
-      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dCodCliente'] = (data['cliente']['codigo'] + '').trim();
     }
   }
@@ -1315,93 +1254,6 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
-    if (this.validateError) {
-      if (!data['autoFactura']) {
-        //throw new Error('Para tipoDocumento = 4 debe proveer los datos de Autofactura en data.autoFactura');
-      }
-      if (!data['autoFactura']['ubicacion']) {
-        /*throw new Error(
-          'Para tipoDocumento = 4 debe proveer los datos del Lugar de Transacción de la Autofactura en data.autoFactura.ubicacion',
-        );*/
-      }
-
-      if (!data['autoFactura']['tipoVendedor']) {
-        //throw new Error('Debe especificar la Naturaleza del Vendedor en data.autoFactura.tipoVendedor');
-      }
-
-      if (!data['autoFactura']['documentoTipo']) {
-        //throw new Error('Debe especificar el Tipo de Documento del Vendedor en data.autoFactura.documentoTipo');
-      }
-    }
-
-    if (
-      constanteService.naturalezaVendedorAutofactura.filter(
-        (um: any) => um.codigo === data['autoFactura']['tipoVendedor'],
-      ).length == 0
-    ) {
-      /*throw new Error(
-        "Tipo de Vendedor '" +
-          data['autoFactura']['tipoVendedor'] +
-          "' en data.autoFactura.tipoVendedor no encontrado. Valores: " +
-          constanteService.naturalezaVendedorAutofactura.map((a: any) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
-
-    if (
-      constanteService.tiposDocumentosIdentidades.filter(
-        (um: any) => um.codigo === data['autoFactura']['documentoTipo'],
-      ).length == 0
-    ) {
-      /*throw new Error(
-        "Tipo de Documento '" +
-          data['autoFactura']['documentoTipo'] +
-          "' en data.autoFactura.documentoTipo no encontrado. Valores: " +
-          constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
-
-    if (this.validateError) {
-      if (!data['autoFactura']['ubicacion']) {
-        //throw new Error('Debe especificar la ubicación de la transacción en data.autoFactura.ubicacion');
-      }
-
-      if (!data['autoFactura']['documentoNumero']) {
-        //throw new Error('Debe especificar el Nro. de Documento del Vendedor en data.autoFactura.documentoNumero');
-      }
-      if (!data['autoFactura']['nombre']) {
-        //throw new Error('Debe especificar el Nombre del Vendedor en data.autoFactura.nombre');
-      }
-      if (!data['autoFactura']['direccion']) {
-        //throw new Error('Debe especificar la Dirección del Vendedor en data.autoFactura.direccion');
-      }
-      if (!data['autoFactura']['numeroCasa']) {
-        //throw new Error('Debe especificar el Número de Casa del Vendedor en data.autoFactura.numeroCasa');
-      }
-
-      if (!data['autoFactura']['departamento']) {
-        //throw new Error('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
-      }
-      if (!data['autoFactura']['distrito']) {
-        //throw new Error('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
-      }
-      if (!data['autoFactura']['ciudad']) {
-        //throw new Error('Debe especificar la Ciudad del Vendedor en data.autoFactura.ciudad');
-      }
-
-      if (!data['autoFactura']['ubicacion']['departamento']) {
-        /*throw new Error(
-          'Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento',
-        );*/
-      }
-      if (!data['autoFactura']['ubicacion']['distrito']) {
-        /*throw new Error(
-          'Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito',
-        );*/
-      }
-      if (!data['autoFactura']['ubicacion']['ciudad']) {
-        //throw new Error('Debe especificar la Ciudad del Lugar de la Transacción en data.autoFactura.ubicacion.ciudad');
-      }
-    }
 
     this.json['rDE']['DE']['gDtipDE']['gCamAE'] = {
       iNatVen: data['autoFactura']['tipoVendedor'], //1=No contribuyente, 2=Extranjero
@@ -1461,22 +1313,6 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
-    if (this.validateError) {
-      if (!data['notaCreditoDebito']['motivo']) {
-        //throw new Error('Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo');
-      }
-    }
-    if (
-      constanteService.notasCreditosMotivos.filter((um: any) => um.codigo === data['notaCreditoDebito']['motivo'])
-        .length == 0
-    ) {
-      /*throw new Error(
-        "Motivo de la Nota de Crédito/Débito '" +
-          data['notaCreditoDebito']['motivo'] +
-          "' en data.notaCreditoDebito.motivo no encontrado. Valores: " +
-          constanteService.notasCreditosMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
 
     this.json['rDE']['DE']['gDtipDE']['gCamNCDE'] = {
       iMotEmi: data['notaCreditoDebito']['motivo'],
