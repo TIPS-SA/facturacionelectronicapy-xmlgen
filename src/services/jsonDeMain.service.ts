@@ -687,7 +687,6 @@ class JSonDeMainService {
     if (data['descripcion'] && data['descripcion'].length > 0) {
       this.json['rDE']['DE']['gOpeDE']['dInfoFisc'] = data['descripcion'];
     }
-
   }
 
   /**
@@ -1009,14 +1008,12 @@ class JSonDeMainService {
       //Obligatorio completar D210
 
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-        constanteService.tiposDocumentosReceptor.filter(
-          (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
-        )[0]['descripcion'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = constanteService.tiposDocumentosReceptor.filter(
+        (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
+      )[0]['descripcion'];
 
       if (data['cliente']['documentoTipo'] == 9) {
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-          data['cliente']['documentoTipoDescripcion'];
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = data['cliente']['documentoTipoDescripcion'];
       }
 
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim();
@@ -1254,7 +1251,6 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
-
     this.json['rDE']['DE']['gDtipDE']['gCamAE'] = {
       iNatVen: data['autoFactura']['tipoVendedor'], //1=No contribuyente, 2=Extranjero
       dDesNatVen: constanteService.naturalezaVendedorAutofactura.filter(
@@ -1313,7 +1309,6 @@ class JSonDeMainService {
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
-
     this.json['rDE']['DE']['gDtipDE']['gCamNCDE'] = {
       iMotEmi: data['notaCreditoDebito']['motivo'],
       dDesMotEmi: constanteService.notasCreditosMotivos.filter(
