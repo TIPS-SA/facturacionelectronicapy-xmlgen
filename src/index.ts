@@ -7,10 +7,6 @@ class DE {
     return deService.generateXMLDE(params, data, config);
   };
 
-  /*generateXMLEvento = (params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEvento(params, data);
-  };*/
-
   generateXMLEventoCancelacion = (id: number, params: any, data: any): Promise<any> => {
     return eventoService.generateXMLEventoCancelacion(id, params, data);
   };

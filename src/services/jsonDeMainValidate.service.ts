@@ -272,12 +272,16 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosGeneralesValidate(params: any, data: any, defaultValues?: boolean) {
+    
     this.generateDatosGeneralesInherentesOperacionValidate(params, data, defaultValues);
+    
     this.generateDatosGeneralesEmisorDEValidate(params, data);
+    
     if (data['usuario']) {
       //No es obligatorio
       this.generateDatosGeneralesResponsableGeneracionDEValidate(params, data);
     }
+
     this.generateDatosGeneralesReceptorDEValidate(params, data);
   }
 
@@ -496,14 +500,16 @@ class JSonDeMainValidateService {
       //No es contribuyente
       //Obligatorio completar D210
 
-      if (data['cliente']['tipoOperacion'] != 4 && !data['cliente']['documentoNumero']) {
-        //Este no tiene sentido por que en MT dice que si no es contribuyente, el tipo de Operacion debe ser 2
-        this.errors.push('Debe informar el número de documento en data.cliente.documentoNumero');
-      }
-
       if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
+
         if (!data['cliente']['documentoTipo']) {
+          //Val.: 59
           this.errors.push('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');
+        }
+
+        if (!data['cliente']['documentoNumero']) {
+          //Val.: 65
+          this.errors.push('Debe informar el número de documento en data.cliente.documentoNumero');
         }
       }
     }
