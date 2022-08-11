@@ -1007,10 +1007,12 @@ class JSonDeMainService {
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
 
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = constanteService.tiposDocumentosReceptor.filter(
-        (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
-      )[0]['descripcion'];
+      if (data['cliente']['documentoTipo']) {
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = constanteService.tiposDocumentosReceptor.filter(
+          (tdr) => tdr.codigo === data['cliente']['documentoTipo'],
+        )[0]['descripcion'];  
+      }
 
       if (data['cliente']['documentoTipo'] == 9) {
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = data['cliente']['documentoTipoDescripcion'];
