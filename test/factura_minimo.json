@@ -1,0 +1,116 @@
+[{
+    "tipoDocumento" : 1,
+    "establecimiento" : 1,
+    "punto" : "001",
+    "numero" : 5, 
+    "descripcion" : "Aparece en el documento",
+    "observacion" : "Cualquier informacion de interes",
+    "fecha" : "2021-10-19T10:11:00",
+    "tipoEmision" : 1,
+    "tipoTransaccion" : 1,
+    "tipoImpuesto" : 1,
+    "moneda" : "PYG",
+    "cliente" : {
+        "contribuyente" : true,
+        "ruc" : "2005001-1",
+        "razonSocial" : "Marcos Adrian Jara Rodriguez",
+        "nombreFantasia" : "Marcos Adrian Jara Rodriguez",
+        "tipoOperacion" : 1,
+        "direccion" : "Avda Calle Segunda y Proyectada",
+        "numeroCasa" : "1515",
+        "departamento" : 11,
+        "departamentoDescripcion" : "ALTO PARANA",
+        "distrito" : 143,
+        "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
+        "ciudad" : 3344,
+        "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "tipoContribuyente" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2324234",
+        "telefono" : "xyz",
+        "celular" : "xyz",
+        "email" : "cliente@cliente.com",
+        "codigo" : "1548"
+    },
+    "usuario" : {
+        "documentoTipo" : 1,
+        "documentoNumero" : "157264",
+        "nombre" : "Marcos Jara",
+        "cargo" : "Vendedor"
+    },
+    "factura" : {
+        "presencia" : 1
+    },
+    "condicion" : {
+        "tipo" : 1,
+        "entregas" : [{ 
+            "tipo" : 1,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0
+        }, { 
+            "tipo" : 3,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0,
+            "infoTarjeta" : {
+                "numero" : 1234,
+                "tipo" : 1,
+                "tipoDescripcion" : "Dinelco",
+                "numeroTarjeta": 3232,
+                "titular" : "Marcos Jara",
+                "ruc" : "69695654-1",
+                "razonSocial" : "Bancard",
+                "medioPago" : 1,
+                "codigoAutorizacion" : 232524234
+            }
+        }, { 
+            "tipo" : 2,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0,
+            "infoCheque" : {
+                "numeroCheque": "32323232",
+                "banco" : "Sudameris"
+            }
+        }],
+        "credito" : {
+            "tipo" : 1,
+            "plazo" : "30 días",
+            "cuotas" : 2,
+            "montoEntrega" : 1500000.00,
+            "infoCuotas" : [{
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2021-10-30"
+            }, {
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2021-11-30"
+            }]
+        }
+    },
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio", 
+        "observacion": "Cualquier informacion de interes", 
+        "ncm": "123456",
+        "unidadMedida": 77,
+        "cantidad": 10.5,
+        "precioUnitario": 10800,
+        "cambio": 0.0,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5,
+        "lote" : "A-001",
+        "vencimiento" : "2022-10-30",
+        "numeroSerie" : "",
+        "numeroPedido" : "",
+        "numeroSeguimiento" : ""
+    }]
+}]
