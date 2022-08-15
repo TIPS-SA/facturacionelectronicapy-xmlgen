@@ -138,7 +138,7 @@ class JSonDteItemService {
     };
 
     jsonResult['dTotBruOpeItem'] = parseFloat(item['precioUnitario']) * parseFloat(item['cantidad']);
-    console.log('res parcial', jsonResult['dTotBruOpeItem'], 'decimal', config.decimals);
+
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.decimals));
     if (data.moneda === 'PYG') {
       jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(0));
