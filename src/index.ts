@@ -37,13 +37,13 @@ class DE {
     });
   };
 
-  consultarDistritos = (departamento: number): Promise<any> => {
+  consultarDistritos = (departamento: number | null): Promise<any> => {
     return new Promise((resolve, reject) => {
       resolve(deService.getDistritos(departamento));
     });
   };
 
-  consultarCiudades = (distrito: number): Promise<any> => {
+  consultarCiudades = (distrito: number | null): Promise<any> => {
     return new Promise((resolve, reject) => {
       resolve(deService.getCiudades(distrito));
     });
@@ -55,30 +55,30 @@ class DE {
     });
   };
 
-  getNombreDepartamento = (departamentoId: number) => {
+  getDepartamento = (departamentoId: number) : any => {
     let departamentos = deService.getDepartamento(departamentoId);
     if (departamentos.length > 0) {
-      return departamentos[0].descripcion;
+      return departamentos[0];
     } else {
-      return '';
+      return null;
     }
   };
 
-  getNombreDistrito = (distritoId: number) => {
+  getDistrito = (distritoId: number) : any => {
     let distritos = deService.getDistrito(distritoId);
     if (distritos.length > 0) {
-      return distritos[0].descripcion;
+      return distritos[0];
     } else {
-      return '';
+      return null;
     }
   };
 
-  getNombreCiudad = (ciudadId: number) => {
+  getCiudad = (ciudadId: number) : any => {
     let ciudades = deService.getCiudad(ciudadId);
     if (ciudades.length > 0) {
-      return ciudades[0].descripcion;
+      return ciudades[0];
     } else {
-      return '';
+      return null;
     }
   };
 }

@@ -1626,12 +1626,20 @@ class JSonDeMainService {
     return constanteService.departamentos;
   }
 
-  getDistritos(departamento: number) {
-    return constanteService.distritos.filter((dis) => dis.departamento === departamento);
+  getDistritos(departamento: number | null) {
+    if (departamento) {
+      return constanteService.distritos.filter((dis) => dis.departamento === departamento);
+    } else {
+      return constanteService.distritos;
+    }
   }
 
-  getCiudades(distrito: number) {
-    return constanteService.ciudades.filter((ciu) => ciu.distrito === distrito);
+  getCiudades(distrito: number | null) {
+    if (distrito) {
+      return constanteService.ciudades.filter((ciu) => ciu.distrito === distrito);
+    } else {
+      return constanteService.ciudades;
+    }
   }
 
   getTiposRegimenes() {

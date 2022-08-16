@@ -156,6 +156,11 @@ class JSonDteTotalesService {
     //---
 
     //Asignar al JSON DATA
+    if (data.moneda != 'PYG') {
+      dSubExe = parseFloat(dSubExe.toFixed(config.taxDecimals));
+      dSubExo = parseFloat(dSubExo.toFixed(config.taxDecimals));
+    }
+
     let jsonResult: any = {
       dSubExe: dSubExe,
       dSubExo: dSubExo,
