@@ -55,7 +55,7 @@ class DE {
     });
   };
 
-  getDepartamento = (departamentoId: number) : any => {
+  getDepartamento = (departamentoId: number): any => {
     let departamentos = deService.getDepartamento(departamentoId);
     if (departamentos.length > 0) {
       return departamentos[0];
@@ -64,7 +64,7 @@ class DE {
     }
   };
 
-  getDistrito = (distritoId: number) : any => {
+  getDistrito = (distritoId: number): any => {
     let distritos = deService.getDistrito(distritoId);
     if (distritos.length > 0) {
       return distritos[0];
@@ -73,7 +73,7 @@ class DE {
     }
   };
 
-  getCiudad = (ciudadId: number) : any => {
+  getCiudad = (ciudadId: number): any => {
     let ciudades = deService.getCiudad(ciudadId);
     if (ciudades.length > 0) {
       return ciudades[0];

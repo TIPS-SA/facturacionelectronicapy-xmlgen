@@ -19,11 +19,11 @@ class JSonDeMainValidateService {
    *   4 - Validacion automática
    *   5 - Se realiza en el SIFEN, la fecha/hora del servidor debe sincronizarse con el SIFEN
    *   6 - Falta, pero es AO
-   * 
+   *
    * B. Campos inherentes a la operación comercial de los Documentos Electrónicos (B001 -B099)
    *   7 - Falta
    *   8 - Validacion automática, via constante.service
-   * 
+   *
    * C. Campos de datos del Timbrado (C001 - C099)
    *   9 - Validacion automática, via constante.service
    *  10 - Se realiza en el SIFEN, se valida solo la primera vez
@@ -33,7 +33,7 @@ class JSonDeMainValidateService {
    *  14 - Se realiza en el SIFEN, se valida solo la primera vez
    *  15 - Se realiza en el SIFEN, se valida solo la primera vez
    *  16 - Se realiza en el SIFEN, pero puede ser realizado en la API de integración
-   * 
+   *
    * @param data
    */
   public validateValues(params: any, data: any, config: XmlgenConfig) {
