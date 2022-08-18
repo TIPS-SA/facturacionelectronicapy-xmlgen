@@ -1069,20 +1069,19 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
         (td) => td.codigo === +data['cliente']['ciudad'],
       )[0]['descripcion'];
-
     }
 
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = +data['cliente']['distrito'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = constanteService.distritos.filter(
-        (td) => td.codigo === +data['cliente']['distrito']
+        (td) => td.codigo === +data['cliente']['distrito'],
       )[0]['descripcion'];
     }
-    
+
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
-        (td) => td.codigo === +data['cliente']['departamento']
+        (td) => td.codigo === +data['cliente']['departamento'],
       )[0]['descripcion'];
     }
 
