@@ -592,7 +592,7 @@ class JSonDeMainValidateService {
         let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
 
         //console.log('objDistrito', objDistrito);
-        let objDepartamento: any = constanteService.distritos.filter(
+        let objDepartamento: any = constanteService.departamentos.filter(
           (dep) => dep.codigo === +objDistrito[0]['departamento'],
         );
 
