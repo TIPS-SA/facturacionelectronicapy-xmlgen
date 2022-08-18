@@ -569,61 +569,86 @@ class JSonDeMainValidateService {
     }
 
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-      if (!data['cliente']['departamento']) {
-        this.errors.push(
-          'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
-        );
-      }
-      if (
-        constanteService.departamentos.filter(
-          (departamento: any) => departamento.codigo === +data['cliente']['departamento'],
-        ).length == 0
-      ) {
-        this.errors.push(
-          "Departamento '" +
-            data['cliente']['departamento'] +
-            "' del Cliente en data.cliente.departamento no encontrado. Valores: " +
-            constanteService.departamentos.map((a: any) => a.codigo + '-' + a.descripcion),
-        );
-      }
-    }
-
-    if (data['cliente']['tipoOperacion'] == 4) {
-      if (data['cliente']['pais'] == 'PRY') {
-        this.errors.push('El tipo de Operación = 4-B2F requiere un pais diferente a PRY');
-      }
-    }
-
-    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-      if (!data['cliente']['distrito']) {
-        this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
-      }
-
-      if (
-        constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito']).length ==
-        0
-      ) {
-        this.errors.push(
-          "Distrito '" +
-            data['cliente']['distrito'] +
-            "' del Cliente en data.cliente.distrito no encontrado. Valores: " +
-            constanteService.distritos.map((a: any) => a.codigo + '-' + a.descripcion),
-        );
-      }
-    }
-
-    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['ciudad']) {
         this.errors.push('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
+      } else {
+        if (constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0) {
+          this.errors.push(
+            "Ciudad '" +
+              data['cliente']['ciudad'] +
+              "' del Cliente en data.cliente.ciudad no encontrado. Valores: " +
+              constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
+          );
+        }
+  
+          //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
+          //valores de forma predeterminada, auque este valor sera sobre-escrito, caso el usuario envie 
+          //data['cliente']['distrito'] y data['cliente']['departamento']
+          let objCiudad : any = constanteService.ciudades.filter(
+            (ciu) => ciu.codigo === +data['cliente']['ciudad'],
+          );
+    
+          console.log("ciudad", objCiudad);
+          let objDistrito : any = constanteService.distritos.filter(
+            (dis) => dis.codigo === +objCiudad[0]['distrito'],
+          );
+    
+          console.log("objDistrito", objDistrito);
+          let objDepartamento : any = constanteService.distritos.filter(
+            (dep) => dep.codigo === +objDistrito[0]['departamento'],
+          );
+    
+          console.log("objDepartamento", objDepartamento);
+          data['cliente']['distrito'] = objDistrito[0]['codigo'];
+          
+          data['cliente']['departamento'] = objDepartamento[0]['codigo'];
+        
       }
-      if (constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0) {
-        this.errors.push(
-          "Ciudad '" +
-            data['cliente']['ciudad'] +
-            "' del Cliente en data.cliente.ciudad no encontrado. Valores: " +
-            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
-        );
+
+      if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
+        if (!data['cliente']['distrito']) {
+          this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
+        }
+  
+        if (
+          constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito']).length ==
+          0
+        ) {
+          this.errors.push(
+            "Distrito '" +
+              data['cliente']['distrito'] +
+              "' del Cliente en data.cliente.distrito no encontrado. Valores: " +
+              constanteService.distritos.map((a: any) => a.codigo + '-' + a.descripcion),
+          );
+        }
       }
+      
+      if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
+        if (!data['cliente']['departamento']) {
+          this.errors.push(
+            'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
+          );
+        }
+        if (
+          constanteService.departamentos.filter(
+            (departamento: any) => departamento.codigo === +data['cliente']['departamento'],
+          ).length == 0
+        ) {
+          this.errors.push(
+            "Departamento '" +
+              data['cliente']['departamento'] +
+              "' del Cliente en data.cliente.departamento no encontrado. Valores: " +
+              constanteService.departamentos.map((a: any) => a.codigo + '-' + a.descripcion),
+          );
+        }
+      }
+  
+      if (data['cliente']['tipoOperacion'] == 4) {
+        if (data['cliente']['pais'] == 'PRY') {
+          this.errors.push('El tipo de Operación = 4-B2F requiere un pais diferente a PRY');
+        }
+      }
+  
     }
 
     constanteService.validateDepartamentoDistritoCiudad(
