@@ -29,6 +29,16 @@ class JSonDteItemValidateService {
         let unidadMedida: number = item['unidadMedida'];
 
         //Validaciones
+        if (!(item['codigo'].length >= 1 && item['codigo'].length <= 20)) {
+          this.errors.push(
+            'El código del item (' +
+              item['codigo'] +
+              ') en data.items[' +
+              i +
+              '].codigo debe tener una longitud de 1 a 20 caracteres',
+          );
+        }
+        
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
           this.errors.push(
             "Unidad de Medida '" +

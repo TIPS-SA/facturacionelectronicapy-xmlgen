@@ -1025,11 +1025,6 @@ class JSonDeMainService {
         //Si es innominado completar con cero
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
       }
-      if (+data['cliente']['tipoOperacion'] == 4) {
-        //Si es innominado completar con cero
-        //this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
-        //this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = data['cliente']['documentoNumero'].trim()
-      }
     }
 
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = data['cliente']['razonSocial'].trim();
@@ -1038,25 +1033,12 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = 'Sin Nombre';
     }
 
-    //if (data['cliente']['documentoTipo'] === 5) {
     if (data['cliente']['nombreFantasia']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomFanRec'] = data['cliente']['nombreFantasia'].trim();
-    }
-    //}
-
-    if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
-      if (!data['cliente']['direccion']) {
-        //throw new Error('data.cliente.direccion es Obligatorio para Tipo de Documento 7 o Tipo de Operación 4');
-      }
     }
 
     if (data['cliente']['direccion']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDirRec'] = data['cliente']['direccion'].trim();
-
-      //Si tiene dirección hay que completar numero de casa.
-      if (!data['cliente']['numeroCasa']) {
-        //throw new Error('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
-      }
     }
 
     if (data['cliente']['numeroCasa']) {
@@ -1065,9 +1047,9 @@ class JSonDeMainService {
 
     //
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
-        (td) => td.codigo === +data['cliente']['ciudad'],
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
+        (td) => td.codigo === +data['cliente']['departamento'],
       )[0]['descripcion'];
     }
 
@@ -1079,11 +1061,13 @@ class JSonDeMainService {
     }
 
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
-        (td) => td.codigo === +data['cliente']['departamento'],
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
+        (td) => td.codigo === +data['cliente']['ciudad'],
       )[0]['descripcion'];
     }
+
+
 
     /*
     constanteService.validateDepartamentoDistritoCiudad(
