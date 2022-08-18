@@ -1067,8 +1067,6 @@ class JSonDeMainService {
       )[0]['descripcion'];
     }
 
-
-
     /*
     constanteService.validateDepartamentoDistritoCiudad(
       'data.cliente',

@@ -38,7 +38,7 @@ class JSonDteItemValidateService {
               '].codigo debe tener una longitud de 1 a 20 caracteres',
           );
         }
-        
+
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
           this.errors.push(
             "Unidad de Medida '" +
