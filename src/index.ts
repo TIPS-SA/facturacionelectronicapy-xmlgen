@@ -36,8 +36,8 @@ class DE {
       //Enviar Copia
       let departamentos = [];
       for (let index = 0; index < deService.getDepartamentos().length; index++) {
-        const ciu = deService.getDepartamentos()[index];
-        departamentos.push({ ...ciu });
+        const dep = deService.getDepartamentos()[index];
+        departamentos.push({ ...dep });
       }
 
       resolve(departamentos);
@@ -49,8 +49,8 @@ class DE {
       //Enviar Copia
       let distritos = [];
       for (let index = 0; index < deService.getDistritos(departamento).length; index++) {
-        const ciu = deService.getDistritos(departamento)[index];
-        distritos.push({ ...ciu });
+        const dis = deService.getDistritos(departamento)[index];
+        distritos.push({ ...dis });
       }
 
       resolve(distritos);
@@ -72,7 +72,12 @@ class DE {
 
   consultarTiposRegimenes = (): Promise<any> => {
     return new Promise((resolve, reject) => {
-      resolve(deService.getTiposRegimenes());
+      let tiposRegimenes = [];
+      for (let index = 0; index < deService.getTiposRegimenes().length; index++) {
+        const tip = deService.getTiposRegimenes()[index];
+        tiposRegimenes.push({ ...tip });
+      }      
+      resolve(tiposRegimenes);
     });
   };
 
