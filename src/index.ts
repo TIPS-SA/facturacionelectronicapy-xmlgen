@@ -76,7 +76,7 @@ class DE {
       for (let index = 0; index < deService.getTiposRegimenes().length; index++) {
         const tip = deService.getTiposRegimenes()[index];
         tiposRegimenes.push({ ...tip });
-      }      
+      }
       resolve(tiposRegimenes);
     });
   };
