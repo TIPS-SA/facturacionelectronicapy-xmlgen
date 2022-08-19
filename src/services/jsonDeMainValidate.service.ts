@@ -585,7 +585,7 @@ class JSonDeMainValidateService {
 
         //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
         //valores de forma predeterminada, auque este valor sera sobre-escrito, caso el usuario envie
-        data['cliente']['distrito'] y data['cliente']['departamento']
+        //data['cliente']['distrito'] y data['cliente']['departamento']
         let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['cliente']['ciudad']);
 
         console.log('ciudad', objCiudad);
@@ -596,7 +596,7 @@ class JSonDeMainValidateService {
           (dep) => dep.codigo === +objDistrito[0]['departamento'],
         );
 
-        //console.log('objDepartamento', objDepartamento);
+        console.log('objDepartamento', objDepartamento);
         data['cliente']['distrito'] = objDistrito[0]['codigo'];
 
         data['cliente']['departamento'] = objDepartamento[0]['codigo'];
