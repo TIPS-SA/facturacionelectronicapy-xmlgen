@@ -557,12 +557,12 @@ class JSonDeMainValidateService {
 
     if (data['cliente']['direccion']) {
       //Si tiene dirección hay que completar numero de casa.
- 
-      if ( data['cliente']['numeroCasa'] == null) {
+
+      if (data['cliente']['numeroCasa'] == null) {
         this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
 
-      if ( ! ((data['cliente']['numeroCasa']+"").length > 0 ) ) {
+      if (!((data['cliente']['numeroCasa'] + '').length > 0)) {
         this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
     }
