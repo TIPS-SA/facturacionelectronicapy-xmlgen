@@ -29,7 +29,7 @@ class JSonDteItemValidateService {
         let unidadMedida: number = item['unidadMedida'];
 
         //Validaciones
-        if (!(item['codigo'].length >= 1 && item['codigo'].length <= 20)) {
+        if (!((item['codigo']+"").length >= 1 && (item['codigo']+"").length <= 20)) {
           this.errors.push(
             'El código del item (' +
               item['codigo'] +
