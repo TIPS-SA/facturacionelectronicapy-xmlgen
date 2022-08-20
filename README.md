@@ -61,7 +61,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 ``` json 
 {
   "version" : 150,
-  "fechaFirmaDigital" : "2021-08-13T00:00:00",
+  "fechaFirmaDigital" : "2022-08-13T00:00:00",
   "ruc" : "80069563-1",
   "razonSocial" : "DE generado en ambiente de prueba - sin valor comercial ni fiscal",
   "nombreFantasia" : "TIPS S.A. TECNOLOGIA Y SERVICIOS",
@@ -70,7 +70,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     "descripcion": "Desarrollo de Software",
   }],   
   "timbradoNumero" : "12558946",
-  "timbradoFecha" : "2021-08-25T00:00:00",
+  "timbradoFecha" : "2022-08-25T00:00:00",
   "tipoContribuyente" : 2, 
   "tipoRegimen" : 8, 
   "establecimientos" : [{
@@ -86,11 +86,12 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     "ciudad" : 3432,
     "ciudadDescripcion" : "PUERTO PTE.STROESSNER (MUNIC)",
     "telefono" : "0973-527155",
-    "email" : "tips@tips.com.py",
+    "email" : "tips@tips.com.py, tips@gmail.com",
     "denominacion" : "Sucursal 1",
   }]
 }
 ```  
+El campo Email, si bien puede informarse mas de 1 (uno), en el Sifen solamente será enviado el primero
 
 ## Estructura completa del `data` JSON de Ejemplo
 ``` json
@@ -103,7 +104,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     "descripcion" : "Aparece en el documento",
     "observacion" : "Cualquier informacion de marketing, publicidad, sorteos, promociones para el Receptor",
     "tipoContribuyente" : 1,
-    "fecha" : "2020-09-14T10:11:00",
+    "fecha" : "2022-08-14T10:11:00",
     "tipoEmision" : 1,
     "tipoTransaccion" : 1,
     "tipoImpuesto" : 1,
@@ -132,7 +133,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "documentoNumero" : "2324234",
         "telefono" : "061-575903",
         "celular" : "0973-809103",
-        "email" : "cliente@cliente.com",
+        "email" : "cliente@empresa.com, cliente@personal.com",
         "codigo" : "1548"
     },
     "usuario" : {
@@ -143,13 +144,13 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     },
     "factura" : {
         "presencia" : 1,
-        "fechaEnvio" : "2021-10-21",
+        "fechaEnvio" : "2023-10-21",
         "dncp" : {
             "modalidad" : "ABC",
             "entidad" : 1,
             "año" : 2021,
             "secuencia" : 3377,
-            "fecha" : "2020-09-14T10:11:00"
+            "fecha" : "2022-09-14T10:11:00"
         }
     },
     "autoFactura" : {
@@ -182,7 +183,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "motivo" : 1,
         "tipoResponsable" : 1, 
         "kms" : 150,
-        "fechaFactura" : "2021-10-21"
+        "fechaFactura" : "2022-08-21"
     },
     "condicion" : {
         "tipo" : 1,
@@ -411,7 +412,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
         "establecimiento" : "001",
         "punto" : "001",
         "numero" : "00278211",
-        "fecha" : "2020-09-14",
+        "fecha" : "2022-09-14",
         "numeroRetencion" : "32323232",
         "resolucionCreditoFiscal" : "32323",
         "constanciaTipo" : 1,
@@ -421,6 +422,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     }
 }
 ```
+El email del Cliente, si bien puede enviarse mas de 1 (uno), en SIFEN solamente será enviado el primero.
 
 ## Eventos
 
@@ -453,7 +455,7 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
 {
     "cdc": "01800695631001001000000812021112910953738413",
     "tipoConformidad": 1,
-    "fechaRecepcion": "2020-01-31T00:01:01"
+    "fechaRecepcion": "2022-01-31T00:01:01"
 }
 ```
 
@@ -469,8 +471,8 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
 ``` json
 {
     "cdc": "01800695631001003000013712022010619364760029",
-    "fechaEmision" : "2020-01-31T00:01:01",
-    "fechaRecepcion" : "2020-01-31T00:01:01",
+    "fechaEmision" : "2022-01-31T00:01:01",
+    "fechaRecepcion" : "2022-01-31T00:01:01",
     "tipoReceptor" : 1,
     "nombre": "BRASIL CRESCENCIO",
     "ruc": "50062360-0",
@@ -484,8 +486,8 @@ El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiend
 ``` json
 {
     "cdc": "01800695631001003000013712022010619364760029",  
-    "fechaEmision" : "2020-01-31T00:01:01",
-    "fechaRecepcion" : "2020-01-31T00:01:01",
+    "fechaEmision" : "2022-01-31T00:01:01",
+    "fechaRecepcion" : "2022-01-31T00:01:01",
     "tipoReceptor" : 1,
     "nombre": "BRASIL CRESCENCIO",
     "ruc": "50062360-0",

@@ -918,9 +918,22 @@ class JSonDeMainService {
         (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
       )[0]['descripcion'],
       dTelEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'],
-      dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
       dDenSuc: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['denominacion'],
     };
+
+    //dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
+
+    if (params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']) {
+      let email = new String( params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'] ); //Hace una copia, para no alterar.
+
+      //Verificar si tiene varios correos.
+      if (email.indexOf(',') > -1) {
+        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que la SET no acepta Comas
+        email = email.split(',')[0].trim();
+      }
+
+      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dEmailE'] = email.trim();
+    }
 
     if (params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gActEco'] = [];
@@ -1115,14 +1128,6 @@ class JSonDeMainService {
         email = email.split(',')[0].trim();
       }
 
-      //Verificar espacios
-      if (email.indexOf(' ') > -1) {
-        //throw new Error("El valor '" + email + "' en data.cliente.email no puede poseer espacios");
-      }
-
-      if (!(email.length >= 3 && email.length <= 80)) {
-        //throw new Error("El valor '" + email + "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres");
-      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dEmailRec = email.trim();
     }
 
