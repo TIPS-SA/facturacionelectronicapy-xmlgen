@@ -557,7 +557,12 @@ class JSonDeMainValidateService {
 
     if (data['cliente']['direccion']) {
       //Si tiene dirección hay que completar numero de casa.
-      if (!data['cliente']['numeroCasa']) {
+ 
+      if ( data['cliente']['numeroCasa'] == null) {
+        this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
+      }
+
+      if ( ! ((data['cliente']['numeroCasa']+"").length > 0 ) ) {
         this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
     }
@@ -588,15 +593,12 @@ class JSonDeMainValidateService {
         //data['cliente']['distrito'] y data['cliente']['departamento']
         let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['cliente']['ciudad']);
 
-        console.log('ciudad', objCiudad);
         let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
 
-        console.log('objDistrito', objDistrito);
         let objDepartamento: any = constanteService.departamentos.filter(
           (dep) => dep.codigo === +objDistrito[0]['departamento'],
         );
 
-        console.log('objDepartamento', objDepartamento);
         data['cliente']['distrito'] = objDistrito[0]['codigo'];
 
         data['cliente']['departamento'] = objDepartamento[0]['codigo'];
