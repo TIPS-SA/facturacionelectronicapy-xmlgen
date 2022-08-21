@@ -69,7 +69,7 @@ class JSonDeMainValidateService {
 
     this.generateCodigoControlValidate(params, data);
 
-    this.generateDeValidate(params, data);
+    this.datosEmisorValidate(params, data);
 
     this.generateDatosOperacionValidate(params, data);
 
@@ -241,7 +241,7 @@ class JSonDeMainValidateService {
     }
   }
 
-  private generateDeValidate(params: any, data: any) {
+  private datosEmisorValidate(params: any, data: any) {
     if (params['ruc'].indexOf('-') == -1) {
       this.errors.push('RUC debe contener dígito verificador en params.ruc');
     }
@@ -267,6 +267,55 @@ class JSonDeMainValidateService {
       this.errors.push(
         "La parte que corresponde al DV del RUC '" + params['ruc'] + "' en params.ruc debe ser del 1 al 9",
       );
+    }
+
+    console.log("timbrado......... ccc", params);
+    if ( ! ((params['timbradoNumero'] + '').length == 8)) {
+      this.errors.push('Debe especificar un Timbrado de 8 caracteres en params.timbradoNumero');
+    }
+
+    if (!fechaUtilService.isIsoDate(params['timbradoFecha'])) {
+      this.errors.push(
+        "Valor de la Fecha '" + params['timbradoFecha'] + "' en params.fecha no válido. Formato: yyyy-MM-dd",
+      );
+    }
+
+    /*if ( (params['contribuyente']+"") == '1' ) {
+      this.errors.push(
+        "Tipo de Emisión '" +
+          data['tipoEmision'] +
+          "' en data.tipoEmision no válido. Valores: " +
+          constanteService.tiposEmisiones.map((a) => a.codigo + '-' + a.descripcion),
+      );
+    }*/
+
+    if (params['tipoRegimen']) {
+      if (constanteService.tiposRegimenes.filter((um) => um.codigo === params['tipoRegimen']).length == 0) {
+        this.errors.push(
+          "Tipo de Regimen '" +
+            data['tipoRegimen'] +
+            "' en params.tipoRegimen no válido. Valores: " +
+            constanteService.tiposRegimenes.map((a) => a.codigo + '-' + a.descripcion),
+        );
+      }  
+    }
+
+    //Aqui hay que verificar los datos de las sucursales
+    if (!(params['establecimientos'] && Array.isArray(params['establecimientos']))) {
+      this.errors.push(
+        "Debe especificar un array de establecimientos en params.establecimientos",
+      );
+    } else {
+      
+      for (let i = 0; i < params['establecimientos'].length; i++) {
+        const establecimiento = params['establecimientos'][i];
+        
+        if (!(establecimiento.codigo)) {
+          this.errors.push(
+            "Debe especificar el código del establecimiento en params.establecimientos[" + i + "].codigo",
+          );
+        }
+      }
     }
   }
 
@@ -312,7 +361,7 @@ class JSonDeMainValidateService {
       return; //No informa si el tipo de documento es 7
     }
 
-    if (!fechaUtilService.isIsoDate(data['fecha'])) {
+    if (!fechaUtilService.isIsoDateTime(data['fecha'])) {
       this.errors.push(
         "Valor de la Fecha '" + data['fecha'] + "' en data.fecha no válido. Formato: yyyy-MM-ddTHH:mm:ss",
       );

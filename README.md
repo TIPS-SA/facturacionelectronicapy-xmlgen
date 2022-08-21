@@ -70,7 +70,7 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
     "descripcion": "Desarrollo de Software",
   }],   
   "timbradoNumero" : "12558946",
-  "timbradoFecha" : "2022-08-25T00:00:00",
+  "timbradoFecha" : "2022-08-25",
   "tipoContribuyente" : 2, 
   "tipoRegimen" : 8, 
   "establecimientos" : [{

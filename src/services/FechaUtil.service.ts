@@ -24,11 +24,19 @@ class FechaUtilService {
     );
   }
 
-  isIsoDate(str: string) {
+  isIsoDateTime(str: string) {
     if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str)) return false;
     var d = new Date(str + '.000Z');
     return d.toISOString() === str + '.000Z';
   }
+
+  isIsoDate(str: string) {
+    if (!/\d{4}-\d{2}-\d{2}/.test(str)) return false;
+    return true;
+    //var d = new Date(str + '.000Z');
+    //return d.toISOString() === str + '.000Z';
+  }
+
 }
 
 export default new FechaUtilService();
