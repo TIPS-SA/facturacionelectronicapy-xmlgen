@@ -52,14 +52,10 @@ class JSonDteIdentificacionDocumentoService {
         throw new Error('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');*/
       }
       if (data['documentoAsociado']['tipoDocumentoImpreso']) {
-        jsonResult['iTipoDocAso'] = data['documentoAsociado']['tipoDocumentoImpreso'];
+        jsonResult['iTipoDocAso'] = +data['documentoAsociado']['tipoDocumentoImpreso'];
         jsonResult['dDTipoDocAso'] = constanteService.tiposDocumentosImpresos.filter(
-          (td) => td.codigo === data['documentoAsociado']['tipoDocumentoImpreso'],
+          (td) => td.codigo === +data['documentoAsociado']['tipoDocumentoImpreso'],
         )[0]['descripcion'];
-        /*} else {
-        throw new Error(
-          'Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso',
-        );*/
       }
       if (data['documentoAsociado']['fecha']) {
         /*if ((data['documentoAsociado']['fecha'] + '').length != 10) {

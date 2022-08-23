@@ -918,7 +918,7 @@ class JSonDeMainService {
         (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
       )[0]['descripcion'],
       dTelEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'],
-      dDenSuc: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['denominacion'],
+      //dDenSuc: ,
     };
 
     //dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
@@ -934,6 +934,8 @@ class JSonDeMainService {
 
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dEmailE'] = email.trim();
     }
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDenSuc'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['denominacion'];
+
 
     if (params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gActEco'] = [];
