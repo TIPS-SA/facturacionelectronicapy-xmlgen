@@ -269,8 +269,8 @@ class JSonDeMainValidateService {
       );
     }
 
-    console.log("timbrado......... ccc", params);
-    if ( ! ((params['timbradoNumero'] + '').length == 8)) {
+    console.log('timbrado......... ccc', params);
+    if (!((params['timbradoNumero'] + '').length == 8)) {
       this.errors.push('Debe especificar un Timbrado de 8 caracteres en params.timbradoNumero');
     }
 
@@ -297,22 +297,19 @@ class JSonDeMainValidateService {
             "' en params.tipoRegimen no válido. Valores: " +
             constanteService.tiposRegimenes.map((a) => a.codigo + '-' + a.descripcion),
         );
-      }  
+      }
     }
 
     //Aqui hay que verificar los datos de las sucursales
     if (!(params['establecimientos'] && Array.isArray(params['establecimientos']))) {
-      this.errors.push(
-        "Debe especificar un array de establecimientos en params.establecimientos",
-      );
+      this.errors.push('Debe especificar un array de establecimientos en params.establecimientos');
     } else {
-      
       for (let i = 0; i < params['establecimientos'].length; i++) {
         const establecimiento = params['establecimientos'][i];
-        
-        if (!(establecimiento.codigo)) {
+
+        if (!establecimiento.codigo) {
           this.errors.push(
-            "Debe especificar el código del establecimiento en params.establecimientos[" + i + "].codigo",
+            'Debe especificar el código del establecimiento en params.establecimientos[' + i + '].codigo',
           );
         }
       }

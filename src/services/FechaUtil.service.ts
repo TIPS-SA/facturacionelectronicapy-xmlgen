@@ -36,7 +36,6 @@ class FechaUtilService {
     //var d = new Date(str + '.000Z');
     //return d.toISOString() === str + '.000Z';
   }
-
 }
 
 export default new FechaUtilService();

@@ -924,7 +924,7 @@ class JSonDeMainService {
     //dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
 
     if (params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']) {
-      let email = new String( params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'] ); //Hace una copia, para no alterar.
+      let email = new String(params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']); //Hace una copia, para no alterar.
 
       //Verificar si tiene varios correos.
       if (email.indexOf(',') > -1) {
@@ -934,8 +934,9 @@ class JSonDeMainService {
 
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dEmailE'] = email.trim();
     }
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDenSuc'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['denominacion'];
-
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDenSuc'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['denominacion'];
 
     if (params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gActEco'] = [];
