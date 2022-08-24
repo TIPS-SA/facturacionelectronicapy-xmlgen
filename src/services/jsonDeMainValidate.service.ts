@@ -269,7 +269,6 @@ class JSonDeMainValidateService {
       );
     }
 
-    console.log('timbrado......... ccc', params);
     if (!((params['timbradoNumero'] + '').length == 8)) {
       this.errors.push('Debe especificar un Timbrado de 8 caracteres en params.timbradoNumero');
     }
