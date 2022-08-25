@@ -348,10 +348,6 @@ class JSonDeMainService {
           entrega.infoTarjeta = { ...entrega.info_tarjeta };
         }
 
-        if (entrega.infoTarjeta?.numero_tarjeta) {
-          entrega.infoTarjeta.numeroTarjeta = entrega.infoTarjeta.numero_tarjeta;
-        }
-
         if (entrega.infoTarjeta?.razon_social) {
           entrega.infoTarjeta.razonSocial = entrega.infoTarjeta.razon_social;
         }
@@ -1471,14 +1467,6 @@ class JSonDeMainService {
           }
 
           if (dataEntrega['infoTarjeta']['numero']) {
-            if (!((dataEntrega['infoTarjeta']['numero'] + '').length == 4)) {
-              /*throw new Error(
-                'El código de Autorización en data.condicion.entregas[' +
-                  i +
-                  '].infoTarjeta.numero debe tener de 4 caracteres',
-              );*/
-            }
-
             cuotaInicialEntrega['gPagTarCD']['dNumTarj'] = dataEntrega['infoTarjeta']['numero'];
           }
         }

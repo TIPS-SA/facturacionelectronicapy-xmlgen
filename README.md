@@ -200,7 +200,6 @@ El campo Email, si bien puede informarse mas de 1 (uno), en el Sifen solamente s
             "infoTarjeta" : {
                 "tipo" : 1,
                 "tipoDescripcion" : "Dinelco",
-                "numeroTarjeta": 3232,
                 "titular" : "Marcos Jara",
                 "ruc" : "6969549654-1",
                 "razonSocial" : "Bancard",
