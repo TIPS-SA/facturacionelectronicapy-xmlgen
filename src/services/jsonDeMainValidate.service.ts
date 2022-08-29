@@ -1156,12 +1156,9 @@ class JSonDeMainValidateService {
               i +
               '].tipoDescripcion para el tipo=99',
           );
-        } else if(dataEntrega['tipo'] == 99){
+        } else if (dataEntrega['tipo'] == 99) {
           if (
-            !(
-              (dataEntrega['tipoDescripcion'] + '').length >= 4 &&
-              (dataEntrega['tipoDescripcion'] + '').length <= 30
-            )
+            !((dataEntrega['tipoDescripcion'] + '').length >= 4 && (dataEntrega['tipoDescripcion'] + '').length <= 30)
           ) {
             this.errors.push(
               'La Descripción del Tipo de Entrega en data.condicion.entregas[' +
@@ -1169,7 +1166,6 @@ class JSonDeMainValidateService {
                 '].tipoDescripcion debe tener de 4 a 30 caracteres, para el tipo=99',
             );
           }
-
         }
 
         if (!dataEntrega['moneda']) {
