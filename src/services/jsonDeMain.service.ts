@@ -1406,7 +1406,7 @@ class JSonDeMainService {
             'descripcion'
           ],
           dMonTiPag: dataEntrega['monto'],
-          //cMoneTiPag: dataEntrega['moneda'],
+          //cMoneTiPag: dataEntrega['3'],asdf
           //dTiCamTiPag : dataEntrega['cambio'],
         };
 
