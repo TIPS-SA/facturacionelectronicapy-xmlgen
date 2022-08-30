@@ -572,7 +572,8 @@ class JSonDeMainValidateService {
           this.errors.push('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');
         }
 
-        if (!data['cliente']['documentoNumero']) {
+        //Cuando el campo puede ser un número, y se admite el valor cero, mejor preguntar de ésta forma
+        if (typeof data['cliente']['documentoNumero'] == 'undefined') {
           //Val.: 65
           this.errors.push('Debe informar el número de documento en data.cliente.documentoNumero');
         }
