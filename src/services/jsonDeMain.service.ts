@@ -1031,7 +1031,7 @@ class JSonDeMainService {
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = data['cliente']['documentoTipoDescripcion'];
       }
 
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = (data['cliente']['documentoNumero']+"").trim();
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = (data['cliente']['documentoNumero'] + '').trim();
 
       if (+data['cliente']['documentoTipo'] === 5) {
         //Si es innominado completar con cero
@@ -1106,7 +1106,7 @@ class JSonDeMainService {
             "' en data.cliente.telefono debe tener una longitud de 6 a 15 caracteres",
         );*/
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = (data['cliente']['telefono']+"").trim();
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = (data['cliente']['telefono'] + '').trim();
     }
     if (data['cliente']['celular']) {
       if (!(data['cliente']['celular'].length >= 10 && data['cliente']['celular'].length <= 20)) {
@@ -1116,7 +1116,7 @@ class JSonDeMainService {
             "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres",
         );*/
       }
-      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = (data['cliente']['celular']+"").trim();
+      this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = (data['cliente']['celular'] + '').trim();
     }
     if (data['cliente']['email']) {
       let email = new String(data['cliente']['email']); //Hace una copia, para no alterar.
