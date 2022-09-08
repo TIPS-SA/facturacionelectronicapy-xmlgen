@@ -1,6 +1,6 @@
 import * as xml2js from 'xml2js';
 import fechaUtilService from './FechaUtil.service';
-import constanteService from './Constante.service';
+import constanteService from './constante.service';
 import stringUtilService from './StringUtil.service';
 
 class JSonEventoMainService {
