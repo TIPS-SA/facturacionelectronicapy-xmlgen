@@ -1,5 +1,5 @@
 import stringUtilService from './StringUtil.service';
-import constanteService from './constante.service.ts2';
+import constanteService from './constante.service';
 import { XmlgenConfig } from './type.interface.';
 
 class JSonDteItemService {
