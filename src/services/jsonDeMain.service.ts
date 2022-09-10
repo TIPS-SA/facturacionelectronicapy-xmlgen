@@ -2,7 +2,7 @@ import * as xml2js from 'xml2js';
 
 import stringUtilService from './StringUtil.service';
 import fechaUtilService from './FechaUtil.service';
-import constanteService from './constante.service';
+import constanteService from './constante.service.ts2';
 import jsonDteItem from './jsonDteItem.service';
 import jsonDteAlgoritmos from './jsonDteAlgoritmos.service';
 import jsonDteComplementarios from './jsonDteComplementario.service';
