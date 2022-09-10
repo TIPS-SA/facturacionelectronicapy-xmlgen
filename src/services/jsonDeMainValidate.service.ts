@@ -1,6 +1,6 @@
 import stringUtilService from './StringUtil.service';
 import fechaUtilService from './FechaUtil.service';
-import constanteService from './constante.service';
+import constanteService from './constants.service';
 import jsonDteItemValidate from './jsonDteItemValidate.service';
 import { XmlgenConfig } from './type.interface.';
 

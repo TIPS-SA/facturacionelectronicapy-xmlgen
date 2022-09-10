@@ -1,4 +1,4 @@
-import constanteService from './constante.service';
+import constanteService from './constants.service';
 import stringUtilService from './StringUtil.service';
 
 class JSonDteIdentificacionDocumentoService {
