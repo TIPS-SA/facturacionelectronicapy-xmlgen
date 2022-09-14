@@ -583,6 +583,12 @@ class JSonDeMainService {
       data['moneda'] = 'PYG';
     }
 
+    if (data['moneda'] != 'PYG') {
+      if (!data['condicionTipoCambio']) {
+        data['condicionTipoCambio'] = 1;  //Por el Global
+      }
+    }
+
     //Valores por defecto para los items
     if (data['items'] && data['items'].length > 0) {
       for (let i = 0; i < data['items'].length; i++) {
