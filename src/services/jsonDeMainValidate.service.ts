@@ -279,15 +279,6 @@ class JSonDeMainValidateService {
       );
     }
 
-    /*if ( (params['contribuyente']+"") == '1' ) {
-      this.errors.push(
-        "Tipo de Emisión '" +
-          data['tipoEmision'] +
-          "' en data.tipoEmision no válido. Valores: " +
-          constanteService.tiposEmisiones.map((a) => a.codigo + '-' + a.descripcion),
-      );
-    }*/
-
     if (params['tipoRegimen']) {
       if (constanteService.tiposRegimenes.filter((um) => um.codigo === params['tipoRegimen']).length == 0) {
         this.errors.push(
@@ -299,6 +290,30 @@ class JSonDeMainValidateService {
       }
     }
 
+    if (
+      !(
+        (params['razonSocial'] + '').length >= 4 &&
+        (params['razonSocial'] + '').length <= 250
+      )
+    ) {
+      this.errors.push(
+        "La razon Social del Emisor '" + params['razonSocial'] + "' en params.razonSocial debe tener de 4 a 250 caracteres",
+      );
+    }
+
+    if (params['nombreFantasia'] && (params['nombreFantasia'] + '').length > 0) {
+      if (
+        !(
+          (params['nombreFantasia'] + '').length >= 4 &&
+          (params['nombreFantasia'] + '').length <= 250
+        )
+      ) {
+        this.errors.push(
+          "El nombre de Fantasia del Emisor '" + params['nombreFantasia'] + "' en params.nombreFantasia debe tener de 4 a 250 caracteres",
+        );
+      }
+    }
+    
     //Aqui hay que verificar los datos de las sucursales
     if (!(params['establecimientos'] && Array.isArray(params['establecimientos']))) {
       this.errors.push('Debe especificar un array de establecimientos en params.establecimientos');
@@ -543,6 +558,35 @@ class JSonDeMainValidateService {
       if (rucCliente[1] > 9) {
         this.errors.push(
           "La parte del DV del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser del 1 al 9",
+        );
+      }
+
+      if (!data['cliente']['tipoContribuyente']) {
+        this.errors.push('Debe proporcionar el Tipo de Contribuyente en data.cliente.tipoContribuyente');
+      }
+  
+    }
+
+    if (
+      !(
+        (data['cliente']['razonSocial'] + '').length >= 4 &&
+        (data['cliente']['razonSocial'] + '').length <= 250
+      )
+    ) {
+      this.errors.push(
+        "La razon Social del Cliente '" + data['cliente']['razonSocial'] + "' en data.cliente.razonSocial debe tener de 4 a 250 caracteres",
+      );
+    }
+
+    if (data['cliente']['nombreFantasia'] && (data['cliente']['nombreFantasia'] + '').length > 0) {
+      if (
+        !(
+          (data['cliente']['nombreFantasia'] + '').length >= 4 &&
+          (data['cliente']['nombreFantasia'] + '').length <= 250
+        )
+      ) {
+        this.errors.push(
+          "El nombre de Fantasia del Cliente '" + data['cliente']['nombreFantasia'] + "' en data.cliente.nombreFantasia debe tener de 4 a 250 caracteres",
         );
       }
     }
@@ -1071,8 +1115,8 @@ class JSonDeMainValidateService {
         }
       }
 
-      if (data['cliente']['contribuyente'] != 1) {
-        this.errors.push('El Cliente de una Autofactura debe ser Contribuyente=1 en data.cliente.tipoContribuyente');
+      if (data['cliente']['contribuyente'] == false) {
+        this.errors.push('El Cliente de una Autofactura debe ser Contribuyente en data.cliente.contribuyente');
       }
     }
   }

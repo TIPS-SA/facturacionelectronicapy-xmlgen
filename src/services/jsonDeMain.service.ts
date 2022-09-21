@@ -890,40 +890,41 @@ class JSonDeMainService {
     if (params['ruc'].indexOf('-') == -1) {
       //throw new Error('RUC debe contener dígito verificador en params.ruc');
     }
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis'] = {
-      dRucEm: params['ruc'].split('-')[0],
-      dDVEmi: params['ruc'].split('-')[1],
-      iTipCont: params['tipoContribuyente'],
-      cTipReg: params['tipoRegimen'],
-      dNomEmi: params['razonSocial'],
-      dNomFanEmi: params['nombreFantasia'],
-      dDirEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['direccion'],
-      dNumCas: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['numeroCasa'],
-      dCompDir1: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
-        'complementoDireccion1'
-      ],
-      dCompDir2: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
-        'complementoDireccion2'
-      ],
-      cDepEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
-      dDesDepEmi: constanteService.departamentos.filter(
-        (td) =>
-          td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
-      )[0]['descripcion'],
-      cDisEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
-      dDesDisEmi: constanteService.distritos.filter(
-        (td) =>
-          td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
-      )[0]['descripcion'],
-      cCiuEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
-      dDesCiuEmi: constanteService.ciudades.filter(
-        (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
-      )[0]['descripcion'],
-      dTelEmi: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'],
-      //dDenSuc: ,
-    };
 
-    //dEmailE: params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email'],
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis'] = {};
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dRucEm'] = params['ruc'].split('-')[0];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDVEmi'] = params['ruc'].split('-')[1];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['iTipCont'] = params['tipoContribuyente'];
+    if (typeof params['tipoRegimen'] != undefined) {
+      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cTipReg'] = params['tipoRegimen'];
+    }
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dNomEmi'] = params['razonSocial'];
+    if (params['nombreFantasia'] && (params['nombreFantasia'] + '').length > 0) {
+      this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dNomFanEmi'] = params['nombreFantasia'];
+    }
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDirEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['direccion'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dNumCas'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['numeroCasa'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir1'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
+      'complementoDireccion1'
+    ];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir2'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
+      'complementoDireccion2'
+    ];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cDepEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDesDepEmi'] = constanteService.departamentos.filter(
+      (td) =>
+        td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
+    )[0]['descripcion'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cDisEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDesDisEmi'] = constanteService.distritos.filter(
+      (td) =>
+        td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
+    )[0]['descripcion'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cCiuEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDesCiuEmi'] = constanteService.ciudades.filter(
+      (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
+    )[0]['descripcion'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dTelEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'];
 
     if (params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']) {
       let email = new String(params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']); //Hace una copia, para no alterar.
