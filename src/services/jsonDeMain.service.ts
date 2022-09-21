@@ -585,7 +585,7 @@ class JSonDeMainService {
 
     if (data['moneda'] != 'PYG') {
       if (!data['condicionTipoCambio']) {
-        data['condicionTipoCambio'] = 1;  //Por el Global
+        data['condicionTipoCambio'] = 1; //Por el Global
       }
     }
 
@@ -902,29 +902,40 @@ class JSonDeMainService {
     if (params['nombreFantasia'] && (params['nombreFantasia'] + '').length > 0) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dNomFanEmi'] = params['nombreFantasia'];
     }
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDirEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['direccion'];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dNumCas'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['numeroCasa'];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir1'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
-      'complementoDireccion1'
-    ];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir2'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
-      'complementoDireccion2'
-    ];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cDepEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDirEmi'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['direccion'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dNumCas'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['numeroCasa'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir1'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['complementoDireccion1'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir2'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['complementoDireccion2'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cDepEmi'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['departamento'];
     this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDesDepEmi'] = constanteService.departamentos.filter(
       (td) =>
         td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['departamento'],
     )[0]['descripcion'];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cDisEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cDisEmi'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['distrito'];
     this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDesDisEmi'] = constanteService.distritos.filter(
-      (td) =>
-        td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
+      (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['distrito'],
     )[0]['descripcion'];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cCiuEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['cCiuEmi'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['ciudad'];
     this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dDesCiuEmi'] = constanteService.ciudades.filter(
       (td) => td.codigo === params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['ciudad'],
     )[0]['descripcion'];
-    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dTelEmi'] = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['telefono'];
+    this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dTelEmi'] = params['establecimientos'].filter(
+      (e: any) => e.codigo === establecimiento,
+    )[0]['telefono'];
 
     if (params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']) {
       let email = new String(params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0]['email']); //Hace una copia, para no alterar.
