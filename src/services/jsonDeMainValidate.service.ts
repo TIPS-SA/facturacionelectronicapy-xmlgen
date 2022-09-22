@@ -470,7 +470,7 @@ class JSonDeMainValidateService {
 
   private generateDatosGeneralesResponsableGeneracionDEValidate(params: any, data: any) {
     if (
-      constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['usuario']['documentoTipo'])
+      constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === +data['usuario']['documentoTipo'])
         .length == 0
     ) {
       this.errors.push(
@@ -501,7 +501,7 @@ class JSonDeMainValidateService {
 
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
       if (
-        constanteService.tiposDocumentosReceptor.filter((um: any) => um.codigo === data['cliente']['documentoTipo'])
+        constanteService.tiposDocumentosReceptor.filter((um: any) => um.codigo === +data['cliente']['documentoTipo'])
           .length == 0
       ) {
         this.errors.push(
@@ -511,7 +511,7 @@ class JSonDeMainValidateService {
             constanteService.tiposDocumentosReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
         );
 
-        if (data['cliente']['documentoTipo'] == 9) {
+        if (+data['cliente']['documentoTipo'] == 9) {
           if (!data['cliente']['documentoTipoDescripcion']) {
             this.errors.push(
               'Debe especificar la Descripción para el tipo de Documento en data.cliente.documentoTipoDescripcion para documentoTipo=9',
