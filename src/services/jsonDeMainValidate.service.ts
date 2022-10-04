@@ -1380,8 +1380,8 @@ class JSonDeMainValidateService {
     //Recorrer array de infoCuotas e informar en el JSON
     if (data['condicion']['credito']['tipo'] === 2) {
       //A Cuotas
-      console.log("a", data['condicion']['credito']['infoCuotas']);
-      console.log("b", data['condicion']['credito']['infoCuotas'].length);
+      console.log('a', data['condicion']['credito']['infoCuotas']);
+      console.log('b', data['condicion']['credito']['infoCuotas'].length);
       if (data['condicion']['credito']['infoCuotas'] && data['condicion']['credito']['infoCuotas'].length > 0) {
         for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
           const infoCuota = data['condicion']['credito']['infoCuotas'][i];

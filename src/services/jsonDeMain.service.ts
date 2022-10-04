@@ -376,7 +376,7 @@ class JSonDeMainService {
 
     if (data.condicion?.credito) {
       if (data.condicion.credito.info_cuotas) {
-        data.condicion.credito.infoCuotas = [ ...data.condicion.credito.info_cuotas ];
+        data.condicion.credito.infoCuotas = [...data.condicion.credito.info_cuotas];
       }
     }
 
