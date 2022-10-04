@@ -370,17 +370,13 @@ class JSonDeMainService {
       }
     }
 
-    if (data.condicion?.credito && data.condicion?.credito.length > 0) {
-      for (let i = 0; i < data.condicion.credito.length; i++) {
-        const credito = data.condicion.credito[i];
+    if (data.condicion?.monto_entrega) {
+      data.condicion.montoEntrega = data.condicion.monto_entrega;
+    }
 
-        if (credito.monto_entrega) {
-          credito.montoEntrega = credito.monto_entrega;
-        }
-
-        if (credito.info_cuotas) {
-          credito.infoCuotas = { ...credito.info_cuotas };
-        }
+    if (data.condicion?.credito) {
+      if (data.condicion.credito.info_cuotas) {
+        data.condicion.credito.infoCuotas = [ ...data.condicion.credito.info_cuotas ];
       }
     }
 
