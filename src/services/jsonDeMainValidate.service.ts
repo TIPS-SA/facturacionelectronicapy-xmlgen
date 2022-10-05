@@ -352,7 +352,8 @@ class JSonDeMainValidateService {
 
     this.generateDatosGeneralesEmisorDEValidate(params, data);
 
-    if (config.userObjectRemove == false) { //Si está TRUE no crea el objeto usuario
+    if (config.userObjectRemove == false) {
+      //Si está TRUE no crea el objeto usuario
       if (data['usuario']) {
         //No es obligatorio
         this.generateDatosGeneralesResponsableGeneracionDEValidate(params, data);

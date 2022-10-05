@@ -30,7 +30,7 @@ class JSonDeMainService {
           redondeoSedeco: true,
           decimals: 2,
           taxDecimals: 2,
-          userObjectRemove : false,
+          userObjectRemove: false,
         };
 
         defaultConfig = Object.assign(defaultConfig, config);
@@ -740,11 +740,12 @@ class JSonDeMainService {
     };
     this.generateDatosGeneralesInherentesOperacion(params, data, config);
     this.generateDatosGeneralesEmisorDE(params, data);
-    if (config.userObjectRemove == false) { //Si está TRUE no crea el objeto usuario
+    if (config.userObjectRemove == false) {
+      //Si está TRUE no crea el objeto usuario
       if (data['usuario']) {
         //No es obligatorio
         this.generateDatosGeneralesResponsableGeneracionDE(params, data);
-      }  
+      }
     }
     this.generateDatosGeneralesReceptorDE(params, data);
   }
