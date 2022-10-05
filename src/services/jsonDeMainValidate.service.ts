@@ -73,7 +73,7 @@ class JSonDeMainValidateService {
 
     this.generateDatosOperacionValidate(params, data);
 
-    this.generateDatosGeneralesValidate(params, data);
+    this.generateDatosGeneralesValidate(params, data, config);
 
     this.generateDatosEspecificosPorTipoDEValidate(params, data);
 
@@ -347,20 +347,21 @@ class JSonDeMainValidateService {
     }
   }
 
-  private generateDatosGeneralesValidate(params: any, data: any, defaultValues?: boolean) {
-    this.generateDatosGeneralesInherentesOperacionValidate(params, data, defaultValues);
+  private generateDatosGeneralesValidate(params: any, data: any, config: XmlgenConfig) {
+    this.generateDatosGeneralesInherentesOperacionValidate(params, data);
 
     this.generateDatosGeneralesEmisorDEValidate(params, data);
 
-    if (data['usuario']) {
-      //No es obligatorio
-      this.generateDatosGeneralesResponsableGeneracionDEValidate(params, data);
+    if (config.userObjectRemove == false) { //Si está TRUE no crea el objeto usuario
+      if (data['usuario']) {
+        //No es obligatorio
+        this.generateDatosGeneralesResponsableGeneracionDEValidate(params, data);
+      }
     }
-
     this.generateDatosGeneralesReceptorDEValidate(params, data);
   }
 
-  private generateDatosGeneralesInherentesOperacionValidate(params: any, data: any, defaultValues?: boolean) {
+  private generateDatosGeneralesInherentesOperacionValidate(params: any, data: any) {
     if (data['tipoDocumento'] == 7) {
       //C002
       return; //No informa si el tipo de documento es 7
@@ -386,7 +387,7 @@ class JSonDeMainValidateService {
     }
 
     let moneda = data['moneda'];
-    if (!moneda && defaultValues === true) {
+    if (!moneda) {
       moneda = 'PYG';
     }
 

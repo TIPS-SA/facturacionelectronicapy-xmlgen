@@ -6,6 +6,7 @@ interface XmlgenConfig {
   redondeoSedeco?: boolean;
   decimals?: number;
   taxDecimals?: number;
+  userObjectRemove?: boolean;
 }
 
 export { XmlgenConfig };
