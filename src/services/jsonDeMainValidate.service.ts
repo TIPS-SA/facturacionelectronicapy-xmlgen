@@ -1118,17 +1118,6 @@ class JSonDeMainValidateService {
     const items = data['items'];
     let sumaSubtotales = 0;
 
-    /*
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      console.log()
-      //---
-      sumaSubtotales += (item['precioUnitario'] || 0) - 
-                        (item['descuento'] || 0) - 
-                        (item['descuentoGlobal'] || 0);
-    } //end-for
-    console.log("--- sumaSubtotales ", sumaSubtotales);
-    */
     if (true) {
       if (!data['condicion']) {
         this.errors.push('Debe indicar los datos de la Condición de la Operación en data.condicion');
@@ -1382,8 +1371,6 @@ class JSonDeMainValidateService {
     //Recorrer array de infoCuotas e informar en el JSON
     if (data['condicion']['credito']['tipo'] === 2) {
       //A Cuotas
-      console.log('a', data['condicion']['credito']['infoCuotas']);
-      console.log('b', data['condicion']['credito']['infoCuotas'].length);
       if (data['condicion']['credito']['infoCuotas'] && data['condicion']['credito']['infoCuotas'].length > 0) {
         for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
           const infoCuota = data['condicion']['credito']['infoCuotas'][i];
@@ -1599,18 +1586,11 @@ class JSonDeMainValidateService {
         let fechaInicio = new Date(data['detalleTransporte']['inicioEstimadoTranslado']);
         let fechaFin = new Date(data['detalleTransporte']['finEstimadoTranslado']);
 
-        console.log('fechaHoy a', new Date().toISOString());
-        console.log('fechaHoy b', new Date().toISOString().slice(0, -14));
-
         let fechaHoy = new Date(new Date().toISOString().slice(0, -14));
         fechaHoy.setHours(0);
         fechaHoy.setMinutes(0);
         fechaHoy.setSeconds(0);
         fechaHoy.setMilliseconds(0);
-
-        console.log('fechaHoy', fechaHoy);
-        console.log('fechaInicio', fechaInicio);
-        console.log('fechaFin', fechaFin);
 
         if (fechaInicio.getTime() < fechaHoy.getTime()) {
           //this.errors.push('La fecha de inicio de translado en data.detalleTransporte.inicioEstimadoTranslado debe ser mayor a la Fecha de la Transacción');
