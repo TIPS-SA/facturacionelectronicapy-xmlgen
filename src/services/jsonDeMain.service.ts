@@ -909,17 +909,17 @@ class JSonDeMainService {
       (e: any) => e.codigo === establecimiento,
     )[0]['numeroCasa'];
 
-    let dCompDir1 = params['establecimientos'].filter(
-                                                  (e: any) => e.codigo === establecimiento,
-                                                )[0]['complementoDireccion1'];
-    if (dCompDir1 && (dCompDir1 + "").length > 1) {
+    let dCompDir1 = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
+      'complementoDireccion1'
+    ];
+    if (dCompDir1 && (dCompDir1 + '').length > 1) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir1'] = dCompDir1;
     }
 
-    let dCompDir2 = params['establecimientos'].filter(
-                                                  (e: any) => e.codigo === establecimiento,
-                                                )[0]['complementoDireccion2'];
-    if (dCompDir2 && (dCompDir2 + "").length > 1) {
+    let dCompDir2 = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0][
+      'complementoDireccion2'
+    ];
+    if (dCompDir2 && (dCompDir2 + '').length > 1) {
       this.json['rDE']['DE']['gDatGralOpe']['gEmis']['dCompDir2'] = dCompDir2;
     }
 
