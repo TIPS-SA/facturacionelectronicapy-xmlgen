@@ -40,7 +40,6 @@ class JSonDteComplementariosService {
     } else {
       return null;
     }
-    
   }
 
   /**

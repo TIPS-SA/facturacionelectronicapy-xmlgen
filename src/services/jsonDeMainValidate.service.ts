@@ -1894,7 +1894,7 @@ class JSonDeMainValidateService {
             data['descuentoGlobal'] +
             '" en data.descuentoGlobal, no puede contener mas de 8 decimales',
         );
-      }  
+      }
     }
 
     if (data.moneda == 'PYG') {
@@ -1912,10 +1912,8 @@ class JSonDeMainValidateService {
             data['anticipoGlobal'] +
             '" en data.anticipoGlobal, no puede contener mas de 8 decimales',
         );
-      }  
+      }
     }
-
-
   }
 
   /**

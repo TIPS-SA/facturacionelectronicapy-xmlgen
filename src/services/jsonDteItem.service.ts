@@ -167,8 +167,7 @@ class JSonDteItemService {
     i: number,
     config: XmlgenConfig,
   ) {
-    const jsonResult: any = {
-    };
+    const jsonResult: any = {};
 
     //Corrige Precio Unitario con la cantidad correcta de decimales
     item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.decimals);
@@ -177,7 +176,7 @@ class JSonDteItemService {
     }
 
     jsonResult['dPUniProSer'] = item['precioUnitario'];
-    
+
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dPUniProSer']) * parseFloat(item['cantidad']);
 
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.decimals));

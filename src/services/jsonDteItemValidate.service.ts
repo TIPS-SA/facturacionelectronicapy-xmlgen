@@ -121,7 +121,7 @@ class JSonDteItemValidateService {
                 i +
                 '].precioUnitario, no puede contener mas de 8 decimales',
             );
-          }  
+          }
         }
 
         if (data.moneda == 'PYG') {

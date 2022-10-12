@@ -82,7 +82,7 @@ class JSonDeMainService {
     if (gCamEsp) {
       this.json['rDE']['DE']['gDtipDE']['gCamEsp'] = gCamEsp;
     }
-    
+
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 7) {
       //1 Opcional, 7 Obligatorio
       if (data['detalleTransporte']) {
