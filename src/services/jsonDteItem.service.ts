@@ -113,6 +113,41 @@ class JSonDteItemService {
 
         jsonResult.push(gCamItem);
       } //end-for
+
+      //Verificacion de Totales de Descuento Global y Anticipo
+      //Con los prorrateos pueden haber diferencias
+      //Las diferencias se corrigen en el ultimo item
+      
+      let totalDescuentoGlobal = 0;
+      let totalAnticipoGlobal = 0;
+      if (data['descuentoGlobal'] > 0 || data['anticipoGlobal'] > 0 ) {
+        for (let i = 0; i < jsonResult.length; i++) {
+          const gCamItem = jsonResult[i];
+  
+          if (data['descuentoGlobal']) {
+            totalDescuentoGlobal += gCamItem['dCantProSer'] * gCamItem['gValorItem']['gValorRestaItem']['dDescGloItem'];
+          }
+            
+          if (data['anticipoGlobal']) {
+            totalAnticipoGlobal += gCamItem['dCantProSer'] * gCamItem['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'];
+          }
+        }
+        
+        if (data['descuentoGlobal'] > 0) {
+          if (data['descuentoGlobal'] != totalDescuentoGlobal) {
+            console.log("hay una diferencia", data['descuentoGlobal'], totalDescuentoGlobal);
+            //throw new Error("hay una diferencia", data['descuentoGlobal'], totalDescuentoGlobal);
+          }
+        }
+        if (data['anticipoGlobal'] > 0) {
+          if (data['anticipoGlobal'] != totalDescuentoGlobal) {
+            console.log("hay una diferencia", data['anticipoGlobal'], totalAnticipoGlobal);
+            //throw new Error("hay una diferencia", data['anticipoGlobal'], totalDescuentoGlobal);
+          }
+        }
+
+      }
+
     }
 
     return jsonResult;
@@ -184,24 +219,40 @@ class JSonDteItemService {
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
     }
 
+    let totalGeneral = 0;
+    for (let i = 0; i < data['items'].length; i++) {
+      const item2 = data['items'][i];
+      totalGeneral += item2['cantidad'] * item2['precioUnitario'];
+    }
+
     jsonResult['dDescGloItem'] = 0;
     if (data['descuentoGlobal'] && +data['descuentoGlobal'] > 0) {
-      jsonResult['dDescGloItem'] = parseFloat(item['descuentoGlobal']).toFixed(config.decimals);
+      let subtotal = item['cantidad'] * item['precioUnitario'];
+      let pesoPorc = (100 * subtotal) / totalGeneral;
+      let descuentoGlobalAplicado = (data['descuentoGlobal'] * pesoPorc) / 100;
+      let descuentoGlobalUnitario = descuentoGlobalAplicado / item['cantidad'];
+
+      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario+"").toFixed(8); //Redondea al maximo decimal, para que el total salga bien
     }
-    /*if (data['porcentajeDescuento'] && data['porcentajeDescuento'] > 0) {
-      //Si hay un descuento global, entonces FacturaSend prorratea entre los items
-      jsonResult['dDescGloItem'] = (data['porcentajeDescuento'] * parseFloat(item['precioUnitario'])) / 100;
-      jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.decimals);
-    }*/
 
     jsonResult['dAntPreUniIt'] = 0;
     if (item['anticipo'] && +item['anticipo'] > 0) {
-      jsonResult['dAntPreUniIt'] = parseFloat(item['anticipo']).toFixed(config.decimals);
+      jsonResult['dAntPreUniIt'] = parseFloat(item['anticipo']).toFixed(config.decimals); //Redondea al maximo decimal, para que el total salga bien
     }
 
+    /*
+    if (data['anticipoGlobal'] && +data['anticipoGlobal'] > 0) {
+      jsonResult['dAntGloPreUniIt'] = parseFloat(data['anticipoGlobal']).toFixed(config.decimals);
+    }*/
+
     jsonResult['dAntGloPreUniIt'] = 0;
-    if (item['anticipoGlobal'] && +item['anticipoGlobal'] > 0) {
-      jsonResult['dAntGloPreUniIt'] = parseFloat(item['anticipoGlobal']).toFixed(config.decimals);
+    if (data['anticipoGlobal'] && +data['anticipoGlobal'] > 0) {
+      let subtotal = item['cantidad'] * item['precioUnitario'];
+      let pesoPorc = (100 * subtotal) / totalGeneral;
+      let anticipoGlobalAplicado = (data['anticipoGlobal'] * pesoPorc) / 100;
+      let anticipoGlobalUnitario = anticipoGlobalAplicado / item['cantidad'];
+
+      jsonResult['dAntGloPreUniIt'] = parseFloat(anticipoGlobalUnitario+"").toFixed(8);
     }
 
     /* dTotOpeItem (EA008)

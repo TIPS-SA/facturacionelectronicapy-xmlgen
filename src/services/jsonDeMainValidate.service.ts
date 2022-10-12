@@ -2,6 +2,7 @@ import stringUtilService from './StringUtil.service';
 import fechaUtilService from './FechaUtil.service';
 import constanteService from './constants.service';
 import jsonDteItemValidate from './jsonDteItemValidate.service';
+import jsonDteTotales from './jsonDteTotales.service';
 import { XmlgenConfig } from './type.interface.';
 
 class JSonDeMainValidateService {
@@ -97,7 +98,7 @@ class JSonDeMainValidateService {
     }
 
     if (data['tipoDocumento'] != 7) {
-      this.generateDatosTotalesValidate(params, data);
+      this.generateDatosTotalesValidate(params, data, config);
     }
 
     if (data['complementarios']) {
@@ -1862,7 +1863,16 @@ class JSonDeMainValidateService {
     }
   }
 
-  public generateDatosTotalesValidate(params: any, data: any) {
+  public generateDatosTotalesValidate(params: any, data: any, config: XmlgenConfig) {
+
+    /*let temporalTotal = jsonDteTotales.generateDatosTotales(params, data, data.items, config);
+    console.log("temporalTotal", temporalTotal);
+
+    if (data.descuentoGlobal > 0) {
+      console.log("temporalTotal", data.descuentoGlobal);
+    }*/
+    
+
     if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {
       if (!data['cambio']) {
         this.errors.push(

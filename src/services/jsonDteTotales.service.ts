@@ -202,6 +202,27 @@ class JSonDteTotalesService {
     } else {
       dDescTotal = parseFloat(dDescTotal.toFixed(0));
     }
+    if (data.moneda != 'PYG') {
+      dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals));
+    } else {
+      dTotOpe = parseFloat(dTotOpe.toFixed(0));
+    }
+    //---
+    if (data.moneda != 'PYG') {
+      dTotAntItem = parseFloat(dTotAntItem.toFixed(config.decimals));
+    } else {
+      dTotAntItem = parseFloat(dTotAntItem.toFixed(0));
+    }
+    if (data.moneda != 'PYG') {
+      dTotAnt = parseFloat(dTotAnt.toFixed(config.decimals));
+    } else {
+      dTotAnt = parseFloat(dTotAnt.toFixed(0));
+    }
+    if (data.moneda != 'PYG') {
+      dAnticipo = parseFloat(dAnticipo.toFixed(config.decimals));
+    } else {
+      dAnticipo = parseFloat(dAnticipo.toFixed(0));
+    }
     jsonResult = Object.assign(jsonResult, {
       dTotOpe: dTotOpe, //F008
       dTotDesc: dTotDesc,
