@@ -1864,14 +1864,12 @@ class JSonDeMainValidateService {
   }
 
   public generateDatosTotalesValidate(params: any, data: any, config: XmlgenConfig) {
-
     /*let temporalTotal = jsonDteTotales.generateDatosTotales(params, data, data.items, config);
     console.log("temporalTotal", temporalTotal);
 
     if (data.descuentoGlobal > 0) {
       console.log("temporalTotal", data.descuentoGlobal);
     }*/
-    
 
     if (data['moneda'] != 'PYG' && data['condicionTipoCambio'] == 1) {
       if (!data['cambio']) {

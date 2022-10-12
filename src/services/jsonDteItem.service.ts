@@ -117,37 +117,36 @@ class JSonDteItemService {
       //Verificacion de Totales de Descuento Global y Anticipo
       //Con los prorrateos pueden haber diferencias
       //Las diferencias se corrigen en el ultimo item
-      
+
       let totalDescuentoGlobal = 0;
       let totalAnticipoGlobal = 0;
-      if (data['descuentoGlobal'] > 0 || data['anticipoGlobal'] > 0 ) {
+      if (data['descuentoGlobal'] > 0 || data['anticipoGlobal'] > 0) {
         for (let i = 0; i < jsonResult.length; i++) {
           const gCamItem = jsonResult[i];
-  
+
           if (data['descuentoGlobal']) {
             totalDescuentoGlobal += gCamItem['dCantProSer'] * gCamItem['gValorItem']['gValorRestaItem']['dDescGloItem'];
           }
-            
+
           if (data['anticipoGlobal']) {
-            totalAnticipoGlobal += gCamItem['dCantProSer'] * gCamItem['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'];
+            totalAnticipoGlobal +=
+              gCamItem['dCantProSer'] * gCamItem['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'];
           }
         }
-        
+
         if (data['descuentoGlobal'] > 0) {
           if (data['descuentoGlobal'] != totalDescuentoGlobal) {
-            console.log("hay una diferencia", data['descuentoGlobal'], totalDescuentoGlobal);
+            console.log('hay una diferencia', data['descuentoGlobal'], totalDescuentoGlobal);
             //throw new Error("hay una diferencia", data['descuentoGlobal'], totalDescuentoGlobal);
           }
         }
         if (data['anticipoGlobal'] > 0) {
           if (data['anticipoGlobal'] != totalDescuentoGlobal) {
-            console.log("hay una diferencia", data['anticipoGlobal'], totalAnticipoGlobal);
+            console.log('hay una diferencia', data['anticipoGlobal'], totalAnticipoGlobal);
             //throw new Error("hay una diferencia", data['anticipoGlobal'], totalDescuentoGlobal);
           }
         }
-
       }
-
     }
 
     return jsonResult;
@@ -232,7 +231,7 @@ class JSonDteItemService {
       let descuentoGlobalAplicado = (data['descuentoGlobal'] * pesoPorc) / 100;
       let descuentoGlobalUnitario = descuentoGlobalAplicado / item['cantidad'];
 
-      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario+"").toFixed(8); //Redondea al maximo decimal, para que el total salga bien
+      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario + '').toFixed(8); //Redondea al maximo decimal, para que el total salga bien
     }
 
     jsonResult['dAntPreUniIt'] = 0;
@@ -252,7 +251,7 @@ class JSonDteItemService {
       let anticipoGlobalAplicado = (data['anticipoGlobal'] * pesoPorc) / 100;
       let anticipoGlobalUnitario = anticipoGlobalAplicado / item['cantidad'];
 
-      jsonResult['dAntGloPreUniIt'] = parseFloat(anticipoGlobalUnitario+"").toFixed(8);
+      jsonResult['dAntGloPreUniIt'] = parseFloat(anticipoGlobalUnitario + '').toFixed(8);
     }
 
     /* dTotOpeItem (EA008)
