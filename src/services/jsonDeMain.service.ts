@@ -78,9 +78,11 @@ class JSonDeMainService {
     //['gDtipDE']=E001
     this.json['rDE']['DE']['gDtipDE']['gCamItem'] = jsonDteItem.generateDatosItemsOperacion(params, data, config);
 
-    this.json['rDE']['DE']['gDtipDE']['gCamEsp'] =
-      jsonDteComplementarios.generateDatosComplementariosComercialesDeUsoEspecificos(params, data);
-
+    let gCamEsp = jsonDteComplementarios.generateDatosComplementariosComercialesDeUsoEspecificos(params, data);
+    if (gCamEsp) {
+      this.json['rDE']['DE']['gDtipDE']['gCamEsp'] = gCamEsp;
+    }
+    
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 7) {
       //1 Opcional, 7 Obligatorio
       if (data['detalleTransporte']) {

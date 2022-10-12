@@ -14,24 +14,33 @@ class JSonDteComplementariosService {
    */
   public generateDatosComplementariosComercialesDeUsoEspecificos(params: any, data: any) {
     const jsonResult: any = {};
-
+    let entro = false;
     if (data['sectorEnergiaElectrica']) {
+      entro = true;
       jsonResult['gGrupEner'] = this.generateDatosSectorEnergiaElectrica(params, data);
     }
 
     if (data['sectorSeguros']) {
+      entro = true;
       jsonResult['gGrupSeg'] = this.generateDatosSectorSeguros(params, data);
     }
 
     if (data['sectorSupermercados']) {
+      entro = true;
       jsonResult['gGrupSup'] = this.generateDatosSectorSupermercados(params, data);
     }
 
     if (data['sectorAdicional']) {
+      entro = true;
       jsonResult['gGrupAdi'] = this.generateDatosDatosAdicionalesUsoComercial(params, data);
     }
 
-    return jsonResult;
+    if (entro) {
+      return jsonResult;
+    } else {
+      return null;
+    }
+    
   }
 
   /**
