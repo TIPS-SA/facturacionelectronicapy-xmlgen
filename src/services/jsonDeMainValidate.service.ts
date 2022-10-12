@@ -1878,6 +1878,44 @@ class JSonDeMainValidateService {
         );
       }
     }
+
+    if (data.moneda == 'PYG') {
+      if ((data['descuentoGlobal'] + '').split('.')[1]?.length > 0) {
+        this.errors.push(
+          'El Descuento Global "' +
+            data['descuentoGlobal'] +
+            '" en "PYG" en data.descuentoGlobal, no puede contener decimales',
+        );
+      }
+    } else {
+      if ((data['descuentoGlobal'] + '').split('.')[1]?.length > 8) {
+        this.errors.push(
+          'El Descuento Global "' +
+            data['descuentoGlobal'] +
+            '" en data.descuentoGlobal, no puede contener mas de 8 decimales',
+        );
+      }  
+    }
+
+    if (data.moneda == 'PYG') {
+      if ((data['anticipoGlobal'] + '').split('.')[1]?.length > 0) {
+        this.errors.push(
+          'El Anticipo Global "' +
+            data['anticipoGlobal'] +
+            '" en "PYG" en data.anticipoGlobal, no puede contener decimales',
+        );
+      }
+    } else {
+      if ((data['anticipoGlobal'] + '').split('.')[1]?.length > 8) {
+        this.errors.push(
+          'El Anticipo Global "' +
+            data['anticipoGlobal'] +
+            '" en data.anticipoGlobal, no puede contener mas de 8 decimales',
+        );
+      }  
+    }
+
+
   }
 
   /**

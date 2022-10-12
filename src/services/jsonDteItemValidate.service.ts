@@ -102,24 +102,48 @@ class JSonDteItemValidateService {
           );
         }
 
-        if ((item['precioUnitario'] + '').split('.')[1]?.length > 8) {
-          this.errors.push(
-            'El Precio Unitario del item "' +
-              item['precioUnitario'] +
-              '" en data.items[' +
-              i +
-              '].precioUnitario, no puede contener mas de 8 decimales',
-          );
+        if (data.moneda == 'PYG') {
+          if ((item['precioUnitario'] + '').split('.')[1]?.length > 0) {
+            this.errors.push(
+              'El Precio Unitario del item "' +
+                item['precioUnitario'] +
+                '" en "PYG" en data.items[' +
+                i +
+                '].precioUnitario, no puede contener decimales',
+            );
+          }
+        } else {
+          if ((item['precioUnitario'] + '').split('.')[1]?.length > 8) {
+            this.errors.push(
+              'El Precio Unitario del item "' +
+                item['precioUnitario'] +
+                '" en data.items[' +
+                i +
+                '].precioUnitario, no puede contener mas de 8 decimales',
+            );
+          }  
         }
 
-        if ((item['descuento'] + '').split('.')[1]?.length > 8) {
-          this.errors.push(
-            'El Descuento del item "' +
-              item['descuento'] +
-              '" en data.items[' +
-              i +
-              '].descuento, no puede contener mas de 8 decimales',
-          );
+        if (data.moneda == 'PYG') {
+          if ((item['descuento'] + '').split('.')[1]?.length > 0) {
+            this.errors.push(
+              'El Descuento del item "' +
+                item['descuento'] +
+                '" en "PYG" en data.items[' +
+                i +
+                '].descuento, no puede contener decimales',
+            );
+          }
+        } else {
+          if ((item['descuento'] + '').split('.')[1]?.length > 8) {
+            this.errors.push(
+              'El Descuento del item "' +
+                item['descuento'] +
+                '" en data.items[' +
+                i +
+                '].descuento, no puede contener mas de 8 decimales',
+            );
+          }
         }
 
         if (+item['cantidad'] <= 0) {
