@@ -111,6 +111,8 @@ El campo Email, si bien puede informarse mas de 1 (uno), en el Sifen solamente s
     "moneda" : "PYG",
     "condicionAnticipo" : 1,
     "condicionTipoCambio": 1,
+    "descuentoGlobal": 0,
+    "anticipoGlobal": 0,
     "cambio": 6700,
     "cliente" : {
         "contribuyente" : true,
