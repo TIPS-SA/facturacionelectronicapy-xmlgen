@@ -103,7 +103,6 @@ El campo Email, si bien puede informarse mas de 1 (uno), en el Sifen solamente s
     "numero" : "0000001", 
     "descripcion" : "Aparece en el documento",
     "observacion" : "Cualquier informacion de marketing, publicidad, sorteos, promociones para el Receptor",
-    "tipoContribuyente" : 1,
     "fecha" : "2022-08-14T10:11:00",
     "tipoEmision" : 1,
     "tipoTransaccion" : 1,
