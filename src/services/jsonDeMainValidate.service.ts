@@ -1136,9 +1136,7 @@ class JSonDeMainValidateService {
           );
         }
 
-        //if (data['condicion']['tipo'] === 1) {
         this.generateDatosCondicionOperacionDE_ContadoValidate(params, data);
-        //}
 
         if (data['condicion']['tipo'] === 2) {
           this.generateDatosCondicionOperacionDE_CreditoValidate(params, data);
@@ -1321,7 +1319,19 @@ class JSonDeMainValidateService {
             );
           }
         }
+
+        if (dataEntrega['moneda'] !== 'PYG') {
+          if (!dataEntrega['cambio']) {
+            this.errors.push(
+              'Debe informar la cotizacion del monto de la Entrega en data.condicion.entregas[' +
+                i +
+                '].cambio si la forma de Pago es diferente a PYG',
+            );
+          }
+        }
+
       }
+
     }
   }
 
