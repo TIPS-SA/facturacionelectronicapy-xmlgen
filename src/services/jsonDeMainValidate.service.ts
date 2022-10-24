@@ -1329,9 +1329,7 @@ class JSonDeMainValidateService {
             );
           }
         }
-
       }
-
     }
   }
 
