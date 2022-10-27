@@ -292,9 +292,7 @@ class JSonDeMainValidateService {
     }
 
     if (!params['razonSocial']) {
-      this.errors.push(
-        "La razon social del emisor en params.razonSocial no puede ser vacio",
-      );
+      this.errors.push('La razon social del emisor en params.razonSocial no puede ser vacio');
     } else {
       if (!((params['razonSocial'] + '').length >= 4 && (params['razonSocial'] + '').length <= 250)) {
         this.errors.push(
@@ -302,9 +300,8 @@ class JSonDeMainValidateService {
             params['razonSocial'] +
             "' en params.razonSocial debe tener de 4 a 250 caracteres",
         );
-      }  
+      }
     }
-
 
     if (params['nombreFantasia'] && (params['nombreFantasia'] + '').length > 0) {
       if (!((params['nombreFantasia'] + '').length >= 4 && (params['nombreFantasia'] + '').length <= 250)) {
@@ -574,9 +571,7 @@ class JSonDeMainValidateService {
     }
 
     if (!data['cliente']['razonSocial']) {
-      this.errors.push(
-        "La razon social del receptor en data.cliente.razonSocial no puede ser vacio",
-      );
+      this.errors.push('La razon social del receptor en data.cliente.razonSocial no puede ser vacio');
     } else {
       if (!((data['cliente']['razonSocial'] + '').length >= 4 && (data['cliente']['razonSocial'] + '').length <= 250)) {
         this.errors.push(
@@ -1731,9 +1726,10 @@ class JSonDeMainValidateService {
       this.errors.push('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     } else {
       if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-        this.errors.push('El numero de matricula del Vehiculo en data.detalleTransporte.vehiculo.numeroMatricula no fue informado');
+        this.errors.push(
+          'El numero de matricula del Vehiculo en data.detalleTransporte.vehiculo.numeroMatricula no fue informado',
+        );
       } else {
-
         if (
           !(
             data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
@@ -1743,10 +1739,10 @@ class JSonDeMainValidateService {
           this.errors.push(
             "Número de Matricula '" +
               data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-        "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+              "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
           );
         }
-        
+
         if (!data['detalleTransporte']['vehiculo']['tipo']) {
           this.errors.push('El tipo de Vehiculo en data.detalleTransporte.vehiculo.tipo no fue informado');
         } else {
@@ -1761,7 +1757,7 @@ class JSonDeMainValidateService {
                 data['detalleTransporte']['vehiculo']['tipo'] +
                 "' en data.detalleTransporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
             );
-          }  
+          }
         }
       }
     }
