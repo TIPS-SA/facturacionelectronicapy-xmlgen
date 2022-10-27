@@ -291,13 +291,20 @@ class JSonDeMainValidateService {
       }
     }
 
-    if (!((params['razonSocial'] + '').length >= 4 && (params['razonSocial'] + '').length <= 250)) {
+    if (!params['razonSocial']) {
       this.errors.push(
-        "La razon Social del Emisor '" +
-          params['razonSocial'] +
-          "' en params.razonSocial debe tener de 4 a 250 caracteres",
+        "La razon social del emisor en params.razonSocial no puede ser vacio",
       );
+    } else {
+      if (!((params['razonSocial'] + '').length >= 4 && (params['razonSocial'] + '').length <= 250)) {
+        this.errors.push(
+          "La razon Social del Emisor '" +
+            params['razonSocial'] +
+            "' en params.razonSocial debe tener de 4 a 250 caracteres",
+        );
+      }  
     }
+
 
     if (params['nombreFantasia'] && (params['nombreFantasia'] + '').length > 0) {
       if (!((params['nombreFantasia'] + '').length >= 4 && (params['nombreFantasia'] + '').length <= 250)) {
@@ -566,12 +573,18 @@ class JSonDeMainValidateService {
       }
     }
 
-    if (!((data['cliente']['razonSocial'] + '').length >= 4 && (data['cliente']['razonSocial'] + '').length <= 250)) {
+    if (!data['cliente']['razonSocial']) {
       this.errors.push(
-        "La razon Social del Cliente '" +
-          data['cliente']['razonSocial'] +
-          "' en data.cliente.razonSocial debe tener de 4 a 250 caracteres",
+        "La razon social del receptor en data.cliente.razonSocial no puede ser vacio",
       );
+    } else {
+      if (!((data['cliente']['razonSocial'] + '').length >= 4 && (data['cliente']['razonSocial'] + '').length <= 250)) {
+        this.errors.push(
+          "La razon Social del Cliente '" +
+            data['cliente']['razonSocial'] +
+            "' en data.cliente.razonSocial debe tener de 4 a 250 caracteres",
+        );
+      }
     }
 
     if (data['cliente']['nombreFantasia'] && (data['cliente']['nombreFantasia'] + '').length > 0) {
