@@ -231,10 +231,7 @@ class JSonDteTransporteService {
      */
   private generateDatosVehiculo(params: any, data: any) {
     const jsonResult: any = {
-      //dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
-      dTiVehTras: constanteService.modalidadesTransportes.filter(
-        (td) => td.codigo === +data['detalleTransporte']['vehiculo']['tipo'],
-      )[0]['descripcion'],
+      dTiVehTras: data['detalleTransporte']['vehiculo']['tipo'],
       dMarVeh: data['detalleTransporte']['vehiculo']['marca'],
     };
 

@@ -1717,19 +1717,9 @@ class JSonDeMainValidateService {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
       this.errors.push('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
     } else {
-      if (data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-        if (
-          !(
-            data['detalleTransporte']['vehiculo']['tipo'].length >= 4 &&
-            data['detalleTransporte']['vehiculo']['tipo'].length <= 10
-          )
-        ) {
-          this.errors.push(
-            "Tipo de Vehiculo '" +
-              data['detalleTransporte']['vehiculo']['tipo'] +
-              "' en data.detalleTransporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
-          );
-        }
+      if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
+        this.errors.push('El numero de matricula del Vehiculo en data.detalleTransporte.vehiculo.numeroMatricula no fue informado');
+      } else {
 
         if (
           !(
@@ -1740,8 +1730,25 @@ class JSonDeMainValidateService {
           this.errors.push(
             "Número de Matricula '" +
               data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-              "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+        "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
           );
+        }
+        
+        if (!data['detalleTransporte']['vehiculo']['tipo']) {
+          this.errors.push('El tipo de Vehiculo en data.detalleTransporte.vehiculo.tipo no fue informado');
+        } else {
+          if (
+            !(
+              data['detalleTransporte']['vehiculo']['tipo'].length >= 4 &&
+              data['detalleTransporte']['vehiculo']['tipo'].length <= 10
+            )
+          ) {
+            this.errors.push(
+              "Tipo de Vehiculo '" +
+                data['detalleTransporte']['vehiculo']['tipo'] +
+                "' en data.detalleTransporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
+            );
+          }  
         }
       }
     }
