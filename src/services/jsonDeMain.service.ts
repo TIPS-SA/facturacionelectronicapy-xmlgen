@@ -169,7 +169,6 @@ class JSonDeMainService {
         (data['fecha'] + '').substring(0, 4) +
         (data['fecha'] + '').substring(5, 7) +
         (data['fecha'] + '').substring(8, 10);
-
     } else {
       this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
       this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
