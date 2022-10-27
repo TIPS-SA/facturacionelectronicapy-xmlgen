@@ -528,34 +528,35 @@ class JSonDeMainValidateService {
     if (data['cliente']['contribuyente']) {
       if (!data['cliente']['ruc']) {
         this.errors.push('Debe proporcionar el RUC en data.cliente.ruc');
-      }
-      if (data['cliente']['ruc'].indexOf('-') == -1) {
-        this.errors.push('RUC debe contener dígito verificador en data.cliente.ruc');
-      }
-
-      const rucCliente = data['cliente']['ruc'].split('-');
-
-      if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
-        this.errors.push(
-          "La parte del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico",
-        );
-      }
-      if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
-        this.errors.push(
-          "La parte del DV del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico",
-        );
-      }
-
-      if (rucCliente[0].length > 8) {
-        this.errors.push(
-          "La parte del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe contener de 1 a 8 caracteres",
-        );
-      }
-
-      if (rucCliente[1] > 9) {
-        this.errors.push(
-          "La parte del DV del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser del 1 al 9",
-        );
+      } else {
+        if (data['cliente']['ruc'].indexOf('-') == -1) {
+          this.errors.push('RUC debe contener dígito verificador en data.cliente.ruc');
+        }
+  
+        const rucCliente = data['cliente']['ruc'].split('-');
+  
+        if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+          this.errors.push(
+            "La parte del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico",
+          );
+        }
+        if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
+          this.errors.push(
+            "La parte del DV del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico",
+          );
+        }
+  
+        if (rucCliente[0].length > 8) {
+          this.errors.push(
+            "La parte del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe contener de 1 a 8 caracteres",
+          );
+        }
+  
+        if (rucCliente[1] > 9) {
+          this.errors.push(
+            "La parte del DV del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser del 1 al 9",
+          );
+        }
       }
 
       if (!data['cliente']['tipoContribuyente']) {
