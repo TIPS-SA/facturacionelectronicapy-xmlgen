@@ -86,7 +86,6 @@ class JSonDteIdentificacionDocumentoService {
     if (data['documentoAsociado']['formato'] == 3) {
       //H002 = Constancia electronica
       if (data['documentoAsociado']['constanciaTipo']) {
-
         jsonResult['iTipCons'] = data['documentoAsociado']['constanciaTipo'];
         jsonResult['dDesTipCons'] = constanteService.tiposConstancias.filter(
           (tc) => tc.codigo === data['documentoAsociado']['constanciaTipo'],
