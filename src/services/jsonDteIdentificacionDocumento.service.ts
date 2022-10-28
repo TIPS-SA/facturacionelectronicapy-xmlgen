@@ -86,17 +86,6 @@ class JSonDteIdentificacionDocumentoService {
     if (data['documentoAsociado']['formato'] == 3) {
       //H002 = Constancia electronica
       if (data['documentoAsociado']['constanciaTipo']) {
-        /*if (
-          constanteService.tiposConstancias.filter((um) => um.codigo === data['documentoAsociado']['constanciaTipo'])
-            .length == 0
-        ) {
-          throw new Error(
-            "Tipo de Constancia '" +
-              data['documentoAsociado']['constanciaTipo'] +
-              "' en data.documentoAsociado.constanciaTipo no encontrado. Valores: " +
-              constanteService.tiposConstancias.map((a) => a.codigo + '-' + a.descripcion),
-          );
-        }*/
 
         jsonResult['iTipCons'] = data['documentoAsociado']['constanciaTipo'];
         jsonResult['dDesTipCons'] = constanteService.tiposConstancias.filter(

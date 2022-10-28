@@ -2142,7 +2142,9 @@ class JSonDeMainValidateService {
 
     if (data['documentoAsociado']['formato'] == 3) {
       //H002 = Constancia electronica
-      if (data['documentoAsociado']['constanciaTipo']) {
+      if (!data['documentoAsociado']['constanciaTipo']) {
+        this.errors.push('Debe especificar el Tipo de Constancia data.documentoAsociado.constanciaTipo');
+      } else {
         if (
           constanteService.tiposConstancias.filter((um) => um.codigo === data['documentoAsociado']['constanciaTipo'])
             .length == 0
