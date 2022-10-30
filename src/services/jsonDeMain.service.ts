@@ -439,6 +439,15 @@ class JSonDeMainService {
       }
     }
 
+    //Detalle de Tranposte
+    if (data.detalle_transporte) {
+      data.detalleTransporte = { ...data.detalle_transporte };
+    }
+    if (data.transporte) {  //Nueva version quedara solamente data.trasnsporte
+      data.detalleTransporte = { ...data.transporte };
+    }
+
+        
     //Sector Energia
     if (data.sector_energia_electrica) {
       data.sectorEnergiaElectrica = { ...data.sector_energia_electrica };
