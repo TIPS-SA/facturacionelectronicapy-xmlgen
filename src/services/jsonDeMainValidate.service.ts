@@ -94,11 +94,9 @@ class JSonDeMainValidateService {
       //1 Opcional, 7 Obligatorio
       if (data['tipoDocumento'] == 7) {
         if (!data['detalleTransporte']) {
-          this.errors.push(
-            'Debe especificar el detalle de tranporte en data.tranporte para el Tipo de Documento = 7',
-          );
+          this.errors.push('Debe especificar el detalle de tranporte en data.tranporte para el Tipo de Documento = 7');
         } else {
-          this.generateDatosTransporteValidate(params, data);  
+          this.generateDatosTransporteValidate(params, data);
         }
       } else {
         //Es por que tipoDocumento = 1
@@ -1607,7 +1605,9 @@ class JSonDeMainValidateService {
       } else {
         if (!fechaUtilService.isIsoDate(data['detalleTransporte']['inicioEstimadoTranslado'])) {
           this.errors.push(
-            "Valor de la Fecha '" + data['detalleTransporte']['inicioEstimadoTranslado'] + "' en data.transporte.inicioEstimadoTranslado no válido. Formato: yyyy-MM-dd",
+            "Valor de la Fecha '" +
+              data['detalleTransporte']['inicioEstimadoTranslado'] +
+              "' en data.transporte.inicioEstimadoTranslado no válido. Formato: yyyy-MM-dd",
           );
         }
       }
@@ -1618,7 +1618,9 @@ class JSonDeMainValidateService {
       } else {
         if (!fechaUtilService.isIsoDate(data['detalleTransporte']['finEstimadoTranslado'])) {
           this.errors.push(
-            "Valor de la Fecha '" + data['detalleTransporte']['finEstimadoTranslado'] + "' en data.transporte.finEstimadoTranslado no válido. Formato: yyyy-MM-dd",
+            "Valor de la Fecha '" +
+              data['detalleTransporte']['finEstimadoTranslado'] +
+              "' en data.transporte.finEstimadoTranslado no válido. Formato: yyyy-MM-dd",
           );
         }
       }
@@ -1801,32 +1803,41 @@ class JSonDeMainValidateService {
       );
     }
 
-    console.log("a Verificacion aqui ...............................................", data['detalleTransporte']);
-    console.log("b Verificacion aqui ...............................................", data['detalleTransporte']['transportista']);
-    console.log("c Verificacion aqui ...............................................", data['detalleTransporte']['transportista']['ruc']);
-                                                                                                                
-    console.log("d Verificacion aqui ...............................................", data['detalleTransporte'] &&
-    data['detalleTransporte']['transportista'] &&
-    data['detalleTransporte']['transportista']['ruc']);
+    console.log('a Verificacion aqui ...............................................', data['detalleTransporte']);
+    console.log(
+      'b Verificacion aqui ...............................................',
+      data['detalleTransporte']['transportista'],
+    );
+    console.log(
+      'c Verificacion aqui ...............................................',
+      data['detalleTransporte']['transportista']['ruc'],
+    );
+
+    console.log(
+      'd Verificacion aqui ...............................................',
+      data['detalleTransporte'] &&
+        data['detalleTransporte']['transportista'] &&
+        data['detalleTransporte']['transportista']['ruc'],
+    );
 
     if (
       data['detalleTransporte'] &&
       data['detalleTransporte']['transportista'] &&
       data['detalleTransporte']['transportista']['contribuyente']
     ) {
-
-      
-      if ( !
-        (data['detalleTransporte'] &&
-        data['detalleTransporte']['transportista'] &&
-        data['detalleTransporte']['transportista']['ruc'])
+      if (
+        !(
+          data['detalleTransporte'] &&
+          data['detalleTransporte']['transportista'] &&
+          data['detalleTransporte']['transportista']['ruc']
+        )
       ) {
-        this.errors.push('Debe especificar el RUC para el Transportista en data.transporte.transportista.ruc');        
+        this.errors.push('Debe especificar el RUC para el Transportista en data.transporte.transportista.ruc');
       } else {
-        console.log("existe el ruc del trnas");
+        console.log('existe el ruc del trnas');
 
         if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
-          console.log("agregar error");
+          console.log('agregar error');
 
           this.errors.push('RUC debe contener dígito verificador en data.transporte.transportista.ruc');
         }

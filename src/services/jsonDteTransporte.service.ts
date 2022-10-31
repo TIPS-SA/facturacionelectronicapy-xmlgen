@@ -29,7 +29,7 @@ class JSonDteTransporteService {
         //throw new Error('Obligatorio informar detalleTransporte.inicioEstimadoTranslado');
       }
     }
-    
+
     const jsonResult: any = {
       iTipTrans: data['detalleTransporte']['tipo'],
       dDesTipTrans: constanteService.tiposTransportes.filter((tt) => tt.codigo == data['detalleTransporte']['tipo'])[0][
@@ -227,7 +227,6 @@ class JSonDteTransporteService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosTransportista(params: any, data: any) {
-
     const jsonResult: any = {
       iNatTrans: data['detalleTransporte']['transportista']['contribuyente'] ? 1 : 2,
       dNomTrans: data['detalleTransporte']['transportista']['nombre'],
@@ -247,7 +246,6 @@ class JSonDteTransporteService {
     }
 
     if (data['detalleTransporte']['transportista'] && data['detalleTransporte']['transportista']['pais']) {
-
       jsonResult['cNacTrans'] = data['detalleTransporte']['transportista']['pais'];
       jsonResult['dDesNacTrans'] = constanteService.paises.filter(
         (pais) => pais.codigo === data['detalleTransporte']['transportista']['pais'],
