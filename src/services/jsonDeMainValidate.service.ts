@@ -92,8 +92,19 @@ class JSonDeMainValidateService {
 
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 7) {
       //1 Opcional, 7 Obligatorio
-      if (data['detalleTransporte']) {
-        this.generateDatosTransporteValidate(params, data);
+      if (data['tipoDocumento'] == 7) {
+        if (!data['detalleTransporte']) {
+          this.errors.push(
+            'Debe especificar el detalle de tranporte en data.tranporte para el Tipo de Documento = 7',
+          );
+        } else {
+          this.generateDatosTransporteValidate(params, data);  
+        }
+      } else {
+        //Es por que tipoDocumento = 1
+        if (data['detalleTransporte']) {
+          this.generateDatosTransporteValidate(params, data);
+        }
       }
     }
 
@@ -1578,7 +1589,7 @@ class JSonDeMainValidateService {
   public generateDatosTransporteValidate(params: any, data: any) {
     if (data['tipoDocumento'] == 7) {
       if (!(data['detalleTransporte'] && data['detalleTransporte']['tipo'] && data['detalleTransporte']['tipo'] > 0)) {
-        this.errors.push('Obligatorio informar detalleTransporte.tipo');
+        this.errors.push('Obligatorio informar transporte.tipo');
       }
     }
     if (data['detalleTransporte'] && data['detalleTransporte']['condicionNegociacion']) {
@@ -1592,12 +1603,24 @@ class JSonDeMainValidateService {
     }
     if (data['tipoDocumento'] == 7) {
       if (!data['detalleTransporte']['inicioEstimadoTranslado']) {
-        this.errors.push('Obligatorio informar data.detalleTransporte.inicioEstimadoTranslado. Formato yyyy-MM-dd');
+        this.errors.push('Obligatorio informar data.transporte.inicioEstimadoTranslado. Formato yyyy-MM-dd');
+      } else {
+        if (!fechaUtilService.isIsoDate(data['detalleTransporte']['inicioEstimadoTranslado'])) {
+          this.errors.push(
+            "Valor de la Fecha '" + data['detalleTransporte']['inicioEstimadoTranslado'] + "' en data.transporte.inicioEstimadoTranslado no válido. Formato: yyyy-MM-dd",
+          );
+        }
       }
     }
     if (data['tipoDocumento'] == 7) {
       if (!data['detalleTransporte']['finEstimadoTranslado']) {
-        this.errors.push('Obligatorio informar data.detalleTransporte.finEstimadoTranslado. Formato yyyy-MM-dd');
+        this.errors.push('Obligatorio informar data.transporte.finEstimadoTranslado. Formato yyyy-MM-dd');
+      } else {
+        if (!fechaUtilService.isIsoDate(data['detalleTransporte']['finEstimadoTranslado'])) {
+          this.errors.push(
+            "Valor de la Fecha '" + data['detalleTransporte']['finEstimadoTranslado'] + "' en data.transporte.finEstimadoTranslado no válido. Formato: yyyy-MM-dd",
+          );
+        }
       }
     }
 
@@ -1611,21 +1634,14 @@ class JSonDeMainValidateService {
         fechaHoy.setMinutes(0);
         fechaHoy.setSeconds(0);
         fechaHoy.setMilliseconds(0);
-
-        if (fechaInicio.getTime() < fechaHoy.getTime()) {
-          //this.errors.push('La fecha de inicio de translado en data.detalleTransporte.inicioEstimadoTranslado debe ser mayor a la Fecha de la Transacción');
-        }
-
-        if (fechaFin.getTime() < fechaInicio.getTime()) {
-          //this.errors.push('La fecha de fin de translado en data.detalleTransporte.finEstimadoTranslado debe ser mayor a la Fecha de Inicio en data.detalleTransporte.inicioEstimadoTranslado');
-        }
       }
     }
+
     if (constanteService.tiposTransportes.filter((um) => um.codigo === data['detalleTransporte']['tipo']).length == 0) {
       this.errors.push(
         "Tipo de Transporte '" +
           data['detalleTransporte']['tipo'] +
-          "' en data.detalleTransporte.tipo no encontrado. Valores: " +
+          "' en data.transporte.tipo no encontrado. Valores: " +
           constanteService.tiposTransportes.map((a) => a.codigo + '-' + a.descripcion),
       );
     }
@@ -1636,7 +1652,7 @@ class JSonDeMainValidateService {
       this.errors.push(
         "Modalidad de Transporte '" +
           data['detalleTransporte']['modalidad'] +
-          "' en data.detalleTransporte.modalidad no encontrado. Valores: " +
+          "' en data.transporte.modalidad no encontrado. Valores: " +
           constanteService.modalidadesTransportes.map((a) => a.codigo + '-' + a.descripcion),
       );
     }
@@ -1649,7 +1665,7 @@ class JSonDeMainValidateService {
       this.errors.push(
         "Condición de Negociación '" +
           data['detalleTransporte']['condicionNegociacion'] +
-          "' en data.detalleTransporte.condicionNegociacion no encontrado. Valores: " +
+          "' en data.transporte.condicionNegociacion no encontrado. Valores: " +
           constanteService.condicionesNegociaciones.map((a) => a.codigo + '-' + a.descripcion),
       );
     }
@@ -1672,7 +1688,7 @@ class JSonDeMainValidateService {
    */
   private generateDatosSalidaValidate(params: any, data: any) {
     constanteService.validateDepartamentoDistritoCiudad(
-      'data.detalleTransporte.salida',
+      'data.transporte.salida',
       +data['detalleTransporte']['salida']['departamento'],
       +data['detalleTransporte']['salida']['distrito'],
       +data['detalleTransporte']['salida']['ciudad'],
@@ -1723,11 +1739,11 @@ class JSonDeMainValidateService {
        */
   private generateDatosVehiculoValidate(params: any, data: any) {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
-      this.errors.push('Los datos del Vehiculo en data.detalleTransporte.vehiculo no fueron informados');
+      this.errors.push('Los datos del Vehiculo en data.transporte.vehiculo no fueron informados');
     } else {
       if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
         this.errors.push(
-          'El numero de matricula del Vehiculo en data.detalleTransporte.vehiculo.numeroMatricula no fue informado',
+          'El numero de matricula del Vehiculo en data.transporte.vehiculo.numeroMatricula no fue informado',
         );
       } else {
         if (
@@ -1739,12 +1755,12 @@ class JSonDeMainValidateService {
           this.errors.push(
             "Número de Matricula '" +
               data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-              "' en data.detalleTransporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+              "' en data.transporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
           );
         }
 
         if (!data['detalleTransporte']['vehiculo']['tipo']) {
-          this.errors.push('El tipo de Vehiculo en data.detalleTransporte.vehiculo.tipo no fue informado');
+          this.errors.push('El tipo de Vehiculo en data.transporte.vehiculo.tipo no fue informado');
         } else {
           if (
             !(
@@ -1755,7 +1771,7 @@ class JSonDeMainValidateService {
             this.errors.push(
               "Tipo de Vehiculo '" +
                 data['detalleTransporte']['vehiculo']['tipo'] +
-                "' en data.detalleTransporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
+                "' en data.transporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
             );
           }
         }
@@ -1780,55 +1796,78 @@ class JSonDeMainValidateService {
       this.errors.push(
         "Tipo de Documento '" +
           data['detalleTransporte']['transportista']['documentoTipo'] +
-          "' en data.detalleTransporte.transportista.documentoTipo no encontrado. Valores: " +
+          "' en data.transporte.transportista.documentoTipo no encontrado. Valores: " +
           constanteService.tiposDocumentosIdentidades.map((a) => a.codigo + '-' + a.descripcion),
       );
     }
 
+    console.log("a Verificacion aqui ...............................................", data['detalleTransporte']);
+    console.log("b Verificacion aqui ...............................................", data['detalleTransporte']['transportista']);
+    console.log("c Verificacion aqui ...............................................", data['detalleTransporte']['transportista']['ruc']);
+                                                                                                                
+    console.log("d Verificacion aqui ...............................................", data['detalleTransporte'] &&
+    data['detalleTransporte']['transportista'] &&
+    data['detalleTransporte']['transportista']['ruc']);
+
     if (
       data['detalleTransporte'] &&
       data['detalleTransporte']['transportista'] &&
-      data['detalleTransporte']['transportista']['ruc']
+      data['detalleTransporte']['transportista']['contribuyente']
     ) {
-      if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
-        this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.ruc');
-      }
 
-      var regExpOnlyNumber = new RegExp(/^\d+$/);
-      const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
+      
+      if ( !
+        (data['detalleTransporte'] &&
+        data['detalleTransporte']['transportista'] &&
+        data['detalleTransporte']['transportista']['ruc'])
+      ) {
+        this.errors.push('Debe especificar el RUC para el Transportista en data.transporte.transportista.ruc');        
+      } else {
+        console.log("existe el ruc del trnas");
 
-      if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
-        this.errors.push(
-          "La parte del RUC del Cliente '" +
-            data['detalleTransporte']['transportista']['ruc'] +
-            "' en data.detalleTransporte.transportista.ruc debe ser numérico",
-        );
-      }
-      if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
-        this.errors.push(
-          "La parte del DV del RUC del Cliente '" +
-            data['detalleTransporte']['transportista']['ruc'] +
-            "' en data.detalleTransporte.transportista.ruc debe ser numérico",
-        );
-      }
+        if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
+          console.log("agregar error");
 
-      if (rucCliente[0].length > 8) {
-        this.errors.push(
-          "La parte del RUC '" +
-            data['detalleTransporte']['transportista']['ruc'] +
-            "' en data.detalleTransporte.transportista.ruc debe contener de 1 a 8 caracteres",
-        );
-      }
+          this.errors.push('RUC debe contener dígito verificador en data.transporte.transportista.ruc');
+        }
 
-      if (rucCliente[1] > 9) {
-        this.errors.push(
-          "La parte del DV del RUC '" +
-            data['detalleTransporte']['transportista']['ruc'] +
-            "' data.detalleTransporte.transportista.ruc debe ser del 1 al 9",
-        );
+        var regExpOnlyNumber = new RegExp(/^\d+$/);
+        const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
+
+        if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+          this.errors.push(
+            "La parte del RUC del Cliente '" +
+              data['detalleTransporte']['transportista']['ruc'] +
+              "' en data.transporte.transportista.ruc debe ser numérico",
+          );
+        }
+        if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
+          this.errors.push(
+            "La parte del DV del RUC del Cliente '" +
+              data['detalleTransporte']['transportista']['ruc'] +
+              "' en data.transporte.transportista.ruc debe ser numérico",
+          );
+        }
+
+        if (rucCliente[0].length > 8) {
+          this.errors.push(
+            "La parte del RUC '" +
+              data['detalleTransporte']['transportista']['ruc'] +
+              "' en data.transporte.transportista.ruc debe contener de 1 a 8 caracteres",
+          );
+        }
+
+        if (rucCliente[1] > 9) {
+          this.errors.push(
+            "La parte del DV del RUC '" +
+              data['detalleTransporte']['transportista']['ruc'] +
+              "' data.transporte.transportista.ruc debe ser del 1 al 9",
+          );
+        }
       }
+    } else {
+      //No es contribuyente
     }
-
     if (
       data['detalleTransporte'] &&
       data['detalleTransporte']['transportista'] &&
@@ -1836,7 +1875,7 @@ class JSonDeMainValidateService {
       data['detalleTransporte']['transportista']['agente']['ruc']
     ) {
       if (data['detalleTransporte']['transportista']['agente']['ruc'].indexOf('-') == -1) {
-        this.errors.push('RUC debe contener dígito verificador en data.detalleTransporte.transportista.agente.ruc');
+        this.errors.push('RUC debe contener dígito verificador en data.transporte.transportista.agente.ruc');
       }
 
       var regExpOnlyNumber = new RegExp(/^\d+$/);
@@ -1846,14 +1885,14 @@ class JSonDeMainValidateService {
         this.errors.push(
           "La parte del RUC del Cliente '" +
             data['detalleTransporte']['transportista']['agente']['ruc'] +
-            "' en data.detalleTransporte.transportista.agente.ruc debe ser numérico",
+            "' en data.transporte.transportista.agente.ruc debe ser numérico",
         );
       }
       if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
         this.errors.push(
           "La parte del DV del RUC del Cliente '" +
             data['detalleTransporte']['transportista']['agente']['ruc'] +
-            "' en data.detalleTransporte.transportista.agente.ruc debe ser numérico",
+            "' en data.transporte.transportista.agente.ruc debe ser numérico",
         );
       }
 
@@ -1861,7 +1900,7 @@ class JSonDeMainValidateService {
         this.errors.push(
           "La parte del RUC '" +
             data['detalleTransporte']['transportista']['agente']['ruc'] +
-            "' en data.detalleTransporte.transportista.agente.ruc debe contener de 1 a 8 caracteres",
+            "' en data.transporte.transportista.agente.ruc debe contener de 1 a 8 caracteres",
         );
       }
 
@@ -1869,7 +1908,7 @@ class JSonDeMainValidateService {
         this.errors.push(
           "La parte del DV del RUC '" +
             data['detalleTransporte']['transportista']['agente']['ruc'] +
-            "' data.detalleTransporte.transportista.agente.ruc debe ser del 1 al 9",
+            "' data.transporte.transportista.agente.ruc debe ser del 1 al 9",
         );
       }
     }
@@ -1883,7 +1922,7 @@ class JSonDeMainValidateService {
         this.errors.push(
           "Pais '" +
             data['detalleTransporte']['transportista']['pais'] +
-            "' del Cliente en data.detalleTransporte.transportista.pais no encontrado. Valores: " +
+            "' del Cliente en data.transporte.transportista.pais no encontrado. Valores: " +
             constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
