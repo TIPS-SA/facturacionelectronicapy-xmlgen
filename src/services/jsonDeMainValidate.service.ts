@@ -1869,39 +1869,74 @@ class JSonDeMainValidateService {
     }
 
     //Chofer - Obligatorio
-    if ( !
-      (data['detalleTransporte'] &&
-      data['detalleTransporte']['transportista'] &&
-      data['detalleTransporte']['transportista']['chofer'] )
+    if (
+      !(
+        data['detalleTransporte'] &&
+        data['detalleTransporte']['transportista'] &&
+        data['detalleTransporte']['transportista']['chofer']
+      )
     ) {
       this.errors.push('Es obligatorio especificar los datos del chofer en data.transporte.transportista.chofer');
     } else {
       //Valida los datos del chofer
-      
+
       if (!data['detalleTransporte']['transportista']['chofer']['documentoNumero']) {
-          this.errors.push('Es obligatorio especificar el nombre del chofer en data.transporte.transportista.chofer.documentoNumero');
+        this.errors.push(
+          'Es obligatorio especificar el nombre del chofer en data.transporte.transportista.chofer.documentoNumero',
+        );
       } else {
         //Validar longitud
-        if (!(data['detalleTransporte']['transportista']['chofer']['documentoNumero'].length >= 1 && data['detalleTransporte']['transportista']['chofer']['documentoNumero'] <= 20)) {
-          this.errors.push('El número de documento del Chofer (' + data['detalleTransporte']['transportista']['chofer']['documentoNumero'] + ') en data.transporte.transportista.chofer.documentoNumero debe tener una longitud de 1 a 20 caracteres');
+        if (
+          !(
+            data['detalleTransporte']['transportista']['chofer']['documentoNumero'].length >= 1 &&
+            data['detalleTransporte']['transportista']['chofer']['documentoNumero'] <= 20
+          )
+        ) {
+          this.errors.push(
+            'El número de documento del Chofer (' +
+              data['detalleTransporte']['transportista']['chofer']['documentoNumero'] +
+              ') en data.transporte.transportista.chofer.documentoNumero debe tener una longitud de 1 a 20 caracteres',
+          );
         }
       }
 
       if (!data['detalleTransporte']['transportista']['chofer']['nombre']) {
-        this.errors.push('Es obligatorio especificar el nombre del chofer en data.transporte.transportista.chofer.nombre');
+        this.errors.push(
+          'Es obligatorio especificar el nombre del chofer en data.transporte.transportista.chofer.nombre',
+        );
       } else {
         //Validar longitud
-        if (!(data['detalleTransporte']['transportista']['chofer']['nombre'].length >= 4 && data['detalleTransporte']['transportista']['chofer']['nombre'] <= 60)) {
-          this.errors.push('El nombre del Chofer (' + data['detalleTransporte']['transportista']['chofer']['nombre'] + ') en data.transporte.transportista.chofer.nombre debe tener una longitud de 4 a 60 caracteres');
+        if (
+          !(
+            data['detalleTransporte']['transportista']['chofer']['nombre'].length >= 4 &&
+            data['detalleTransporte']['transportista']['chofer']['nombre'] <= 60
+          )
+        ) {
+          this.errors.push(
+            'El nombre del Chofer (' +
+              data['detalleTransporte']['transportista']['chofer']['nombre'] +
+              ') en data.transporte.transportista.chofer.nombre debe tener una longitud de 4 a 60 caracteres',
+          );
         }
       }
 
       if (!data['detalleTransporte']['transportista']['chofer']['direccion']) {
-        this.errors.push('Es obligatorio especificar la dirección del chofer en data.transporte.transportista.chofer.direccion');
+        this.errors.push(
+          'Es obligatorio especificar la dirección del chofer en data.transporte.transportista.chofer.direccion',
+        );
       } else {
         //Validar longitud
-        if (!(data['detalleTransporte']['transportista']['chofer']['direccion'].length >= 4 && data['detalleTransporte']['transportista']['chofer']['direccion'] <= 60)) {
-          this.errors.push('La direccion del Chofer (' + data['detalleTransporte']['transportista']['chofer']['direccion'] + ') en data.transporte.transportista.chofer.direccion debe tener una longitud de 1 a 255 caracteres');
+        if (
+          !(
+            data['detalleTransporte']['transportista']['chofer']['direccion'].length >= 4 &&
+            data['detalleTransporte']['transportista']['chofer']['direccion'] <= 60
+          )
+        ) {
+          this.errors.push(
+            'La direccion del Chofer (' +
+              data['detalleTransporte']['transportista']['chofer']['direccion'] +
+              ') en data.transporte.transportista.chofer.direccion debe tener una longitud de 1 a 255 caracteres',
+          );
         }
       }
     }
