@@ -1035,6 +1035,10 @@ class JSonDeMainValidateService {
       );
     }
 
+    if (data['remision']['kms']) {
+      this.errors.push('Debe especificar Kilometros estimado recorrido en data.remision.kms');
+    }
+
     if (data['remision'] && data['remision']['motivo'] == 7) {
       //Motivo=7-Translado entre locales
       if (data['cliente']['ruc'] != params['ruc']) {

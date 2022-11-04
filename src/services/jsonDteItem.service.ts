@@ -403,11 +403,11 @@ class JSonDteItemService {
       jsonResult['dNumSegui'] = item['numeroSeguimiento'];
     }
     if (item['importador'] && item['importador']['nombre']) {
-      jsonResult['dNomImp'] = item['importador']['nombre'].substring(0, 60);
-      jsonResult['dDirImp'] = item['importador']['direccion'].substring(0, 255);
-      jsonResult['dNumFir'] = item['importador']['registroImportador'].substring(0, 20);
-      //jsonResult['dNumReg'] = item['importador']['registroSenave'].substring(0, 20);
-      //jsonResult['dNumRegEntCom'] = item['importador']['registroEntidadComercial'].substring(0, 20);
+      //nt009 se retira estos campo
+      //jsonResult['dNomImp'] = item['importador']['nombre'].substring(0, 60);
+      //jsonResult['dDirImp'] = item['importador']['direccion'].substring(0, 255);
+      //jsonResult['dNumFir'] = item['importador']['registroImportador'].substring(0, 20);
+      //nt009 se retira estos campo
     }
 
     if (item['registroSenave']) {

@@ -29,7 +29,7 @@ class JSonDteItemValidateService {
         let unidadMedida: number = item['unidadMedida'];
 
         //Validaciones
-        if (!((item['codigo'] + '').length >= 1 && (item['codigo'] + '').length <= 20)) {
+        if (!((item['codigo'] + '').length >= 1 && (item['codigo'] + '').length <= 50)) {
           this.errors.push(
             'El código del item (' +
               item['codigo'] +
@@ -71,7 +71,7 @@ class JSonDteItemValidateService {
           this.errors.push('La descripción del item en data.items[' + i + '].descripcion no puede ser null');
         }
 
-        if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 120)) {
+        if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 2000)) {
           this.errors.push(
             'La descripción del item (' +
               item['descripcion'] +
