@@ -1251,7 +1251,7 @@ class ConstanteService {
     { codigo: 'BEN', descripcion: 'Benin' },
     { codigo: 'BFA', descripcion: 'Burkina Faso' },
     { codigo: 'CPV', descripcion: 'Cabo Verde' },
-    { codigo: 'CIV', descripcion: "Côte d\'Ivoire" },
+    { codigo: 'CIV', descripcion: "Côte d'Ivoire" },
     { codigo: 'GMB', descripcion: 'Gambia' },
     { codigo: 'GHA', descripcion: 'Ghana' },
     { codigo: 'GIN', descripcion: 'Guinea' },

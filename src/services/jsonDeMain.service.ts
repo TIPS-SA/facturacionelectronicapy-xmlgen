@@ -1308,8 +1308,8 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dDesMotEmiNR'] = data['remision']['motivoDescripcion'];
     }
     //if (data['remision']['kms']) {
-    //NT009 pasa a ser obligatorio 
-      this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dKmR'] = data['remision']['kms'];
+    //NT009 pasa a ser obligatorio
+    this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dKmR'] = data['remision']['kms'];
     //}
     if (data['remision']['fechaFactura']) {
       this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dFecEm'] = data['remision']['fechaFactura'];
