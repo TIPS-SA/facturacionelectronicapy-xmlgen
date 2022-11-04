@@ -886,7 +886,8 @@ class ConstanteService {
     },
     {
       codigo: 2,
-      descripcion: 'Exonerado (Art.83- Ley 125/91)',
+      //descripcion: 'Exonerado (Art.83- Ley 125/91)',
+      descripcion: 'Exonerado (Art.100 – 6380/2019)',
     },
     {
       codigo: 3,

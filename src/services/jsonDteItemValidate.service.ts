@@ -35,7 +35,7 @@ class JSonDteItemValidateService {
               item['codigo'] +
               ') en data.items[' +
               i +
-              '].codigo debe tener una longitud de 1 a 20 caracteres',
+              '].codigo debe tener una longitud de 1 a 50 caracteres'
           );
         }
 
@@ -77,7 +77,7 @@ class JSonDteItemValidateService {
               item['descripcion'] +
               ') en data.items[' +
               i +
-              '].descripcion debe tener una longitud de 1 a 120 caracteres',
+              '].descripcion debe tener una longitud de 1 a 2000 caracteres'
           );
         }
 

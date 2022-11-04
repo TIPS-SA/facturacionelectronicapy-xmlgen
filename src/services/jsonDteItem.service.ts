@@ -418,6 +418,10 @@ class JSonDteItemService {
       jsonResult['dNumRegEntCom'] = item['registroEntidadComercial'];
     }
 
+    if (item['nombreProducto']) {
+      jsonResult['dNomPro'] = item['nombreProducto']; //E761
+    }
+
     return jsonResult;
   }
 

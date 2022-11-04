@@ -261,13 +261,15 @@ class JSonDteTransporteService {
 
     jsonResult['dNomChof'] = data['detalleTransporte']['transportista']['chofer']['nombre'];
 
-    if (data['detalleTransporte']['transportista']['direccion']) {
+    //if (data['detalleTransporte']['transportista']['direccion']) {
+      //MT010 - pasa a ser obligatorio
       jsonResult['dDomFisc'] = data['detalleTransporte']['transportista']['direccion'];
-    }
+    //}
 
-    if (data['detalleTransporte']['transportista']['chofer']['direccion']) {
+    //if (data['detalleTransporte']['transportista']['chofer']['direccion']) {
+      //MT010 - pasa a ser obligatorio
       jsonResult['dDirChof'] = data['detalleTransporte']['transportista']['chofer']['direccion'];
-    }
+    //}
 
     if (
       data['detalleTransporte']['transportista']['agente'] &&

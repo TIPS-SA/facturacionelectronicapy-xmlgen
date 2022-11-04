@@ -1314,6 +1314,9 @@ class JSonDeMainService {
     if (data['remision']['fechaFactura']) {
       this.json['rDE']['DE']['gDtipDE']['gCamNRE']['dFecEm'] = data['remision']['fechaFactura'];
     }
+    if (data['remision']['costoFlete']) {
+      this.json['rDE']['DE']['gDtipDE']['gCamNRE']['cPreFle'] = data['remision']['costoFlete'];
+    }
   }
 
   /**

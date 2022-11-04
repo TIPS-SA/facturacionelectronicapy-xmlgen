@@ -1584,6 +1584,7 @@ class JSonDeMainValidateService {
   /**
    * E10. Campos que describen el transporte de las mercaderías (E900-E999)
    *
+   * Aqui puede entrar si tipoDocumento = 1 (opcional) o tipoDocumento = 7 (obligatorio)
    * @param params
    * @param data
    * @param options
@@ -1807,23 +1808,6 @@ class JSonDeMainValidateService {
       );
     }
 
-    console.log('a Verificacion aqui ...............................................', data['detalleTransporte']);
-    console.log(
-      'b Verificacion aqui ...............................................',
-      data['detalleTransporte']['transportista'],
-    );
-    console.log(
-      'c Verificacion aqui ...............................................',
-      data['detalleTransporte']['transportista']['ruc'],
-    );
-
-    console.log(
-      'd Verificacion aqui ...............................................',
-      data['detalleTransporte'] &&
-        data['detalleTransporte']['transportista'] &&
-        data['detalleTransporte']['transportista']['ruc'],
-    );
-
     if (
       data['detalleTransporte'] &&
       data['detalleTransporte']['transportista'] &&
@@ -1883,6 +1867,45 @@ class JSonDeMainValidateService {
     } else {
       //No es contribuyente
     }
+
+    //Chofer - Obligatorio
+    if ( !
+      (data['detalleTransporte'] &&
+      data['detalleTransporte']['transportista'] &&
+      data['detalleTransporte']['transportista']['chofer'] )
+    ) {
+      this.errors.push('Es obligatorio especificar los datos del chofer en data.transporte.transportista.chofer');
+    } else {
+      //Valida los datos del chofer
+      
+      if (!data['detalleTransporte']['transportista']['chofer']['documentoNumero']) {
+          this.errors.push('Es obligatorio especificar el nombre del chofer en data.transporte.transportista.chofer.documentoNumero');
+      } else {
+        //Validar longitud
+        if (!(data['detalleTransporte']['transportista']['chofer']['documentoNumero'].length >= 1 && data['detalleTransporte']['transportista']['chofer']['documentoNumero'] <= 20)) {
+          this.errors.push('El número de documento del Chofer (' + data['detalleTransporte']['transportista']['chofer']['documentoNumero'] + ') en data.transporte.transportista.chofer.documentoNumero debe tener una longitud de 1 a 20 caracteres');
+        }
+      }
+
+      if (!data['detalleTransporte']['transportista']['chofer']['nombre']) {
+        this.errors.push('Es obligatorio especificar el nombre del chofer en data.transporte.transportista.chofer.nombre');
+      } else {
+        //Validar longitud
+        if (!(data['detalleTransporte']['transportista']['chofer']['nombre'].length >= 4 && data['detalleTransporte']['transportista']['chofer']['nombre'] <= 60)) {
+          this.errors.push('El nombre del Chofer (' + data['detalleTransporte']['transportista']['chofer']['nombre'] + ') en data.transporte.transportista.chofer.nombre debe tener una longitud de 4 a 60 caracteres');
+        }
+      }
+
+      if (!data['detalleTransporte']['transportista']['chofer']['direccion']) {
+        this.errors.push('Es obligatorio especificar la dirección del chofer en data.transporte.transportista.chofer.direccion');
+      } else {
+        //Validar longitud
+        if (!(data['detalleTransporte']['transportista']['chofer']['direccion'].length >= 4 && data['detalleTransporte']['transportista']['chofer']['direccion'] <= 60)) {
+          this.errors.push('La direccion del Chofer (' + data['detalleTransporte']['transportista']['chofer']['direccion'] + ') en data.transporte.transportista.chofer.direccion debe tener una longitud de 1 a 255 caracteres');
+        }
+      }
+    }
+
     if (
       data['detalleTransporte'] &&
       data['detalleTransporte']['transportista'] &&
