@@ -1889,7 +1889,7 @@ class JSonDeMainValidateService {
         if (
           !(
             data['detalleTransporte']['transportista']['chofer']['documentoNumero'].length >= 1 &&
-            data['detalleTransporte']['transportista']['chofer']['documentoNumero'] <= 20
+            data['detalleTransporte']['transportista']['chofer']['documentoNumero'].length <= 20
           )
         ) {
           this.errors.push(
@@ -1909,7 +1909,7 @@ class JSonDeMainValidateService {
         if (
           !(
             data['detalleTransporte']['transportista']['chofer']['nombre'].length >= 4 &&
-            data['detalleTransporte']['transportista']['chofer']['nombre'] <= 60
+            data['detalleTransporte']['transportista']['chofer']['nombre'].length <= 60
           )
         ) {
           this.errors.push(
@@ -1929,13 +1929,13 @@ class JSonDeMainValidateService {
         if (
           !(
             data['detalleTransporte']['transportista']['chofer']['direccion'].length >= 4 &&
-            data['detalleTransporte']['transportista']['chofer']['direccion'] <= 60
+            data['detalleTransporte']['transportista']['chofer']['direccion'].length <= 60
           )
         ) {
           this.errors.push(
             'La direccion del Chofer (' +
               data['detalleTransporte']['transportista']['chofer']['direccion'] +
-              ') en data.transporte.transportista.chofer.direccion debe tener una longitud de 1 a 255 caracteres',
+              ') en data.transporte.transportista.chofer.direccion debe tener una longitud de 4 a 60 caracteres',
           );
         }
       }
