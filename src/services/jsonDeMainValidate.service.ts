@@ -703,12 +703,11 @@ class JSonDeMainValidateService {
           let objDepartamento: any = constanteService.departamentos.filter(
             (dep) => dep.codigo === +objDistrito[0]['departamento'],
           );
-  
+
           data['cliente']['distrito'] = objDistrito[0]['codigo'];
-  
+
           data['cliente']['departamento'] = objDepartamento[0]['codigo'];
         }
-
       }
 
       if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
