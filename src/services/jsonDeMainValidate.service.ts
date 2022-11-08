@@ -697,15 +697,18 @@ class JSonDeMainValidateService {
         //data['cliente']['distrito'] y data['cliente']['departamento']
         let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['cliente']['ciudad']);
 
-        let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
+        if (objCiudad && objCiudad[0]) {
+          let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
 
-        let objDepartamento: any = constanteService.departamentos.filter(
-          (dep) => dep.codigo === +objDistrito[0]['departamento'],
-        );
+          let objDepartamento: any = constanteService.departamentos.filter(
+            (dep) => dep.codigo === +objDistrito[0]['departamento'],
+          );
+  
+          data['cliente']['distrito'] = objDistrito[0]['codigo'];
+  
+          data['cliente']['departamento'] = objDepartamento[0]['codigo'];
+        }
 
-        data['cliente']['distrito'] = objDistrito[0]['codigo'];
-
-        data['cliente']['departamento'] = objDepartamento[0]['codigo'];
       }
 
       if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
