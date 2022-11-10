@@ -1037,7 +1037,7 @@ class JSonDeMainValidateService {
       );
     }
 
-    if (data['remision']['kms']) {
+    if (!data['remision']['kms']) {
       this.errors.push('Debe especificar Kilometros estimado recorrido en data.remision.kms');
     }
 
