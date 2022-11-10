@@ -1750,9 +1750,10 @@ class JSonDeMainValidateService {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
       this.errors.push('Los datos del Vehiculo en data.transporte.vehiculo no fueron informados');
     } else {
+
       if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
         this.errors.push(
-          'El numero de matricula del Vehiculo en data.transporte.vehiculo.numeroMatricula no fue informado',
+          'El numero de matricula del Vehiculo en data.transporte.vehiculo.numeroMatricula no fue informado'
         );
       } else {
         if (
@@ -1764,7 +1765,7 @@ class JSonDeMainValidateService {
           this.errors.push(
             "Número de Matricula '" +
               data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-              "' en data.transporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+              "' en data.transporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres "
           );
         }
 
@@ -1780,11 +1781,32 @@ class JSonDeMainValidateService {
             this.errors.push(
               "Tipo de Vehiculo '" +
                 data['detalleTransporte']['vehiculo']['tipo'] +
-                "' en data.transporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
+                "' en data.transporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres "
             );
           }
         }
       }
+
+      if (!data['detalleTransporte']['vehiculo']['marca']) {
+        this.errors.push(
+          'La marca del Vehiculo en data.transporte.vehiculo.marca no fue informado'
+        );
+      } else {
+        if (
+          !(
+            data['detalleTransporte']['vehiculo']['marca'].length >= 1 &&
+            data['detalleTransporte']['vehiculo']['marca'].length <= 10
+          )
+        ) {
+          this.errors.push(
+            "Marca del Vehiculo '" +
+              data['detalleTransporte']['vehiculo']['marca'] +
+              "' en data.transporte.vehiculo.marca debe tener una longitud de 1 a 10 caracteres"
+          );
+        }
+      }
+
+
     }
   }
 
@@ -1869,6 +1891,27 @@ class JSonDeMainValidateService {
     } else {
       //No es contribuyente
     }
+
+    if (!data['detalleTransporte']['transportista']['direccion']) {
+      this.errors.push(
+        'Es obligatorio especificar la dirección de la Empresa transportista en data.transporte.transportista.direccion'
+      );
+    } else {
+      //Validar longitud
+      if (
+        !(
+          data['detalleTransporte']['transportista']['direccion'].length >= 1 &&
+          data['detalleTransporte']['transportista']['direccion'].length <= 150
+        )
+      ) {
+        this.errors.push(
+          'La direccion de la Empresa Transportista (' +
+            data['detalleTransporte']['transportista']['direccion'] +
+            ') en data.transporte.transportista.direccion debe tener una longitud de 1 a 150 caracteres',
+        );
+      }
+    }
+  
 
     //Chofer - Obligatorio
     if (
