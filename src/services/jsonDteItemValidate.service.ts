@@ -151,12 +151,16 @@ class JSonDteItemValidateService {
         }
 
         if (+item['precioUnitario'] < 0) {
-          this.errors.push('El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero');
+          this.errors.push(
+            'El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero',
+          );
         }
 
         if (item['descuento']) {
           if (+item['descuento'] < 0) {
-            this.errors.push('El Descuento del item en data.items[' + i + '].descuento debe ser mayor o igual Anticipo cero');
+            this.errors.push(
+              'El Descuento del item en data.items[' + i + '].descuento debe ser mayor o igual Anticipo cero',
+            );
           }
         }
         if (item['anticipo']) {
@@ -168,7 +172,7 @@ class JSonDteItemValidateService {
         if (item['cambio']) {
           if (+item['cambio'] < 0) {
             this.errors.push('El Cambio del item en data.items[' + i + '].cambio debe ser mayor o igual a cero');
-          }  
+          }
         }
 
         if (item['pais']) {
