@@ -150,6 +150,27 @@ class JSonDteItemValidateService {
           this.errors.push('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
         }
 
+        if (+item['precioUnitario'] < 0) {
+          this.errors.push('El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero');
+        }
+
+        if (item['descuento']) {
+          if (+item['descuento'] < 0) {
+            this.errors.push('El Descuento del item en data.items[' + i + '].descuento debe ser mayor o igual Anticipo cero');
+          }
+        }
+        if (item['anticipo']) {
+          if (+item['anticipo'] < 0) {
+            this.errors.push('El Anticipo del item en data.items[' + i + '].anticipo debe ser mayor o igual a cero');
+          }
+        }
+
+        if (item['cambio']) {
+          if (+item['cambio'] < 0) {
+            this.errors.push('El Cambio del item en data.items[' + i + '].cambio debe ser mayor o igual a cero');
+          }  
+        }
+
         if (item['pais']) {
           if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
             this.errors.push(
