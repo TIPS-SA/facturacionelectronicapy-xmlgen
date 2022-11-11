@@ -175,6 +175,12 @@ class JSonDteItemValidateService {
           }
         }
 
+        if (item['cdcAnticipo']) {
+          if ((item['cdcAnticipo']).length != 44) {
+            this.errors.push('El Valor (' + item['cdcAnticipo'] + ') del CDC del Anticipo en data.items[' + i + '].cdcAnticipo debe tener 44 caracteres');
+          }
+        }
+
         if (item['pais']) {
           if (constanteService.paises.filter((pais: any) => pais.codigo === item['pais']).length == 0) {
             this.errors.push(
