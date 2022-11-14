@@ -67,30 +67,33 @@ class JSonDteItemValidateService {
           }
         }
 
+        let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
+
         if (!item['descripcion']) {
           this.errors.push('La descripción del item en data.items[' + i + '].descripcion no puede ser null');
-        }
+        } else {
 
-        if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 2000)) {
-          this.errors.push(
-            'La descripción del item (' +
-              item['descripcion'] +
-              ') en data.items[' +
-              i +
-              '].descripcion debe tener una longitud de 1 a 2000 caracteres',
-          );
-        }
+          if (!(item['descripcion'].length >= 1 && item['descripcion'].length <= 2000)) {
+            this.errors.push(
+              'La descripción del item (' +
+                item['descripcion'] +
+                ') en data.items[' +
+                i +
+                '].descripcion debe tener una longitud de 1 a 2000 caracteres',
+            );
+          }
 
-        let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
-        if (regexp.test(item['descripcion'])) {
-          this.errors.push(
-            'La descripción del item (' +
-              item['descripcion'] +
-              ') en data.items[' +
-              i +
-              '].descripcion contiene valores inválidos',
-          );
+          if (regexp.test(item['descripcion'])) {
+            this.errors.push(
+              'La descripción del item (' +
+                item['descripcion'] +
+                ') en data.items[' +
+                i +
+                '].descripcion contiene valores inválidos',
+            );
+          }
         }
+        
 
         if ((item['cantidad'] + '').split('.')[1]?.length > 8) {
           this.errors.push(
