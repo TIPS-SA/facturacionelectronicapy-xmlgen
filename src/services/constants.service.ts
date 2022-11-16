@@ -8177,7 +8177,11 @@ class ConstanteService {
     errores: Array<string>,
   ) {
     if (ciudadId) {
-      let distritoCiudadId = this.ciudades.filter((td) => td.codigo === ciudadId)[0]['distrito'];
+      let distritoCiudadId: any = this.ciudades.filter((td) => td.codigo === ciudadId);
+
+      if (distritoCiudadId  && distritoCiudadId[0] && distritoCiudadId[0]['distrito']) {
+        distritoCiudadId = distritoCiudadId[0]['distrito'];
+      }
 
       if (distritoId != distritoCiudadId) {
         errores.push(
@@ -8193,7 +8197,11 @@ class ConstanteService {
     }
 
     if (distritoId) {
-      let departamentoDistritoId = this.distritos.filter((td) => td.codigo === distritoId)[0]['departamento'];
+      let departamentoDistritoId: any = this.distritos.filter((td) => td.codigo === distritoId);
+
+      if (departamentoDistritoId  && departamentoDistritoId[0] && departamentoDistritoId[0]['departamento']) {
+        departamentoDistritoId = departamentoDistritoId[0]['departamento'];
+      }
 
       if (departamentoId != departamentoDistritoId) {
         errores.push(
