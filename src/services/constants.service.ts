@@ -8179,7 +8179,7 @@ class ConstanteService {
     if (ciudadId) {
       let distritoCiudadId: any = this.ciudades.filter((td) => td.codigo === ciudadId);
 
-      if (distritoCiudadId  && distritoCiudadId[0] && distritoCiudadId[0]['distrito']) {
+      if (distritoCiudadId && distritoCiudadId[0] && distritoCiudadId[0]['distrito']) {
         distritoCiudadId = distritoCiudadId[0]['distrito'];
       }
 
@@ -8199,7 +8199,7 @@ class ConstanteService {
     if (distritoId) {
       let departamentoDistritoId: any = this.distritos.filter((td) => td.codigo === distritoId);
 
-      if (departamentoDistritoId  && departamentoDistritoId[0] && departamentoDistritoId[0]['departamento']) {
+      if (departamentoDistritoId && departamentoDistritoId[0] && departamentoDistritoId[0]['departamento']) {
         departamentoDistritoId = departamentoDistritoId[0]['departamento'];
       }
 
