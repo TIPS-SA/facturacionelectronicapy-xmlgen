@@ -482,6 +482,19 @@ class JSonDeMainValidateService {
     if (!(params['actividadesEconomicas'] && params['actividadesEconomicas'].length > 0)) {
       this.errors.push('Debe proveer el array de actividades económicas en params.actividadesEconomicas');
     }
+
+    //Validacion de algunos datos de la sucursal
+    const establecimientoUsado = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0];
+
+    if (!establecimientoUsado.ciudad) {
+      this.errors.push('Debe proveer la Ciudad del establecimiento en params.establecimientos*.ciudad');
+    }
+    if (!establecimientoUsado.distrito) {
+      this.errors.push('Debe proveer la Distrito del establecimiento en params.establecimientos*.distrito');
+    }
+    if (!establecimientoUsado.departamento) {
+      this.errors.push('Debe proveer la Departamento del establecimiento en params.establecimientos*.departamento');
+    }
   }
 
   private generateDatosGeneralesResponsableGeneracionDEValidate(params: any, data: any) {
@@ -1814,79 +1827,112 @@ class JSonDeMainValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosTransportistaValidate(params: any, data: any) {
-    if (
-      constanteService.tiposDocumentosIdentidades.filter(
-        (um) => um.codigo === data['detalleTransporte']['transportista']['documentoTipo'],
-      ).length == 0
-    ) {
-      this.errors.push(
-        "Tipo de Documento '" +
-          data['detalleTransporte']['transportista']['documentoTipo'] +
-          "' en data.transporte.transportista.documentoTipo no encontrado. Valores: " +
-          constanteService.tiposDocumentosIdentidades.map((a) => a.codigo + '-' + a.descripcion),
-      );
+    let errorEsContribuyente = false;
+    if (data['detalleTransporte']['transportista']) {
+      if (typeof data['detalleTransporte']['transportista']['contribuyente'] == 'undefined') {
+        this.errors.push(
+          'Debe indicar si el Transportista es o no un Contribuyente true|false en data.transporte.transportista.contribuyente',
+        );
+        errorEsContribuyente = true;
+      }
+
+      if (typeof data['detalleTransporte']['transportista']['contribuyente'] == 'undefined') {
+        this.errors.push(
+          'Debe indicar si el Transportista es o no un Contribuyente true|false en data.transporte.transportista.contribuyente',
+        );
+        errorEsContribuyente = true;
+      }
+
+      if (!(data['detalleTransporte']['transportista']['contribuyente'] === true || data['detalleTransporte']['transportista']['contribuyente'] === false)) {
+        this.errors.push('data.transporte.transportista.contribuyente debe ser true|false');
+        errorEsContribuyente = true;
+      }
+      
     }
 
-    if (
-      data['detalleTransporte'] &&
-      data['detalleTransporte']['transportista'] &&
-      data['detalleTransporte']['transportista']['contribuyente']
-    ) {
+    if (!errorEsContribuyente) {
+
       if (
-        !(
-          data['detalleTransporte'] &&
-          data['detalleTransporte']['transportista'] &&
-          data['detalleTransporte']['transportista']['ruc']
-        )
+        data['detalleTransporte'] &&
+        data['detalleTransporte']['transportista'] &&
+        data['detalleTransporte']['transportista']['contribuyente'] === true
       ) {
-        this.errors.push('Debe especificar el RUC para el Transportista en data.transporte.transportista.ruc');
+        if (
+          !(
+            data['detalleTransporte'] &&
+            data['detalleTransporte']['transportista'] &&
+            data['detalleTransporte']['transportista']['ruc']
+          )
+        ) {
+          this.errors.push('Debe especificar el RUC para el Transportista en data.transporte.transportista.ruc');
+        } else {
+  
+          if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
+            console.log('agregar error');
+  
+            this.errors.push('RUC debe contener dígito verificador en data.transporte.transportista.ruc');
+          }
+  
+          var regExpOnlyNumber = new RegExp(/^\d+$/);
+          const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
+  
+          if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+            this.errors.push(
+              "La parte del RUC del Cliente '" +
+                data['detalleTransporte']['transportista']['ruc'] +
+                "' en data.transporte.transportista.ruc debe ser numérico",
+            );
+          }
+          if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
+            this.errors.push(
+              "La parte del DV del RUC del Cliente '" +
+                data['detalleTransporte']['transportista']['ruc'] +
+                "' en data.transporte.transportista.ruc debe ser numérico",
+            );
+          }
+  
+          if (rucCliente[0].length > 8) {
+            this.errors.push(
+              "La parte del RUC '" +
+                data['detalleTransporte']['transportista']['ruc'] +
+                "' en data.transporte.transportista.ruc debe contener de 1 a 8 caracteres",
+            );
+          }
+  
+          if (rucCliente[1] > 9) {
+            this.errors.push(
+              "La parte del DV del RUC '" +
+                data['detalleTransporte']['transportista']['ruc'] +
+                "' data.transporte.transportista.ruc debe ser del 1 al 9",
+            );
+          }
+        }
       } else {
-        console.log('existe el ruc del trnas');
-
-        if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
-          console.log('agregar error');
-
-          this.errors.push('RUC debe contener dígito verificador en data.transporte.transportista.ruc');
+        //No es contribuyente
+        if ( !data['detalleTransporte']['transportista']['documentoTipo'] ) {
+          this.errors.push("Debe especificar el Tipo de Documento en data.transporte.transportista.documentoTipo");
+        } else {
+          if (
+            constanteService.tiposDocumentosIdentidades.filter(
+              (um) => um.codigo === data['detalleTransporte']['transportista']['documentoTipo'],
+            ).length == 0
+          ) {
+            this.errors.push(
+              "Tipo de Documento '" +
+                data['detalleTransporte']['transportista']['documentoTipo'] +
+                "' en data.transporte.transportista.documentoTipo no encontrado. Valores: " +
+                constanteService.tiposDocumentosIdentidades.map((a) => a.codigo + '-' + a.descripcion),
+            );
+          }
         }
-
-        var regExpOnlyNumber = new RegExp(/^\d+$/);
-        const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
-
-        if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
-          this.errors.push(
-            "La parte del RUC del Cliente '" +
-              data['detalleTransporte']['transportista']['ruc'] +
-              "' en data.transporte.transportista.ruc debe ser numérico",
-          );
-        }
-        if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
-          this.errors.push(
-            "La parte del DV del RUC del Cliente '" +
-              data['detalleTransporte']['transportista']['ruc'] +
-              "' en data.transporte.transportista.ruc debe ser numérico",
-          );
-        }
-
-        if (rucCliente[0].length > 8) {
-          this.errors.push(
-            "La parte del RUC '" +
-              data['detalleTransporte']['transportista']['ruc'] +
-              "' en data.transporte.transportista.ruc debe contener de 1 a 8 caracteres",
-          );
-        }
-
-        if (rucCliente[1] > 9) {
-          this.errors.push(
-            "La parte del DV del RUC '" +
-              data['detalleTransporte']['transportista']['ruc'] +
-              "' data.transporte.transportista.ruc debe ser del 1 al 9",
-          );
+    
+        if ( !data['detalleTransporte']['transportista']['documentoNumero'] ) {
+          this.errors.push('Es obligatorio especificar el Número de Documento la Empresa transportista en data.transporte.transportista.documentoNumero');
         }
       }
-    } else {
-      //No es contribuyente
     }
 
+    //Datos obligatorios que no dependen de si es o no contribuyente
     if (!data['detalleTransporte']['transportista']['direccion']) {
       this.errors.push(
         'Es obligatorio especificar la dirección de la Empresa transportista en data.transporte.transportista.direccion',
