@@ -1843,15 +1843,18 @@ class JSonDeMainValidateService {
         errorEsContribuyente = true;
       }
 
-      if (!(data['detalleTransporte']['transportista']['contribuyente'] === true || data['detalleTransporte']['transportista']['contribuyente'] === false)) {
+      if (
+        !(
+          data['detalleTransporte']['transportista']['contribuyente'] === true ||
+          data['detalleTransporte']['transportista']['contribuyente'] === false
+        )
+      ) {
         this.errors.push('data.transporte.transportista.contribuyente debe ser true|false');
         errorEsContribuyente = true;
       }
-      
     }
 
     if (!errorEsContribuyente) {
-
       if (
         data['detalleTransporte'] &&
         data['detalleTransporte']['transportista'] &&
@@ -1866,16 +1869,15 @@ class JSonDeMainValidateService {
         ) {
           this.errors.push('Debe especificar el RUC para el Transportista en data.transporte.transportista.ruc');
         } else {
-  
           if (data['detalleTransporte']['transportista']['ruc'].indexOf('-') == -1) {
             console.log('agregar error');
-  
+
             this.errors.push('RUC debe contener dígito verificador en data.transporte.transportista.ruc');
           }
-  
+
           var regExpOnlyNumber = new RegExp(/^\d+$/);
           const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
-  
+
           if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
             this.errors.push(
               "La parte del RUC del Cliente '" +
@@ -1890,7 +1892,7 @@ class JSonDeMainValidateService {
                 "' en data.transporte.transportista.ruc debe ser numérico",
             );
           }
-  
+
           if (rucCliente[0].length > 8) {
             this.errors.push(
               "La parte del RUC '" +
@@ -1898,7 +1900,7 @@ class JSonDeMainValidateService {
                 "' en data.transporte.transportista.ruc debe contener de 1 a 8 caracteres",
             );
           }
-  
+
           if (rucCliente[1] > 9) {
             this.errors.push(
               "La parte del DV del RUC '" +
@@ -1909,8 +1911,8 @@ class JSonDeMainValidateService {
         }
       } else {
         //No es contribuyente
-        if ( !data['detalleTransporte']['transportista']['documentoTipo'] ) {
-          this.errors.push("Debe especificar el Tipo de Documento en data.transporte.transportista.documentoTipo");
+        if (!data['detalleTransporte']['transportista']['documentoTipo']) {
+          this.errors.push('Debe especificar el Tipo de Documento en data.transporte.transportista.documentoTipo');
         } else {
           if (
             constanteService.tiposDocumentosIdentidades.filter(
@@ -1925,9 +1927,11 @@ class JSonDeMainValidateService {
             );
           }
         }
-    
-        if ( !data['detalleTransporte']['transportista']['documentoNumero'] ) {
-          this.errors.push('Es obligatorio especificar el Número de Documento la Empresa transportista en data.transporte.transportista.documentoNumero');
+
+        if (!data['detalleTransporte']['transportista']['documentoNumero']) {
+          this.errors.push(
+            'Es obligatorio especificar el Número de Documento la Empresa transportista en data.transporte.transportista.documentoNumero',
+          );
         }
       }
     }
