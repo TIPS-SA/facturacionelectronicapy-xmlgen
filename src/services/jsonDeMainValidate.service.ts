@@ -495,6 +495,14 @@ class JSonDeMainValidateService {
     if (!establecimientoUsado.departamento) {
       this.errors.push('Debe proveer la Departamento del establecimiento en params.establecimientos*.departamento');
     }
+
+    constanteService.validateDepartamentoDistritoCiudad(
+      'params.establecimientos*',
+      +establecimientoUsado.departamento,
+      +establecimientoUsado.distrito,
+      +establecimientoUsado.ciudad,
+      this.errors,
+    );
   }
 
   private generateDatosGeneralesResponsableGeneracionDEValidate(params: any, data: any) {
