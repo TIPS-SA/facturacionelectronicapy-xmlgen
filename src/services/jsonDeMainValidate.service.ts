@@ -355,7 +355,7 @@ class JSonDeMainValidateService {
     //Validar aqui "dInfoFisc"
     if (data['tipoDocumento'] == 7) {
       //Nota de Remision
-      if (!(data['descripcion'] && data['descripcion'].length > 0)) {
+      if (!(data['descripcion'] && (data['descripcion']+"").trim().length > 0)) {
         this.errors.push('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
       }
     }
