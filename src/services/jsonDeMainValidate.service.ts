@@ -536,6 +536,22 @@ class JSonDeMainValidateService {
       return; //El error de cliente vacio, ya fue validado arriba
     }
 
+    if (!data['cliente']['tipoOperacion']) {
+      this.errors.push(
+          "Tipo de Operación del Cliente en data.cliente.tipoOperacion es requerido > 0");      
+    } else {
+      if (
+        constanteService.tiposOperaciones.filter((um: any) => um.codigo === +data['cliente']['tipoOperacion'])
+          .length == 0
+      ) {
+        this.errors.push(
+          "Tipo de Operación '" +
+            data['cliente']['tipoOperacion'] +
+            "' del Cliente en data.cliente.tipoOperacion no encontrado. Valores: " +
+            constanteService.tiposOperaciones.map((a: any) => a.codigo + '-' + a.descripcion)
+        );
+      }
+    }
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
       if (
         constanteService.tiposDocumentosReceptor.filter((um: any) => um.codigo === +data['cliente']['documentoTipo'])
@@ -545,7 +561,7 @@ class JSonDeMainValidateService {
           "Tipo de Documento '" +
             data['cliente']['documentoTipo'] +
             "' del Cliente en data.cliente.documentoTipo no encontrado. Valores: " +
-            constanteService.tiposDocumentosReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
+            constanteService.tiposDocumentosReceptor.map((a: any) => a.codigo + '-' + a.descripcion)
         );
 
         if (+data['cliente']['documentoTipo'] == 9) {
