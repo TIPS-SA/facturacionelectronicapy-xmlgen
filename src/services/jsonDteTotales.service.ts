@@ -299,6 +299,8 @@ class JSonDteTotalesService {
           }
 
           jsonResult['dBaseGrav5'] = dBaseGrav5;
+        } else {
+          jsonResult['dBaseGrav5'] = 0;
         }
         if (dBaseGrav10 > 0) {
           dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
@@ -307,6 +309,8 @@ class JSonDteTotalesService {
           }
 
           jsonResult['dBaseGrav10'] = dBaseGrav10;
+        } else {
+          jsonResult['dBaseGrav10'] = 0;
         }
         if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
           let toFixed = config.decimals;
@@ -317,6 +321,8 @@ class JSonDteTotalesService {
           jsonResult['dTBasGraIVA'] = parseFloat(
             ((dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0)).toFixed(toFixed),
           );
+        } else {
+          jsonResult['dTBasGraIVA'] = 0;
         }
       }
     }

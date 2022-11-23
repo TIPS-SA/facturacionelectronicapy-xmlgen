@@ -364,7 +364,11 @@ class JSonDteItemService {
     */
     jsonResult['dLiqIVAItem'] = 0;
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
+      console.log("IIIIIIIIIIIIIIIIIIIIIIIVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAAAAAAAAAAAAAAAAAAAAAA", jsonResult['dBasGravIVA'], item['iva']);
+      console.log("IIIIIIIIIIIIIIIIIIIIIIIVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAAAAAAAAAAAAAAAAAAAAAA", (jsonResult['dBasGravIVA'] * item['iva']) / 100);
       jsonResult['dLiqIVAItem'] = (jsonResult['dBasGravIVA'] * item['iva']) / 100;
+
+      console.log("IIIIIIIIIIIIIIIIIIIIIIIVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAAAAAAAAAAAAAAAAAAAAAA", jsonResult['dLiqIVAItem'], parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals)));
 
       //Redondeo
       jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals));
