@@ -2011,6 +2011,15 @@ class JSonDeMainValidateService {
               ') en data.transporte.transportista.chofer.documentoNumero debe tener una longitud de 1 a 20 caracteres',
           );
         }
+
+        //Validar si tiene puntos
+        if ((data['detalleTransporte']['transportista']['chofer']['documentoNumero']+"").includes(".")) {
+          this.errors.push(
+            'El número de documento del Chofer (' +
+              data['detalleTransporte']['transportista']['chofer']['documentoNumero'] +
+              ') en data.transporte.transportista.chofer.documentoNumero debe estar sin puntos',
+          );
+        }
       }
 
       if (!data['detalleTransporte']['transportista']['chofer']['nombre']) {
