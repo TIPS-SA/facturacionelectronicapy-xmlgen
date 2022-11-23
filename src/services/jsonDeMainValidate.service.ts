@@ -537,18 +537,17 @@ class JSonDeMainValidateService {
     }
 
     if (!data['cliente']['tipoOperacion']) {
-      this.errors.push(
-          "Tipo de Operación del Cliente en data.cliente.tipoOperacion es requerido > 0");      
+      this.errors.push('Tipo de Operación del Cliente en data.cliente.tipoOperacion es requerido > 0');
     } else {
       if (
-        constanteService.tiposOperaciones.filter((um: any) => um.codigo === +data['cliente']['tipoOperacion'])
-          .length == 0
+        constanteService.tiposOperaciones.filter((um: any) => um.codigo === +data['cliente']['tipoOperacion']).length ==
+        0
       ) {
         this.errors.push(
           "Tipo de Operación '" +
             data['cliente']['tipoOperacion'] +
             "' del Cliente en data.cliente.tipoOperacion no encontrado. Valores: " +
-            constanteService.tiposOperaciones.map((a: any) => a.codigo + '-' + a.descripcion)
+            constanteService.tiposOperaciones.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
     }
@@ -561,7 +560,7 @@ class JSonDeMainValidateService {
           "Tipo de Documento '" +
             data['cliente']['documentoTipo'] +
             "' del Cliente en data.cliente.documentoTipo no encontrado. Valores: " +
-            constanteService.tiposDocumentosReceptor.map((a: any) => a.codigo + '-' + a.descripcion)
+            constanteService.tiposDocumentosReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
         );
 
         if (+data['cliente']['documentoTipo'] == 9) {
@@ -2013,7 +2012,7 @@ class JSonDeMainValidateService {
         }
 
         //Validar si tiene puntos
-        if ((data['detalleTransporte']['transportista']['chofer']['documentoNumero']+"").includes(".")) {
+        if ((data['detalleTransporte']['transportista']['chofer']['documentoNumero'] + '').includes('.')) {
           this.errors.push(
             'El número de documento del Chofer (' +
               data['detalleTransporte']['transportista']['chofer']['documentoNumero'] +
