@@ -334,9 +334,6 @@ class JSonDeMainValidateService {
             'Debe especificar el código del establecimiento en params.establecimientos[' + i + '].codigo',
           );
         }
-
-        
-        
       }
     }
   }
@@ -462,7 +459,7 @@ class JSonDeMainValidateService {
 
   private generateDatosGeneralesEmisorDEValidate(params: any, data: any) {
     var regExpOnlyNumber = new RegExp(/^\d+$/);
-    
+
     if (!(params && params.establecimientos)) {
       this.errors.push('Debe proveer un Array con la información de los establecimientos en params');
     }

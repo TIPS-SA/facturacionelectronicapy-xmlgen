@@ -174,7 +174,7 @@ class JSonDteTotalesService {
         if (data.moneda != 'PYG') {
           jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
         }
-      
+
         if (dSub10 > 0) {
           jsonResult['dSub10'] = dSub10;
 
@@ -182,7 +182,7 @@ class JSonDteTotalesService {
             jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.taxDecimals));
           }
         } else {
-          jsonResult['dSub10'] = 0
+          jsonResult['dSub10'] = 0;
         }
       }
     }
@@ -262,7 +262,8 @@ class JSonDteTotalesService {
     }
 
     if (agregarDSub) {
-      if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) { //D013
+      if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) {
+        //D013
         jsonResult['dIVA5'] = dIVA5;
         jsonResult['dIVA10'] = dIVA10;
         jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
@@ -277,7 +278,8 @@ class JSonDteTotalesService {
     }
 
     if (agregarDSub) {
-      if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) { //D013
+      if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) {
+        //D013
         //dTotIva: No debe existir el campo si D013 ≠ 1 o D013≠5
         if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
           jsonResult['dTotIVA'] = dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid;
