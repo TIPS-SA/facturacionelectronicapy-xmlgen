@@ -334,6 +334,9 @@ class JSonDeMainValidateService {
             'Debe especificar el código del establecimiento en params.establecimientos[' + i + '].codigo',
           );
         }
+
+        
+        
       }
     }
   }
@@ -458,6 +461,8 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosGeneralesEmisorDEValidate(params: any, data: any) {
+    var regExpOnlyNumber = new RegExp(/^\d+$/);
+    
     if (!(params && params.establecimientos)) {
       this.errors.push('Debe proveer un Array con la información de los establecimientos en params');
     }
@@ -503,6 +508,12 @@ class JSonDeMainValidateService {
       +establecimientoUsado.ciudad,
       this.errors,
     );
+
+    if (establecimientoUsado['numeroCasa']) {
+      if (!regExpOnlyNumber.test(establecimientoUsado['numeroCasa'])) {
+        this.errors.push('El Número de Casa en params.establecimientos*.numeroCasa debe ser numérico');
+      }
+    }
   }
 
   private generateDatosGeneralesResponsableGeneracionDEValidate(params: any, data: any) {
