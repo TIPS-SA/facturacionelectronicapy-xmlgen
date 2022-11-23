@@ -257,10 +257,12 @@ class JSonDteTotalesService {
     }
 
     if (agregarDSub) {
-      jsonResult['dIVA5'] = dIVA5;
-      jsonResult['dIVA10'] = dIVA10;
-      jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
-      jsonResult['dLiqTotIVA10'] = dLiqTotIVA10;
+      if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) { //D013
+        jsonResult['dIVA5'] = dIVA5;
+        jsonResult['dIVA10'] = dIVA10;
+        jsonResult['dLiqTotIVA5'] = dLiqTotIVA5;
+        jsonResult['dLiqTotIVA10'] = dLiqTotIVA10;
+      }
     }
 
     if (comisionLiquid > 0) {
@@ -270,43 +272,50 @@ class JSonDteTotalesService {
     }
 
     if (agregarDSub) {
-      if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
-        jsonResult['dTotIVA'] = dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid;
+      if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) { //D013
+        //dTotIva: No debe existir el campo si D013 ≠ 1 o D013≠5
+        if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
+          jsonResult['dTotIVA'] = dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid;
 
-        //Redondeo
+          //Redondeo
 
-        jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.taxDecimals));
-        if (data.moneda === 'PYG') {
-          jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(0));
-        }
-      }
-      if (dBaseGrav5 > 0) {
-        dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
-        if (data.moneda === 'PYG') {
-          dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
-        }
-
-        jsonResult['dBaseGrav5'] = dBaseGrav5;
-      }
-      if (dBaseGrav10 > 0) {
-        dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
-        if (data.moneda === 'PYG') {
-          dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
+          jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.taxDecimals));
+          if (data.moneda === 'PYG') {
+            jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(0));
+          }
+        } else {
+          jsonResult['dTotIVA'] = 0;
         }
 
-        jsonResult['dBaseGrav10'] = dBaseGrav10;
-      }
-      if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
-        let toFixed = config.decimals;
-        if (moneda == 'PYG') {
-          toFixed = 0;
-        }
+        if (dBaseGrav5 > 0) {
+          dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
+          if (data.moneda === 'PYG') {
+            dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
+          }
 
-        jsonResult['dTBasGraIVA'] = parseFloat(
-          ((dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0)).toFixed(toFixed),
-        );
+          jsonResult['dBaseGrav5'] = dBaseGrav5;
+        }
+        if (dBaseGrav10 > 0) {
+          dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
+          if (data.moneda === 'PYG') {
+            dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
+          }
+
+          jsonResult['dBaseGrav10'] = dBaseGrav10;
+        }
+        if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
+          let toFixed = config.decimals;
+          if (moneda == 'PYG') {
+            toFixed = 0;
+          }
+
+          jsonResult['dTBasGraIVA'] = parseFloat(
+            ((dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0)).toFixed(toFixed),
+          );
+        }
       }
     }
+
     if (moneda != 'PYG' && data['condicionTipoCambio'] == 1) {
       if (!data['cambio']) {
         /*throw new Error(
