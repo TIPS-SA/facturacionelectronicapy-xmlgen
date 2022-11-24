@@ -353,10 +353,12 @@ class JSonDeMainService {
           item.cdcAnticipo = item.cdc_anticipo;
         }
 
-        if (item.iva_tipo) {
+        //if (item.iva_tipo) {
+        if (typeof item.iva_tipo != 'undefined') {
           item.ivaTipo = item.iva_tipo;
         }
-        if (item.iva_base) {
+        //if (item.iva_base) {
+        if (typeof item.iva_base != 'undefined') {
           item.ivaBase = item.iva_base;
         }
         if (item.numero_serie) {
