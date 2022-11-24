@@ -350,7 +350,8 @@ class JSonDteItemService {
 
       //Redondeo inicial a 2 decimales
       if (jsonResult['dBasGravIVA']) {
-        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.decimals));
+        //jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.decimals));
+        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
         if (data.moneda === 'PYG') {
           jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(0));
         }
