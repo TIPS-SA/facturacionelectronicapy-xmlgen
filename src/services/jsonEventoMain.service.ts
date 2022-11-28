@@ -8,32 +8,12 @@ class JSonEventoMainService {
   codigoControl: any = null;
   json: any = {};
 
-  /*public generateXMLEvento(params: any, data: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      try {
-        resolve(this.generateXMLEventoService(params, data));
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }*/
-
   public generateXMLEventoCancelacion(id: number, params: any, data: any): Promise<any> {
     data.tipoEvento = 1; //Cancelacion
     return new Promise(async (resolve, reject) => {
       try {
         let xml = await this.generateXMLEventoService(params, data);
         xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
-        /*let soapXMLData = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-                            <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
-                                <env:Header/>\n\
-                                <env:Body>\n\
-                                    <rEnviEventoDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">\n\
-                                      <dId>${id}</dId>\n\
-                                      <dEvReg>${xml}</dEvReg>\n\
-                                    </rEnviEventoDe>\n\
-                                </env:Body>\n\
-                            </env:Envelope>\n`;*/
 
         let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
@@ -49,17 +29,7 @@ class JSonEventoMainService {
       try {
         let xml = await this.generateXMLEventoService(params, data);
         xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
-        /*let soapXMLData = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-                            <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
-                                <env:Header/>\n\
-                                <env:Body>\n\
-                                    <rEnviEventoDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">\n\
-                                      <dId>${id}</dId>\n\
-                                      <dEvReg>${xml}</dEvReg>\n\
-                                    </rEnviEventoDe>\n\
-                                </env:Body>\n\
-                            </env:Envelope>\n`;
-                            */
+
         let soapXMLData = this.envelopeEvent(id, xml);
         resolve(soapXMLData);
       } catch (error) {
@@ -323,6 +293,12 @@ class JSonEventoMainService {
       throw new Error('El Motivo de la Inutilización en data.motivo debe contener de [5-500] caracteres');
     }
 
+    if (data['serie']) {
+      if ((data['serie'] + '').length != 2) {
+        throw new Error('El número de serie en data.serie debe contener [2] caracteres');
+      }
+    }
+
     const jsonResult: any = {};
     jsonResult['rGeVeInu'] = {
       dNumTim: stringUtilService.leftZero(data['timbrado'], 8),
@@ -331,8 +307,12 @@ class JSonEventoMainService {
       dNumIn: stringUtilService.leftZero(data['desde'], 7),
       dNumFin: stringUtilService.leftZero(data['hasta'], 7),
       iTiDE: data['tipoDocumento'],
-      mOtEve: data['motivo'],
+      mOtEve: data['motivo']
     };
+
+    if (data['serie']) {
+      jsonResult['rGeVeInu']['dSerieNum'] = data['serie'];
+    }
 
     return jsonResult;
   }
