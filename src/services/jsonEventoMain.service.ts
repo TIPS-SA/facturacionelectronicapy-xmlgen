@@ -307,7 +307,7 @@ class JSonEventoMainService {
       dNumIn: stringUtilService.leftZero(data['desde'], 7),
       dNumFin: stringUtilService.leftZero(data['hasta'], 7),
       iTiDE: data['tipoDocumento'],
-      mOtEve: data['motivo']
+      mOtEve: data['motivo'],
     };
 
     if (data['serie']) {
