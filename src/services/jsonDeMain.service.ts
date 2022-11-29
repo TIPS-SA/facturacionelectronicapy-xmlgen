@@ -1395,10 +1395,17 @@ class JSonDeMainService {
           dDesTiPag: constanteService.condicionesTiposPagos.filter((co) => co.codigo === dataEntrega['tipo'])[0][
             'descripcion'
           ],
-          dMonTiPag: dataEntrega['monto'],
+          //dMonTiPag: dataEntrega['monto'],  //se agrega el redondeo de 4 decimales
           //cMoneTiPag: dataEntrega['3'],asdf
           //dTiCamTiPag : dataEntrega['cambio'],
         };
+
+        cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(4);
+
+        if (data.moneda === 'PYG') {
+          cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(0);
+        }
+
 
         if (dataEntrega['tipo'] == 99) {
           cuotaInicialEntrega['dDesTiPag'] = dataEntrega['tipoDescripcion'];
