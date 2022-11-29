@@ -1406,7 +1406,6 @@ class JSonDeMainService {
           cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(0);
         }
 
-
         if (dataEntrega['tipo'] == 99) {
           cuotaInicialEntrega['dDesTiPag'] = dataEntrega['tipoDescripcion'];
         }
