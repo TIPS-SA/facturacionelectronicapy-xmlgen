@@ -488,27 +488,31 @@ class JSonDeMainValidateService {
     //Validacion de algunos datos de la sucursal
     const establecimientoUsado = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0];
 
-    if (!establecimientoUsado.ciudad) {
-      this.errors.push('Debe proveer la Ciudad del establecimiento en params.establecimientos*.ciudad');
-    }
-    if (!establecimientoUsado.distrito) {
-      this.errors.push('Debe proveer la Distrito del establecimiento en params.establecimientos*.distrito');
-    }
-    if (!establecimientoUsado.departamento) {
-      this.errors.push('Debe proveer la Departamento del establecimiento en params.establecimientos*.departamento');
-    }
+    if (!establecimientoUsado) {
+      this.errors.push('Debe especificar los datos del Establecimiento "' + establecimiento + '" en params.establecimientos*');
+    } else {
+      if (!establecimientoUsado.ciudad) {
+        this.errors.push('Debe proveer la Ciudad del establecimiento en params.establecimientos*.ciudad');
+      }
+      if (!establecimientoUsado.distrito) {
+        this.errors.push('Debe proveer la Distrito del establecimiento en params.establecimientos*.distrito');
+      }
+      if (!establecimientoUsado.departamento) {
+        this.errors.push('Debe proveer la Departamento del establecimiento en params.establecimientos*.departamento');
+      }
+      
+      constanteService.validateDepartamentoDistritoCiudad(
+        'params.establecimientos*',
+        +establecimientoUsado.departamento,
+        +establecimientoUsado.distrito,
+        +establecimientoUsado.ciudad,
+        this.errors,
+      );
 
-    constanteService.validateDepartamentoDistritoCiudad(
-      'params.establecimientos*',
-      +establecimientoUsado.departamento,
-      +establecimientoUsado.distrito,
-      +establecimientoUsado.ciudad,
-      this.errors,
-    );
-
-    if (establecimientoUsado['numeroCasa']) {
-      if (!regExpOnlyNumber.test(establecimientoUsado['numeroCasa'])) {
-        this.errors.push('El Número de Casa en params.establecimientos*.numeroCasa debe ser numérico');
+      if (establecimientoUsado['numeroCasa']) {
+        if (!regExpOnlyNumber.test(establecimientoUsado['numeroCasa'])) {
+          this.errors.push('El Número de Casa en params.establecimientos*.numeroCasa debe ser numérico');
+        }
       }
     }
   }
