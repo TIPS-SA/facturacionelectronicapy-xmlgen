@@ -489,7 +489,9 @@ class JSonDeMainValidateService {
     const establecimientoUsado = params['establecimientos'].filter((e: any) => e.codigo === establecimiento)[0];
 
     if (!establecimientoUsado) {
-      this.errors.push('Debe especificar los datos del Establecimiento "' + establecimiento + '" en params.establecimientos*');
+      this.errors.push(
+        'Debe especificar los datos del Establecimiento "' + establecimiento + '" en params.establecimientos*',
+      );
     } else {
       if (!establecimientoUsado.ciudad) {
         this.errors.push('Debe proveer la Ciudad del establecimiento en params.establecimientos*.ciudad');
@@ -500,7 +502,7 @@ class JSonDeMainValidateService {
       if (!establecimientoUsado.departamento) {
         this.errors.push('Debe proveer la Departamento del establecimiento en params.establecimientos*.departamento');
       }
-      
+
       constanteService.validateDepartamentoDistritoCiudad(
         'params.establecimientos*',
         +establecimientoUsado.departamento,
