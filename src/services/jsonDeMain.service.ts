@@ -1523,7 +1523,7 @@ class JSonDeMainService {
 
     if (+data['condicion']['credito']['tipo'] === 1) {
       //Plazo
-      
+
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dPlazoCre'] = data['condicion']['credito']['plazo'];
     }
 

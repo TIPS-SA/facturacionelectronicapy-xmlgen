@@ -1437,10 +1437,15 @@ class JSonDeMainValidateService {
         );
       } else {
         if (
-          !((data['condicion']['credito']['plazo'] + '').length >= 2 && (data['condicion']['credito']['plazo'] + '').length <= 15)
+          !(
+            (data['condicion']['credito']['plazo'] + '').length >= 2 &&
+            (data['condicion']['credito']['plazo'] + '').length <= 15
+          )
         ) {
-          this.errors.push('El Plazo de Crédito en data.condicion.credito.plazo debe contener entre 2 y 15 caracteres ');
-        } 
+          this.errors.push(
+            'El Plazo de Crédito en data.condicion.credito.plazo debe contener entre 2 y 15 caracteres ',
+          );
+        }
       }
     }
 
