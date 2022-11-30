@@ -1523,11 +1523,7 @@ class JSonDeMainService {
 
     if (+data['condicion']['credito']['tipo'] === 1) {
       //Plazo
-      if (!data['condicion']['credito']['plazo']) {
-        /*throw new Error(
-          'El tipo de Crédito en data.condicion.credito.tipo es 1 entonces data.condicion.credito.plazo es obligatorio',
-        );*/
-      }
+      
       this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['dPlazoCre'] = data['condicion']['credito']['plazo'];
     }
 
