@@ -7,6 +7,7 @@ interface XmlgenConfig {
   decimals?: number;
   taxDecimals?: number;
   userObjectRemove?: boolean;
+  //debug?: boolean
 }
 
 export { XmlgenConfig };

@@ -7,28 +7,28 @@ class DE {
     return deService.generateXMLDE(params, data, config);
   };
 
-  generateXMLEventoCancelacion = (id: number, params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEventoCancelacion(id, params, data);
+  generateXMLEventoCancelacion = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoCancelacion(id, params, data, config);
   };
 
-  generateXMLEventoInutilizacion = (id: number, params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEventoInutilizacion(id, params, data);
+  generateXMLEventoInutilizacion = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoInutilizacion(id, params, data, config);
   };
 
-  generateXMLEventoConformidad = (id: number, params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEventoConformidad(id, params, data);
+  generateXMLEventoConformidad = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoConformidad(id, params, data, config);
   };
 
-  generateXMLEventoDisconformidad = (id: number, params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEventoDisconformidad(id, params, data);
+  generateXMLEventoDisconformidad = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoDisconformidad(id, params, data, config);
   };
 
-  generateXMLEventoDesconocimiento = (id: number, params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEventoDesconocimiento(id, params, data);
+  generateXMLEventoDesconocimiento = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoDesconocimiento(id, params, data, config);
   };
 
-  generateXMLEventoNotificacion = (id: number, params: any, data: any): Promise<any> => {
-    return eventoService.generateXMLEventoNotificacion(id, params, data);
+  generateXMLEventoNotificacion = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoNotificacion(id, params, data, config);
   };
 
   consultarDepartamentos = (): Promise<any> => {

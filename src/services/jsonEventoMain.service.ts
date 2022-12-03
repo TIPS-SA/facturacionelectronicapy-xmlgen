@@ -2,13 +2,14 @@ import * as xml2js from 'xml2js';
 import fechaUtilService from './FechaUtil.service';
 import constanteService from './constants.service';
 import stringUtilService from './StringUtil.service';
+import { XmlgenConfig } from './type.interface.';
 
 class JSonEventoMainService {
   codigoSeguridad: any = null;
   codigoControl: any = null;
   json: any = {};
 
-  public generateXMLEventoCancelacion(id: number, params: any, data: any): Promise<any> {
+  public generateXMLEventoCancelacion(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
     data.tipoEvento = 1; //Cancelacion
     return new Promise(async (resolve, reject) => {
       try {
@@ -23,7 +24,7 @@ class JSonEventoMainService {
     });
   }
 
-  public generateXMLEventoInutilizacion(id: number, params: any, data: any): Promise<any> {
+  public generateXMLEventoInutilizacion(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
     data.tipoEvento = 2; //Inutilizacion
     return new Promise(async (resolve, reject) => {
       try {
@@ -31,6 +32,9 @@ class JSonEventoMainService {
         xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
 
         let soapXMLData = this.envelopeEvent(id, xml);
+        /*if (config && config.debug === true) {
+          console.log("generateXMLEventoInutilizacion", soapXMLData); //TODO Agregar esto a todos los demas 
+        }*/
         resolve(soapXMLData);
       } catch (error) {
         reject(error);
@@ -38,7 +42,7 @@ class JSonEventoMainService {
     });
   }
 
-  public generateXMLEventoConformidad(id: number, params: any, data: any): Promise<any> {
+  public generateXMLEventoConformidad(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
     data.tipoEvento = 11; //Conformidad
     return new Promise(async (resolve, reject) => {
       try {
@@ -53,7 +57,7 @@ class JSonEventoMainService {
     });
   }
 
-  public generateXMLEventoDisconformidad(id: number, params: any, data: any): Promise<any> {
+  public generateXMLEventoDisconformidad(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
     data.tipoEvento = 12; //Disconformidad
     return new Promise(async (resolve, reject) => {
       try {
@@ -68,7 +72,7 @@ class JSonEventoMainService {
     });
   }
 
-  public generateXMLEventoDesconocimiento(id: number, params: any, data: any): Promise<any> {
+  public generateXMLEventoDesconocimiento(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
     data.tipoEvento = 13; //Desconocimiento
     return new Promise(async (resolve, reject) => {
       try {
@@ -83,7 +87,7 @@ class JSonEventoMainService {
     });
   }
 
-  public generateXMLEventoNotificacion(id: number, params: any, data: any): Promise<any> {
+  public generateXMLEventoNotificacion(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
     data.tipoEvento = 14; //Notificacion
     return new Promise(async (resolve, reject) => {
       try {
