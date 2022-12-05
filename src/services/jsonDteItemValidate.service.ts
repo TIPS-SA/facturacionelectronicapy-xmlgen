@@ -407,7 +407,32 @@ class JSonDteItemValidateService {
    * @param options
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
-  private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {}
+  private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {
+    let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
+
+  console.log("XXXXXXXXXXXXXXXX", item['registroEntidadComercial']);
+    if (item['registroEntidadComercial'] && item['registroEntidadComercial'].trim().length > 0) {
+      if (!(item['registroEntidadComercial'].length >= 20 && item['registroEntidadComercial'].length <= 20)) {
+        this.errors.push(
+          'El Número de Registro de la Entidad Comercial del item (' +
+            item['registroEntidadComercial'] +
+            ') en data.items[' +
+            i +
+            '].registroEntidadComercial debe tener una longitud de 20 caracteres',
+        );
+      }
+      if (regexp.test(item['registroEntidadComercial'])) {
+        this.errors.push(
+          'El Número de Registro de la Entidad Comercial del item (' +
+            item['registroEntidadComercial'] +
+            ') en data.items[' +
+            i +
+            '].registroEntidadComercial contiene valores inválidos',
+        );
+      }
+    }
+
+  }
 
   /**
    * E8.5. Sector de automotores nuevos y usados (E770-E789)
