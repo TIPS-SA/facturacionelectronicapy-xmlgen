@@ -410,7 +410,6 @@ class JSonDteItemValidateService {
   private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {
     let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
 
-    console.log('XXXXXXXXXXXXXXXX', item['registroEntidadComercial']);
     if (item['registroEntidadComercial'] && item['registroEntidadComercial'].trim().length > 0) {
       if (!(item['registroEntidadComercial'].length >= 20 && item['registroEntidadComercial'].length <= 20)) {
         this.errors.push(
