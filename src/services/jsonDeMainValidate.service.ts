@@ -853,11 +853,11 @@ class JSonDeMainValidateService {
     }
 
     if (data['cliente']['codigo']) {
-      if (!((data['cliente']['codigo'] + '').length >= 3)) {
+      if (!((data['cliente']['codigo'] + '').length >= 3 && (data['cliente']['codigo'] + '').length <= 15)) {
         this.errors.push(
           "El código del Cliente '" +
             data['cliente']['codigo'] +
-            "' en data.cliente.codigo debe tener al menos 3 caracteres",
+            "' en data.cliente.codigo debe tener de 3 a 15 caracteres",
         );
       }
     }
