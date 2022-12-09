@@ -1046,18 +1046,18 @@ class JSonDeMainValidateService {
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebitoValidate(params: any, data: any) {
     if (!(data['notaCreditoDebito']['motivo'] && data['notaCreditoDebito']['motivo'])) {
       this.errors.push('Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo');
-    }
-
-    if (
-      constanteService.notasCreditosMotivos.filter((um: any) => um.codigo === data['notaCreditoDebito']['motivo'])
-        .length == 0
-    ) {
-      this.errors.push(
-        "Motivo de la Nota de Crédito/Débito '" +
-          data['notaCreditoDebito']['motivo'] +
-          "' en data.notaCreditoDebito.motivo no encontrado. Valores: " +
-          constanteService.notasCreditosMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
-      );
+    } else {
+      if (
+        constanteService.notasCreditosMotivos.filter((um: any) => um.codigo === +data['notaCreditoDebito']['motivo'])
+          .length == 0
+      ) {
+        this.errors.push(
+          "Motivo de la Nota de Crédito/Débito '" +
+            data['notaCreditoDebito']['motivo'] +
+            "' en data.notaCreditoDebito.motivo no encontrado. Valores: " +
+            constanteService.notasCreditosMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }
     }
   }
 
@@ -1078,7 +1078,7 @@ class JSonDeMainValidateService {
       this.errors.push('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');
     }
 
-    if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === data['remision']['motivo']).length == 0) {
+    if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === +data['remision']['motivo']).length == 0) {
       this.errors.push(
         "Motivo de la Remisión '" +
           data['remision']['motivo'] +
