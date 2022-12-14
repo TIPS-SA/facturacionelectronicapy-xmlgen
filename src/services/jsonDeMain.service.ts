@@ -73,7 +73,7 @@ class JSonDeMainService {
     this.generateDatosEspecificosPorTipoDE(params, data, config);
 
     if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
-      this.generateDatosCondicionOperacionDE(params, data);
+      this.generateDatosCondicionOperacionDE(params, data, config);
     }
 
     //['gDtipDE']=E001
