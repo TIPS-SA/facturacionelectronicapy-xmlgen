@@ -126,13 +126,13 @@ class JSonDteItemValidateService {
         }
 
         if (data.moneda == 'PYG') {
-          if ((item['descuento'] + '').split('.')[1]?.length > 0) {
+          if ((item['descuento'] + '').split('.')[1]?.length > (config.pygDecimals || 0)) {
             this.errors.push(
               'El Descuento del item "' +
                 item['descuento'] +
                 '" en "PYG" en data.items[' +
                 i +
-                '].descuento, no puede contener decimales',
+                '].descuento, supera la cantidad de Decimales en config.pygDecimals',
             );
           }
         } else {

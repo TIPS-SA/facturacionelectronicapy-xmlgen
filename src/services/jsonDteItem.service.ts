@@ -172,7 +172,7 @@ class JSonDteItemService {
     //Corrige Precio Unitario con la cantidad correcta de decimales
     item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.decimals);
     if (data.moneda === 'PYG') {
-      item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(0);
+      item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.pygDecimals);
     }
 
     jsonResult['dPUniProSer'] = item['precioUnitario'];
@@ -181,7 +181,7 @@ class JSonDteItemService {
 
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.decimals));
     if (data.moneda === 'PYG') {
-      jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(0));
+      jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.pygDecimals));
     }
 
     if (data['condicionTipoCambio'] && data['condicionTipoCambio'] == 2) {
@@ -289,7 +289,7 @@ class JSonDteItemService {
 
       jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
       if (data.moneda === 'PYG') {
-        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
+        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.pygDecimals));
       }
     }
     if (data['tipoDocumento'] == 4) {
@@ -298,7 +298,7 @@ class JSonDteItemService {
 
       jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
       if (data.moneda === 'PYG') {
-        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(0));
+        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.pygDecimals));
       }
     }
 
@@ -353,7 +353,7 @@ class JSonDteItemService {
         //jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.decimals));
         jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
         if (data.moneda === 'PYG') {
-          jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(0));
+          jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.pygDecimals));
         }
       }
     }
@@ -370,7 +370,7 @@ class JSonDteItemService {
       //Redondeo
       jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals));
       if (data.moneda === 'PYG') {
-        jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(0));
+        jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.pygDecimals));
       }
     }
 

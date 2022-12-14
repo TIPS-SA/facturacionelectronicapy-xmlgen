@@ -6,6 +6,7 @@ interface XmlgenConfig {
   redondeoSedeco?: boolean;
   decimals?: number;
   taxDecimals?: number;
+  pygDecimals?: number;
   userObjectRemove?: boolean;
   //debug?: boolean
 }

@@ -30,6 +30,7 @@ class JSonDeMainService {
           redondeoSedeco: true,
           decimals: 2,
           taxDecimals: 2,
+          pygDecimals: 0,
           userObjectRemove: false,
         };
 
@@ -1327,7 +1328,7 @@ class JSonDeMainService {
    * @param data
    * @param options
    */
-  private generateDatosCondicionOperacionDE(params: any, data: any) {
+  private generateDatosCondicionOperacionDE(params: any, data: any, config: XmlgenConfig) {
     if (!data['condicion']) {
       return;
     }
@@ -1350,11 +1351,11 @@ class JSonDeMainService {
     };
 
     //if (data['condicion']['tipo'] === 1) {
-    this.generateDatosCondicionOperacionDE_Contado(params, data);
+    this.generateDatosCondicionOperacionDE_Contado(params, data, config);
     //}
 
     if (data['condicion']['tipo'] === 2) {
-      this.generateDatosCondicionOperacionDE_Credito(params, data);
+      this.generateDatosCondicionOperacionDE_Credito(params, data, config);
     }
   }
 
@@ -1365,7 +1366,7 @@ class JSonDeMainService {
    * @param data
    * @param options
    */
-  private generateDatosCondicionOperacionDE_Contado(params: any, data: any) {
+  private generateDatosCondicionOperacionDE_Contado(params: any, data: any, config: XmlgenConfig) {
     if (data['condicion']['tipo'] === 1) {
       if (!(data['condicion']['entregas'] && data['condicion']['entregas'].length > 0)) {
         /*throw new Error(
@@ -1403,7 +1404,7 @@ class JSonDeMainService {
         cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(4);
 
         if (data.moneda === 'PYG') {
-          cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(0);
+          cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(config.pygDecimals);
         }
 
         if (dataEntrega['tipo'] == 99) {
@@ -1495,7 +1496,7 @@ class JSonDeMainService {
    * @param data
    * @param options
    */
-  private generateDatosCondicionOperacionDE_Credito(params: any, data: any) {
+  private generateDatosCondicionOperacionDE_Credito(params: any, data: any, config: XmlgenConfig) {
     if (!data['condicion']['credito']['tipo']) {
       /*throw new Error(
         'El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condición posee créditos',

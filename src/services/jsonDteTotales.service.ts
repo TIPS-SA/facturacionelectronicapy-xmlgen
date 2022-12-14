@@ -190,43 +190,43 @@ class JSonDteTotalesService {
     if (data.moneda != 'PYG') {
       dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals));
     } else {
-      dTotOpe = parseFloat(dTotOpe.toFixed(0));
+      dTotOpe = parseFloat(dTotOpe.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
       dTotDesc = parseFloat(dTotDesc.toFixed(config.decimals));
     } else {
-      dTotDesc = parseFloat(dTotDesc.toFixed(0));
+      dTotDesc = parseFloat(dTotDesc.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
       dTotDescGlotem = parseFloat(dTotDescGlotem.toFixed(config.decimals));
     } else {
-      dTotDescGlotem = parseFloat(dTotDescGlotem.toFixed(0));
+      dTotDescGlotem = parseFloat(dTotDescGlotem.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
       dDescTotal = parseFloat(dDescTotal.toFixed(config.decimals));
     } else {
-      dDescTotal = parseFloat(dDescTotal.toFixed(0));
+      dDescTotal = parseFloat(dDescTotal.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
       dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals));
     } else {
-      dTotOpe = parseFloat(dTotOpe.toFixed(0));
+      dTotOpe = parseFloat(dTotOpe.toFixed(config.pygDecimals));
     }
     //---
     if (data.moneda != 'PYG') {
       dTotAntItem = parseFloat(dTotAntItem.toFixed(config.decimals));
     } else {
-      dTotAntItem = parseFloat(dTotAntItem.toFixed(0));
+      dTotAntItem = parseFloat(dTotAntItem.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
       dTotAnt = parseFloat(dTotAnt.toFixed(config.decimals));
     } else {
-      dTotAnt = parseFloat(dTotAnt.toFixed(0));
+      dTotAnt = parseFloat(dTotAnt.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
       dAnticipo = parseFloat(dAnticipo.toFixed(config.decimals));
     } else {
-      dAnticipo = parseFloat(dAnticipo.toFixed(0));
+      dAnticipo = parseFloat(dAnticipo.toFixed(config.pygDecimals));
     }
     jsonResult = Object.assign(jsonResult, {
       dTotOpe: dTotOpe, //F008
@@ -255,10 +255,10 @@ class JSonDteTotalesService {
     dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.taxDecimals));
 
     if (data.moneda === 'PYG') {
-      dIVA5 = parseFloat(dIVA5.toFixed(0));
-      dIVA10 = parseFloat(dIVA10.toFixed(0));
-      dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(0));
-      dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(0));
+      dIVA5 = parseFloat(dIVA5.toFixed(config.pygDecimals));
+      dIVA10 = parseFloat(dIVA10.toFixed(config.pygDecimals));
+      dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(config.pygDecimals));
+      dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.pygDecimals));
     }
 
     if (agregarDSub) {
@@ -288,7 +288,7 @@ class JSonDteTotalesService {
 
           jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.taxDecimals));
           if (data.moneda === 'PYG') {
-            jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(0));
+            jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.pygDecimals));
           }
         } else {
           jsonResult['dTotIVA'] = 0;
@@ -297,7 +297,7 @@ class JSonDteTotalesService {
         if (dBaseGrav5 > 0) {
           dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
           if (data.moneda === 'PYG') {
-            dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(0));
+            dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.pygDecimals));
           }
 
           jsonResult['dBaseGrav5'] = dBaseGrav5;
@@ -307,7 +307,7 @@ class JSonDteTotalesService {
         if (dBaseGrav10 > 0) {
           dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
           if (data.moneda === 'PYG') {
-            dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(0));
+            dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.pygDecimals));
           }
 
           jsonResult['dBaseGrav10'] = dBaseGrav10;
@@ -337,7 +337,7 @@ class JSonDteTotalesService {
       }
 
       //Por el Global
-      jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(0));
+      jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
     }
     if (moneda != 'PYG' && data['condicionTipoCambio'] == 2) {
       //Por item
