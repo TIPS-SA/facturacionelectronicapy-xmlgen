@@ -10,25 +10,6 @@ class JSonDteTransporteService {
    * @param options
    */
   public generateDatosTransporte(params: any, data: any) {
-    if (data['tipoDocumento'] == 7) {
-      if (!(data['detalleTransporte'] && data['detalleTransporte']['tipo'] && data['detalleTransporte']['tipo'] > 0)) {
-        //throw new Error('Obligatorio informar detalleTransporte.tipo');
-      }
-    }
-    if (data['detalleTransporte'] && data['detalleTransporte']['condicionNegociacion']) {
-      if (constanteService.condicionesNegociaciones.indexOf(data['detalleTransporte']['condicionNegociacion']) < -1) {
-        /*throw new Error(
-          'detalleTransporte.condicionNegociación (' +
-            data['detalleTransporte']['condicionNegociacion'] +
-            ') no válido',
-        );*/
-      }
-    }
-    if (data['tipoDocumento'] == 7) {
-      if (data['inicioEstimadoTranslado']) {
-        //throw new Error('Obligatorio informar detalleTransporte.inicioEstimadoTranslado');
-      }
-    }
 
     const jsonResult: any = {
       iTipTrans: data['detalleTransporte']['tipo'],

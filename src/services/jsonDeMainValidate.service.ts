@@ -1727,7 +1727,7 @@ class JSonDeMainValidateService {
       );
     }
 
-    if (
+    /*if (
       constanteService.condicionesNegociaciones.filter(
         (um) => um.codigo === data['detalleTransporte']['condicionNegociacion'],
       ).length == 0
@@ -1738,7 +1738,7 @@ class JSonDeMainValidateService {
           "' en data.transporte.condicionNegociacion no encontrado. Valores: " +
           constanteService.condicionesNegociaciones.map((a) => a.codigo + '-' + a.descripcion),
       );
-    }
+    }*/
 
     this.generateDatosSalidaValidate(params, data);
     this.generateDatosEntregaValidate(params, data);
