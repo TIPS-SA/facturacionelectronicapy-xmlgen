@@ -167,10 +167,9 @@ class JSonDteTotalesService {
       if (!(data['tipoImpuesto'] != 1)) {
         //No debe existir si D013 != 1        if (dSub5 > 0) {
         if (dSub5 > 0) {
-
           jsonResult['dSub5'] = dSub5;
           //if (data.moneda != 'PYG') { //Redondea el tax, independiente a la moneda
-            jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
+          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
           //}
 
           //if (data.moneda != 'PYG') { //Codigo duplicado
@@ -184,7 +183,7 @@ class JSonDteTotalesService {
           jsonResult['dSub10'] = dSub10;
 
           //if (data.moneda != 'PYG') { //Redondea el tax, independiente a la moneda
-            jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.taxDecimals));
+          jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.taxDecimals));
           //}
         } else {
           jsonResult['dSub10'] = 0;
