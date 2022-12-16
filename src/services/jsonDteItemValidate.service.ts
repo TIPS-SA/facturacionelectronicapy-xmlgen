@@ -110,7 +110,9 @@ class JSonDteItemValidateService {
                 item['precioUnitario'] +
                 '" en "PYG" en data.items[' +
                 i +
-                '].precioUnitario, no puede contener mas de ' + (config.pygDecimals || 0) + ' decimales',
+                '].precioUnitario, no puede contener mas de ' +
+                (config.pygDecimals || 0) +
+                ' decimales',
             );
           }
         } else {
@@ -132,7 +134,9 @@ class JSonDteItemValidateService {
                 item['descuento'] +
                 '" en "PYG" en data.items[' +
                 i +
-                '].descuento, no puede contener mas de ' + (config.pygDecimals || 0) + ' decimales',
+                '].descuento, no puede contener mas de ' +
+                (config.pygDecimals || 0) +
+                ' decimales',
             );
           }
         } else {
