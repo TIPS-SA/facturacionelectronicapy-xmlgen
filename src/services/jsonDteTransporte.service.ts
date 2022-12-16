@@ -10,7 +10,6 @@ class JSonDteTransporteService {
    * @param options
    */
   public generateDatosTransporte(params: any, data: any) {
-
     const jsonResult: any = {
       iTipTrans: data['detalleTransporte']['tipo'],
       dDesTipTrans: constanteService.tiposTransportes.filter((tt) => tt.codigo == data['detalleTransporte']['tipo'])[0][
