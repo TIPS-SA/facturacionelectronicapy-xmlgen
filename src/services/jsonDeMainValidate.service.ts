@@ -1757,24 +1757,17 @@ class JSonDeMainValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosSalidaValidate(params: any, data: any) {
-
     let errorDepDisCiu = false;
-    if ( ! data['detalleTransporte']['salida']['departamento']) {
-      this.errors.push(
-        "Debe especificar el Departamento del Local de Salida en data.transporte.salida.departamento"
-      );
+    if (!data['detalleTransporte']['salida']['departamento']) {
+      this.errors.push('Debe especificar el Departamento del Local de Salida en data.transporte.salida.departamento');
       errorDepDisCiu = true;
     }
-    if ( ! data['detalleTransporte']['salida']['distrito']) {
-      this.errors.push(
-        "Debe especificar el Distrito del Local de Salida en data.transporte.salida.distrito"
-      );
+    if (!data['detalleTransporte']['salida']['distrito']) {
+      this.errors.push('Debe especificar el Distrito del Local de Salida en data.transporte.salida.distrito');
       errorDepDisCiu = true;
     }
-    if ( ! data['detalleTransporte']['salida']['ciudad']) {
-      this.errors.push(
-        "Debe especificar la Ciudad del Local de Salida en data.transporte.salida.ciudad"
-      );
+    if (!data['detalleTransporte']['salida']['ciudad']) {
+      this.errors.push('Debe especificar la Ciudad del Local de Salida en data.transporte.salida.ciudad');
       errorDepDisCiu = true;
     }
 
@@ -1788,10 +1781,8 @@ class JSonDeMainValidateService {
       );
     }
 
-    if ( ! data['detalleTransporte']['salida']['direccion']) {
-      this.errors.push(
-        "Debe especificar la Dirección del Local de Salida en data.transporte.salida.direccion"
-      );
+    if (!data['detalleTransporte']['salida']['direccion']) {
+      this.errors.push('Debe especificar la Dirección del Local de Salida en data.transporte.salida.direccion');
     } else {
       if (
         !(
@@ -1802,14 +1793,12 @@ class JSonDeMainValidateService {
         this.errors.push(
           "Dirección del Local de Salida '" +
             data['detalleTransporte']['salida']['direccion'] +
-            "' en data.transporte.salida.direccion debe tener una longitud de 1 a 255 caracteres"
+            "' en data.transporte.salida.direccion debe tener una longitud de 1 a 255 caracteres",
         );
       }
     }
-    if ( ! data['detalleTransporte']['salida']['numeroCasa']) {
-      this.errors.push(
-        "Debe especificar el Número de Casa del Local de Salida en data.transporte.salida.numeroCasa"
-      );
+    if (!data['detalleTransporte']['salida']['numeroCasa']) {
+      this.errors.push('Debe especificar el Número de Casa del Local de Salida en data.transporte.salida.numeroCasa');
     } else {
       if (
         !(
@@ -1820,11 +1809,10 @@ class JSonDeMainValidateService {
         this.errors.push(
           "Número de Casa del Local de Salida '" +
             data['detalleTransporte']['salida']['numeroCasa'] +
-            "' en data.transporte.salida.numeroCasa debe tener una longitud de 1 a 255 caracteres"
+            "' en data.transporte.salida.numeroCasa debe tener una longitud de 1 a 255 caracteres",
         );
       }
     }
-
   }
 
   /**
@@ -1836,24 +1824,17 @@ class JSonDeMainValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosEntregaValidate(params: any, data: any) {
-
     let errorDepDisCiu = false;
-    if ( ! data['detalleTransporte']['entrega']['departamento']) {
-      this.errors.push(
-        "Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento"
-      );
+    if (!data['detalleTransporte']['entrega']['departamento']) {
+      this.errors.push('Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento');
       errorDepDisCiu = true;
     }
-    if ( ! data['detalleTransporte']['entrega']['distrito']) {
-      this.errors.push(
-        "Debe especificar el Distrito del Local de Entrega en data.transporte.entrega.distrito"
-      );
+    if (!data['detalleTransporte']['entrega']['distrito']) {
+      this.errors.push('Debe especificar el Distrito del Local de Entrega en data.transporte.entrega.distrito');
       errorDepDisCiu = true;
     }
-    if ( ! data['detalleTransporte']['entrega']['ciudad']) {
-      this.errors.push(
-        "Debe especificar la Ciudad del Local de Entrega en data.transporte.entrega.ciudad"
-      );
+    if (!data['detalleTransporte']['entrega']['ciudad']) {
+      this.errors.push('Debe especificar la Ciudad del Local de Entrega en data.transporte.entrega.ciudad');
       errorDepDisCiu = true;
     }
 
@@ -1864,7 +1845,7 @@ class JSonDeMainValidateService {
         +data['detalleTransporte']['entrega']['distrito'],
         +data['detalleTransporte']['entrega']['ciudad'],
         this.errors,
-      );      
+      );
     }
 
     /*
@@ -1888,10 +1869,8 @@ class JSonDeMainValidateService {
         //dTelEnt : data['detalleTransporte']['entrega']['telefonoContacto'],
       };
     */
-    if ( ! data['detalleTransporte']['entrega']['direccion']) {
-      this.errors.push(
-        "Debe especificar la Dirección del Local de Entrega en data.transporte.entrega.direccion"
-      );
+    if (!data['detalleTransporte']['entrega']['direccion']) {
+      this.errors.push('Debe especificar la Dirección del Local de Entrega en data.transporte.entrega.direccion');
     } else {
       if (
         !(
@@ -1902,14 +1881,12 @@ class JSonDeMainValidateService {
         this.errors.push(
           "Dirección del Local de Entrega '" +
             data['detalleTransporte']['entrega']['direccion'] +
-            "' en data.transporte.entrega.direccion debe tener una longitud de 1 a 255 caracteres"
+            "' en data.transporte.entrega.direccion debe tener una longitud de 1 a 255 caracteres",
         );
       }
     }
-    if ( ! data['detalleTransporte']['entrega']['numeroCasa']) {
-      this.errors.push(
-        "Debe especificar el Número de Casa del Local de Entrega en data.transporte.entrega.numeroCasa"
-      );
+    if (!data['detalleTransporte']['entrega']['numeroCasa']) {
+      this.errors.push('Debe especificar el Número de Casa del Local de Entrega en data.transporte.entrega.numeroCasa');
     } else {
       if (
         !(
@@ -1920,7 +1897,7 @@ class JSonDeMainValidateService {
         this.errors.push(
           "Número de Casa del Local de Entrega '" +
             data['detalleTransporte']['entrega']['numeroCasa'] +
-            "' en data.transporte.entrega.numeroCasa debe tener una longitud de 1 a 255 caracteres"
+            "' en data.transporte.entrega.numeroCasa debe tener una longitud de 1 a 255 caracteres",
         );
       }
     }
