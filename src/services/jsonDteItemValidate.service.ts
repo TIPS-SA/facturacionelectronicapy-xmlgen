@@ -64,17 +64,20 @@ class JSonDteItemValidateService {
                   "' en data.items[" +
                   i +
                   '].tolerancia no encontrado. Valores: ' +
-                  constanteService.relevanciasMercaderias.map((a) => a.codigo + '-' + a.descripcion)
+                  constanteService.relevanciasMercaderias.map((a) => a.codigo + '-' + a.descripcion),
               );
             }
 
-            if ( ! ( item['toleranciaCantidad'] && item['toleranciaPorcentaje'] ) ){
+            if (!(item['toleranciaCantidad'] && item['toleranciaPorcentaje'])) {
               this.errors.push(
-                'La Tolerancia require especificar la cantidad y porcentaje de quiebra o merma en data.items[' + i + '].toleranciaCantidad y data.items[' + i + '].toleranciaPorcenaje'
+                'La Tolerancia require especificar la cantidad y porcentaje de quiebra o merma en data.items[' +
+                  i +
+                  '].toleranciaCantidad y data.items[' +
+                  i +
+                  '].toleranciaPorcenaje',
               );
             }
           }
-          
         }
 
         let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
