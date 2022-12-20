@@ -19,7 +19,7 @@ class JSonDteTransporteService {
       dDesModTrans: constanteService.modalidadesTransportes.filter(
         (mt) => mt.codigo == data['detalleTransporte']['modalidad'],
       )[0]['descripcion'],
-      iRespFlete: data['detalleTransporte']['tipoResponsable']
+      iRespFlete: data['detalleTransporte']['tipoResponsable'],
       //cCondNeg: data['detalleTransporte']['condicionNegociacion'],
     };
 
