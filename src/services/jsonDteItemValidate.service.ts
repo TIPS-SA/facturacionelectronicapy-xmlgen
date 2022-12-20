@@ -49,7 +49,7 @@ class JSonDteItemValidateService {
               constanteService.unidadesMedidas.map((a) => a.codigo + '-' + a.descripcion.trim()),
           );
         }
-        if (data['tipoDocumento'] === 7) {
+        /*if (data['tipoDocumento'] === 7) {
           if (!item['tolerancia']) {
             this.errors.push(
               'La Tolerancia es obligatoria para el Tipo de Documento = 7 en data.items[' + i + '].tolerancia',
@@ -65,7 +65,7 @@ class JSonDteItemValidateService {
                 constanteService.relevanciasMercaderias.map((a) => a.codigo + '-' + a.descripcion),
             );
           }
-        }
+        }*/
 
         let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
 
