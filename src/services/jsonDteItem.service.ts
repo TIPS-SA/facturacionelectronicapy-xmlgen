@@ -63,8 +63,14 @@ class JSonDteItemService {
             gCamItem['dDesRelMerc'] = constanteService.relevanciasMercaderias.filter(
               (um) => um.codigo === item['tolerancia'],
             )[0]['descripcion'];
-            gCamItem['dCanQuiMer'] = item['toleranciaCantidad'];
-            gCamItem['dPorQuiMer'] = item['toleranciaPorcentaje'];
+            
+            if (item['toleranciaCantidad']) {
+              gCamItem['dCanQuiMer'] = item['toleranciaCantidad'];
+            }
+            
+            if (item['toleranciaPorcentaje']) {
+              gCamItem['dPorQuiMer'] = item['toleranciaPorcentaje'];
+            }
           }
         }
 
