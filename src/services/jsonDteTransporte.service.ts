@@ -19,10 +19,13 @@ class JSonDteTransporteService {
       dDesModTrans: constanteService.modalidadesTransportes.filter(
         (mt) => mt.codigo == data['detalleTransporte']['modalidad'],
       )[0]['descripcion'],
-      iRespFlete: data['detalleTransporte']['tipoResponsable'],
-      cCondNeg: data['detalleTransporte']['condicionNegociacion'],
+      iRespFlete: data['detalleTransporte']['tipoResponsable']
+      //cCondNeg: data['detalleTransporte']['condicionNegociacion'],
     };
 
+    if (data['detalleTransporte']['condicionNegociacion']) {
+      jsonResult['cCondNeg'] = data['detalleTransporte']['condicionNegociacion'];
+    }
     if (data['detalleTransporte']['numeroManifiesto']) {
       jsonResult['dNuManif'] = data['detalleTransporte']['numeroManifiesto'];
     }
