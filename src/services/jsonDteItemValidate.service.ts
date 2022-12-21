@@ -39,6 +39,20 @@ class JSonDteItemValidateService {
           );
         }
 
+        if (!item['ncm']) {
+          //this.errors.push('La descripción del item en data.items[' + i + '].ncm no puede ser null');
+        } else {
+          if (!(item['ncm'].length >= 6 && item['ncm'].length <= 8)) {
+            this.errors.push(
+              'El valor del campo NCM (' +
+                item['ncm'] +
+                ') en data.items[' +
+                i +
+                '].ncm debe tener una longitud de 6 a 8 caracteres',
+            );
+          }
+        }
+
         if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
           this.errors.push(
             "Unidad de Medida '" +
