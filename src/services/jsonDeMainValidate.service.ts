@@ -858,6 +858,11 @@ class JSonDeMainValidateService {
       if (!(email.length >= 3 && email.length <= 80)) {
         this.errors.push("El valor '" + email + "' en data.cliente.email debe tener una longitud de 3 a 80 caracteres");
       }
+      //se valida el mail
+      var reg = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm);
+      if (!reg.test(email)) {
+        this.errors.push("El valor '" + email + "' en data.cliente.email es invalido, para " + data['cliente']['razonSocial']);
+      }
     }
 
     if (data['cliente']['codigo']) {
