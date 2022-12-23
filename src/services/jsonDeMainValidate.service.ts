@@ -712,6 +712,14 @@ class JSonDeMainValidateService {
     if (data['cliente']['direccion']) {
       //Si tiene dirección hay que completar numero de casa.
 
+      if (!((data['cliente']['direccion'] + '').trim().length >= 1 && (data['cliente']['direccion'] + '').trim().length <= 255)) {
+        this.errors.push(
+          "La dirección del Receptor '" +
+            data['cliente']['direccion'] +
+            "' en data.cliente.direccion debe tener de 1 a 255 caracteres",
+        );
+      }
+
       if (data['cliente']['numeroCasa'] == null) {
         this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
@@ -1422,18 +1430,18 @@ class JSonDeMainValidateService {
       this.errors.push(
         'El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condición posee créditos',
       );
-    }
-
-    if (
-      constanteService.condicionesCreditosTipos.filter((um: any) => um.codigo === data['condicion']['credito']['tipo'])
-        .length == 0
-    ) {
-      this.errors.push(
-        "Tipo de Crédito '" +
-          data['condicion']['credito']['tipo'] +
-          "' en data.condicion.credito.tipo no encontrado. Valores: " +
-          constanteService.condicionesCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
-      );
+    } else {
+      if (
+        constanteService.condicionesCreditosTipos.filter((um: any) => um.codigo === data['condicion']['credito']['tipo'])
+          .length == 0
+      ) {
+        this.errors.push(
+          "Tipo de Crédito '" +
+            data['condicion']['credito']['tipo'] +
+            "' en data.condicion.credito.tipo no encontrado. Valores: " +
+            constanteService.condicionesCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }
     }
 
     if (+data['condicion']['credito']['tipo'] === 1) {
@@ -1462,12 +1470,13 @@ class JSonDeMainValidateService {
         this.errors.push(
           'El tipo de Crédito en data.condicion.credito.tipo es 2 entonces data.condicion.credito.cuotas es obligatorio',
         );
-      }
-    }
+      } else {
 
-    //Recorrer array de infoCuotas e informar en el JSON
-    if (data['condicion']['credito']['tipo'] === 2) {
-      //A Cuotas
+      }
+
+      //Si es Cuotas
+      //Recorrer array de infoCuotas e informar en el JSON
+
       if (data['condicion']['credito']['infoCuotas'] && data['condicion']['credito']['infoCuotas'].length > 0) {
         for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
           const infoCuota = data['condicion']['credito']['infoCuotas'][i];
@@ -1482,11 +1491,29 @@ class JSonDeMainValidateService {
                 constanteService.monedas.map((a: any) => a.codigo + '-' + a.descripcion),
             );
           }
+
+          if ( ! infoCuota['vencimiento']) {
+            //No es obligatorio
+            //this.errors.push('Obligatorio informar data.transporte.inicioEstimadoTranslado. Formato yyyy-MM-dd');
+          } else {
+            if (!fechaUtilService.isIsoDate(infoCuota['vencimiento'])) {
+              this.errors.push(
+                "Vencimiento de la Cuota '" +
+                infoCuota['vencimiento'] +
+                  "' en data.condicion.credito.infoCuotas[" +
+                  i +
+                  "].vencimiento no válido. Formato: yyyy-MM-dd"
+              );
+            }
+          }
         }
       } else {
         this.errors.push('Debe proporcionar data.condicion.credito.infoCuotas[]');
       }
+
     }
+
+
   }
 
   public generateDatosComplementariosComercialesDeUsoEspecificosValidate(params: any, data: any) {
