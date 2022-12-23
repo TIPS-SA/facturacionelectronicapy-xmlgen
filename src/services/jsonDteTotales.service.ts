@@ -144,6 +144,8 @@ class JSonDteTotalesService {
     let dTotGralOpe = dTotOpe - dRedon + (data['comision'] || 0);
     if (data.moneda != 'PYG') {
       dTotGralOpe = parseFloat(dTotGralOpe.toFixed(config.decimals));
+    }else{
+        dTotGralOpe = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
     }
     //dTotOpe + dRedon + dComi;
     //Si C002 = 1, 5 o 6, entonces dTotGralOpe(F014) = F008 - F011 - F012 - F013
