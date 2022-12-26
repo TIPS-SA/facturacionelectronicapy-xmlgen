@@ -353,7 +353,6 @@ class JSonDteTotalesService {
       }*/
     }
 
-    
     if (moneda != 'PYG') {
       if (data['tipoDocumento'] == 4) {
         jsonResult['dTotalGs'] = dTotGralOpe; //Debe ser igual a F014
