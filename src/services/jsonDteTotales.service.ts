@@ -144,6 +144,8 @@ class JSonDteTotalesService {
     let dTotGralOpe = dTotOpe - dRedon + (data['comision'] || 0);
     if (data.moneda != 'PYG') {
       dTotGralOpe = parseFloat(dTotGralOpe.toFixed(config.decimals));
+    } else {
+      dTotGralOpe = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
     }
     //dTotOpe + dRedon + dComi;
     //Si C002 = 1, 5 o 6, entonces dTotGralOpe(F014) = F008 - F011 - F012 - F013
@@ -333,23 +335,28 @@ class JSonDteTotalesService {
       }
     }
 
-    if (moneda != 'PYG' && data['condicionTipoCambio'] == 1) {
-      if (!data['cambio']) {
-        /*throw new Error(
-          'Debe especificar el valor del Cambio en data.cambio cuando moneda != PYG y la Cotización es Global',
-        );*/
+    if (moneda != 'PYG') {
+      //Utiliza el Decimales en Guaranies pygDecimals
+      if (data['condicionTipoCambio'] == 1) {
+        //Por el Global
+        jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
+      } else {
+        jsonResult['dTotalGs'] = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
       }
+    } else {
+      //No informar si D015 = PYG
+      /*if (data['condicionTipoCambio'] == 1) {
+        //Por el Global
+        jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
+      } else {
+        jsonResult['dTotalGs'] = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
+      }*/
+    }
 
-      //Por el Global
-      jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
-    }
-    if (moneda != 'PYG' && data['condicionTipoCambio'] == 2) {
-      //Por item
-      jsonResult['dTotalGs'] = dTotOpeGs;
-    }
+    
     if (moneda != 'PYG') {
       if (data['tipoDocumento'] == 4) {
-        jsonResult['dTotalGs'] = dTotGralOpe;
+        jsonResult['dTotalGs'] = dTotGralOpe; //Debe ser igual a F014
       }
     }
     return jsonResult;
