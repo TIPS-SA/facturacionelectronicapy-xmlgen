@@ -1306,9 +1306,9 @@ class JSonDeMainValidateService {
         if (dataEntrega['tipo'] === 3 || dataEntrega['tipo'] === 4) {
           if (!dataEntrega['infoTarjeta']) {
             this.errors.push(
-              'Debe informar sobre la tarjeta en data.condicion.entregas[' +
+              'Debe informar los datos de la tarjeta en data.condicion.entregas[' +
                 i +
-                '].infoTarjeta si la forma de Pago es a Tarjeta',
+                '].infoTarjeta si la forma de Pago es a Tarjeta'
             );
           } else {
             if (!dataEntrega['infoTarjeta']['tipo']){
@@ -1324,7 +1324,7 @@ class JSonDeMainValidateService {
                 ).length == 0
               ) {
                 this.errors.push(
-                  "Tipo de Tarjeta de Crédito '" +
+                  "Tipo de Tarjeta '" +
                     dataEntrega['infoTarjeta']['tipo'] +
                     "' en data.condicion.entregas[" +
                     i +
@@ -1341,9 +1341,9 @@ class JSonDeMainValidateService {
                   )
                 ) {
                   this.errors.push(
-                    'La descripción del Tipo de Tarjeta de crédito/debito en data.condicion.entregas[' +
+                    'La descripción del Tipo de Tarjeta en data.condicion.entregas[' +
                       i +
-                      '].infoTarjeta.tipoDescripcion debe tener de 4 y 20 caracteres',
+                      '].infoTarjeta.tipoDescripcion debe tener de 4 a 20 caracteres',
                   );
                 }
               }
