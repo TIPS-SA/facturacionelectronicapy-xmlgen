@@ -1311,19 +1311,43 @@ class JSonDeMainValidateService {
                 '].infoTarjeta si la forma de Pago es a Tarjeta',
             );
           } else {
-            if (
-              constanteService.tarjetasCreditosTipos.filter(
-                (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
-              ).length == 0
-            ) {
+            if (!dataEntrega['infoTarjeta']['tipo']){
               this.errors.push(
-                "Tipo de Tarjeta de Crédito '" +
-                  dataEntrega['infoTarjeta']['tipo'] +
-                  "' en data.condicion.entregas[" +
+                'Debe especificar el tipo de tarjeta en data.condicion.entregas[' +
                   i +
-                  '].infoTarjeta.tipo no encontrado. Valores: ' +
-                  constanteService.tarjetasCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
+                  '].infoTarjeta.tipo si la forma de Pago es a Tarjeta',
               );
+            } else {
+             if (
+                constanteService.tarjetasCreditosTipos.filter(
+                  (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
+                ).length == 0
+              ) {
+                this.errors.push(
+                  "Tipo de Tarjeta de Crédito '" +
+                    dataEntrega['infoTarjeta']['tipo'] +
+                    "' en data.condicion.entregas[" +
+                    i +
+                    '].infoTarjeta.tipo no encontrado. Valores: ' +
+                    constanteService.tarjetasCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
+                );
+              }
+
+              if (dataEntrega['infoTarjeta']['tipoDescripcion']) {
+                if (
+                  !(
+                    (dataEntrega['infoTarjeta']['tipoDescripcion'] + '').length >= 4 &&
+                    (dataEntrega['infoTarjeta']['tipoDescripcion'] + '').length <= 20
+                  )
+                ) {
+                  this.errors.push(
+                    'La descripción del Tipo de Tarjeta de crédito/debito en data.condicion.entregas[' +
+                      i +
+                      '].infoTarjeta.tipoDescripcion debe tener de 4 y 20 caracteres',
+                  );
+                }
+              }
+  
             }
 
             if (dataEntrega['infoTarjeta']['ruc']) {
