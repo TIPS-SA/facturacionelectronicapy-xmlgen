@@ -1308,17 +1308,17 @@ class JSonDeMainValidateService {
             this.errors.push(
               'Debe informar los datos de la tarjeta en data.condicion.entregas[' +
                 i +
-                '].infoTarjeta si la forma de Pago es a Tarjeta'
+                '].infoTarjeta si la forma de Pago es a Tarjeta',
             );
           } else {
-            if (!dataEntrega['infoTarjeta']['tipo']){
+            if (!dataEntrega['infoTarjeta']['tipo']) {
               this.errors.push(
                 'Debe especificar el tipo de tarjeta en data.condicion.entregas[' +
                   i +
                   '].infoTarjeta.tipo si la forma de Pago es a Tarjeta',
               );
             } else {
-             if (
+              if (
                 constanteService.tarjetasCreditosTipos.filter(
                   (um: any) => um.codigo === dataEntrega['infoTarjeta']['tipo'],
                 ).length == 0
@@ -1347,7 +1347,6 @@ class JSonDeMainValidateService {
                   );
                 }
               }
-  
             }
 
             if (dataEntrega['infoTarjeta']['ruc']) {
