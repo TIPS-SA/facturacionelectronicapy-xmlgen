@@ -140,24 +140,25 @@ class JSonDteTransporteService {
       jsonResult['dComp2Ent'] = data['detalleTransporte']['entrega']['complementoDireccion2'];
     }
 
-    jsonResult['cDepEnt'] = +data['detalleTransporte']['entrega']['departamento'];
-
     if (data['detalleTransporte']['entrega']['departamento']) {
+      jsonResult['cDepEnt'] = +data['detalleTransporte']['entrega']['departamento'];
+
       jsonResult['dDesDepEnt'] = constanteService.departamentos.filter(
         (td) => td.codigo === +data['detalleTransporte']['entrega']['departamento'],
       )[0]['descripcion'];
     }
 
-    jsonResult['cDisEnt'] = +data['detalleTransporte']['entrega']['distrito'];
-
     if (data['detalleTransporte']['entrega']['distrito']) {
+      jsonResult['cDisEnt'] = +data['detalleTransporte']['entrega']['distrito'];
+
       jsonResult['dDesDisEnt'] = constanteService.distritos.filter(
         (td) => td.codigo === +data['detalleTransporte']['entrega']['distrito'],
       )[0]['descripcion'];
     }
 
-    jsonResult['cCiuEnt'] = +data['detalleTransporte']['entrega']['ciudad'];
     if (data['detalleTransporte']['entrega']['ciudad']) {
+      jsonResult['cCiuEnt'] = +data['detalleTransporte']['entrega']['ciudad'];
+      
       jsonResult['dDesCiuEnt'] = constanteService.ciudades.filter(
         (td) => td.codigo === +data['detalleTransporte']['entrega']['ciudad'],
       )[0]['descripcion'];
