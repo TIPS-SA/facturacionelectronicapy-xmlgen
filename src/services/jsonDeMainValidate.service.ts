@@ -703,9 +703,16 @@ class JSonDeMainValidateService {
       this.errors.push('La naturaleza del Receptor debe ser "No contribuyente" para el Tipo de Operación = 4-B2F');
     }
 
-    if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
+    //Temporal Mercosys
+    /*if (data['tipoDocumento'] === 7 || data['cliente']['tipoOperacion'] === 4) {
       if (!data['cliente']['direccion']) {
         this.errors.push('data.cliente.direccion es Obligatorio para Tipo de Documento 7 o Tipo de Operación 4');
+      }
+    }*/
+
+    if (data['tipoDocumento'] === 7) {
+      if (!data['cliente']['direccion']) {
+        this.errors.push('data.cliente.direccion es Obligatorio para Tipo de Documento 7');
       }
     }
 
@@ -1886,7 +1893,8 @@ class JSonDeMainValidateService {
    */
   private generateDatosEntregaValidate(params: any, data: any) {
     let errorDepDisCiu = false;
-    if (!data['detalleTransporte']['entrega']['departamento']) {
+    //Temporal Mercosys
+/*    if (!data['detalleTransporte']['entrega']['departamento']) {
       this.errors.push('Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento');
       errorDepDisCiu = true;
     }
@@ -1898,7 +1906,7 @@ class JSonDeMainValidateService {
       this.errors.push('Debe especificar la Ciudad del Local de Entrega en data.transporte.entrega.ciudad');
       errorDepDisCiu = true;
     }
-
+*/
     if (!errorDepDisCiu) {
       constanteService.validateDepartamentoDistritoCiudad(
         'data.transporte.entrega',
