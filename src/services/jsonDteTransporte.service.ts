@@ -158,7 +158,7 @@ class JSonDteTransporteService {
 
     if (data['detalleTransporte']['entrega']['ciudad']) {
       jsonResult['cCiuEnt'] = +data['detalleTransporte']['entrega']['ciudad'];
-      
+
       jsonResult['dDesCiuEnt'] = constanteService.ciudades.filter(
         (td) => td.codigo === +data['detalleTransporte']['entrega']['ciudad'],
       )[0]['descripcion'];
