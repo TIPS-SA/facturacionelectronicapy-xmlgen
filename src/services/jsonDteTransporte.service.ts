@@ -54,7 +54,7 @@ class JSonDteTransporteService {
     }
 
     jsonResult['gVehTras'] = this.generateDatosVehiculo(params, data);
-    
+
     if (data['detalleTransporte']['transportista']) {
       jsonResult['gCamTrans'] = this.generateDatosTransportista(params, data);
     }
