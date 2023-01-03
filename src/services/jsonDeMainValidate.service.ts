@@ -1801,7 +1801,9 @@ class JSonDeMainValidateService {
     }*/
 
     this.generateDatosSalidaValidate(params, data);
-    this.generateDatosEntregaValidate(params, data);
+    if (data['detalleTransporte']['entrega']) {
+      this.generateDatosEntregaValidate(params, data);
+    }
     this.generateDatosVehiculoValidate(params, data);
     if (data['detalleTransporte']['transportista']) {
       this.generateDatosTransportistaValidate(params, data);
