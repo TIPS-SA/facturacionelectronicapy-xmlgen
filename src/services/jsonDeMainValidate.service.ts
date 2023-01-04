@@ -598,11 +598,12 @@ class JSonDeMainValidateService {
 
         const rucCliente = data['cliente']['ruc'].split('-');
 
-        if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+        //Un RUC puede ser alphanumerico
+        /*if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
           this.errors.push(
             "La parte del RUC del Cliente '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe ser numérico",
           );
-        }
+        }*/
         if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
           this.errors.push(
             "La parte del DV del RUC del Cliente '" +
@@ -611,9 +612,9 @@ class JSonDeMainValidateService {
           );
         }
 
-        if (rucCliente[0].length > 8) {
+        if (!(rucCliente[0].length >= 3 && rucCliente[0].length <= 8)) {
           this.errors.push(
-            "La parte del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe contener de 1 a 8 caracteres",
+            "La parte del RUC '" + data['cliente']['ruc'] + "' en data.cliente.ruc debe contener de 3 a 8 caracteres",
           );
         }
 
@@ -1368,7 +1369,8 @@ class JSonDeMainValidateService {
               var regExpOnlyNumber = new RegExp(/^\d+$/);
               const rucCliente = dataEntrega['infoTarjeta']['ruc'].split('-');
 
-              if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+              //Un RUC puede ser alphanumerico
+              /*if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
                 this.errors.push(
                   "La parte del RUC del Cliente '" +
                     dataEntrega['infoTarjeta']['ruc'] +
@@ -1376,7 +1378,7 @@ class JSonDeMainValidateService {
                     i +
                     '].infoTarjeta.ruc debe ser numérico',
                 );
-              }
+              }*/
               if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
                 this.errors.push(
                   "La parte del DV del RUC del Cliente '" +
@@ -1387,7 +1389,7 @@ class JSonDeMainValidateService {
                 );
               }
 
-              if (rucCliente[0].length > 8) {
+              if (!(rucCliente[0].length >= 3 && rucCliente[0].length <= 8)) {
                 this.errors.push(
                   "La parte del RUC '" +
                     dataEntrega['infoTarjeta']['ruc'] +
@@ -2099,13 +2101,14 @@ class JSonDeMainValidateService {
           var regExpOnlyNumber = new RegExp(/^\d+$/);
           const rucCliente = data['detalleTransporte']['transportista']['ruc'].split('-');
 
-          if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+          //Un RUC puede ser alphanumerico
+          /*if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
             this.errors.push(
               "La parte del RUC del Cliente '" +
                 data['detalleTransporte']['transportista']['ruc'] +
                 "' en data.transporte.transportista.ruc debe ser numérico",
             );
-          }
+          }*/
           if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
             this.errors.push(
               "La parte del DV del RUC del Cliente '" +
@@ -2114,7 +2117,7 @@ class JSonDeMainValidateService {
             );
           }
 
-          if (rucCliente[0].length > 8) {
+          if (!(rucCliente[0].length >= 3 && rucCliente[0].length <= 8)) {
             this.errors.push(
               "La parte del RUC '" +
                 data['detalleTransporte']['transportista']['ruc'] +
@@ -2273,13 +2276,14 @@ class JSonDeMainValidateService {
       var regExpOnlyNumber = new RegExp(/^\d+$/);
       const rucCliente = data['detalleTransporte']['transportista']['agente']['ruc'].split('-');
 
-      if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
+      //Un RUC puede ser alphanumerico
+      /*if (!regExpOnlyNumber.test((rucCliente[0] + '').trim())) {
         this.errors.push(
           "La parte del RUC del Cliente '" +
             data['detalleTransporte']['transportista']['agente']['ruc'] +
             "' en data.transporte.transportista.agente.ruc debe ser numérico",
         );
-      }
+      }*/
       if (!regExpOnlyNumber.test((rucCliente[1] + '').trim())) {
         this.errors.push(
           "La parte del DV del RUC del Cliente '" +
@@ -2288,11 +2292,11 @@ class JSonDeMainValidateService {
         );
       }
 
-      if (rucCliente[0].length > 8) {
+      if (!(rucCliente[0].length >= 3 && rucCliente[0].length <= 8)) {
         this.errors.push(
           "La parte del RUC '" +
             data['detalleTransporte']['transportista']['agente']['ruc'] +
-            "' en data.transporte.transportista.agente.ruc debe contener de 1 a 8 caracteres",
+            "' en data.transporte.transportista.agente.ruc debe contener de 3 a 8 caracteres",
         );
       }
 
