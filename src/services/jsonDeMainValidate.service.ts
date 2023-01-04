@@ -1893,8 +1893,7 @@ class JSonDeMainValidateService {
    */
   private generateDatosEntregaValidate(params: any, data: any) {
     let errorDepDisCiu = false;
-    //Temporal Mercosys
-    /*    if (!data['detalleTransporte']['entrega']['departamento']) {
+    if (!data['detalleTransporte']['entrega']['departamento']) {
       this.errors.push('Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento');
       errorDepDisCiu = true;
     }
@@ -1906,7 +1905,7 @@ class JSonDeMainValidateService {
       this.errors.push('Debe especificar la Ciudad del Local de Entrega en data.transporte.entrega.ciudad');
       errorDepDisCiu = true;
     }
-*/
+
     if (!errorDepDisCiu) {
       constanteService.validateDepartamentoDistritoCiudad(
         'data.transporte.entrega',
