@@ -341,9 +341,9 @@ class JSonDteTotalesService {
         //Por el Global
         jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
       } else {
-//        jsonResult['dTotalGs'] = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
-//TODO Este hay que ver la forma de que el totalGS sea por la multiplicacion con el cambio de cada item, al final
-// o ver como seria, hacer pruebas
+        //jsonResult['dTotalGs'] = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
+        //TODO Este hay que ver la forma de que el totalGS sea por la multiplicacion con el cambio de cada item, al final
+        // o ver como seria, hacer pruebas
         jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
       }
     } else {
