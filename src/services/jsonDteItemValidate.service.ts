@@ -323,7 +323,7 @@ class JSonDteItemValidateService {
             item['precioUnitario'],
         );
       }
-/*
+      /*
       if (+item['descuento'] == +item['precioUnitario']) {
         //Validar IVA
         //Quiere decir que no va a ir nada en exenta, gravada5 y gravada10, para este item.
@@ -336,8 +336,6 @@ class JSonDteItemValidateService {
         }
       }*/
     }
-
-
   }
 
   /**
