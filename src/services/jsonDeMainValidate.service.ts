@@ -685,6 +685,19 @@ class JSonDeMainValidateService {
         if (typeof data['cliente']['documentoNumero'] == 'undefined') {
           //Val.: 65
           this.errors.push('Debe informar el número de documento en data.cliente.documentoNumero');
+        } else {
+          //Validar que documentoNumero no tenga .
+          if (data['cliente']['documentoNumero'].indexOf('.') > -1) {
+            this.errors.push(
+              'El valor "' + data['cliente']['documentoNumero'] + '" en data.cliente.documentoNumero no es válido '
+            );
+          }
+          //Validar que documentoNumero no tenga /
+          if (data['cliente']['documentoNumero'].indexOf('/') > -1) {
+            this.errors.push(
+              'El valor "' + data['cliente']['documentoNumero'] + '" en data.cliente.documentoNumero no es válido '
+            );
+          }
         }
       }
     }
@@ -1421,6 +1434,21 @@ class JSonDeMainValidateService {
                   'El código de Autorización en data.condicion.entregas[' +
                     i +
                     '].infoTarjeta.codigoAutorizacion debe tener de 6 y 10 caracteres',
+                );
+              }
+            }
+
+            if (dataEntrega['infoTarjeta']['titular']) {
+              if (
+                !(
+                  (dataEntrega['infoTarjeta']['titular'] + '').length >= 4 &&
+                  (dataEntrega['infoTarjeta']['titular'] + '').length <= 30
+                )
+              ) {
+                this.errors.push(
+                  'El Titular de la Tarjeta en data.condicion.entregas[' +
+                    i +
+                    '].infoTarjeta.titular debe tener de 4 y 30 caracteres',
                 );
               }
             }
