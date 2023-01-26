@@ -1451,6 +1451,23 @@ class JSonDeMainValidateService {
                     '].infoTarjeta.titular debe tener de 4 y 30 caracteres',
                 );
               }
+              //Validar que titular no tenga .
+              if (dataEntrega['infoTarjeta']['titular'].indexOf('.') > -1) {
+                this.errors.push(
+                  'El valor "' + dataEntrega['infoTarjeta']['titular'] + '" en data.condicion.entregas[' +
+                    i +
+                    '].infoTarjeta.titular no es válido ',
+                );
+              }
+              //Validar que titular no tenga /
+              if (dataEntrega['infoTarjeta']['titular'].indexOf('/') > -1) {
+                this.errors.push(
+                  'El valor "' + dataEntrega['infoTarjeta']['titular'] + '" en data.condicion.entregas[' +
+                    i +
+                    '].infoTarjeta.titular no es válido ',
+                );
+              }
+
             }
 
             if (dataEntrega['infoTarjeta']['numero']) {
