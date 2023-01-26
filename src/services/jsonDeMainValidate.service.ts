@@ -1454,7 +1454,9 @@ class JSonDeMainValidateService {
               //Validar que titular no tenga .
               if (dataEntrega['infoTarjeta']['titular'].indexOf('.') > -1) {
                 this.errors.push(
-                  'El valor "' + dataEntrega['infoTarjeta']['titular'] + '" en data.condicion.entregas[' +
+                  'El valor "' +
+                    dataEntrega['infoTarjeta']['titular'] +
+                    '" en data.condicion.entregas[' +
                     i +
                     '].infoTarjeta.titular no es válido ',
                 );
@@ -1462,12 +1464,13 @@ class JSonDeMainValidateService {
               //Validar que titular no tenga /
               if (dataEntrega['infoTarjeta']['titular'].indexOf('/') > -1) {
                 this.errors.push(
-                  'El valor "' + dataEntrega['infoTarjeta']['titular'] + '" en data.condicion.entregas[' +
+                  'El valor "' +
+                    dataEntrega['infoTarjeta']['titular'] +
+                    '" en data.condicion.entregas[' +
                     i +
                     '].infoTarjeta.titular no es válido ',
                 );
               }
-
             }
 
             if (dataEntrega['infoTarjeta']['numero']) {
