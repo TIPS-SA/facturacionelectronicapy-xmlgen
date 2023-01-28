@@ -274,6 +274,10 @@ class JSonDeMainService {
       data.autoFactura.documentoNumero = data.autoFactura.documento_numero;
     }
 
+    if (data.autoFactura?.numero_casa) {
+      data.autoFactura.numeroCasa = data.autoFactura.numero_casa;
+    }
+
     //Remision
     if (data.nota_credito_debito) {
       data.notaCreditoDebito = data.nota_credito_debito;
@@ -281,12 +285,32 @@ class JSonDeMainService {
 
     //Remision
     if (data.remision?.tipo_responsable) {
-      data.remision.tipoResponsable = data.remision.tipo_resonsable;
+      data.remision.tipoResponsable = data.remision.tipo_responsable;
     }
 
     //Documento Asociado
     if (data.documento_asociado) {
-      data.documentoAsociado = data.documento_asociado;
+      data.documentoAsociado = { ...data.documento_asociado };
+    }
+
+    if (data.documentoAsociado?.numero_retencion) {
+      data.documentoAsociado.numeroRetencion = data.documentoAsociado.numero_retencion;
+    }
+
+    if (data.documentoAsociado?.resolucion_credito_fiscal) {
+      data.documentoAsociado.resolucionCreditoFiscal = data.documentoAsociado.resolucion_credito_fiscal;
+    }
+
+    if (data.documentoAsociado?.constancia_tipo) {
+      data.documentoAsociado.constanciaTipo = data.documentoAsociado.constancia_tipo;
+    }
+
+    if (data.documentoAsociado?.constancia_numero) {
+      data.documentoAsociado.constanciaNumero = data.documentoAsociado.constancia_numero;
+    }
+
+    if (data.documentoAsociado?.constancia_control) {
+      data.documentoAsociado.constanciaControl = data.documentoAsociado.constancia_control;
     }
 
     //Condicion entregas
@@ -450,6 +474,37 @@ class JSonDeMainService {
       //Nueva version quedara solamente data.trasnsporte
       data.detalleTransporte = { ...data.transporte };
     }
+
+    if (data.detalleTransporte?.tipo_responsable) {
+      data.detalleTransporte.tipoResponsable = data.detalleTransporte.tipo_responsable;
+    }
+
+    if (data.detalleTransporte?.condicion_negociacion) {
+      data.detalleTransporte.condicionNegociacion = data.detalleTransporte.condicion_negociacion;
+    }
+
+
+
+    if (data.detalleTransporte?.numero_manifiesto) {
+      data.detalleTransporte.numeroManifiesto = data.detalleTransporte.numero_manifiesto;
+    }
+    if (data.detalleTransporte?.numero_despacho_importacion) {
+      data.detalleTransporte.numeroDespachoImportacion = data.detalleTransporte.numero_despacho_importacion;
+    }
+    if (data.detalleTransporte?.inicio_estimado_translado) {
+      data.detalleTransporte.inicioEstimadoTranslado = data.detalleTransporte.inicio_estimado_translado;
+    }
+    if (data.detalleTransporte?.fin_estimado_translado) {
+      data.detalleTransporte.finEstimadoTranslado = data.detalleTransporte.fin_estimado_translado;
+    }
+    if (data.detalleTransporte?.pais_destino) {
+      data.detalleTransporte.paisDestino = data.detalleTransporte.pais_destino;
+    }
+    if (data.detalleTransporte?.pais_destino_nombre) {
+      data.detalleTransporte.paisDestinoNombre = data.detalleTransporte.pais_destino_nombre;
+    }
+
+  //Falta los de salida, entrega, etc.
 
     //Sector Energia
     if (data.sector_energia_electrica) {
