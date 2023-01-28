@@ -483,8 +483,6 @@ class JSonDeMainService {
       data.detalleTransporte.condicionNegociacion = data.detalleTransporte.condicion_negociacion;
     }
 
-
-
     if (data.detalleTransporte?.numero_manifiesto) {
       data.detalleTransporte.numeroManifiesto = data.detalleTransporte.numero_manifiesto;
     }
@@ -504,7 +502,7 @@ class JSonDeMainService {
       data.detalleTransporte.paisDestinoNombre = data.detalleTransporte.pais_destino_nombre;
     }
 
-  //Falta los de salida, entrega, etc.
+    //Falta los de salida, entrega, etc.
 
     //Sector Energia
     if (data.sector_energia_electrica) {
