@@ -504,6 +504,113 @@ class JSonDeMainService {
 
     //Falta los de salida, entrega, etc.
 
+    //Detalle de Transporte Salida
+    if (data.detalleTransporte?.salida?.numero_casa) {
+      //Nueva version quedara solamente data.trasnsporte
+      data.detalleTransporte.salida.numeroCasa = data.detalleTransporte.salida.numero_casa;
+    }
+    if (data.detalleTransporte?.salida?.complemento_direccion1) {
+      data.detalleTransporte.salida.complementoDireccion1 = data.detalleTransporte.salida.complemento_direccion1;
+    }
+    if (data.detalleTransporte?.salida?.complemento_direccion2) {
+      data.detalleTransporte.salida.complementoDireccion2 = data.detalleTransporte.salida.complemento_direccion2;
+    }
+    if (data.detalleTransporte?.salida?.departamento_descripcion) {
+      data.detalleTransporte.salida.departamentoDescripcion = data.detalleTransporte.salida.departamento_descripcion;
+    }
+    if (data.detalleTransporte?.salida?.distrito_descripcion) {
+      data.detalleTransporte.salida.distritoDescripcion = data.detalleTransporte.salida.distrito_descripcion;
+    }
+    if (data.detalleTransporte?.salida?.ciudad_descripcion) {
+      data.detalleTransporte.salida.ciudadDescripcion = data.detalleTransporte.salida.ciudad_descripcion;
+    }
+    if (data.detalleTransporte?.salida?.pais_descripcion) {
+      data.detalleTransporte.salida.paisDescripcion = data.detalleTransporte.salida.pais_descripcion;
+    }
+    if (data.detalleTransporte?.salida?.telefono_contacto) {
+      data.detalleTransporte.salida.telefonoContacto = data.detalleTransporte.salida.telefono_contacto;
+    }
+
+    //Detalle de Transporte Entrega
+    if (data.detalleTransporte?.entrega?.numero_casa) {
+      //Nueva version quedara solamente data.trasnsporte
+      data.detalleTransporte.entrega.numeroCasa = data.detalleTransporte.entrega.numero_casa;
+    }
+    if (data.detalleTransporte?.entrega?.complemento_direccion1) {
+      data.detalleTransporte.entrega.complementoDireccion1 = data.detalleTransporte.entrega.complemento_direccion1;
+    }
+    if (data.detalleTransporte?.entrega?.complemento_direccion2) {
+      data.detalleTransporte.entrega.complementoDireccion2 = data.detalleTransporte.entrega.complemento_direccion2;
+    }
+    if (data.detalleTransporte?.entrega?.departamento_descripcion) {
+      data.detalleTransporte.entrega.departamentoDescripcion = data.detalleTransporte.entrega.departamento_descripcion;
+    }
+    if (data.detalleTransporte?.entrega?.distrito_descripcion) {
+      data.detalleTransporte.entrega.distritoDescripcion = data.detalleTransporte.entrega.distrito_descripcion;
+    }
+    if (data.detalleTransporte?.entrega?.ciudad_descripcion) {
+      data.detalleTransporte.entrega.ciudadDescripcion = data.detalleTransporte.entrega.ciudad_descripcion;
+    }
+    if (data.detalleTransporte?.entrega?.pais_descripcion) {
+      data.detalleTransporte.entrega.paisDescripcion = data.detalleTransporte.entrega.pais_descripcion;
+    }
+    if (data.detalleTransporte?.entrega?.telefono_contacto) {
+      data.detalleTransporte.entrega.telefonoContacto = data.detalleTransporte.entrega.telefono_contacto;
+    }
+
+    // Detalle de Transporte Vehiculo
+    if (data.detalleTransporte?.vehiculo?.documento_tipo){
+      data.detalleTransporte.vehiculo.documentoTipo = data.detalleTransporte.vehiculo.documento_tipo;
+    }
+    if (data.detalleTransporte?.vehiculo?.documento_numero){
+      data.detalleTransporte.vehiculo.documentoNumero = data.detalleTransporte.vehiculo.documento_numero;
+    }
+    if (data.detalleTransporte?.vehiculo?.numero_matricula){
+      data.detalleTransporte.vehiculo.numeroMatricula = data.detalleTransporte.vehiculo.numero_matricula;
+    }
+    if (data.detalleTransporte?.vehiculo?.numero_vuelo){
+      data.detalleTransporte.vehiculo.numeroVuelo = data.detalleTransporte.vehiculo.numero_vuelo;
+    }
+
+    // Detalle de Transporte Transportista
+    if (data.detalleTransporte?.transportista?.documento_tipo){
+      data.detalleTransporte.transportista.documentoTipo = data.detalleTransporte.transportista.documento_tipo;
+    }
+    if (data.detalleTransporte?.transportista?.documento_numero){
+      data.detalleTransporte.transportista.documentoNumero = data.detalleTransporte.transportista.documento_numero;
+    }
+    if (data.detalleTransporte?.transportista?.pais_descripcion) {
+      data.detalleTransporte.transportista.paisDescripcion = data.detalleTransporte.transportista.pais_descripcion;
+    }
+
+    // Detalle de Transporte Transportista Chofer
+    if (data.detalleTransporte?.transportista?.chofer?.documento_numero){
+      data.detalleTransporte.transportista.chofer.documentoNumero = data.detalleTransporte.transportista.chofer.documento_numero;
+    }
+
+
+    // Data Complementarios
+    if(data.complementarios?.orden_compra){
+      data.complementarios.ordenCompra = data.complementarios.orden_compra;
+    }
+    if(data.complementarios?.orden_venta){
+      data.complementarios.ordenVenta = data.complementarios.orden_venta;
+    }
+    if(data.complementarios?.numero_asiento){
+      data.complementarios.numeroAsiento = data.complementarios.numero_asiento;
+    }
+
+    // Data complementarios carga
+    if(data.complementarios?.carga?.orden_compra){
+      data.complementarios.carga.ordenCompra = data.complementarios.carga.orden_compra;
+    }
+    if(data.complementarios?.carga?.orden_venta){
+      data.complementarios.carga.ordenVenta = data.complementarios.carga.orden_venta;
+    }
+    if(data.complementarios?.carga?.numero_asiento){
+      data.complementarios.carga.numeroAsiento = data.complementarios.carga.numero_asiento;
+    }
+    
     //Sector Energia
     if (data.sector_energia_electrica) {
       data.sectorEnergiaElectrica = { ...data.sector_energia_electrica };
