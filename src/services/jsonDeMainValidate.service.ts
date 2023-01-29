@@ -687,13 +687,13 @@ class JSonDeMainValidateService {
           this.errors.push('Debe informar el número de documento en data.cliente.documentoNumero');
         } else {
           //Validar que documentoNumero no tenga .
-          if (data['cliente']['documentoNumero'].indexOf('.') > -1) {
+          if ((data['cliente']['documentoNumero']+'').indexOf('.') > -1) {
             this.errors.push(
               'El valor "' + data['cliente']['documentoNumero'] + '" en data.cliente.documentoNumero no es válido ',
             );
           }
           //Validar que documentoNumero no tenga /
-          if (data['cliente']['documentoNumero'].indexOf('/') > -1) {
+          if ((data['cliente']['documentoNumero']+'').indexOf('/') > -1) {
             this.errors.push(
               'El valor "' + data['cliente']['documentoNumero'] + '" en data.cliente.documentoNumero no es válido ',
             );
