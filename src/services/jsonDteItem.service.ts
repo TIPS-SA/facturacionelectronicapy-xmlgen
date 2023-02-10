@@ -176,10 +176,13 @@ class JSonDteItemService {
     const jsonResult: any = {};
 
     //Corrige Precio Unitario con la cantidad correcta de decimales
+    /*
+    //Mejor no tocar como el usuario envia desde el JSON
     item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.decimals);
     if (data.moneda === 'PYG') {
       item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.pygDecimals);
     }
+    */
 
     jsonResult['dPUniProSer'] = item['precioUnitario'];
 
