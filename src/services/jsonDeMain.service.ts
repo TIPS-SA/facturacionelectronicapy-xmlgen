@@ -121,23 +121,21 @@ class JSonDeMainService {
     ) {
       //this.json['rDE']['DE']['gDtipDE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
       if (data['documentoAsociado']) {
-
-        if ( ! Array.isArray(data['documentoAsociado'])) {
+        if (!Array.isArray(data['documentoAsociado'])) {
           this.json['rDE']['DE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(
             params,
-            data['documentoAsociado']
+            data['documentoAsociado'],
           );
         } else {
           //Caso sea un array.
           this.json['rDE']['DE']['gCamDEAsoc'] = new Array();
-          
-          for( var i = 0; i < data['documentoAsociado'].length; i++ ) {
+
+          for (var i = 0; i < data['documentoAsociado'].length; i++) {
             const dataDocumentoAsociado = data['documentoAsociado'][i];
 
-            this.json['rDE']['DE']['gCamDEAsoc'].push(jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(
-              params,
-              dataDocumentoAsociado
-            ));
+            this.json['rDE']['DE']['gCamDEAsoc'].push(
+              jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, dataDocumentoAsociado),
+            );
           }
         }
       }

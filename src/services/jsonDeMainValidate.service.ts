@@ -139,16 +139,15 @@ class JSonDeMainValidateService {
       data['tipoDocumento'] == 7
     ) {
       if (data['documentoAsociado']) {
-        if ( ! Array.isArray(data['documentoAsociado']) ) {
+        if (!Array.isArray(data['documentoAsociado'])) {
           this.generateDatosDocumentoAsociadoValidate(params, data['documentoAsociado'], data);
         } else {
           //Caso sea un array.
-          
-          for( var i = 0; i < data['documentoAsociado'].length; i++ ) {
+
+          for (var i = 0; i < data['documentoAsociado'].length; i++) {
             const dataDocumentoAsociado = data['documentoAsociado'][i];
 
             this.generateDatosDocumentoAsociadoValidate(params, dataDocumentoAsociado, data);
-
           }
         }
       }
@@ -2557,15 +2556,15 @@ class JSonDeMainValidateService {
    * @param data
    * @param options
    */
-  public generateDatosDocumentoAsociadoValidate(params: any, dataDocumentoAsociado: any, data : any) {
+  public generateDatosDocumentoAsociadoValidate(params: any, dataDocumentoAsociado: any, data: any) {
     if (data['tipoTransaccion'] == 11 && !dataDocumentoAsociado['resolucionCreditoFiscal']) {
       this.errors.push('Obligatorio informar data.documentoAsociado.resolucionCreditoFiscal');
     }
 
     //Validaciones
     if (
-      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === dataDocumentoAsociado['formato'])
-        .length == 0
+      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === dataDocumentoAsociado['formato']).length ==
+      0
     ) {
       this.errors.push(
         "Formato de Documento Asociado '" +
