@@ -9,89 +9,89 @@ class JSonDteIdentificacionDocumentoService {
    * @param data
    * @param options
    */
-  public generateDatosDocumentoAsociado(params: any, data: any) {
+  public generateDatosDocumentoAsociado(params: any, dataDocumentoAsociado: any) {
     const jsonResult: any = {
-      iTipDocAso: data['documentoAsociado']['formato'],
+      iTipDocAso: dataDocumentoAsociado['formato'],
       dDesTipDocAso: constanteService.tiposDocumentosAsociados.filter(
-        (td) => td.codigo === data['documentoAsociado']['formato'],
+        (td) => td.codigo === dataDocumentoAsociado['formato'],
       )[0]['descripcion'],
     };
 
-    if (data['documentoAsociado']['formato'] == 1) {
+    if (dataDocumentoAsociado['formato'] == 1) {
       //H002 = Electronico
-      if (data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44) {
-        jsonResult['dCdCDERef'] = data['documentoAsociado']['cdc'];
+      if (dataDocumentoAsociado['cdc'] && dataDocumentoAsociado['cdc'].length >= 44) {
+        jsonResult['dCdCDERef'] = dataDocumentoAsociado['cdc'];
         /*} else {
         throw new Error('Debe indicar el CDC asociado en data.documentoAsociado.cdc');*/
       }
     }
-    if (data['documentoAsociado']['formato'] == 2) {
+    if (dataDocumentoAsociado['formato'] == 2) {
       //H002 = Impreso
-      if (data['documentoAsociado']['timbrado']) {
-        jsonResult['dNTimDI'] = data['documentoAsociado']['timbrado'];
+      if (dataDocumentoAsociado['timbrado']) {
+        jsonResult['dNTimDI'] = dataDocumentoAsociado['timbrado'];
         /*} else {
         throw new Error(
           'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
         );*/
       }
-      if (data['documentoAsociado']['establecimiento']) {
-        jsonResult['dEstDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['establecimiento'] + '', 3);
+      if (dataDocumentoAsociado['establecimiento']) {
+        jsonResult['dEstDocAso'] = stringUtilService.leftZero(dataDocumentoAsociado['establecimiento'] + '', 3);
         /*} else {
         throw new Error(
           'Debe especificar el Establecimiento del Documento impreso Asociado en data.documentoAsociado.establecimiento',
         );*/
       }
-      if (data['documentoAsociado']['punto']) {
-        jsonResult['dPExpDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['punto'] + '', 3);
+      if (dataDocumentoAsociado['punto']) {
+        jsonResult['dPExpDocAso'] = stringUtilService.leftZero(dataDocumentoAsociado['punto'] + '', 3);
         /*} else {
         throw new Error('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');*/
       }
-      if (data['documentoAsociado']['numero']) {
-        jsonResult['dNumDocAso'] = stringUtilService.leftZero(data['documentoAsociado']['numero'] + '', 7);
+      if (dataDocumentoAsociado['numero']) {
+        jsonResult['dNumDocAso'] = stringUtilService.leftZero(dataDocumentoAsociado['numero'] + '', 7);
         /*} else {
         throw new Error('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');*/
       }
-      if (data['documentoAsociado']['tipoDocumentoImpreso']) {
-        jsonResult['iTipoDocAso'] = +data['documentoAsociado']['tipoDocumentoImpreso'];
+      if (dataDocumentoAsociado['tipoDocumentoImpreso']) {
+        jsonResult['iTipoDocAso'] = +dataDocumentoAsociado['tipoDocumentoImpreso'];
         jsonResult['dDTipoDocAso'] = constanteService.tiposDocumentosImpresos.filter(
-          (td) => td.codigo === +data['documentoAsociado']['tipoDocumentoImpreso'],
+          (td) => td.codigo === +dataDocumentoAsociado['tipoDocumentoImpreso'],
         )[0]['descripcion'];
       }
-      if (data['documentoAsociado']['fecha']) {
-        /*if ((data['documentoAsociado']['fecha'] + '').length != 10) {
+      if (dataDocumentoAsociado['fecha']) {
+        /*if ((dataDocumentoAsociado['fecha'] + '').length != 10) {
           throw new Error(
             'La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres',
           );
         }*/
-        jsonResult['dFecEmiDI'] = data['documentoAsociado']['fecha'];
+        jsonResult['dFecEmiDI'] = dataDocumentoAsociado['fecha'];
         /*} else {
         throw new Error('Debe especificar la Fecha del Documento impreso Asociado en data.documentoAsociado.fecha');*/
       }
     }
     if (
-      data['documentoAsociado'] &&
-      data['documentoAsociado']['numeroRetencion'] &&
-      data['documentoAsociado']['numeroRetencion'].length >= 15
+      dataDocumentoAsociado &&
+      dataDocumentoAsociado['numeroRetencion'] &&
+      dataDocumentoAsociado['numeroRetencion'].length >= 15
     ) {
-      jsonResult['dNumComRet'] = data['documentoAsociado']['numeroRetencion'].substring(0, 15);
+      jsonResult['dNumComRet'] = dataDocumentoAsociado['numeroRetencion'].substring(0, 15);
     }
     if (
-      data['documentoAsociado'] &&
-      data['documentoAsociado']['resolucionCreditoFiscal'] &&
-      data['documentoAsociado']['resolucionCreditoFiscal'].length >= 15
+      dataDocumentoAsociado &&
+      dataDocumentoAsociado['resolucionCreditoFiscal'] &&
+      dataDocumentoAsociado['resolucionCreditoFiscal'].length >= 15
     ) {
-      jsonResult['dNumResCF'] = data['documentoAsociado']['resolucionCreditoFiscal'].substring(0, 15);
+      jsonResult['dNumResCF'] = dataDocumentoAsociado['resolucionCreditoFiscal'].substring(0, 15);
     }
 
-    if (data['documentoAsociado']['formato'] == 3) {
+    if (dataDocumentoAsociado['formato'] == 3) {
       //H002 = Constancia electronica
-      if (data['documentoAsociado']['constanciaTipo']) {
-        jsonResult['iTipCons'] = data['documentoAsociado']['constanciaTipo'];
+      if (dataDocumentoAsociado['constanciaTipo']) {
+        jsonResult['iTipCons'] = dataDocumentoAsociado['constanciaTipo'];
         jsonResult['dDesTipCons'] = constanteService.tiposConstancias.filter(
-          (tc) => tc.codigo === data['documentoAsociado']['constanciaTipo'],
+          (tc) => tc.codigo === dataDocumentoAsociado['constanciaTipo'],
         )[0]['descripcion'];
-        jsonResult['dNumCons'] = +data['documentoAsociado']['constanciaNumero'];
-        jsonResult['dNumControl'] = data['documentoAsociado']['constanciaControl'];
+        jsonResult['dNumCons'] = +dataDocumentoAsociado['constanciaNumero'];
+        jsonResult['dNumControl'] = dataDocumentoAsociado['constanciaControl'];
       }
     }
     return jsonResult;

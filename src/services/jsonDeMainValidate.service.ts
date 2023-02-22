@@ -139,7 +139,18 @@ class JSonDeMainValidateService {
       data['tipoDocumento'] == 7
     ) {
       if (data['documentoAsociado']) {
-        this.generateDatosDocumentoAsociadoValidate(params, data);
+        if ( ! Array.isArray(data['documentoAsociado']) ) {
+          this.generateDatosDocumentoAsociadoValidate(params, data['documentoAsociado'], data);
+        } else {
+          //Caso sea un array.
+          
+          for( var i = 0; i < data['documentoAsociado'].length; i++ ) {
+            const dataDocumentoAsociado = data['documentoAsociado'][i];
+
+            this.generateDatosDocumentoAsociadoValidate(params, dataDocumentoAsociado, data);
+
+          }
+        }
       }
     }
 
@@ -2546,74 +2557,74 @@ class JSonDeMainValidateService {
    * @param data
    * @param options
    */
-  public generateDatosDocumentoAsociadoValidate(params: any, data: any) {
-    if (data['tipoTransaccion'] == 11 && !data['documentoAsociado']['resolucionCreditoFiscal']) {
+  public generateDatosDocumentoAsociadoValidate(params: any, dataDocumentoAsociado: any, data : any) {
+    if (data['tipoTransaccion'] == 11 && !dataDocumentoAsociado['resolucionCreditoFiscal']) {
       this.errors.push('Obligatorio informar data.documentoAsociado.resolucionCreditoFiscal');
     }
 
     //Validaciones
     if (
-      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === data['documentoAsociado']['formato'])
+      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === dataDocumentoAsociado['formato'])
         .length == 0
     ) {
       this.errors.push(
         "Formato de Documento Asociado '" +
-          data['documentoAsociado']['formato'] +
+          dataDocumentoAsociado['formato'] +
           "' en data.documentoAsociado.formato no encontrado. Valores: " +
           constanteService.tiposDocumentosAsociados.map((a) => a.codigo + '-' + a.descripcion),
       );
     }
 
-    if (data['documentoAsociado']['tipo'] == 2) {
+    if (dataDocumentoAsociado['tipo'] == 2) {
       if (
         constanteService.tiposDocumentosImpresos.filter(
-          (um) => um.codigo === data['documentoAsociado']['tipoDocumentoImpreso'],
+          (um) => um.codigo === dataDocumentoAsociado['tipoDocumentoImpreso'],
         ).length == 0
       ) {
         this.errors.push(
           "Tipo de Documento impreso '" +
-            data['documentoAsociado']['tipoDocumentoImpreso'] +
+            dataDocumentoAsociado['tipoDocumentoImpreso'] +
             "' en data.documentoAsociado.tipoDocumentoImpreso no encontrado. Valores: " +
             constanteService.tiposDocumentosImpresos.map((a) => a.codigo + '-' + a.descripcion),
         );
       }
     }
 
-    if (data['documentoAsociado']['formato'] == 1) {
+    if (dataDocumentoAsociado['formato'] == 1) {
       //H002 = Electronico
-      if (!(data['documentoAsociado']['cdc'] && data['documentoAsociado']['cdc'].length >= 44)) {
+      if (!(dataDocumentoAsociado['cdc'] && dataDocumentoAsociado['cdc'].length >= 44)) {
         this.errors.push('Debe indicar el CDC asociado en data.documentoAsociado.cdc');
       }
     }
 
-    if (data['documentoAsociado']['formato'] == 2) {
+    if (dataDocumentoAsociado['formato'] == 2) {
       //H002 = Impreso
-      if (!data['documentoAsociado']['timbrado']) {
+      if (!dataDocumentoAsociado['timbrado']) {
         this.errors.push(
           'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
         );
       }
-      if (!data['documentoAsociado']['establecimiento']) {
+      if (!dataDocumentoAsociado['establecimiento']) {
         this.errors.push(
           'Debe especificar el Establecimiento del Documento impreso Asociado en data.documentoAsociado.establecimiento',
         );
       }
-      if (!data['documentoAsociado']['punto']) {
+      if (!dataDocumentoAsociado['punto']) {
         this.errors.push('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');
       }
 
-      if (!data['documentoAsociado']['numero']) {
+      if (!dataDocumentoAsociado['numero']) {
         this.errors.push('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');
       }
 
-      if (!data['documentoAsociado']['tipoDocumentoImpreso']) {
+      if (!dataDocumentoAsociado['tipoDocumentoImpreso']) {
         this.errors.push(
           'Debe especificar el Tipo del Documento Impreso Asociado en data.documentoAsociado.tipoDocumentoImpreso',
         );
       }
 
-      if (data['documentoAsociado']['fecha']) {
-        if ((data['documentoAsociado']['fecha'] + '').length != 10) {
+      if (dataDocumentoAsociado['fecha']) {
+        if ((dataDocumentoAsociado['fecha'] + '').length != 10) {
           this.errors.push(
             'La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres',
           );
@@ -2623,18 +2634,18 @@ class JSonDeMainValidateService {
       }
     }
 
-    if (data['documentoAsociado']['formato'] == 3) {
+    if (dataDocumentoAsociado['formato'] == 3) {
       //H002 = Constancia electronica
-      if (!data['documentoAsociado']['constanciaTipo']) {
+      if (!dataDocumentoAsociado['constanciaTipo']) {
         this.errors.push('Debe especificar el Tipo de Constancia data.documentoAsociado.constanciaTipo');
       } else {
         if (
-          constanteService.tiposConstancias.filter((um) => um.codigo === data['documentoAsociado']['constanciaTipo'])
+          constanteService.tiposConstancias.filter((um) => um.codigo === dataDocumentoAsociado['constanciaTipo'])
             .length == 0
         ) {
           this.errors.push(
             "Tipo de Constancia '" +
-              data['documentoAsociado']['constanciaTipo'] +
+              dataDocumentoAsociado['constanciaTipo'] +
               "' en data.documentoAsociado.constanciaTipo no encontrado. Valores: " +
               constanteService.tiposConstancias.map((a) => a.codigo + '-' + a.descripcion),
           );
