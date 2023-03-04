@@ -1742,10 +1742,10 @@ class JSonDeMainService {
             );*/
           }
 
-          const gCuotas :any = {
+          const gCuotas: any = {
             cMoneCuo: infoCuota['moneda'],
             dDMoneCuo: constanteService.monedas.filter((co) => co.codigo === infoCuota['moneda'])[0]['descripcion'],
-            dMonCuota: infoCuota['monto']
+            dMonCuota: infoCuota['monto'],
           };
 
           if (infoCuota['vencimiento']) {
