@@ -1742,13 +1742,15 @@ class JSonDeMainService {
             );*/
           }
 
-          const gCuotas = {
+          const gCuotas :any = {
             cMoneCuo: infoCuota['moneda'],
             dDMoneCuo: constanteService.monedas.filter((co) => co.codigo === infoCuota['moneda'])[0]['descripcion'],
-            dMonCuota: infoCuota['monto'],
-            dVencCuo: infoCuota['vencimiento'],
+            dMonCuota: infoCuota['monto']
           };
 
+          if (infoCuota['vencimiento']) {
+            gCuotas['dVencCuo'] = infoCuota['vencimiento'];
+          }
           this.json['rDE']['DE']['gDtipDE']['gCamCond']['gPagCred']['gCuotas'].push(gCuotas);
         }
       } else {
