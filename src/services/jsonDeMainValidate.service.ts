@@ -1866,11 +1866,15 @@ class JSonDeMainValidateService {
       );
     }*/
 
-    this.generateDatosSalidaValidate(params, data);
+    if (data['detalleTransporte']['salida']) {
+      this.generateDatosSalidaValidate(params, data);
+    }
     if (data['detalleTransporte']['entrega']) {
       this.generateDatosEntregaValidate(params, data);
     }
-    this.generateDatosVehiculoValidate(params, data);
+    if (data['detalleTransporte']['vehiculo']) {
+      this.generateDatosVehiculoValidate(params, data);
+    }
     if (data['detalleTransporte']['transportista']) {
       this.generateDatosTransportistaValidate(params, data);
     }
@@ -1930,14 +1934,14 @@ class JSonDeMainValidateService {
     } else {
       if (
         !(
-          data['detalleTransporte']['salida']['numeroCasa'].length >= 1 &&
-          data['detalleTransporte']['salida']['numeroCasa'].length <= 255
+          (data['detalleTransporte']['salida']['numeroCasa']+"").length >= 1 &&
+          (data['detalleTransporte']['salida']['numeroCasa']+"").length <= 6
         )
       ) {
         this.errors.push(
           "Número de Casa del Local de Salida '" +
             data['detalleTransporte']['salida']['numeroCasa'] +
-            "' en data.transporte.salida.numeroCasa debe tener una longitud de 1 a 255 caracteres",
+            "' en data.transporte.salida.numeroCasa debe tener una longitud de 1 a 6 caracteres",
         );
       }
     }

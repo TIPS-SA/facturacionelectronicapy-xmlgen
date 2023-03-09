@@ -47,13 +47,17 @@ class JSonDteTransporteService {
       )[0]['descripcion'];
     }
 
-    jsonResult['gCamSal'] = this.generateDatosSalida(params, data);
+    if (data['detalleTransporte']['salida']) {
+      jsonResult['gCamSal'] = this.generateDatosSalida(params, data);
+    }
 
     if (data['detalleTransporte']['entrega']) {
       jsonResult['gCamEnt'] = this.generateDatosEntrega(params, data);
     }
 
-    jsonResult['gVehTras'] = this.generateDatosVehiculo(params, data);
+    if (data['detalleTransporte']['vehiculo']) {
+      jsonResult['gVehTras'] = this.generateDatosVehiculo(params, data);
+    }
 
     if (data['detalleTransporte']['transportista']) {
       jsonResult['gCamTrans'] = this.generateDatosTransportista(params, data);
