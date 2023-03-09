@@ -1934,8 +1934,8 @@ class JSonDeMainValidateService {
     } else {
       if (
         !(
-          (data['detalleTransporte']['salida']['numeroCasa']+"").length >= 1 &&
-          (data['detalleTransporte']['salida']['numeroCasa']+"").length <= 6
+          (data['detalleTransporte']['salida']['numeroCasa'] + '').length >= 1 &&
+          (data['detalleTransporte']['salida']['numeroCasa'] + '').length <= 6
         )
       ) {
         this.errors.push(
