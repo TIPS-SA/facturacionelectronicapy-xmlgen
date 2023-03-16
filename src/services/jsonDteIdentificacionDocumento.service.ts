@@ -90,8 +90,10 @@ class JSonDteIdentificacionDocumentoService {
         jsonResult['dDesTipCons'] = constanteService.tiposConstancias.filter(
           (tc) => tc.codigo === dataDocumentoAsociado['constanciaTipo'],
         )[0]['descripcion'];
-        jsonResult['dNumCons'] = +dataDocumentoAsociado['constanciaNumero'];
-        jsonResult['dNumControl'] = dataDocumentoAsociado['constanciaControl'];
+        if(dataDocumentoAsociado['constanciaTipo'] === 2) {
+          jsonResult['dNumCons'] = +dataDocumentoAsociado['constanciaNumero'];
+          jsonResult['dNumControl'] = dataDocumentoAsociado['constanciaControl'];
+        }
       }
     }
     return jsonResult;

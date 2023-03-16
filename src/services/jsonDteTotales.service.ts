@@ -52,8 +52,8 @@ class JSonDteTotalesService {
         }
         //Gravadas 5 o 10
         if (item['gCamIVA']['iAfecIVA'] == 1 || item['gCamIVA']['iAfecIVA'] == 4) {
-          if (!(data['tipoImpuesto'] != 1)) {
-            //No debe existir si D013 != 1
+          if (data['tipoImpuesto'] === 1 || data['tipoImpuesto'] === 5) {
+            //Debe existir si D013 = 1 o D013 = 5
             if (item['gCamIVA']['dTasaIVA'] == 5) {
               //E734
               dSub5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
@@ -166,12 +166,12 @@ class JSonDteTotalesService {
     };
 
     if (agregarDSub) {
-      if (!(data['tipoImpuesto'] != 1)) {
-        //No debe existir si D013 != 1        if (dSub5 > 0) {
+      if (data['tipoImpuesto'] === 1 || data['tipoImpuesto'] === 5) {
+        //debe existir si D013 = 1 o D013 = 5
         if (dSub5 > 0) {
           jsonResult['dSub5'] = dSub5;
           //if (data.moneda != 'PYG') { //Redondea el tax, independiente a la moneda
-          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
+          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));npm 
           //}
 
           //if (data.moneda != 'PYG') { //Codigo duplicado
