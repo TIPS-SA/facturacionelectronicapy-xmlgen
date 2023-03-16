@@ -171,7 +171,7 @@ class JSonDteTotalesService {
         if (dSub5 > 0) {
           jsonResult['dSub5'] = dSub5;
           //if (data.moneda != 'PYG') { //Redondea el tax, independiente a la moneda
-          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));npm 
+          jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
           //}
 
           //if (data.moneda != 'PYG') { //Codigo duplicado
