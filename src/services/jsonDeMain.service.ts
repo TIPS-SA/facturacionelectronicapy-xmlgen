@@ -1249,7 +1249,7 @@ class JSonDeMainService {
     */
 
     //Asignar null a departamento, distrito y ciudad si tipoOperacion = 4
-    
+
     if (data['cliente']['telefono']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = (data['cliente']['telefono'] + '').trim();
     }

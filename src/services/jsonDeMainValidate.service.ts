@@ -350,17 +350,23 @@ class JSonDeMainValidateService {
             this.errors.push(
               "El valor '" +
                 establecimiento['telefono'] +
-                "' en params.establecimientos[" + i + "].telefono debe tener una longitud de 6 a 15 caracteres",
+                "' en params.establecimientos[" +
+                i +
+                '].telefono debe tener una longitud de 6 a 15 caracteres',
             );
           } else {
-            if ((establecimiento['telefono']+"").includes('(') || 
-                (establecimiento['telefono']+"").includes(')') || 
-                (establecimiento['telefono']+"").includes('[') || 
-                (establecimiento['telefono']+"").includes(']')) {
+            if (
+              (establecimiento['telefono'] + '').includes('(') ||
+              (establecimiento['telefono'] + '').includes(')') ||
+              (establecimiento['telefono'] + '').includes('[') ||
+              (establecimiento['telefono'] + '').includes(']')
+            ) {
               this.errors.push(
                 "El valor '" +
                   establecimiento['telefono'] +
-                  "' en params.establecimientos[" + i + "].telefono no puede contener () o []",
+                  "' en params.establecimientos[" +
+                  i +
+                  '].telefono no puede contener () o []',
               );
             }
           }
@@ -886,14 +892,14 @@ class JSonDeMainValidateService {
             "' en data.cliente.telefono debe tener una longitud de 6 a 15 caracteres",
         );
       } else {
-        if ((data['cliente']['telefono']+"").includes('(') || 
-            (data['cliente']['telefono']+"").includes(')') || 
-            (data['cliente']['telefono']+"").includes('[') || 
-            (data['cliente']['telefono']+"").includes(']')) {
+        if (
+          (data['cliente']['telefono'] + '').includes('(') ||
+          (data['cliente']['telefono'] + '').includes(')') ||
+          (data['cliente']['telefono'] + '').includes('[') ||
+          (data['cliente']['telefono'] + '').includes(']')
+        ) {
           this.errors.push(
-            "El valor '" +
-              data['cliente']['telefono'] +
-              "' en data.cliente.telefono no puede contener () o []",
+            "El valor '" + data['cliente']['telefono'] + "' en data.cliente.telefono no puede contener () o []",
           );
         }
       }
@@ -907,14 +913,14 @@ class JSonDeMainValidateService {
             "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres",
         );
       } else {
-        if ((data['cliente']['celular']+"").includes('(') || 
-          (data['cliente']['celular']+"").includes(')') || 
-          (data['cliente']['celular']+"").includes('[') || 
-          (data['cliente']['celular']+"").includes(']')) {
+        if (
+          (data['cliente']['celular'] + '').includes('(') ||
+          (data['cliente']['celular'] + '').includes(')') ||
+          (data['cliente']['celular'] + '').includes('[') ||
+          (data['cliente']['celular'] + '').includes(']')
+        ) {
           this.errors.push(
-            "El valor '" +
-              data['cliente']['celular'] +
-              "' en data.cliente.celular no puede contener () o []",
+            "El valor '" + data['cliente']['celular'] + "' en data.cliente.celular no puede contener () o []",
           );
         }
       }
