@@ -1249,33 +1249,11 @@ class JSonDeMainService {
     */
 
     //Asignar null a departamento, distrito y ciudad si tipoOperacion = 4
-    /*    if (data['cliente']['tipoOperacion'] === 4) {
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = null;
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = null;
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = null;
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = null;
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = null;
-            this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = null;
-        }
-    */
+
     if (data['cliente']['telefono']) {
-      if (!(data['cliente']['telefono'].length >= 6 && data['cliente']['telefono'].length <= 15)) {
-        /*throw new Error(
-          "El valor '" +
-            data['cliente']['telefono'] +
-            "' en data.cliente.telefono debe tener una longitud de 6 a 15 caracteres",
-        );*/
-      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = (data['cliente']['telefono'] + '').trim();
     }
     if (data['cliente']['celular']) {
-      if (!(data['cliente']['celular'].length >= 10 && data['cliente']['celular'].length <= 20)) {
-        /*throw new Error(
-          "El valor '" +
-            data['cliente']['celular'] +
-            "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres",
-        );*/
-      }
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = (data['cliente']['celular'] + '').trim();
     }
     if (data['cliente']['email']) {
