@@ -361,13 +361,14 @@ class JSonDeMainValidateService {
               (establecimiento['telefono'] + '').includes('[') ||
               (establecimiento['telefono'] + '').includes(']')
             ) {
-              this.errors.push(
+              /*this.errors.push(
                 "El valor '" +
                   establecimiento['telefono'] +
                   "' en params.establecimientos[" +
                   i +
                   '].telefono no puede contener () o []',
-              );
+              );*/
+              //Finalmente no da error en la SET por esto
             }
           }
         }
@@ -898,9 +899,10 @@ class JSonDeMainValidateService {
           (data['cliente']['telefono'] + '').includes('[') ||
           (data['cliente']['telefono'] + '').includes(']')
         ) {
-          this.errors.push(
+          /*this.errors.push(
             "El valor '" + data['cliente']['telefono'] + "' en data.cliente.telefono no puede contener () o []",
-          );
+          );*/
+          //Finalmente no da error en la SET por esto
         }
       }
     }
