@@ -1239,15 +1239,6 @@ class JSonDeMainService {
       )[0]['descripcion'];
     }
 
-    /*
-    constanteService.validateDepartamentoDistritoCiudad(
-      'data.cliente',
-      +data['cliente']['departamento'],
-      +data['cliente']['distrito'],
-      +data['cliente']['ciudad'], this.errors
-    );
-    */
-
     //Asignar null a departamento, distrito y ciudad si tipoOperacion = 4
 
     if (data['cliente']['telefono']) {

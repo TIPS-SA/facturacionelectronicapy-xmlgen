@@ -131,7 +131,7 @@ class JSonDteItemValidateService {
         }
 
         if (data.moneda == 'PYG') {
-          if ((item['precioUnitario'] + '').split('.')[1]?.length > (config.pygDecimals || 0)) {
+          /*if ((item['precioUnitario'] + '').split('.')[1]?.length > (config.pygDecimals || 0)) {
             this.errors.push(
               'El Precio Unitario del item "' +
                 item['precioUnitario'] +
@@ -140,6 +140,15 @@ class JSonDteItemValidateService {
                 '].precioUnitario, no puede contener mas de ' +
                 (config.pygDecimals || 0) +
                 ' decimales',
+            );
+          }*/
+          if ((item['precioUnitario'] + '').split('.')[1]?.length > 8) {
+            this.errors.push(
+              'El Precio Unitario del item "' +
+                item['precioUnitario'] +
+                '" en "PYG" en data.items[' +
+                i +
+                '].precioUnitario, no puede contener mas de 8 decimales',
             );
           }
         } else {
