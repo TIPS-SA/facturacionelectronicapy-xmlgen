@@ -346,8 +346,10 @@ class JSonDteItemService {
             [EA008 * (E733/100)] / 1,05 si la tasa es del 5%
         Si E731 = 2 o 3 este campo es igual 0
     */
-    jsonResult['dBasGravIVA'] = 0;
+
+    jsonResult['dBasGravIVA'] = 0;  //Valor por defecto
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
+      // Antes de NT13
       if (item['iva'] == 10) {
         jsonResult['dBasGravIVA'] =
           (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (item['ivaBase'] / 100)) / 1.1;
@@ -356,10 +358,25 @@ class JSonDteItemService {
         jsonResult['dBasGravIVA'] =
           (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (item['ivaBase'] / 100)) / 1.05;
       }
+      
 
+      // Aplicando NT13      
+      //-------------------------------------------------------------
+      /**
+      * Cambios en NT13
+        Si E731 = 1 o 4 este campo es igual al resultado del cálculo:
+          [100 * EA008 * E733] / [10000 + (E734 * E733)]
+
+        Si E731 = 2 o 3 este campo es igual 0
+      */
+      /*jsonResult['dBasGravIVA'] =
+          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) 
+          / 
+          (10000 + ( item['iva'] * item['ivaBase']));
+      */
+      
       //Redondeo inicial a 2 decimales
       if (jsonResult['dBasGravIVA']) {
-        //jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.decimals));
         jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
         if (data.moneda === 'PYG') {
           jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.pygDecimals));
@@ -383,6 +400,32 @@ class JSonDteItemService {
       }
     }
 
+    //Calculo para E737, aparecio en la NT13
+    /*jsonResult['dBasExe'] = 0;  //Valor por defecto E737
+    if (item['ivaTipo'] == 4) { //E731 == 4
+     
+      // Aplicando NT13      
+      //-------------------------------------------------------------
+      /**
+        Si E731 = 4 este campo es igual al resultado del cálculo:
+        [100 * EA008 * (100 – E733)] / [10000 + (E734 * E733)]
+        Si E731 = 1 , 2 o 3 este campo es igual 0 
+      * /
+
+      jsonResult['dBasExe'] =
+          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase']))
+          / 
+          (10000 + ( item['iva'] * item['ivaBase']));
+      
+      
+      //Redondeo inicial a 2 decimales
+      if (jsonResult['dBasExe']) {
+        jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
+        if (data.moneda === 'PYG') {
+          jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.pygDecimals));
+        }
+      }
+    }*/
     return jsonResult;
   }
 
