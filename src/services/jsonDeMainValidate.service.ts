@@ -832,58 +832,52 @@ class JSonDeMainValidateService {
         }
       }
 
-      if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-        if (!data['cliente']['distrito']) {
-          this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
-        }
-
-        if (
-          constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito'])
-            .length == 0
-        ) {
-          this.errors.push(
-            "Distrito '" +
-              data['cliente']['distrito'] +
-              "' del Cliente en data.cliente.distrito no encontrado. Valores: " +
-              constanteService.distritos.map((a: any) => a.codigo + '-' + a.descripcion),
-          );
-        }
+      if (!data['cliente']['distrito']) {
+        this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
+      } else if (
+        constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito'])
+          .length == 0
+      ) {
+        this.errors.push(
+          "Distrito '" +
+            data['cliente']['distrito'] +
+            "' del Cliente en data.cliente.distrito no encontrado. Valores: " +
+            constanteService.distritos.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
       }
-
-      if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
-        if (!data['cliente']['departamento']) {
-          this.errors.push(
-            'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
-          );
-        }
-        if (
-          constanteService.departamentos.filter(
-            (departamento: any) => departamento.codigo === +data['cliente']['departamento'],
-          ).length == 0
-        ) {
-          this.errors.push(
-            "Departamento '" +
-              data['cliente']['departamento'] +
-              "' del Cliente en data.cliente.departamento no encontrado. Valores: " +
-              constanteService.departamentos.map((a: any) => a.codigo + '-' + a.descripcion),
-          );
-        }
+      
+      if (!data['cliente']['departamento']) {
+        this.errors.push(
+          'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
+        );
+      } else if (
+        constanteService.departamentos.filter(
+          (departamento: any) => departamento.codigo === +data['cliente']['departamento'],
+        ).length == 0
+      ) {
+        this.errors.push(
+          "Departamento '" +
+            data['cliente']['departamento'] +
+            "' del Cliente en data.cliente.departamento no encontrado. Valores: " +
+            constanteService.departamentos.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
       }
-
-      if (data['cliente']['tipoOperacion'] == 4) {
-        if (data['cliente']['pais'] == 'PRY') {
-          this.errors.push('El tipo de Operación = 4-B2F requiere un pais diferente a PRY');
-        }
-      }
+      
+      //console.log("distrito", data['cliente']['distrito'], "ciudad", data['cliente']['ciudad'], "departamento", data['cliente']['departamento']);
+      constanteService.validateDepartamentoDistritoCiudad(
+        'data.cliente',
+        +data['cliente']['departamento'],
+        +data['cliente']['distrito'],
+        +data['cliente']['ciudad'],
+        this.errors,
+      );
     }
 
-    constanteService.validateDepartamentoDistritoCiudad(
-      'data.cliente',
-      +data['cliente']['departamento'],
-      +data['cliente']['distrito'],
-      +data['cliente']['ciudad'],
-      this.errors,
-    );
+    if (data['cliente']['tipoOperacion'] == 4) {
+      if (data['cliente']['pais'] == 'PRY') {
+        this.errors.push('El tipo de Operación = 4-B2F requiere un pais diferente a PRY');
+      }
+    }
 
     if (data['cliente']['telefono']) {
       if (!(data['cliente']['telefono'].length >= 6 && data['cliente']['telefono'].length <= 15)) {

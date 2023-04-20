@@ -8174,26 +8174,6 @@ class ConstanteService {
     { codigo: 3, descripcion: 'SAN PEDRO' },
   ];
 
-  /*  validateDepartamentoDistritoCiudad(field: string, departamentoId: number, distritoId: number, ciudadId: number) {
-  
-  
-      if (ciudadId) {
-        let distritoCiudadId = this.ciudades.filter((td) => td.codigo === ciudadId)[0]['distrito'];
-  
-        if (distritoId != distritoCiudadId) {
-          throw new Error('El distrito pasado no pertenece a la Ciudad especificada en ' + field + '.distrito');
-        }
-      }
-  
-      if (distritoId) {
-        let departamentoDistritoId = this.distritos.filter((td) => td.codigo === distritoId)[0]['departamento'];
-  
-        if (departamentoId != departamentoDistritoId) {
-          throw new Error('El departamento pasado no pertenece al Distrito especificado en ' + field + '.departamento');
-        }
-      }
-    }*/
-
   validateDepartamentoDistritoCiudad(
     field: string,
     departamentoId: number,

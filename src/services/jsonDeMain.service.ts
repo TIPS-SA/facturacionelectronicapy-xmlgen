@@ -1412,21 +1412,6 @@ class JSonDeMainService {
         (td) => td.codigo === +data['autoFactura']['ubicacion']['ciudad'],
       )[0]['descripcion'],
     };
-
-    /*
-    constanteService.validateDepartamentoDistritoCiudad(
-      'data.autoFactura',
-      +data['autoFactura']['departamento'],
-      +data['autoFactura']['distrito'],
-      +data['autoFactura']['ciudad'],
-    );
-    constanteService.validateDepartamentoDistritoCiudad(
-      'data.autoFactura.ubicacion',
-      +data['autoFactura']['ubicacion']['departamento'],
-      +data['autoFactura']['ubicacion']['distrito'],
-      +data['autoFactura']['ubicacion']['ciudad'],
-    );
-    */
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
