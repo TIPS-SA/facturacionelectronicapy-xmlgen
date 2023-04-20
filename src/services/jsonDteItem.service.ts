@@ -347,7 +347,7 @@ class JSonDteItemService {
         Si E731 = 2 o 3 este campo es igual 0
     */
 
-    jsonResult['dBasGravIVA'] = 0;  //Valor por defecto
+    jsonResult['dBasGravIVA'] = 0; //Valor por defecto
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
       // Antes de NT13
       if (item['iva'] == 10) {
@@ -358,9 +358,8 @@ class JSonDteItemService {
         jsonResult['dBasGravIVA'] =
           (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (item['ivaBase'] / 100)) / 1.05;
       }
-      
 
-      // Aplicando NT13      
+      // Aplicando NT13
       //-------------------------------------------------------------
       /**
       * Cambios en NT13
@@ -374,7 +373,7 @@ class JSonDteItemService {
           / 
           (10000 + ( item['iva'] * item['ivaBase']));
       */
-      
+
       //Redondeo inicial a 2 decimales
       if (jsonResult['dBasGravIVA']) {
         jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
