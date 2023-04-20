@@ -835,8 +835,8 @@ class JSonDeMainValidateService {
       if (!data['cliente']['distrito']) {
         this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
       } else if (
-        constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito'])
-          .length == 0
+        constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito']).length ==
+        0
       ) {
         this.errors.push(
           "Distrito '" +
@@ -845,7 +845,7 @@ class JSonDeMainValidateService {
             constanteService.distritos.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
-      
+
       if (!data['cliente']['departamento']) {
         this.errors.push(
           'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
@@ -862,7 +862,7 @@ class JSonDeMainValidateService {
             constanteService.departamentos.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
-      
+
       //console.log("distrito", data['cliente']['distrito'], "ciudad", data['cliente']['ciudad'], "departamento", data['cliente']['departamento']);
       constanteService.validateDepartamentoDistritoCiudad(
         'data.cliente',
