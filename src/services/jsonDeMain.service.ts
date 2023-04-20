@@ -1176,18 +1176,19 @@ class JSonDeMainService {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dRucRec'] = (data['cliente']['ruc'].split('-')[0] + '').trim();
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDVRec'] = (data['cliente']['ruc'].split('-')[1] + '').trim();
     }
+    
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //Obligatorio completar D210
 
       if (data['cliente']['documentoTipo']) {
-        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = data['cliente']['documentoTipo'];
+        this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = +data['cliente']['documentoTipo'];
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] =
-          constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === data['cliente']['documentoTipo'])[0][
+          constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === +data['cliente']['documentoTipo'])[0][
             'descripcion'
           ];
       }
 
-      if (data['cliente']['documentoTipo'] == 9) {
+      if (+data['cliente']['documentoTipo'] == 9) {
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDTipIDRec'] = data['cliente']['documentoTipoDescripcion'];
       }
 
@@ -1218,21 +1219,21 @@ class JSonDeMainService {
     }
 
     //
-    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
+    if (data['cliente']['direccion'] && +data['cliente']['tipoOperacion'] != 4) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDepRec'] = +data['cliente']['departamento'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDepRec'] = constanteService.departamentos.filter(
         (td) => td.codigo === +data['cliente']['departamento'],
       )[0]['descripcion'];
     }
 
-    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
+    if (data['cliente']['direccion'] && +data['cliente']['tipoOperacion'] != 4) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cDisRec'] = +data['cliente']['distrito'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesDisRec'] = constanteService.distritos.filter(
         (td) => td.codigo === +data['cliente']['distrito'],
       )[0]['descripcion'];
     }
 
-    if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
+    if (data['cliente']['direccion'] && +data['cliente']['tipoOperacion'] != 4) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['cCiuRec'] = +data['cliente']['ciudad'];
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dDesCiuRec'] = constanteService.ciudades.filter(
         (td) => td.codigo === +data['cliente']['ciudad'],
