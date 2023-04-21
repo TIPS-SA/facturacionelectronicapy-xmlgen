@@ -349,7 +349,6 @@ class JSonDteItemService {
 
     jsonResult['dBasGravIVA'] = 0; //Valor por defecto
     if (item['ivaTipo'] == 1 || item['ivaTipo'] == 4) {
-
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
       // Antes de NT13 -- esta opcion esta deprecada, valida solo hasta el 21/05/2023
       if (item['iva'] == 10) {
@@ -372,16 +371,15 @@ class JSonDteItemService {
 
           Si E731 = 2 o 3 este campo es igual 0
         */
-        if (new Date().getTime() >= new Date("2023-04-21").getTime()) {
+        if (new Date().getTime() >= new Date('2023-04-21').getTime()) {
           jsonResult['dBasGravIVA'] =
-            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) 
-            / 
-            (10000 + ( item['iva'] * item['ivaBase']));
+            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) /
+            (10000 + item['iva'] * item['ivaBase']);
         }
       }
 
       //Vigencia en Test y Produccion
-      if (new Date().getTime() >= new Date("2023-05-21").getTime()) {
+      if (new Date().getTime() >= new Date('2023-05-21').getTime()) {
         //Si la fecha de hoy ya supera el plazo de entrada en vigor ya no importa, utiliza la nueva forma.
         /**
         * Cambios en NT13
@@ -391,9 +389,8 @@ class JSonDteItemService {
           Si E731 = 2 o 3 este campo es igual 0
         */
         jsonResult['dBasGravIVA'] =
-          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) 
-          / 
-          (10000 + ( item['iva'] * item['ivaBase']));
+          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) /
+          (10000 + item['iva'] * item['ivaBase']);
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -404,7 +401,6 @@ class JSonDteItemService {
           jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.pygDecimals));
         }
       }
-
     }
 
     /* 
@@ -424,17 +420,17 @@ class JSonDteItemService {
       }
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if (config.test == true) { //Ambiente de test de la SET
-      if (new Date().getTime() >= new Date("2023-04-21").getTime()) {
-
+    if (config.test == true) {
+      //Ambiente de test de la SET
+      if (new Date().getTime() >= new Date('2023-04-21').getTime()) {
         //Esta parte debe entrar en vigor en produccion a partir de 21/05/2023
         //Calculo para E737, aparecio en la NT13
-        jsonResult['dBasExe'] = 0;  //Valor por defecto E737
-        if (item['ivaTipo'] == 4) { //E731 == 4
-        
-          // Aplicando NT13      
+        jsonResult['dBasExe'] = 0; //Valor por defecto E737
+        if (item['ivaTipo'] == 4) {
+          //E731 == 4
+
+          // Aplicando NT13
           //-------------------------------------------------------------
           /**
             Si E731 = 4 este campo es igual al resultado del cálculo:
@@ -443,11 +439,9 @@ class JSonDteItemService {
           */
 
           jsonResult['dBasExe'] =
-              (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase']))
-              / 
-              (10000 + ( item['iva'] * item['ivaBase']));
-          
-          
+            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase'])) /
+            (10000 + item['iva'] * item['ivaBase']);
+
           //Redondeo inicial a 2 decimales
           if (jsonResult['dBasExe']) {
             jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
@@ -460,12 +454,13 @@ class JSonDteItemService {
     }
 
     //Vigencia en test y produccion
-    if (new Date().getTime() >= new Date("2023-05-21").getTime()) {
+    if (new Date().getTime() >= new Date('2023-05-21').getTime()) {
       //No importando si es test o produccion, luego del plazo de entrada en vigor en produccion ya aplica igualmente.
-      jsonResult['dBasExe'] = 0;  //Valor por defecto E737
-      if (item['ivaTipo'] == 4) { //E731 == 4
-      
-        // Aplicando NT13      
+      jsonResult['dBasExe'] = 0; //Valor por defecto E737
+      if (item['ivaTipo'] == 4) {
+        //E731 == 4
+
+        // Aplicando NT13
         //-------------------------------------------------------------
         /**
           Si E731 = 4 este campo es igual al resultado del cálculo:
@@ -474,11 +469,9 @@ class JSonDteItemService {
         */
 
         jsonResult['dBasExe'] =
-            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase']))
-            / 
-            (10000 + ( item['iva'] * item['ivaBase']));
-        
-        
+          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase'])) /
+          (10000 + item['iva'] * item['ivaBase']);
+
         //Redondeo inicial a 2 decimales
         if (jsonResult['dBasExe']) {
           jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
