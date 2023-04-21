@@ -32,6 +32,7 @@ class JSonDeMainService {
           taxDecimals: 2,
           pygDecimals: 0,
           userObjectRemove: false,
+          test: false //Para ambiente de test se debe informar true por "config" exterior..
         };
 
         defaultConfig = Object.assign(defaultConfig, config);
