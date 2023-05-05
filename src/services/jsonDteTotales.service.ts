@@ -338,10 +338,12 @@ class JSonDteTotalesService {
           jsonResult['dBaseGrav10'] = 0;
         }
         if (dBaseGrav5 > 0 || dBaseGrav10 > 0) {
-          let toFixed = config.decimals;
+          /*let toFixed = config.decimals;
           if (moneda == 'PYG') {
             toFixed = 0;
-          }
+          }*/
+
+          let toFixed = config.taxDecimals;
 
           jsonResult['dTBasGraIVA'] = parseFloat(
             ((dBaseGrav5 > 0 ? dBaseGrav5 : 0) + (dBaseGrav10 > 0 ? dBaseGrav10 : 0)).toFixed(toFixed),
