@@ -9,16 +9,14 @@ class JSonDteTotalesService {
    * @param options
    */
   public generateDatosTotales(params: any, data: any, items: any[], config: XmlgenConfig) {
-
-
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     console.log(config);
-    
+
     let moneda = data['moneda'];
     if (!moneda && config.defaultValues === true) {
       moneda = 'PYG';
@@ -272,7 +270,7 @@ class JSonDteTotalesService {
 
     //No se por que se puso este pero genera error en los redondeos al calcular, HB
     //Deshabilitado 05 05 23
-    
+
     //Redondeo
     /*if (data.moneda === 'PYG') {
       //Si la moneda es PYG, no asignar decimales en los impuestos previos de iva.
@@ -317,7 +315,7 @@ class JSonDteTotalesService {
 
         if (dBaseGrav5 > 0) {
           dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
-          
+
           //Redondeo
           /*if (data.moneda === 'PYG') {
             dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.pygDecimals));
