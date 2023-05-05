@@ -414,7 +414,7 @@ class JSonDteItemService {
       jsonResult['dLiqIVAItem'] = (jsonResult['dBasGravIVA'] * item['iva']) / 100;
 
       //Redondeo
-      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals));  //Calculo intermedio
+      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals)); //Calculo intermedio
       //jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(8));
       /*
       Se desabilita por que da error en el calculo global, cuando muy tempranamente se redondea.
