@@ -415,9 +415,11 @@ class JSonDteItemService {
 
       //Redondeo
       jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals));
+      /*
+      Se desabilita por que da error en el calculo global, cuando muy tempranamente se redondea.
       if (data.moneda === 'PYG') {
         jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.pygDecimals));
-      }
+      }*/
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

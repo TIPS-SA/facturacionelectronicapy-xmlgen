@@ -9,6 +9,16 @@ class JSonDteTotalesService {
    * @param options
    */
   public generateDatosTotales(params: any, data: any, items: any[], config: XmlgenConfig) {
+
+
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    console.log(config);
+    
     let moneda = data['moneda'];
     if (!moneda && config.defaultValues === true) {
       moneda = 'PYG';
@@ -260,12 +270,17 @@ class JSonDteTotalesService {
     dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(config.taxDecimals));
     dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.taxDecimals));
 
-    if (data.moneda === 'PYG') {
+    //No se por que se puso este pero genera error en los redondeos al calcular, HB
+    //Deshabilitado 05 05 23
+    
+    //Redondeo
+    /*if (data.moneda === 'PYG') {
+      //Si la moneda es PYG, no asignar decimales en los impuestos previos de iva.
       dIVA5 = parseFloat(dIVA5.toFixed(config.pygDecimals));
       dIVA10 = parseFloat(dIVA10.toFixed(config.pygDecimals));
       dLiqTotIVA5 = parseFloat(dLiqTotIVA5.toFixed(config.pygDecimals));
       dLiqTotIVA10 = parseFloat(dLiqTotIVA10.toFixed(config.pygDecimals));
-    }
+    }*/
 
     if (agregarDSub) {
       if (data.tipoImpuesto == 1 || data.tipoImpuesto == 5) {
@@ -293,18 +308,20 @@ class JSonDteTotalesService {
           //Redondeo
 
           jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.taxDecimals));
-          if (data.moneda === 'PYG') {
+          /*if (data.moneda === 'PYG') {
             jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.pygDecimals));
-          }
+          }*/
         } else {
           jsonResult['dTotIVA'] = 0;
         }
 
         if (dBaseGrav5 > 0) {
           dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
-          if (data.moneda === 'PYG') {
+          
+          //Redondeo
+          /*if (data.moneda === 'PYG') {
             dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.pygDecimals));
-          }
+          }*/
 
           jsonResult['dBaseGrav5'] = dBaseGrav5;
         } else {
@@ -312,9 +329,11 @@ class JSonDteTotalesService {
         }
         if (dBaseGrav10 > 0) {
           dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
-          if (data.moneda === 'PYG') {
+
+          //Redondeo
+          /*if (data.moneda === 'PYG') {
             dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.pygDecimals));
-          }
+          }*/
 
           jsonResult['dBaseGrav10'] = dBaseGrav10;
         } else {
