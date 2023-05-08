@@ -174,7 +174,7 @@ class JSonDteTotalesService {
         if (dSub5 > 0) {
           jsonResult['dSub5'] = dSub5;
 
-          if (data.moneda !== 'PYG') { 
+          if (data.moneda !== 'PYG') {
             jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.taxDecimals));
           } else {
             jsonResult['dSub5'] = parseFloat(dSub5.toFixed(config.pygTaxDecimals));
@@ -186,9 +186,10 @@ class JSonDteTotalesService {
         if (dSub10 > 0) {
           jsonResult['dSub10'] = dSub10;
 
-          if (data.moneda !== 'PYG') { //Redondea el tax, independiente a la moneda
+          if (data.moneda !== 'PYG') {
+            //Redondea el tax, independiente a la moneda
             jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.taxDecimals));
-          } else { 
+          } else {
             jsonResult['dSub10'] = parseFloat(dSub10.toFixed(config.pygTaxDecimals));
           }
         } else {
@@ -300,7 +301,7 @@ class JSonDteTotalesService {
         if (dIVA5 > 0 || dIVA10 > 0 || dLiqTotIVA5 > 0 || dLiqTotIVA10 > 0 || comisionLiquid > 0) {
           jsonResult['dTotIVA'] = dIVA5 + dIVA10 - dLiqTotIVA5 - dLiqTotIVA10 + comisionLiquid;
 
-          //Redondeo          
+          //Redondeo
           if (data.moneda !== 'PYG') {
             jsonResult['dTotIVA'] = parseFloat(jsonResult['dTotIVA'].toFixed(config.taxDecimals));
           } else {
@@ -311,7 +312,6 @@ class JSonDteTotalesService {
         }
 
         if (dBaseGrav5 > 0) {
-
           //Redondeo
           if (data.moneda !== 'PYG') {
             dBaseGrav5 = parseFloat(dBaseGrav5.toFixed(config.taxDecimals));
@@ -324,7 +324,6 @@ class JSonDteTotalesService {
           jsonResult['dBaseGrav5'] = 0;
         }
         if (dBaseGrav10 > 0) {
-
           //Redondeo
           if (data.moneda !== 'PYG') {
             dBaseGrav10 = parseFloat(dBaseGrav10.toFixed(config.taxDecimals));
