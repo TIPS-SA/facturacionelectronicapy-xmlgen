@@ -31,6 +31,7 @@ class JSonDeMainService {
           decimals: 2,
           taxDecimals: 2,
           pygDecimals: 0,
+          pygTaxDecimals: 0,
           userObjectRemove: false,
           test: false, //Para ambiente de test se debe informar true por "config" exterior..
         };
