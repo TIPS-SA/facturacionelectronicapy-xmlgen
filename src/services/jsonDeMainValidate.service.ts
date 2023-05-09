@@ -394,7 +394,8 @@ class JSonDeMainValidateService {
     if (data['tipoDocumento'] == 7) {
       //Nota de Remision
       if (!(data['descripcion'] && (data['descripcion'] + '').trim().length > 0)) {
-        this.errors.push('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
+        //Segun dicen en TDE no es obligatorio, entonces se retira la validacion.
+        //this.errors.push('Debe informar la Descripción en data.descripcion para el Documento Electrónico');
       }
     }
   }
