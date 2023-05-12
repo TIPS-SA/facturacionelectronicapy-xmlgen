@@ -102,6 +102,36 @@ class JSonEventoMainService {
     });
   }
 
+  public generateXMLEventoNominacion(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
+    data.tipoEvento = 15; //Nominacion
+    return new Promise(async (resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
+
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public generateXMLEventoActualizacionDatosTransporte(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
+    data.tipoEvento = 16; //ActualizacionDatosTransporte
+    return new Promise(async (resolve, reject) => {
+      try {
+        let xml = await this.generateXMLEventoService(params, data);
+        xml = xml.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '');
+
+        let soapXMLData = this.envelopeEvent(id, xml);
+        resolve(soapXMLData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   private envelopeEvent(id: number, xml: string) {
     return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">\n\
@@ -178,6 +208,18 @@ class JSonEventoMainService {
         data,
       );
     }
+    if (data.tipoEvento == 15) {
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventoEmisorNominacion(
+        params,
+        data,
+      );
+    }
+    if (data.tipoEvento == 16) {
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventoEmisorActualizacionDatosTransporte(
+        params,
+        data,
+      );
+    }
     var builder = new xml2js.Builder({
       xmldec: {
         version: '1.0',
@@ -202,16 +244,6 @@ class JSonEventoMainService {
    * @param data
    */
   private addDefaultValues(data: any) {
-    /*if (constanteService.tiposEventos.filter((um) => um.codigo === data['tipoEvento']).length == 0) {
-      throw (
-        new Error("Tipo de Evento '" + data['tipoEvento']) +
-        "' en data.tipoEvento no válido. Valores: " +
-        constanteService.tiposEventos.map((a) => a.codigo + '-' + a.descripcion + ' ')
-      );
-    }
-    data['tipoEventoDescripcion'] = constanteService.tiposEventos.filter((td) => td.codigo == data['tipoEvento'])[0][
-      'descripcion'
-    ];*/
   }
 
   /**
@@ -518,6 +550,166 @@ class JSonEventoMainService {
     }
 
     jsonResult['rGeVeNotRec'] = {
+      Id: data['cdc'],
+      dFecEmi: data['fechaEmision'],
+      dFecRecep: data['fechaRecepcion'],
+      iTipRec: +data['tipoReceptor'],
+      dNomRec: data['nombre'],
+    };
+
+    if (+data['tipoReceptor'] == 1) {
+      if (data['ruc'].indexOf('-') == -1) {
+        throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
+      }
+      const rucEmisor = data['ruc'].split('-')[0];
+      const dvEmisor = data['ruc'].split('-')[1];
+
+      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
+      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
+    }
+
+    if (+data['tipoReceptor'] == 2) {
+      if (
+        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
+      ) {
+        throw new Error(
+          "Tipo de Documento '" +
+            data['documentoTipo'] +
+            "' en data.documentoTipo no encontrado. Valores: " +
+            constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }
+
+      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
+
+      if (!data['documentoNumero']) {
+        throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
+      }
+      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
+    }
+
+    jsonResult['rGeVeNotRec']['dTotalGs'] = data['totalPYG'];
+
+    return jsonResult;
+  }
+
+  private eventoEmisorNominacion(params: any, data: any) {
+    const jsonResult: any = {};
+
+    if (!data['cdc']) {
+      throw new Error('Debe proporcionar el CDC en data.cdc');
+    }
+
+    if (!(data['cdc'].length == 44)) {
+      throw new Error('El CDC en data.cdc debe tener 44 caracteres');
+    }
+
+    if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
+      throw new Error(
+        "Tipo de Receptor '" +
+          data['tipoReceptor'] +
+          "' en data.tipoReceptor no encontrado. Valores: " +
+          constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    if (!data['nombre']) {
+      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
+    }
+
+    if (!(data['nombre'].length >= 4)) {
+      throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de emisión debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
+    jsonResult['rGeVeNotRec'] = {
+      Id: data['cdc'],
+      dFecEmi: data['fechaEmision'],
+      dFecRecep: data['fechaRecepcion'],
+      iTipRec: +data['tipoReceptor'],
+      dNomRec: data['nombre'],
+    };
+
+    if (+data['tipoReceptor'] == 1) {
+      if (data['ruc'].indexOf('-') == -1) {
+        throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
+      }
+      const rucEmisor = data['ruc'].split('-')[0];
+      const dvEmisor = data['ruc'].split('-')[1];
+
+      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
+      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
+    }
+
+    if (+data['tipoReceptor'] == 2) {
+      if (
+        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
+      ) {
+        throw new Error(
+          "Tipo de Documento '" +
+            data['documentoTipo'] +
+            "' en data.documentoTipo no encontrado. Valores: " +
+            constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }
+
+      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
+
+      if (!data['documentoNumero']) {
+        throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
+      }
+      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
+    }
+
+    jsonResult['rGeVeNotRec']['dTotalGs'] = data['totalPYG'];
+
+    return jsonResult;
+  }
+
+  private eventoEmisorActualizacionDatosTransporte(params: any, data: any) {
+    const jsonResult: any = {};
+
+    if (!data['cdc']) {
+      throw new Error('Debe proporcionar el CDC en data.cdc');
+    }
+
+    if (!(data['cdc'].length == 44)) {
+      throw new Error('El CDC en data.cdc debe tener 44 caracteres');
+    }
+
+    if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
+      throw new Error(
+        "Tipo de Receptor '" +
+          data['tipoReceptor'] +
+          "' en data.tipoReceptor no encontrado. Valores: " +
+          constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
+      );
+    }
+
+    if (!data['nombre']) {
+      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
+    }
+
+    if (!(data['nombre'].length >= 4)) {
+      throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de emisión debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
+    if (new String(data['fechaRecepcion']).length != 19) {
+      throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    }
+
+    jsonResult['rGeVeTr'] = {
       Id: data['cdc'],
       dFecEmi: data['fechaEmision'],
       dFecRecep: data['fechaRecepcion'],

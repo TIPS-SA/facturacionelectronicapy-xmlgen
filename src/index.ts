@@ -31,6 +31,14 @@ class DE {
     return eventoService.generateXMLEventoNotificacion(id, params, data, config);
   };
 
+  generateXMLEventoNominacion = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoNominacion(id, params, data, config);
+  };
+
+  generateXMLEventoActualizacionDatosTransporte = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+    return eventoService.generateXMLEventoActualizacionDatosTransporte(id, params, data, config);
+  };
+
   consultarDepartamentos = (): Promise<any> => {
     return new Promise((resolve, reject) => {
       //Enviar Copia
