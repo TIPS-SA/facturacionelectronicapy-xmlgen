@@ -35,7 +35,12 @@ class DE {
     return eventoService.generateXMLEventoNominacion(id, params, data, config);
   };
 
-  generateXMLEventoActualizacionDatosTransporte = (id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> => {
+  generateXMLEventoActualizacionDatosTransporte = (
+    id: number,
+    params: any,
+    data: any,
+    config?: XmlgenConfig,
+  ): Promise<any> => {
     return eventoService.generateXMLEventoActualizacionDatosTransporte(id, params, data, config);
   };
 

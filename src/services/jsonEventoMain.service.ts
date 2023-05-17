@@ -117,7 +117,12 @@ class JSonEventoMainService {
     });
   }
 
-  public generateXMLEventoActualizacionDatosTransporte(id: number, params: any, data: any, config?: XmlgenConfig): Promise<any> {
+  public generateXMLEventoActualizacionDatosTransporte(
+    id: number,
+    params: any,
+    data: any,
+    config?: XmlgenConfig,
+  ): Promise<any> {
     data.tipoEvento = 16; //ActualizacionDatosTransporte
     return new Promise(async (resolve, reject) => {
       try {
@@ -209,10 +214,7 @@ class JSonEventoMainService {
       );
     }
     if (data.tipoEvento == 15) {
-      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventoEmisorNominacion(
-        params,
-        data,
-      );
+      this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventoEmisorNominacion(params, data);
     }
     if (data.tipoEvento == 16) {
       this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = this.eventoEmisorActualizacionDatosTransporte(
@@ -243,8 +245,7 @@ class JSonEventoMainService {
    * todas las operaciones
    * @param data
    */
-  private addDefaultValues(data: any) {
-  }
+  private addDefaultValues(data: any) {}
 
   /**
    * Si los valores vienen en underscore, crea los valores en formato variableJava que
