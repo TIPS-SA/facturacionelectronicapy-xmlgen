@@ -1168,7 +1168,7 @@ class JSonDeMainService {
   private generateDatosGeneralesReceptorDE(params: any, data: any) {
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec'] = {
       iNatRec: data['cliente']['contribuyente'] ? 1 : 2,
-      iTiOpe: data['cliente']['tipoOperacion'],
+      iTiOpe: +data['cliente']['tipoOperacion'],
       cPaisRec: data['cliente']['pais'],
       dDesPaisRe: constanteService.paises.filter((pais) => pais.codigo === data['cliente']['pais'])[0]['descripcion'],
     };
@@ -1418,9 +1418,9 @@ class JSonDeMainService {
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params: any, data: any) {
     this.json['rDE']['DE']['gDtipDE']['gCamNCDE'] = {
-      iMotEmi: data['notaCreditoDebito']['motivo'],
+      iMotEmi: +data['notaCreditoDebito']['motivo'],
       dDesMotEmi: constanteService.notasCreditosMotivos.filter(
-        (nv) => nv.codigo === data['notaCreditoDebito']['motivo'],
+        (nv) => nv.codigo === +data['notaCreditoDebito']['motivo'],
       )[0]['descripcion'],
     };
   }
