@@ -379,7 +379,7 @@ class JSonDteItemService {
       }
 
       //Vigencia en Test y Produccion
-      if (new Date().getTime() >= new Date('2023-05-21').getTime()) {
+      if (new Date().getTime() >= new Date('2023-06-17').getTime()) {
         //Si la fecha de hoy ya supera el plazo de entrada en vigor ya no importa, utiliza la nueva forma.
         /**
         * Cambios en NT13
@@ -457,7 +457,7 @@ class JSonDteItemService {
     }
 
     //Vigencia en test y produccion
-    if (new Date().getTime() >= new Date('2023-05-21').getTime()) {
+    if (new Date().getTime() >= new Date('2023-06-17').getTime()) {
       //No importando si es test o produccion, luego del plazo de entrada en vigor en produccion ya aplica igualmente.
       jsonResult['dBasExe'] = 0; //Valor por defecto E737
       if (item['ivaTipo'] == 4) {
