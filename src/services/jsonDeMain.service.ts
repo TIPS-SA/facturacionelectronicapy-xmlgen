@@ -691,16 +691,16 @@ class JSonDeMainService {
    * @param data
    */
   private addDefaultValues(data: any) {
-    if (constanteService.tiposDocumentos.filter((um) => um.codigo === data['tipoDocumento']).length == 0) {
+    if (constanteService.tiposDocumentos.filter((um) => um.codigo === +data['tipoDocumento']).length == 0) {
       //No quitar este throw
       throw (
-        new Error("Tipo de Documento '" + data['tipoDocumento']) +
+        new Error("Tipo de Documento '" + data['tipoDocumento'] +
         "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion)
-      );
+        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion))
+        );
     }
     data['tipoDocumentoDescripcion'] = constanteService.tiposDocumentos.filter(
-      (td) => td.codigo == data['tipoDocumento'],
+      (td) => td.codigo == +data['tipoDocumento'],
     )[0]['descripcion'];
 
     if (!data['tipoEmision']) {
@@ -907,49 +907,10 @@ class JSonDeMainService {
       return; //No informa si el tipo de documento es 7
     }
 
-    if (!data['tipoImpuesto']) {
-      //throw new Error('Debe especificar el Tipo de Impuesto en data.tipoImpuesto');
-    }
-
-    if (constanteService.tiposImpuestos.filter((um) => um.codigo === data['tipoImpuesto']).length == 0) {
-      /*throw new Error(
-        "Tipo de Impuesto '" +
-          data['tipoImpuesto'] +
-          "' en data.tipoImpuesto no válido. Valores: " +
-          constanteService.tiposImpuestos.map((a) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
 
     let moneda = data['moneda'];
     if (!moneda && config.defaultValues === true) {
       moneda = 'PYG';
-    }
-
-    if (constanteService.monedas.filter((um) => um.codigo === moneda).length == 0) {
-      /*throw new Error(
-        "Moneda '" +
-          moneda +
-          "' en data.moneda no válido. Valores: " +
-          constanteService.monedas.map((a) => a.codigo + '-' + a.descripcion),
-      );*/
-    }
-    if (data['condicionAnticipo']) {
-      if (constanteService.globalPorItem.filter((um) => um.codigo === data['condicionAnticipo']).length == 0) {
-        /*throw new Error(
-          "Condición de Anticipo '" +
-            data['condicionAnticipo'] +
-            "' en data.condicionAnticipo no válido. Valores: " +
-            constanteService.globalPorItem.map((a) => a.codigo + '-Anticipo ' + a.descripcion),
-        );*/
-      }
-    }
-    if (constanteService.tiposTransacciones.filter((um) => um.codigo === data['tipoTransaccion']).length == 0) {
-      /*throw new Error(
-        "Tipo de Transacción '" +
-          data['tipoTransaccion'] +
-          "' en data.tipoTransaccion no válido. Valores: " +
-          constanteService.tiposTransacciones.map((a) => a.codigo + '-' + a.descripcion),
-      );*/
     }
 
     this.json['rDE']['DE']['gDatGralOpe']['gOpeCom'] = {};

@@ -40,10 +40,10 @@ class JSonDeMainValidateService {
   public validateValues(params: any, data: any, config: XmlgenConfig) {
     this.errors = new Array<string>();
 
-    if (constanteService.tiposDocumentos.filter((um) => um.codigo === data['tipoDocumento']).length == 0) {
-      this.errors.push("Tipo de Documento '" + data['tipoDocumento']) +
+    if (constanteService.tiposDocumentos.filter((um) => um.codigo === +data['tipoDocumento']).length == 0) {
+      this.errors.push("Tipo de Documento '" + data['tipoDocumento'] +
         "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion);
+        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion));
     }
 
     if (typeof data['cliente'] == 'undefined') {
@@ -430,7 +430,7 @@ class JSonDeMainValidateService {
     if (!data['tipoImpuesto']) {
       this.errors.push('Debe especificar el Tipo de Impuesto en data.tipoImpuesto');
     } else {
-      if (constanteService.tiposImpuestos.filter((um) => um.codigo === data['tipoImpuesto']).length == 0) {
+      if (constanteService.tiposImpuestos.filter((um) => um.codigo === +data['tipoImpuesto']).length == 0) {
         this.errors.push(
           "Tipo de Impuesto '" +
             data['tipoImpuesto'] +
@@ -2613,7 +2613,7 @@ class JSonDeMainValidateService {
 
     //Validaciones
     if (
-      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === dataDocumentoAsociado['formato']).length ==
+      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === +dataDocumentoAsociado['formato']).length ==
       0
     ) {
       this.errors.push(

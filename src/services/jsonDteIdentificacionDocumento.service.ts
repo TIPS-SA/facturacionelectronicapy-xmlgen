@@ -13,7 +13,7 @@ class JSonDteIdentificacionDocumentoService {
     const jsonResult: any = {
       iTipDocAso: dataDocumentoAsociado['formato'],
       dDesTipDocAso: constanteService.tiposDocumentosAsociados.filter(
-        (td) => td.codigo === dataDocumentoAsociado['formato'],
+        (td) => td.codigo === +dataDocumentoAsociado['formato'],
       )[0]['descripcion'],
     };
 

@@ -26,7 +26,7 @@ class JSonDteItemValidateService {
       for (let i = 0; i < data['items'].length; i++) {
         const item = data['items'][i];
 
-        let unidadMedida: number = item['unidadMedida'];
+        let unidadMedida: number = +item['unidadMedida'];
 
         //Validaciones
         if (!((item['codigo'] + '').length >= 1 && (item['codigo'] + '').length <= 50)) {
@@ -53,7 +53,7 @@ class JSonDteItemValidateService {
           }
         }
 
-        if (constanteService.unidadesMedidas.filter((um) => um.codigo === unidadMedida).length == 0) {
+        if (constanteService.unidadesMedidas.filter((um) => um.codigo === +unidadMedida).length == 0) {
           this.errors.push(
             "Unidad de Medida '" +
               unidadMedida +
@@ -71,7 +71,7 @@ class JSonDteItemValidateService {
             //No es obligatorio
           } else {
             //Si tiene tolerancia, entonces valida
-            if (constanteService.relevanciasMercaderias.filter((um) => um.codigo === item['tolerancia']).length == 0) {
+            if (constanteService.relevanciasMercaderias.filter((um) => um.codigo === +item['tolerancia']).length == 0) {
               this.errors.push(
                 "Tolerancia de Mercaderia '" +
                   item['tolerancia'] +
@@ -356,7 +356,7 @@ class JSonDteItemValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosItemsOperacionIVAValidate(params: any, data: any, item: any, i: number) {
-    if (constanteService.codigosAfectaciones.filter((um) => um.codigo === item['ivaTipo']).length == 0) {
+    if (constanteService.codigosAfectaciones.filter((um) => um.codigo === +item['ivaTipo']).length == 0) {
       this.errors.push(
         "Tipo de IVA '" +
           item['ivaTipo'] +

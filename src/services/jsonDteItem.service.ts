@@ -41,7 +41,7 @@ class JSonDteItemService {
 
         gCamItem['cUniMed'] = item['unidadMedida'];
         gCamItem['dDesUniMed'] = constanteService.unidadesMedidas
-          .filter((um) => um.codigo === item['unidadMedida'])[0]
+          .filter((um) => um.codigo === +item['unidadMedida'])[0]
           ['representacion'].trim();
 
         gCamItem['dCantProSer'] = item['cantidad'];
@@ -335,7 +335,7 @@ class JSonDteItemService {
   ) {
     const jsonResult: any = {
       iAfecIVA: item['ivaTipo'], //E731
-      dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === item['ivaTipo'])[0]['descripcion'],
+      dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === +item['ivaTipo'])[0]['descripcion'],
       dPropIVA: item['ivaBase'], //E733
       dTasaIVA: item['iva'], //E734
     };
