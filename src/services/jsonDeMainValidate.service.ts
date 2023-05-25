@@ -41,9 +41,12 @@ class JSonDeMainValidateService {
     this.errors = new Array<string>();
 
     if (constanteService.tiposDocumentos.filter((um) => um.codigo === +data['tipoDocumento']).length == 0) {
-      this.errors.push("Tipo de Documento '" + data['tipoDocumento'] +
-        "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion));
+      this.errors.push(
+        "Tipo de Documento '" +
+          data['tipoDocumento'] +
+          "' en data.tipoDocumento no válido. Valores: " +
+          constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion),
+      );
     }
 
     if (typeof data['cliente'] == 'undefined') {
@@ -2613,8 +2616,8 @@ class JSonDeMainValidateService {
 
     //Validaciones
     if (
-      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === +dataDocumentoAsociado['formato']).length ==
-      0
+      constanteService.tiposDocumentosAsociados.filter((um) => um.codigo === +dataDocumentoAsociado['formato'])
+        .length == 0
     ) {
       this.errors.push(
         "Formato de Documento Asociado '" +

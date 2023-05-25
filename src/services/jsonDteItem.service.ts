@@ -335,7 +335,9 @@ class JSonDteItemService {
   ) {
     const jsonResult: any = {
       iAfecIVA: item['ivaTipo'], //E731
-      dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === +item['ivaTipo'])[0]['descripcion'],
+      dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === +item['ivaTipo'])[0][
+        'descripcion'
+      ],
       dPropIVA: item['ivaBase'], //E733
       dTasaIVA: item['iva'], //E734
     };

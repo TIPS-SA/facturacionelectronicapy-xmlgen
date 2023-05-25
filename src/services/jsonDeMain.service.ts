@@ -693,11 +693,12 @@ class JSonDeMainService {
   private addDefaultValues(data: any) {
     if (constanteService.tiposDocumentos.filter((um) => um.codigo === +data['tipoDocumento']).length == 0) {
       //No quitar este throw
-      throw (
-        new Error("Tipo de Documento '" + data['tipoDocumento'] +
-        "' en data.tipoDocumento no válido. Valores: " +
-        constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion))
-        );
+      throw new Error(
+        "Tipo de Documento '" +
+          data['tipoDocumento'] +
+          "' en data.tipoDocumento no válido. Valores: " +
+          constanteService.tiposDocumentos.map((a) => a.codigo + '-' + a.descripcion),
+      );
     }
     data['tipoDocumentoDescripcion'] = constanteService.tiposDocumentos.filter(
       (td) => td.codigo == +data['tipoDocumento'],
@@ -906,7 +907,6 @@ class JSonDeMainService {
       //C002
       return; //No informa si el tipo de documento es 7
     }
-
 
     let moneda = data['moneda'];
     if (!moneda && config.defaultValues === true) {
