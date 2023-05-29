@@ -316,6 +316,10 @@ class JSonDeMainService {
       data.documentoAsociado.resolucionCreditoFiscal = data.documentoAsociado.resolucion_credito_fiscal;
     }
 
+    if (data.documentoAsociado?.tipo_documento_impreso) {
+      data.documentoAsociado.tipoDocumentoImpreso = data.documentoAsociado.tipo_documento_impreso;
+    }
+
     if (data.documentoAsociado?.constancia_tipo) {
       data.documentoAsociado.constanciaTipo = data.documentoAsociado.constancia_tipo;
     }
