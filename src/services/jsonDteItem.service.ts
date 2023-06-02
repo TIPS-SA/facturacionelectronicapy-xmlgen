@@ -297,6 +297,7 @@ class JSonDteItemService {
       jsonResult['dTotOpeItem'] = parseFloat(valores + '') * parseFloat(item['cantidad']);
 
       jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
+
       if (data.moneda === 'PYG') {
         jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.pygDecimals));
       }

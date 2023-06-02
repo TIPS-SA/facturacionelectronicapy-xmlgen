@@ -1576,91 +1576,98 @@ class JSonDeMainValidateService {
    * @param options
    */
   private generateDatosCondicionOperacionDE_CreditoValidate(params: any, data: any) {
-    if (!data['condicion']['credito']['tipo']) {
-      this.errors.push(
-        'El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condición posee créditos',
-      );
-    } else {
-      if (
-        constanteService.condicionesCreditosTipos.filter(
-          (um: any) => um.codigo === data['condicion']['credito']['tipo'],
-        ).length == 0
-      ) {
-        this.errors.push(
-          "Tipo de Crédito '" +
-            data['condicion']['credito']['tipo'] +
-            "' en data.condicion.credito.tipo no encontrado. Valores: " +
-            constanteService.condicionesCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
+    if (!data['condicion']['credito']) {
+       this.errors.push(
+          'Fue especificado Condicion Tipo 2 (Crédito) pero el detalle de Crédito en data.condicion.credito es nulo',
         );
-      }
-    }
-
-    if (+data['condicion']['credito']['tipo'] === 1) {
-      //Plazo
-      if (!data['condicion']['credito']['plazo']) {
+    } else {
+      if (!data['condicion']['credito']['tipo']) {
         this.errors.push(
-          'El tipo de Crédito en data.condicion.credito.tipo es 1 entonces data.condicion.credito.plazo es obligatorio',
+          'El tipo de Crédito en data.condicion.credito.tipo es obligatorio si la condición posee créditos',
         );
       } else {
         if (
-          !(
-            (data['condicion']['credito']['plazo'] + '').length >= 2 &&
-            (data['condicion']['credito']['plazo'] + '').length <= 15
-          )
+          constanteService.condicionesCreditosTipos.filter(
+            (um: any) => um.codigo === data['condicion']['credito']['tipo'],
+          ).length == 0
         ) {
           this.errors.push(
-            'El Plazo de Crédito en data.condicion.credito.plazo debe contener entre 2 y 15 caracteres ',
+            "Tipo de Crédito '" +
+              data['condicion']['credito']['tipo'] +
+              "' en data.condicion.credito.tipo no encontrado. Valores: " +
+              constanteService.condicionesCreditosTipos.map((a: any) => a.codigo + '-' + a.descripcion),
           );
         }
       }
-    }
 
-    if (+data['condicion']['credito']['tipo'] === 2) {
-      //Cuota
-      if (!data['condicion']['credito']['cuotas']) {
-        this.errors.push(
-          'El tipo de Crédito en data.condicion.credito.tipo es 2 entonces data.condicion.credito.cuotas es obligatorio',
-        );
-      } else {
-      }
-
-      //Si es Cuotas
-      //Recorrer array de infoCuotas e informar en el JSON
-
-      if (data['condicion']['credito']['infoCuotas'] && data['condicion']['credito']['infoCuotas'].length > 0) {
-        for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
-          const infoCuota = data['condicion']['credito']['infoCuotas'][i];
-
-          if (constanteService.monedas.filter((um: any) => um.codigo === infoCuota['moneda']).length == 0) {
+      if (+data['condicion']['credito']['tipo'] === 1) {
+        //Plazo
+        if (!data['condicion']['credito']['plazo']) {
+          this.errors.push(
+            'El tipo de Crédito en data.condicion.credito.tipo es 1 entonces data.condicion.credito.plazo es obligatorio',
+          );
+        } else {
+          if (
+            !(
+              (data['condicion']['credito']['plazo'] + '').length >= 2 &&
+              (data['condicion']['credito']['plazo'] + '').length <= 15
+            )
+          ) {
             this.errors.push(
-              "Moneda '" +
-                infoCuota['moneda'] +
-                "' en data.condicion.credito.infoCuotas[" +
-                i +
-                '].moneda no encontrado. Valores: ' +
-                constanteService.monedas.map((a: any) => a.codigo + '-' + a.descripcion),
+              'El Plazo de Crédito en data.condicion.credito.plazo debe contener entre 2 y 15 caracteres ',
             );
           }
+        }
+      }
 
-          if (!infoCuota['vencimiento']) {
-            //No es obligatorio
-            //this.errors.push('Obligatorio informar data.transporte.inicioEstimadoTranslado. Formato yyyy-MM-dd');
-          } else {
-            if (!fechaUtilService.isIsoDate(infoCuota['vencimiento'])) {
+      if (+data['condicion']['credito']['tipo'] === 2) {
+        //Cuota
+        if (!data['condicion']['credito']['cuotas']) {
+          this.errors.push(
+            'El tipo de Crédito en data.condicion.credito.tipo es 2 entonces data.condicion.credito.cuotas es obligatorio',
+          );
+        } else {
+        }
+
+        //Si es Cuotas
+        //Recorrer array de infoCuotas e informar en el JSON
+
+        if (data['condicion']['credito']['infoCuotas'] && data['condicion']['credito']['infoCuotas'].length > 0) {
+          for (let i = 0; i < data['condicion']['credito']['infoCuotas'].length; i++) {
+            const infoCuota = data['condicion']['credito']['infoCuotas'][i];
+
+            if (constanteService.monedas.filter((um: any) => um.codigo === infoCuota['moneda']).length == 0) {
               this.errors.push(
-                "Vencimiento de la Cuota '" +
-                  infoCuota['vencimiento'] +
+                "Moneda '" +
+                  infoCuota['moneda'] +
                   "' en data.condicion.credito.infoCuotas[" +
                   i +
-                  '].vencimiento no válido. Formato: yyyy-MM-dd',
+                  '].moneda no encontrado. Valores: ' +
+                  constanteService.monedas.map((a: any) => a.codigo + '-' + a.descripcion),
               );
             }
+
+            if (!infoCuota['vencimiento']) {
+              //No es obligatorio
+              //this.errors.push('Obligatorio informar data.transporte.inicioEstimadoTranslado. Formato yyyy-MM-dd');
+            } else {
+              if (!fechaUtilService.isIsoDate(infoCuota['vencimiento'])) {
+                this.errors.push(
+                  "Vencimiento de la Cuota '" +
+                    infoCuota['vencimiento'] +
+                    "' en data.condicion.credito.infoCuotas[" +
+                    i +
+                    '].vencimiento no válido. Formato: yyyy-MM-dd',
+                );
+              }
+            }
           }
+        } else {
+          this.errors.push('Debe proporcionar data.condicion.credito.infoCuotas[]');
         }
-      } else {
-        this.errors.push('Debe proporcionar data.condicion.credito.infoCuotas[]');
       }
     }
+
   }
 
   public generateDatosComplementariosComercialesDeUsoEspecificosValidate(params: any, data: any) {
