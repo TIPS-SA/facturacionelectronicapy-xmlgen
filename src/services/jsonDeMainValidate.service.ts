@@ -819,7 +819,7 @@ class JSonDeMainValidateService {
         }
 
         //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
-        //valores de forma predeterminada, auque este valor sera sobre-escrito, caso el usuario envie
+        //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
         //data['cliente']['distrito'] y data['cliente']['departamento']
         let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['cliente']['ciudad']);
 
@@ -1101,45 +1101,133 @@ class JSonDeMainValidateService {
       this.errors.push('Debe especificar el Número de Casa del Vendedor en data.autoFactura.numeroCasa');
     }
 
-    if (!data['autoFactura']['departamento']) {
-      this.errors.push('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
-    }
-    if (!data['autoFactura']['distrito']) {
-      this.errors.push('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
-    }
+    let errorDepDisCiu = false;
+    let errorDepDisCiuUbi = false;
+
     if (!data['autoFactura']['ciudad']) {
       this.errors.push('Debe especificar la Ciudad del Vendedor en data.autoFactura.ciudad');
+      errorDepDisCiu = true;
+    } else {
+      if (
+        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['autoFactura']['ciudad']).length == 0
+      ) {
+        this.errors.push(
+          "Ciudad '" +
+            data['autoFactura']['ciudad'] +
+            "' del Cliente en data.autoFactura.ciudad no encontrado. Valores: " +
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+        );
+        errorDepDisCiu = true;
+      }
+
+
+      //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
+      //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
+      //data['autoFactura']['ciudad']['distrito'] y data['autoFactura']['ciudad']['departamento']
+      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['autoFactura']['ciudad']);
+
+      if (objCiudad && objCiudad[0]) {
+        let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
+
+        let objDepartamento: any = constanteService.departamentos.filter(
+          (dep) => dep.codigo === +objDistrito[0]['departamento'],
+        );
+
+        //Solo actualiza si no tiene valor
+        if (!data['autoFactura']['distrito'])
+          data['autoFactura']['distrito'] = objDistrito[0]['codigo'];
+
+        if (!data['autoFactura']['departamento'])
+          data['autoFactura']['departamento'] = objDepartamento[0]['codigo'];
+      }
+
+      
+      if (errorDepDisCiu) {
+        if (!data['autoFactura']['departamento']) {
+          this.errors.push('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
+          errorDepDisCiu = true;
+        }
+        if (!data['autoFactura']['distrito']) {
+          this.errors.push('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
+          errorDepDisCiu = true;
+        }
+      }    
     }
 
-    if (!data['autoFactura']['ubicacion']['departamento']) {
-      this.errors.push(
-        'Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento',
-      );
-    }
-    if (!data['autoFactura']['ubicacion']['distrito']) {
-      this.errors.push(
-        'Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito',
-      );
-    }
     if (!data['autoFactura']['ubicacion']['ciudad']) {
       this.errors.push('Debe especificar la Ciudad del Lugar de la Transacción en data.autoFactura.ubicacion.ciudad');
+      errorDepDisCiuUbi = true;
+    } else {
+      if (
+        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['autoFactura']['ubicacion']['ciudad']).length == 0
+      ) {
+        this.errors.push(
+          "Ciudad '" +
+            data['autoFactura']['ubicacion']['ciudad'] +
+            "' del Cliente en data.autoFactura.ubicacion.ciudad no encontrado. Valores: " +
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+        );
+        errorDepDisCiuUbi = true;
+      }
+
+
+      //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
+      //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
+      //data['autoFactura']['ubicacion']['ciudad']['distrito'] y data['autoFactura']['ubicacion']['ciudad']['departamento']
+      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['autoFactura']['ubicacion']['ciudad']);
+
+      if (objCiudad && objCiudad[0]) {
+        let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
+
+        let objDepartamento: any = constanteService.departamentos.filter(
+          (dep) => dep.codigo === +objDistrito[0]['departamento'],
+        );
+
+        //Solo actualiza si no tiene valor
+        if (!data['autoFactura']['ubicacion']['distrito'])
+          data['autoFactura']['ubicacion']['distrito'] = objDistrito[0]['codigo'];
+
+        if (!data['autoFactura']['ubicacion']['departamento'])
+          data['autoFactura']['ubicacion']['departamento'] = objDepartamento[0]['codigo'];
+      }
+
+      if (errorDepDisCiuUbi) {
+        if (!data['autoFactura']['ubicacion']['departamento']) {
+          this.errors.push(
+            'Debe especificar el Departamento del Lugar de la Transacción en data.autoFactura.ubicacion.departamento',
+          );
+          errorDepDisCiuUbi = true;
+        }
+        if (!data['autoFactura']['ubicacion']['distrito']) {
+          this.errors.push(
+            'Debe especificar el Distrito del Lugar de la Transacciónen data.autoFactura.ubicacion.distrito',
+          );
+          errorDepDisCiuUbi = true;
+        }
+      }
     }
 
-    constanteService.validateDepartamentoDistritoCiudad(
-      'data.autoFactura',
-      +data['autoFactura']['departamento'],
-      +data['autoFactura']['distrito'],
-      +data['autoFactura']['ciudad'],
-      this.errors,
-    );
 
-    constanteService.validateDepartamentoDistritoCiudad(
-      'data.autoFactura.ubicacion',
-      +data['autoFactura']['ubicacion']['departamento'],
-      +data['autoFactura']['ubicacion']['distrito'],
-      +data['autoFactura']['ubicacion']['ciudad'],
-      this.errors,
-    );
+
+    if (errorDepDisCiu) {
+      constanteService.validateDepartamentoDistritoCiudad(
+        'data.autoFactura',
+        +data['autoFactura']['departamento'],
+        +data['autoFactura']['distrito'],
+        +data['autoFactura']['ciudad'],
+        this.errors,
+      );  
+    }
+
+    if (errorDepDisCiuUbi) {
+      constanteService.validateDepartamentoDistritoCiudad(
+        'data.autoFactura.ubicacion',
+        +data['autoFactura']['ubicacion']['departamento'],
+        +data['autoFactura']['ubicacion']['distrito'],
+        +data['autoFactura']['ubicacion']['ciudad'],
+        this.errors,
+      );
+    }
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebitoValidate(params: any, data: any) {
@@ -1265,7 +1353,7 @@ class JSonDeMainValidateService {
       }
 
       if (
-        !(data['documentoAsociado']['constanciaNumero'] && data['documentoAsociado']['constanciaNumero'].length > 0)
+        !(data['documentoAsociado']['constanciaNumero'] && (data['documentoAsociado']['constanciaNumero']+"").length > 0)
       ) {
         this.errors.push('Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero');
       } else {
@@ -1946,17 +2034,53 @@ class JSonDeMainValidateService {
    */
   private generateDatosSalidaValidate(params: any, data: any) {
     let errorDepDisCiu = false;
-    if (!data['detalleTransporte']['salida']['departamento']) {
-      this.errors.push('Debe especificar el Departamento del Local de Salida en data.transporte.salida.departamento');
-      errorDepDisCiu = true;
-    }
-    if (!data['detalleTransporte']['salida']['distrito']) {
-      this.errors.push('Debe especificar el Distrito del Local de Salida en data.transporte.salida.distrito');
-      errorDepDisCiu = true;
-    }
     if (!data['detalleTransporte']['salida']['ciudad']) {
       this.errors.push('Debe especificar la Ciudad del Local de Salida en data.transporte.salida.ciudad');
       errorDepDisCiu = true;
+    } else {
+      if (
+        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['detalleTransporte']['salida']['ciudad']).length == 0
+      ) {
+        this.errors.push(
+          "Ciudad '" +
+            data['detalleTransporte']['salida']['ciudad'] +
+            "' del Cliente en data.transporte.salida.ciudad no encontrado. Valores: " +
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+        );
+        errorDepDisCiu = true;
+      }
+
+
+      //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
+      //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
+      //data['detalleTransporte']['salida']['distrito'] y data['detalleTransporte']['salida']['departamento']
+      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['detalleTransporte']['salida']['ciudad']);
+
+      if (objCiudad && objCiudad[0]) {
+        let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
+
+        let objDepartamento: any = constanteService.departamentos.filter(
+          (dep) => dep.codigo === +objDistrito[0]['departamento'],
+        );
+
+        //Solo actualiza si no tiene valor
+        if (!data['detalleTransporte']['salida']['distrito'])
+          data['detalleTransporte']['salida']['distrito'] = objDistrito[0]['codigo'];
+
+        if (!data['detalleTransporte']['salida']['departamento'])
+          data['detalleTransporte']['salida']['departamento'] = objDepartamento[0]['codigo'];
+      }
+
+      if (!errorDepDisCiu) {
+        if (!data['detalleTransporte']['salida']['departamento']) {
+          this.errors.push('Debe especificar el Departamento del Local de Salida en data.transporte.salida.departamento');
+          errorDepDisCiu = true;
+        }
+        if (!data['detalleTransporte']['salida']['distrito']) {
+          this.errors.push('Debe especificar el Distrito del Local de Salida en data.transporte.salida.distrito');
+          errorDepDisCiu = true;
+        }  
+      }
     }
 
     if (!errorDepDisCiu) {
@@ -2013,18 +2137,55 @@ class JSonDeMainValidateService {
    */
   private generateDatosEntregaValidate(params: any, data: any) {
     let errorDepDisCiu = false;
-    if (!data['detalleTransporte']['entrega']['departamento']) {
-      this.errors.push('Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento');
-      errorDepDisCiu = true;
-    }
-    if (!data['detalleTransporte']['entrega']['distrito']) {
-      this.errors.push('Debe especificar el Distrito del Local de Entrega en data.transporte.entrega.distrito');
-      errorDepDisCiu = true;
-    }
     if (!data['detalleTransporte']['entrega']['ciudad']) {
       this.errors.push('Debe especificar la Ciudad del Local de Entrega en data.transporte.entrega.ciudad');
       errorDepDisCiu = true;
+    } else {
+      if (
+        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['detalleTransporte']['entrega']['ciudad']).length == 0
+      ) {
+        this.errors.push(
+          "Ciudad '" +
+            data['detalleTransporte']['entrega']['ciudad'] +
+            "' del Cliente en data.transporte.entrega.ciudad no encontrado. Valores: " +
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+        );
+        errorDepDisCiu = true;
+      }
+
+
+      //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
+      //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
+      //data['detalleTransporte']['entrega']['distrito'] y data['detalleTransporte']['entrega']['departamento']
+      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['detalleTransporte']['entrega']['ciudad']);
+
+      if (objCiudad && objCiudad[0]) {
+        let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
+
+        let objDepartamento: any = constanteService.departamentos.filter(
+          (dep) => dep.codigo === +objDistrito[0]['departamento'],
+        );
+
+        //Solo actualiza si no tiene valor
+        if (!data['detalleTransporte']['entrega']['distrito'])
+          data['detalleTransporte']['entrega']['distrito'] = objDistrito[0]['codigo'];
+
+        if (!data['detalleTransporte']['entrega']['departamento'])
+          data['detalleTransporte']['entrega']['departamento'] = objDepartamento[0]['codigo'];
+      }
+
+      if (!errorDepDisCiu) {
+        if (!data['detalleTransporte']['entrega']['departamento']) {
+          this.errors.push('Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento');
+          errorDepDisCiu = true;
+        }
+        if (!data['detalleTransporte']['entrega']['distrito']) {
+          this.errors.push('Debe especificar el Distrito del Local de Entrega en data.transporte.entrega.distrito');
+          errorDepDisCiu = true;
+        }
+      }
     }
+
 
     if (!errorDepDisCiu) {
       constanteService.validateDepartamentoDistritoCiudad(
