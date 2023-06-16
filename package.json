@@ -1,6 +1,6 @@
 {
   "name": "facturacionelectronicapy-xmlgen",
-  "version": "1.0.206",
+  "version": "1.0.207",
   "description": "API Node JS para generar el archivo XML del Documento electrónico exigido por la SET en base a JSON",
   "main": "dist/index.js",
   "scripts": {

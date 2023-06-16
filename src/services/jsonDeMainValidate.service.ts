@@ -1115,11 +1115,10 @@ class JSonDeMainValidateService {
           "Ciudad '" +
             data['autoFactura']['ciudad'] +
             "' del Cliente en data.autoFactura.ciudad no encontrado. Valores: " +
-            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
         );
         errorDepDisCiu = true;
       }
-
 
       //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
       //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
@@ -1134,14 +1133,11 @@ class JSonDeMainValidateService {
         );
 
         //Solo actualiza si no tiene valor
-        if (!data['autoFactura']['distrito'])
-          data['autoFactura']['distrito'] = objDistrito[0]['codigo'];
+        if (!data['autoFactura']['distrito']) data['autoFactura']['distrito'] = objDistrito[0]['codigo'];
 
-        if (!data['autoFactura']['departamento'])
-          data['autoFactura']['departamento'] = objDepartamento[0]['codigo'];
+        if (!data['autoFactura']['departamento']) data['autoFactura']['departamento'] = objDepartamento[0]['codigo'];
       }
 
-      
       if (errorDepDisCiu) {
         if (!data['autoFactura']['departamento']) {
           this.errors.push('Debe especificar el Departamento del Vendedor en data.autoFactura.departamento');
@@ -1151,7 +1147,7 @@ class JSonDeMainValidateService {
           this.errors.push('Debe especificar el Distrito Vendedor en data.autoFactura.distrito');
           errorDepDisCiu = true;
         }
-      }    
+      }
     }
 
     if (!data['autoFactura']['ubicacion']['ciudad']) {
@@ -1159,22 +1155,24 @@ class JSonDeMainValidateService {
       errorDepDisCiuUbi = true;
     } else {
       if (
-        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['autoFactura']['ubicacion']['ciudad']).length == 0
+        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['autoFactura']['ubicacion']['ciudad'])
+          .length == 0
       ) {
         this.errors.push(
           "Ciudad '" +
             data['autoFactura']['ubicacion']['ciudad'] +
             "' del Cliente en data.autoFactura.ubicacion.ciudad no encontrado. Valores: " +
-            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
         );
         errorDepDisCiuUbi = true;
       }
 
-
       //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
       //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
       //data['autoFactura']['ubicacion']['ciudad']['distrito'] y data['autoFactura']['ubicacion']['ciudad']['departamento']
-      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['autoFactura']['ubicacion']['ciudad']);
+      let objCiudad: any = constanteService.ciudades.filter(
+        (ciu) => ciu.codigo === +data['autoFactura']['ubicacion']['ciudad'],
+      );
 
       if (objCiudad && objCiudad[0]) {
         let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
@@ -1207,8 +1205,6 @@ class JSonDeMainValidateService {
       }
     }
 
-
-
     if (errorDepDisCiu) {
       constanteService.validateDepartamentoDistritoCiudad(
         'data.autoFactura',
@@ -1216,7 +1212,7 @@ class JSonDeMainValidateService {
         +data['autoFactura']['distrito'],
         +data['autoFactura']['ciudad'],
         this.errors,
-      );  
+      );
     }
 
     if (errorDepDisCiuUbi) {
@@ -1353,7 +1349,10 @@ class JSonDeMainValidateService {
       }
 
       if (
-        !(data['documentoAsociado']['constanciaNumero'] && (data['documentoAsociado']['constanciaNumero']+"").length > 0)
+        !(
+          data['documentoAsociado']['constanciaNumero'] &&
+          (data['documentoAsociado']['constanciaNumero'] + '').length > 0
+        )
       ) {
         this.errors.push('Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero');
       } else {
@@ -1665,9 +1664,9 @@ class JSonDeMainValidateService {
    */
   private generateDatosCondicionOperacionDE_CreditoValidate(params: any, data: any) {
     if (!data['condicion']['credito']) {
-       this.errors.push(
-          'Fue especificado Condicion Tipo 2 (Crédito) pero el detalle de Crédito en data.condicion.credito es nulo',
-        );
+      this.errors.push(
+        'Fue especificado Condicion Tipo 2 (Crédito) pero el detalle de Crédito en data.condicion.credito es nulo',
+      );
     } else {
       if (!data['condicion']['credito']['tipo']) {
         this.errors.push(
@@ -1755,7 +1754,6 @@ class JSonDeMainValidateService {
         }
       }
     }
-
   }
 
   public generateDatosComplementariosComercialesDeUsoEspecificosValidate(params: any, data: any) {
@@ -2039,22 +2037,25 @@ class JSonDeMainValidateService {
       errorDepDisCiu = true;
     } else {
       if (
-        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['detalleTransporte']['salida']['ciudad']).length == 0
+        constanteService.ciudades.filter(
+          (ciudad: any) => ciudad.codigo === +data['detalleTransporte']['salida']['ciudad'],
+        ).length == 0
       ) {
         this.errors.push(
           "Ciudad '" +
             data['detalleTransporte']['salida']['ciudad'] +
             "' del Cliente en data.transporte.salida.ciudad no encontrado. Valores: " +
-            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
         );
         errorDepDisCiu = true;
       }
 
-
       //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
       //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
       //data['detalleTransporte']['salida']['distrito'] y data['detalleTransporte']['salida']['departamento']
-      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['detalleTransporte']['salida']['ciudad']);
+      let objCiudad: any = constanteService.ciudades.filter(
+        (ciu) => ciu.codigo === +data['detalleTransporte']['salida']['ciudad'],
+      );
 
       if (objCiudad && objCiudad[0]) {
         let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
@@ -2073,13 +2074,15 @@ class JSonDeMainValidateService {
 
       if (!errorDepDisCiu) {
         if (!data['detalleTransporte']['salida']['departamento']) {
-          this.errors.push('Debe especificar el Departamento del Local de Salida en data.transporte.salida.departamento');
+          this.errors.push(
+            'Debe especificar el Departamento del Local de Salida en data.transporte.salida.departamento',
+          );
           errorDepDisCiu = true;
         }
         if (!data['detalleTransporte']['salida']['distrito']) {
           this.errors.push('Debe especificar el Distrito del Local de Salida en data.transporte.salida.distrito');
           errorDepDisCiu = true;
-        }  
+        }
       }
     }
 
@@ -2142,22 +2145,25 @@ class JSonDeMainValidateService {
       errorDepDisCiu = true;
     } else {
       if (
-        constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['detalleTransporte']['entrega']['ciudad']).length == 0
+        constanteService.ciudades.filter(
+          (ciudad: any) => ciudad.codigo === +data['detalleTransporte']['entrega']['ciudad'],
+        ).length == 0
       ) {
         this.errors.push(
           "Ciudad '" +
             data['detalleTransporte']['entrega']['ciudad'] +
             "' del Cliente en data.transporte.entrega.ciudad no encontrado. Valores: " +
-            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion)
+            constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
         );
         errorDepDisCiu = true;
       }
 
-
       //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
       //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
       //data['detalleTransporte']['entrega']['distrito'] y data['detalleTransporte']['entrega']['departamento']
-      let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['detalleTransporte']['entrega']['ciudad']);
+      let objCiudad: any = constanteService.ciudades.filter(
+        (ciu) => ciu.codigo === +data['detalleTransporte']['entrega']['ciudad'],
+      );
 
       if (objCiudad && objCiudad[0]) {
         let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
@@ -2176,7 +2182,9 @@ class JSonDeMainValidateService {
 
       if (!errorDepDisCiu) {
         if (!data['detalleTransporte']['entrega']['departamento']) {
-          this.errors.push('Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento');
+          this.errors.push(
+            'Debe especificar el Departamento del Local de Entrega en data.transporte.entrega.departamento',
+          );
           errorDepDisCiu = true;
         }
         if (!data['detalleTransporte']['entrega']['distrito']) {
@@ -2185,7 +2193,6 @@ class JSonDeMainValidateService {
         }
       }
     }
-
 
     if (!errorDepDisCiu) {
       constanteService.validateDepartamentoDistritoCiudad(
