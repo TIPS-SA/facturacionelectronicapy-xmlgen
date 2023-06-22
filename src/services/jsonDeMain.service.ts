@@ -855,12 +855,18 @@ class JSonDeMainService {
       dPunExp: stringUtilService.leftZero(data['punto'], 3),
       dNumDoc: stringUtilService.leftZero(data['numero'], 7),
       //dSerieNum : null,
-      dFeIniT: params['timbradoFecha'].substring(0, 10),
+      //dFeIniT: params['timbradoFecha'].substring(0, 10),
     };
 
     if (data['numeroSerie']) {
       this.json['rDE']['DE']['gTimb']['dSerieNum'] = data['numeroSerie'];
     }
+    if (data['serie']) {
+      this.json['rDE']['DE']['gTimb']['dSerieNum'] = data['serie'];
+    }
+    //if (data['numeroSerie']) {
+    this.json['rDE']['DE']['gTimb']['dFeIniT'] = params['timbradoFecha'].substring(0, 10);
+    //}
   }
 
   /**
