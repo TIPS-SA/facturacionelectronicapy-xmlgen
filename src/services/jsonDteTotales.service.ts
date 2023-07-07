@@ -85,11 +85,10 @@ class JSonDteTotalesService {
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
       dTotDesc += (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'];
-      
+
       //Este calculo no sale exactamente igual por la diferencia de decimales, entonces usa directo en enviado por el usuario.
       //Ya no suma el descuento global calculado
       //dTotDescGlotem += (item.gValorItem?.gValorRestaItem?.dDescGloItem || 0) * item['dCantProSer'];
-      
 
       dTotAntItem += (item['gValorItem']['gValorRestaItem']['dAntPreUniIt'] || 0) * item['dCantProSer'];
       dTotAnt += (item['gValorItem']['gValorRestaItem']['dAntGloPreUniIt'] || 0) * item['dCantProSer'];
@@ -104,7 +103,7 @@ class JSonDteTotalesService {
     //Finalmente sobreescribe de vuelta con el que paso el usuario.
     dTotDescGlotem = +data.descuentoGlobal || 0;
     dDescTotal = dTotDesc + dTotDescGlotem;
-    
+
     if (
       data['tipoImpuesto'] == 1 ||
       data['tipoImpuesto'] == 3 ||
