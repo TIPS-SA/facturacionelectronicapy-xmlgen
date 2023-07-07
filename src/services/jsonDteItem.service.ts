@@ -229,6 +229,10 @@ class JSonDteItemService {
       //Validar que si el descuento es mayor al precio
       jsonResult['dDescItem'] = parseFloat(item['descuento']).toFixed(config.decimals);
 
+      if (data.moneda === 'PYG') {
+        jsonResult['dDescItem'] = parseFloat(jsonResult['dDescItem'].toFixed(config.pygDecimals));  
+      }
+
       //FacturaSend calcula solo el % Descuento, no hace falta informar
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));
     }
@@ -246,12 +250,21 @@ class JSonDteItemService {
       let descuentoGlobalAplicado = (data['descuentoGlobal'] * pesoPorc) / 100;
       let descuentoGlobalUnitario = descuentoGlobalAplicado / item['cantidad'];
 
-      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario + '').toFixed(8); //Redondea al maximo decimal, para que el total salga bien
+      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario + '').toFixed(8); //Analizar si no es mejor dejar config.decimals
+
+      if (data.moneda === 'PYG') {
+        jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.pygDecimals);  
+      }
     }
 
     jsonResult['dAntPreUniIt'] = 0;
     if (item['anticipo'] && +item['anticipo'] > 0) {
-      jsonResult['dAntPreUniIt'] = parseFloat(item['anticipo']).toFixed(config.decimals); //Redondea al maximo decimal, para que el total salga bien
+      jsonResult['dAntPreUniIt'] = parseFloat(item['anticipo']).toFixed(config.decimals); 
+
+      if (data.moneda === 'PYG') {
+        jsonResult['dAntPreUniIt'] = parseFloat(jsonResult['dAntPreUniIt']).toFixed(config.pygDecimals);
+      }
+
     }
 
     /*
@@ -266,7 +279,12 @@ class JSonDteItemService {
       let anticipoGlobalAplicado = (data['anticipoGlobal'] * pesoPorc) / 100;
       let anticipoGlobalUnitario = anticipoGlobalAplicado / item['cantidad'];
 
-      jsonResult['dAntGloPreUniIt'] = parseFloat(anticipoGlobalUnitario + '').toFixed(8);
+      jsonResult['dAntGloPreUniIt'] = parseFloat(anticipoGlobalUnitario + '').toFixed(8); //Analizar si no es mejor dejar config.decimals
+
+      if (data.moneda === 'PYG') {
+        jsonResult['dAntGloPreUniIt'] = parseFloat(jsonResult['dAntGloPreUniIt']).toFixed(config.pygDecimals);
+      }
+
     }
 
     /* dTotOpeItem (EA008)
