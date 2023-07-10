@@ -1332,44 +1332,10 @@ class JSonDeMainValidateService {
     if (!data['documentoAsociado']) {
       this.errors.push('Debe indicar el Documento Asociado en data.documentoAsociado para el Tipo de Documento = 4');
     } else {
-      if (
-        !(data['documentoAsociado']['constanciaControl'] && data['documentoAsociado']['constanciaControl'].length > 0)
-      ) {
-        this.errors.push(
-          'Debe indicar el Número de Control de la Constancia en data.documentoAsociado.constanciaControl',
-        );
+      if (Array.isArray(data['documentoAsociado'])) {
+        this.validateAsociadoConstancia(params, data['documentoAsociado'][0], true);
       } else {
-        if ((data['documentoAsociado']['constanciaControl'] + '').length != 8) {
-          this.errors.push(
-            'El Numero de Control de la Constancia "' +
-              data['documentoAsociado']['constanciaControl'] +
-              '" en data.documentoAsociado.constanciaControl debe contener 8 caracteres ',
-          );
-        }
-      }
-
-      if (
-        !(
-          data['documentoAsociado']['constanciaNumero'] &&
-          (data['documentoAsociado']['constanciaNumero'] + '').length > 0
-        )
-      ) {
-        this.errors.push('Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero');
-      } else {
-        if (isNaN(data['documentoAsociado']['constanciaNumero'])) {
-          this.errors.push(
-            'El Numero de la Constancia "' +
-              data['documentoAsociado']['constanciaNumero'] +
-              '" en data.documentoAsociado.constanciaNumero debe ser numérico ',
-          );
-        }
-        if ((data['documentoAsociado']['constanciaNumero'] + '').length != 11) {
-          this.errors.push(
-            'El Numero de la Constancia "' +
-              data['documentoAsociado']['constanciaNumero'] +
-              '" en data.documentoAsociado.constanciaNumero debe contener 11 caracteres ',
-          );
-        }
+        this.validateAsociadoConstancia(params, data['documentoAsociado'], false);
       }
 
       if (data['cliente']['contribuyente'] == false) {
@@ -1378,6 +1344,48 @@ class JSonDeMainValidateService {
     }
   }
 
+  private validateAsociadoConstancia(params: any, documentoAsociado: any, isArray: boolean) {
+    if (
+      !(documentoAsociado['constanciaControl'] && documentoAsociado['constanciaControl'].length > 0)
+    ) {
+      this.errors.push(
+        'Debe indicar el Número de Control de la Constancia en data.documentoAsociado.constanciaControl. ' + (isArray ? 'En la posicion 0' : '')
+      );
+    } else {
+      if ((documentoAsociado['constanciaControl'] + '').length != 8) {
+        this.errors.push(
+          'El Numero de Control de la Constancia "' +
+            documentoAsociado['constanciaControl'] +
+            '" en data.documentoAsociado.constanciaControl debe contener 8 caracteres. ' + (isArray ? 'En la posicion 0' : '')
+        );
+      }
+    }
+
+    if (
+      !(
+        documentoAsociado['constanciaNumero'] &&
+        (documentoAsociado['constanciaNumero'] + '').length > 0
+      )
+    ) {
+      this.errors.push('Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero. '  + (isArray ? 'En la posicion 0' : ''));
+    } else {
+      if (isNaN(documentoAsociado['constanciaNumero'])) {
+        this.errors.push(
+          'El Numero de la Constancia "' +
+            documentoAsociado['constanciaNumero'] +
+            '" en data.documentoAsociado.constanciaNumero debe ser numérico. ' + (isArray ? 'En la posicion 0' : '')
+        );
+      }
+      if ((documentoAsociado['constanciaNumero'] + '').length != 11) {
+        this.errors.push(
+          'El Numero de la Constancia "' +
+            documentoAsociado['constanciaNumero'] +
+            '" en data.documentoAsociado.constanciaNumero debe contener 11 caracteres. ' + (isArray ? 'En la posicion 0' : '')
+        );
+      }
+    }
+
+  }
   private generateDatosCondicionOperacionDEValidate(params: any, data: any) {
     const items = data['items'];
     let sumaSubtotales = 0;

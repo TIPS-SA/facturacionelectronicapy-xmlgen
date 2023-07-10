@@ -21,35 +21,21 @@ class JSonDteIdentificacionDocumentoService {
       //H002 = Electronico
       if (dataDocumentoAsociado['cdc'] && dataDocumentoAsociado['cdc'].length >= 44) {
         jsonResult['dCdCDERef'] = dataDocumentoAsociado['cdc'];
-        /*} else {
-        throw new Error('Debe indicar el CDC asociado en data.documentoAsociado.cdc');*/
       }
     }
     if (dataDocumentoAsociado['formato'] == 2) {
       //H002 = Impreso
       if (dataDocumentoAsociado['timbrado']) {
         jsonResult['dNTimDI'] = dataDocumentoAsociado['timbrado'];
-        /*} else {
-        throw new Error(
-          'Debe especificar el Timbrado del Documento impreso Asociado en data.documentoAsociado.timbrado',
-        );*/
       }
       if (dataDocumentoAsociado['establecimiento']) {
         jsonResult['dEstDocAso'] = stringUtilService.leftZero(dataDocumentoAsociado['establecimiento'] + '', 3);
-        /*} else {
-        throw new Error(
-          'Debe especificar el Establecimiento del Documento impreso Asociado en data.documentoAsociado.establecimiento',
-        );*/
       }
       if (dataDocumentoAsociado['punto']) {
         jsonResult['dPExpDocAso'] = stringUtilService.leftZero(dataDocumentoAsociado['punto'] + '', 3);
-        /*} else {
-        throw new Error('Debe especificar el Punto del Documento impreso Asociado en data.documentoAsociado.punto');*/
       }
       if (dataDocumentoAsociado['numero']) {
         jsonResult['dNumDocAso'] = stringUtilService.leftZero(dataDocumentoAsociado['numero'] + '', 7);
-        /*} else {
-        throw new Error('Debe especificar el Número del Documento impreso Asociado en data.documentoAsociado.numero');*/
       }
       if (dataDocumentoAsociado['tipoDocumentoImpreso']) {
         jsonResult['iTipoDocAso'] = +dataDocumentoAsociado['tipoDocumentoImpreso'];
@@ -58,14 +44,7 @@ class JSonDteIdentificacionDocumentoService {
         )[0]['descripcion'];
       }
       if (dataDocumentoAsociado['fecha']) {
-        /*if ((dataDocumentoAsociado['fecha'] + '').length != 10) {
-          throw new Error(
-            'La Fecha del Documento impreso Asociado en data.documentoAsociado.fecha debe tener una longitud de 10 caracteres',
-          );
-        }*/
         jsonResult['dFecEmiDI'] = dataDocumentoAsociado['fecha'];
-        /*} else {
-        throw new Error('Debe especificar la Fecha del Documento impreso Asociado en data.documentoAsociado.fecha');*/
       }
     }
     if (
