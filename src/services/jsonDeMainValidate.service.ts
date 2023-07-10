@@ -1345,46 +1345,45 @@ class JSonDeMainValidateService {
   }
 
   private validateAsociadoConstancia(params: any, documentoAsociado: any, isArray: boolean) {
-    if (
-      !(documentoAsociado['constanciaControl'] && documentoAsociado['constanciaControl'].length > 0)
-    ) {
+    if (!(documentoAsociado['constanciaControl'] && documentoAsociado['constanciaControl'].length > 0)) {
       this.errors.push(
-        'Debe indicar el Número de Control de la Constancia en data.documentoAsociado.constanciaControl. ' + (isArray ? 'En la posicion 0' : '')
+        'Debe indicar el Número de Control de la Constancia en data.documentoAsociado.constanciaControl. ' +
+          (isArray ? 'En la posicion 0' : ''),
       );
     } else {
       if ((documentoAsociado['constanciaControl'] + '').length != 8) {
         this.errors.push(
           'El Numero de Control de la Constancia "' +
             documentoAsociado['constanciaControl'] +
-            '" en data.documentoAsociado.constanciaControl debe contener 8 caracteres. ' + (isArray ? 'En la posicion 0' : '')
+            '" en data.documentoAsociado.constanciaControl debe contener 8 caracteres. ' +
+            (isArray ? 'En la posicion 0' : ''),
         );
       }
     }
 
-    if (
-      !(
-        documentoAsociado['constanciaNumero'] &&
-        (documentoAsociado['constanciaNumero'] + '').length > 0
-      )
-    ) {
-      this.errors.push('Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero. '  + (isArray ? 'En la posicion 0' : ''));
+    if (!(documentoAsociado['constanciaNumero'] && (documentoAsociado['constanciaNumero'] + '').length > 0)) {
+      this.errors.push(
+        'Debe indicar el Numero de la Constancia en data.documentoAsociado.constanciaNumero. ' +
+          (isArray ? 'En la posicion 0' : ''),
+      );
     } else {
       if (isNaN(documentoAsociado['constanciaNumero'])) {
         this.errors.push(
           'El Numero de la Constancia "' +
             documentoAsociado['constanciaNumero'] +
-            '" en data.documentoAsociado.constanciaNumero debe ser numérico. ' + (isArray ? 'En la posicion 0' : '')
+            '" en data.documentoAsociado.constanciaNumero debe ser numérico. ' +
+            (isArray ? 'En la posicion 0' : ''),
         );
       }
       if ((documentoAsociado['constanciaNumero'] + '').length != 11) {
         this.errors.push(
           'El Numero de la Constancia "' +
             documentoAsociado['constanciaNumero'] +
-            '" en data.documentoAsociado.constanciaNumero debe contener 11 caracteres. ' + (isArray ? 'En la posicion 0' : '')
+            '" en data.documentoAsociado.constanciaNumero debe contener 11 caracteres. ' +
+            (isArray ? 'En la posicion 0' : ''),
         );
       }
     }
-
   }
   private generateDatosCondicionOperacionDEValidate(params: any, data: any) {
     const items = data['items'];
