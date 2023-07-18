@@ -450,8 +450,8 @@ class JSonDteItemValidateService {
   private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {
     let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
 
-    if (item['registroEntidadComercial'] && item['registroEntidadComercial'].trim().length > 0) {
-      if (!(item['registroEntidadComercial'].length >= 20 && item['registroEntidadComercial'].length <= 20)) {
+    if (item['registroEntidadComercial'] && (item['registroEntidadComercial']+"").trim().length > 0) {
+      if (!((item['registroEntidadComercial']+"").trim().length >= 20 && (item['registroEntidadComercial']+"").trim().length <= 20)) {
         this.errors.push(
           'El Número de Registro de la Entidad Comercial del item (' +
             item['registroEntidadComercial'] +
