@@ -230,7 +230,7 @@ class JSonDteItemService {
       jsonResult['dDescItem'] = parseFloat(item['descuento']).toFixed(config.decimals);
 
       if (data.moneda === 'PYG') {
-        jsonResult['dDescItem'] = parseFloat(jsonResult['dDescItem'].toFixed(config.pygDecimals));
+        jsonResult['dDescItem'] = parseFloat(jsonResult['dDescItem']).toFixed(config.pygDecimals);
       }
 
       //FacturaSend calcula solo el % Descuento, no hace falta informar
