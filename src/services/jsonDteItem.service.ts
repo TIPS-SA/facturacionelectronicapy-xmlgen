@@ -253,7 +253,7 @@ class JSonDteItemService {
       jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario + '').toFixed(8); //Analizar si no es mejor dejar config.decimals
 
       if (data.moneda === 'PYG') {
-        jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.pygDecimals);
+        //jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.pygDecimals);
       }
     }
 
