@@ -453,7 +453,7 @@ class JSonDteItemValidateService {
     if (item['registroEntidadComercial'] && (item['registroEntidadComercial'] + '').trim().length > 0) {
       if (
         !(
-          (item['registroEntidadComercial'] + '').trim().length >= 20 &&
+          (item['registroEntidadComercial'] + '').trim().length >= 1 &&
           (item['registroEntidadComercial'] + '').trim().length <= 20
         )
       ) {
@@ -462,7 +462,7 @@ class JSonDteItemValidateService {
             item['registroEntidadComercial'] +
             ') en data.items[' +
             i +
-            '].registroEntidadComercial debe tener una longitud de 20 caracteres',
+            '].registroEntidadComercial debe tener una longitud entre 1 y 20 caracteres',
         );
       }
       if (regexp.test(item['registroEntidadComercial'])) {
