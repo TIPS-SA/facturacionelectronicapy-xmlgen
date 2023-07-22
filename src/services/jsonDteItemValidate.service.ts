@@ -448,7 +448,7 @@ class JSonDteItemValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosItemsOperacionRastreoMercaderiasValidate(params: any, data: any, item: any, i: number) {
-    let regexp = new RegExp('<[^>]*>'); //HTML/XML TAGS
+    let regexpXMLHTML = new RegExp('<[^>]*>'); //HTML/XML TAGS
 
     if (item['registroEntidadComercial'] && (item['registroEntidadComercial'] + '').trim().length > 0) {
       if (
@@ -465,7 +465,7 @@ class JSonDteItemValidateService {
             '].registroEntidadComercial debe tener una longitud entre 1 y 20 caracteres',
         );
       }
-      if (regexp.test(item['registroEntidadComercial'])) {
+      if (regexpXMLHTML.test(item['registroEntidadComercial'])) {
         this.errors.push(
           'El Número de Registro de la Entidad Comercial del item (' +
             item['registroEntidadComercial'] +
