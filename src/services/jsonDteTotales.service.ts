@@ -85,7 +85,7 @@ class JSonDteTotalesService {
       if (data['tipoDocumento'] == 4) {
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
-      
+
       //Ahora mismo dTotOpeSinDescuento solo es el precio por la cantidad y se usa para calcular mas adelante
       //dPorcDescTotal (OJO: Si dPorcDescTotal solo debe estar relacionado al total, entonces al dPUniProSer
       //hay que restarle el dDescItem antes de multiplicar por la cantidad)
