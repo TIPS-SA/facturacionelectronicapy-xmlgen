@@ -18,6 +18,7 @@ class JSonDteTotalesService {
       dSubExo = 0,
       dSub5 = 0,
       dSub10 = 0,
+      dTotOpeSinDescuento = 0,
       dTotOpe = 0,
       dTotDesc = 0,
       dTotDescGlotem = 0,
@@ -84,6 +85,12 @@ class JSonDteTotalesService {
       if (data['tipoDocumento'] == 4) {
         dTotOpe += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
       }
+      
+      //Ahora mismo dTotOpeSinDescuento solo es el precio por la cantidad y se usa para calcular mas adelante
+      //dPorcDescTotal (OJO: Si dPorcDescTotal solo debe estar relacionado al total, entonces al dPUniProSer
+      //hay que restarle el dDescItem antes de multiplicar por la cantidad)
+      dTotOpeSinDescuento += item['gValorItem']['dPUniProSer'] * item['dCantProSer'];
+
       dTotDesc += (item['gValorItem']['gValorRestaItem']['dDescItem'] || 0) * item['dCantProSer'];
 
       //Este calculo no sale exactamente igual por la diferencia de decimales, entonces usa directo en enviado por el usuario.
@@ -228,7 +235,7 @@ class JSonDteTotalesService {
       dDescTotal = parseFloat(dDescTotal.toFixed(config.pygDecimals));
     }
     if (data.moneda != 'PYG') {
-      dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals));
+      dTotOpe = parseFloat(dTotOpe.toFixed(config.decimals)); //Este esta repetido en la linea 218, verificar
     } else {
       dTotOpe = parseFloat(dTotOpe.toFixed(config.pygDecimals));
     }
@@ -390,10 +397,10 @@ class JSonDteTotalesService {
 
     //Calculo del % de descuento Global
     if (jsonResult['dTotDescGlotem'] > 0) {
-      jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpe).toFixed(config.taxDecimals);
+      jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.taxDecimals);
 
       if (moneda == 'PYG') {
-        jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpe).toFixed(config.pygTaxDecimals);
+        jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.pygTaxDecimals);
       }
     }
 
