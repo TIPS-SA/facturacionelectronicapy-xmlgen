@@ -359,7 +359,8 @@ class JSonDteTotalesService {
       }
     }
 
-    if (moneda != 'PYG') {  //Si es en otra moneda que no sea PYG
+    if (moneda != 'PYG') {
+      //Si es en otra moneda que no sea PYG
       //Utiliza el Decimales en Guaranies pygDecimals
       if (data['condicionTipoCambio'] == 1) {
         //Por el Global
@@ -387,17 +388,14 @@ class JSonDteTotalesService {
       }
     }*/
 
-    //Calculo del % de descuento Global 
+    //Calculo del % de descuento Global
     if (jsonResult['dTotDescGlotem'] > 0) {
-      jsonResult['dPorcDescTotal'] = (dTotDescGlotem * 100 / dTotOpe).toFixed(config.taxDecimals);
+      jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpe).toFixed(config.taxDecimals);
 
       if (moneda == 'PYG') {
-        jsonResult['dPorcDescTotal'] = (dTotDescGlotem * 100 / dTotOpe).toFixed(config.pygTaxDecimals);
-
+        jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpe).toFixed(config.pygTaxDecimals);
       }
     }
-    
-
 
     return jsonResult;
   }
