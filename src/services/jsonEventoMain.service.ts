@@ -605,6 +605,13 @@ class JSonEventoMainService {
       throw new Error('El CDC en data.cdc debe tener 44 caracteres');
     }
 
+    if (!data['motivo']) {
+      throw new Error('Debe especificar el Motivo del evento de nominación en data.motivo');
+    }
+    if (!(data['motivo'].length >= 5 && data['motivo'].length <= 500)) {
+      throw new Error('El Motivo del Evento en data.motivo debe tener una longitud entre 5 y 500 caracteres');
+    }
+
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
       throw new Error(
         "Tipo de Receptor '" +
@@ -614,42 +621,137 @@ class JSonEventoMainService {
       );
     }
 
-    if (!data['nombre']) {
-      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
+    if (!data['pais']) {
+      throw new Error('Debe especificar el Pais del Receptor en data.pais');
+    }
+    if (!(data['pais'].length >= 3 && data['pais'].length <= 3)) {
+      throw new Error('El Pais del Receptor en data.pais debe tener una longitud de 3 caracteres');
+    }
+    let paisDescripcion: any = constanteService.paises.filter(
+      (pais) => pais.codigo === data['pais'],
+    );
+
+    if (!data['razonSocial']) {
+      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.razonSocial');
+    }
+    if (!(data['razonSocial'].length >= 4 && data['razonSocial'].length <= 255)) {
+      throw new Error('El Nombre del Cliente en data.razonSocial debe tener una longitud entre 4 y 255 caracteres');
     }
 
-    if (!(data['nombre'].length >= 4)) {
-      throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
+    if (data['nombreFantasia']) {
+      if (!(data['nombreFantasia'].length >= 4  && data['nombreFantasia'].length <= 255)) {
+        throw new Error('El Nombre del Cliente en data.nombreFantasia debe tener una longitud entre 4 y 255 caracteres');
+      }
     }
 
-    if (new String(data['fechaRecepcion']).length != 19) {
-      throw new Error('La fecha de emisión debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    if (data['direccion']) {
+      if (!(data['direccion'].length >= 1  && data['direccion'].length <= 255)) {
+        throw new Error('El Nombre del Cliente en data.direccion debe tener una longitud entre 1 y 255 caracteres');
+      }
     }
 
-    if (new String(data['fechaRecepcion']).length != 19) {
-      throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
+    if (typeof data['numeroCasa'] != 'undefined') {
+      if (!(data['numeroCasa'].length >= 1  && data['numeroCasa'].length <= 6)) {
+        throw new Error('El Nombre del Cliente en data.numeroCasa debe tener una longitud entre 1 y 6 caracteres');
+      }
     }
 
-    jsonResult['rGeVeNotRec'] = {
+    let departamentoDescripcion = null;
+    let distritoDescripcion = null;
+    let ciudadDescripcion = null;
+
+    if (data['departamento']) {
+      let objDepartamento: any = constanteService.departamentos.filter(
+        (dep) => dep.codigo === +data['departamento']
+      );      
+
+      if (objDepartamento.legth <= 0) {
+        throw new Error("No se encontro el Departamento '" + data['departamento'] + "'");
+      }
+
+      let errorsDepDisCiu = new Array();
+      constanteService.validateDepartamentoDistritoCiudad(
+        'data',
+        +data['departamento'],
+        +data['distrito'],
+        +data['ciudad'],
+        errorsDepDisCiu,
+      );
+        
+      if (errorsDepDisCiu.length > 0) {
+        throw new Error(errorsDepDisCiu[0]);
+      }
+
+      departamentoDescripcion = objDepartamento[0].descripcion;
+      distritoDescripcion = constanteService.distritos.filter(
+        (dep) => dep.codigo === +data['distrito']
+      )[0].descripcion;   
+      ciudadDescripcion = constanteService.ciudades.filter(
+        (dep) => dep.codigo === +data['ciudad']
+      )[0].descripcion;
+    }
+    
+    if (data['telefono']) {
+      if (!(data['telefono'].length >= 6  && data['telefono'].length <= 65)) {
+        throw new Error('El Telefono del Cliente en data.telefono debe tener una longitud entre 6 y 15 caracteres');
+      }
+    }
+    if (data['celular']) {
+      if (!(data['celular'].length >= 10  && data['celular'].length <= 20)) {
+        throw new Error('El Celular del Cliente en data.celular debe tener una longitud entre 10 y 20 caracteres');
+      }
+    }
+    if (data['codigo']) {
+      if (!(data['codigo'].length >= 3  && data['codigo'].length <= 15)) {
+        throw new Error('El Código del Cliente en data.codigo debe tener una longitud entre 3 y 15 caracteres');
+      }
+    }
+    
+    jsonResult['rGeVeNom'] = {
       Id: data['cdc'],
-      dFecEmi: data['fechaEmision'],
-      dFecRecep: data['fechaRecepcion'],
-      iTipRec: +data['tipoReceptor'],
-      dNomRec: data['nombre'],
+      mOtEve: data['motivo'],
+      iNatRec: data['fechaRecepcion'],
+      iTiOpe: +data['tipoReceptor'],
+      cPaisRec: data['pais'],
+      dDesPaisRe: paisDescripcion,
+      iTiContRec: data['contribuyente'] ? 1 : 2,
+      //dRucRec: data['contribuyente'],
+      //dDVRec: data['contribuyente'],
+      iTipIDRec: data['tipoContribuyente'],
+      //dDTipIDRec: data['documentoTipo'],
+      //dNumIDRec: data['documentoNumero'],
+      dNomRec: data['razonSocial'],
+      dNomFanRec: data['nombreFantasia'],
+      dDirRec: data['direccion'],
+      dNumCasRec: data['numeroCasa'],
+      cDepRec: data['departamento'],
+      dDesDepRec: departamentoDescripcion,
+      cDisRec: data['distrito'],
+      dDesDisRec: distritoDescripcion,
+      cCiuRec: data['ciudad'],
+      dDesCiuRec: ciudadDescripcion,
+      dTelRec: data['telefono'],
+      dCelRec: data['celular'],
+      dEmailRec: data['email'],
+      dCodCliente: data['clienteCodigo']
     };
 
-    if (+data['tipoReceptor'] == 1) {
+    if (data['contribuyente']) {
       if (data['ruc'].indexOf('-') == -1) {
         throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
       }
       const rucEmisor = data['ruc'].split('-')[0];
       const dvEmisor = data['ruc'].split('-')[1];
 
-      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
-      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
+      if (!(rucEmisor && (rucEmisor+"").length >= 3 && (rucEmisor+"").length <= 8)) {
+        throw new Error('RUC del Receptor debe estar compuesto de 3 a 8 caracteres');
+      }
+
+      jsonResult['rGeVeNom']['dRucRec'] = rucEmisor;
+      jsonResult['rGeVeNom']['dDVRec'] = dvEmisor;
     }
 
-    if (+data['tipoReceptor'] == 2) {
+    if ( ! data['contribuyente']) {
       if (
         constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
       ) {
@@ -661,15 +763,14 @@ class JSonEventoMainService {
         );
       }
 
-      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
+      jsonResult['rGeVeNom']['dTipIDRec'] = data['documentoTipo'];
 
       if (!data['documentoNumero']) {
         throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
       }
-      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
+      jsonResult['rGeVeNom']['dNumID'] = data['documentoNumero'];
     }
 
-    jsonResult['rGeVeNotRec']['dTotalGs'] = data['totalPYG'];
 
     return jsonResult;
   }
