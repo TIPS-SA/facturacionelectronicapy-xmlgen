@@ -634,6 +634,12 @@ class JSonEventoMainService {
     } else {
       if (!(data['tipoOperacion'] == 1 || data['tipoOperacion'] == 2 || data['tipoOperacion'] == 4)) {
         throw new Error('El Tipo de Operación en data.tipoOperacion debe ser 1-B2B, 2-B2C o 4-B2F');
+      } else {
+        if (!data['contribuyente']) {
+          if (data['tipoOperacion'] == 1) {
+            throw new Error('Tipo de Operación 1-B2B incorrecto para Receptor No Contribuyente');
+          }      
+        }
       }
     }
 
@@ -755,7 +761,9 @@ class JSonEventoMainService {
     };
 
     if (data['tipoReceptor']) {
-      jsonResult['rGEveNom']['iTiContRec'] = data['tipoReceptor'];
+      if (data['contribuyente']) {
+        jsonResult['rGEveNom']['iTiContRec'] = data['tipoReceptor'];
+      }
     }
 
     if (data['contribuyente']) {
@@ -775,26 +783,29 @@ class JSonEventoMainService {
 
     if (!data['contribuyente']) {
       if (
-        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
+        constanteService.tiposDocumentosReceptorInnominado.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
       ) {
         throw new Error(
           "Tipo de Documento '" +
             data['documentoTipo'] +
             "' en data.documentoTipo no encontrado. Valores: " +
-            constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
+            constanteService.tiposDocumentosReceptorInnominado.map((a: any) => a.codigo + '-' + a.descripcion),
         );
       }
 
-      jsonResult['rGEveNom']['dTipIDRec'] = data['documentoTipo'];
+      jsonResult['rGEveNom']['iTipIDRec'] = data['documentoTipo'];
+      jsonResult['rGEveNom']['dDTipIDRec'] = constanteService.tiposDocumentosReceptorInnominado.filter((um: any) => um.codigo === data['documentoTipo'])[0].descripcion;
+
+      if (data['documentoTipo'] == 9) {
+        jsonResult['rGEveNom']['dDTipIDRec'] = data['documentoTipoDescripcion'];
+      }
+      
+      //jsonResult['rGEveNom']['dTipIDRec'] = data['tipoContribuyente'];
 
       if (!data['documentoNumero']) {
         throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
       }
-      jsonResult['rGEveNom']['dNumID'] = data['documentoNumero'];
-    }
-
-    if (data['tipoContribuyente']) {
-      jsonResult['rGEveNom']['iTipIDRec'] = data['tipoContribuyente'];
+      jsonResult['rGEveNom']['dNumIDRec'] = data['documentoNumero'];
     }
 
     jsonResult['rGEveNom']['dNomRec'] = data['razonSocial'];

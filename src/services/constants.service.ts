@@ -490,6 +490,33 @@ class ConstanteService {
     },
   ];
 
+  tiposDocumentosReceptorInnominado = [
+    {
+      codigo: 1,
+      descripcion: 'Cédula paraguaya',
+    },
+    {
+      codigo: 2,
+      descripcion: 'Pasaporte',
+    },
+    {
+      codigo: 3,
+      descripcion: 'Cédula extranjera',
+    },
+    {
+      codigo: 4,
+      descripcion: 'Carnet de residencia',
+    },
+    {
+      codigo: 5,
+      descripcion: 'Tarjeta Diplomática de exoneración fiscal',
+    },
+    {
+      codigo: 9,
+      descripcion: 'Otro',
+    },
+  ];
+
   tiposOperaciones = [
     {
       codigo: 1,
