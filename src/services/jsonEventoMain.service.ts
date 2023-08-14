@@ -627,21 +627,21 @@ class JSonEventoMainService {
     if (!(data['pais'].length >= 3 && data['pais'].length <= 3)) {
       throw new Error('El Pais del Receptor en data.pais debe tener una longitud de 3 caracteres');
     }
-    let paisDescripcion: any = constanteService.paises.filter(
-      (pais) => pais.codigo === data['pais'],
-    )[0].descripcion;
+    let paisDescripcion: any = constanteService.paises.filter((pais) => pais.codigo === data['pais'])[0].descripcion;
 
     if (!data['tipoOperacion']) {
       throw new Error('Debe especificar el Tipo de Operación en data.tipoOperacion 1-B2B, 2-B2C o 4-B2F');
     } else {
       if (!(data['tipoOperacion'] == 1 || data['tipoOperacion'] == 2 || data['tipoOperacion'] == 4)) {
         throw new Error('El Tipo de Operación en data.tipoOperacion debe ser 1-B2B, 2-B2C o 4-B2F');
-      }  
+      }
     }
 
     if (data['contribuyente']) {
       if (!data['tipoContribuyente']) {
-        throw new Error('Debe especificar el Tipo de Contribuyente en data.tipoContribuyente 1-Persona Física o 2-Persona Jurídica');
+        throw new Error(
+          'Debe especificar el Tipo de Contribuyente en data.tipoContribuyente 1-Persona Física o 2-Persona Jurídica',
+        );
       }
     }
 
@@ -649,9 +649,19 @@ class JSonEventoMainService {
       if (!data['documentoTipo']) {
         throw new Error('Debe especificar el Tipo de Documento en data.documentoTipo');
       } else {
-        if (!(data['documentoTipo'] == 1 || data['documentoTipo'] == 2 || data['documentoTipo'] == 3 || data['documentoTipo'] == 4 || data['documentoTipo'] == 5)) {
-          throw new Error('El Tipo de Operación en data.documentoTipo debe ser 1-Cédula paraguaya, 2-Pasaporte, 3-Cédula Extranjera, 4-Carnet de residencia, 5-Tarjeta Diplomatica');
-        }  
+        if (
+          !(
+            data['documentoTipo'] == 1 ||
+            data['documentoTipo'] == 2 ||
+            data['documentoTipo'] == 3 ||
+            data['documentoTipo'] == 4 ||
+            data['documentoTipo'] == 5
+          )
+        ) {
+          throw new Error(
+            'El Tipo de Operación en data.documentoTipo debe ser 1-Cédula paraguaya, 2-Pasaporte, 3-Cédula Extranjera, 4-Carnet de residencia, 5-Tarjeta Diplomatica',
+          );
+        }
       }
 
       if (!data['documentoNumero']) {
@@ -667,13 +677,15 @@ class JSonEventoMainService {
     }
 
     if (data['nombreFantasia']) {
-      if (!(data['nombreFantasia'].length >= 4  && data['nombreFantasia'].length <= 255)) {
-        throw new Error('El Nombre del Cliente en data.nombreFantasia debe tener una longitud entre 4 y 255 caracteres');
+      if (!(data['nombreFantasia'].length >= 4 && data['nombreFantasia'].length <= 255)) {
+        throw new Error(
+          'El Nombre del Cliente en data.nombreFantasia debe tener una longitud entre 4 y 255 caracteres',
+        );
       }
     }
 
     if (data['direccion']) {
-      if (!(data['direccion'].length >= 1  && data['direccion'].length <= 255)) {
+      if (!(data['direccion'].length >= 1 && data['direccion'].length <= 255)) {
         throw new Error('El Nombre del Cliente en data.direccion debe tener una longitud entre 1 y 255 caracteres');
       }
     }
@@ -682,9 +694,9 @@ class JSonEventoMainService {
       if (!data['numeroCasa']) {
         throw new Error('Debe especificar el numero de casa en data.numeroCasa');
       } else {
-        if (!(data['numeroCasa'].length >= 1  && data['numeroCasa'].length <= 6)) {
+        if (!(data['numeroCasa'].length >= 1 && data['numeroCasa'].length <= 6)) {
           throw new Error('El Nombre del Cliente en data.numeroCasa debe tener una longitud entre 1 y 6 caracteres');
-        }  
+        }
       }
     }
 
@@ -693,9 +705,7 @@ class JSonEventoMainService {
     let ciudadDescripcion = null;
 
     if (data['departamento']) {
-      let objDepartamento: any = constanteService.departamentos.filter(
-        (dep) => dep.codigo === +data['departamento']
-      );      
+      let objDepartamento: any = constanteService.departamentos.filter((dep) => dep.codigo === +data['departamento']);
 
       if (objDepartamento.legth <= 0) {
         throw new Error("No se encontro el Departamento '" + data['departamento'] + "'");
@@ -709,36 +719,32 @@ class JSonEventoMainService {
         +data['ciudad'],
         errorsDepDisCiu,
       );
-        
+
       if (errorsDepDisCiu.length > 0) {
         throw new Error(errorsDepDisCiu[0]);
       }
 
       departamentoDescripcion = objDepartamento[0].descripcion;
-      distritoDescripcion = constanteService.distritos.filter(
-        (dep) => dep.codigo === +data['distrito']
-      )[0].descripcion;   
-      ciudadDescripcion = constanteService.ciudades.filter(
-        (dep) => dep.codigo === +data['ciudad']
-      )[0].descripcion;
+      distritoDescripcion = constanteService.distritos.filter((dep) => dep.codigo === +data['distrito'])[0].descripcion;
+      ciudadDescripcion = constanteService.ciudades.filter((dep) => dep.codigo === +data['ciudad'])[0].descripcion;
     }
-    
+
     if (data['telefono']) {
-      if (!(data['telefono'].length >= 6  && data['telefono'].length <= 65)) {
+      if (!(data['telefono'].length >= 6 && data['telefono'].length <= 65)) {
         throw new Error('El Telefono del Cliente en data.telefono debe tener una longitud entre 6 y 15 caracteres');
       }
     }
     if (data['celular']) {
-      if (!(data['celular'].length >= 10  && data['celular'].length <= 20)) {
+      if (!(data['celular'].length >= 10 && data['celular'].length <= 20)) {
         throw new Error('El Celular del Cliente en data.celular debe tener una longitud entre 10 y 20 caracteres');
       }
     }
     if (data['codigo']) {
-      if (!(data['codigo'].length >= 3  && data['codigo'].length <= 15)) {
+      if (!(data['codigo'].length >= 3 && data['codigo'].length <= 15)) {
         throw new Error('El Código del Cliente en data.codigo debe tener una longitud entre 3 y 15 caracteres');
       }
     }
-    
+
     jsonResult['rGEveNom'] = {
       Id: data['cdc'],
       mOtEve: data['motivo'],
@@ -746,13 +752,12 @@ class JSonEventoMainService {
       iTiOpe: +data['tipoOperacion'],
       cPaisRec: data['pais'],
       dDesPaisRe: paisDescripcion,
-      
     };
 
     if (data['tipoReceptor']) {
       jsonResult['rGEveNom']['iTiContRec'] = data['tipoReceptor'];
     }
-    
+
     if (data['contribuyente']) {
       if (data['ruc'].indexOf('-') == -1) {
         throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
@@ -760,7 +765,7 @@ class JSonEventoMainService {
       const rucEmisor = data['ruc'].split('-')[0];
       const dvEmisor = data['ruc'].split('-')[1];
 
-      if (!(rucEmisor && (rucEmisor+"").length >= 3 && (rucEmisor+"").length <= 8)) {
+      if (!(rucEmisor && (rucEmisor + '').length >= 3 && (rucEmisor + '').length <= 8)) {
         throw new Error('RUC del Receptor debe estar compuesto de 3 a 8 caracteres');
       }
 
@@ -768,7 +773,7 @@ class JSonEventoMainService {
       jsonResult['rGEveNom']['dDVRec'] = dvEmisor;
     }
 
-    if ( ! data['contribuyente']) {
+    if (!data['contribuyente']) {
       if (
         constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
       ) {
@@ -788,56 +793,51 @@ class JSonEventoMainService {
       jsonResult['rGEveNom']['dNumID'] = data['documentoNumero'];
     }
 
-
-
     if (data['tipoContribuyente']) {
       jsonResult['rGEveNom']['iTipIDRec'] = data['tipoContribuyente'];
     }
 
     jsonResult['rGEveNom']['dNomRec'] = data['razonSocial'];
 
-    if (data['nombreFantasia']) { 
+    if (data['nombreFantasia']) {
       jsonResult['rGEveNom']['dNomFanRec'] = data['nombreFantasia'];
     }
-    if (data['direccion']) { 
+    if (data['direccion']) {
       jsonResult['rGEveNom']['dDirRec'] = data['direccion'];
     }
-    if (data['numeroCasa']) { 
+    if (data['numeroCasa']) {
       jsonResult['rGEveNom']['dNumCasRec'] = data['numeroCasa'];
     }
-    if (data['departamento']) { 
+    if (data['departamento']) {
       jsonResult['rGEveNom']['cDepRec'] = data['departamento'];
     }
-    if (data['departamento']) { 
+    if (data['departamento']) {
       jsonResult['rGEveNom']['dDesDepRec'] = departamentoDescripcion;
     }
-    if (data['distrito']) { 
+    if (data['distrito']) {
       jsonResult['rGEveNom']['cDisRec'] = data['distrito'];
     }
-    if (data['distrito']) { 
+    if (data['distrito']) {
       jsonResult['rGEveNom']['dDesDisRec'] = distritoDescripcion;
     }
-    if (data['ciudad']) { 
+    if (data['ciudad']) {
       jsonResult['rGEveNom']['cCiuRec'] = data['ciudad'];
     }
-    if (data['ciudad']) { 
+    if (data['ciudad']) {
       jsonResult['rGEveNom']['dDesCiuRec'] = ciudadDescripcion;
     }
-    if (data['telefono']) { 
+    if (data['telefono']) {
       jsonResult['rGEveNom']['dTelRec'] = data['telefono'];
     }
-    if (data['celular']) { 
+    if (data['celular']) {
       jsonResult['rGEveNom']['dCelRec'] = data['celular'];
     }
-    if (data['email']) { 
+    if (data['email']) {
       jsonResult['rGEveNom']['dEmailRec'] = data['email'];
     }
-    if (data['codigo']) { 
+    if (data['codigo']) {
       jsonResult['rGEveNom']['dCodCliente'] = data['codigo'];
     }
-
-
-
 
     return jsonResult;
   }
