@@ -638,7 +638,7 @@ class JSonEventoMainService {
         if (!data['contribuyente']) {
           if (data['tipoOperacion'] == 1) {
             throw new Error('Tipo de Operación 1-B2B incorrecto para Receptor No Contribuyente');
-          }      
+          }
         }
       }
     }
@@ -783,7 +783,8 @@ class JSonEventoMainService {
 
     if (!data['contribuyente']) {
       if (
-        constanteService.tiposDocumentosReceptorInnominado.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
+        constanteService.tiposDocumentosReceptorInnominado.filter((um: any) => um.codigo === data['documentoTipo'])
+          .length == 0
       ) {
         throw new Error(
           "Tipo de Documento '" +
@@ -794,12 +795,14 @@ class JSonEventoMainService {
       }
 
       jsonResult['rGEveNom']['iTipIDRec'] = data['documentoTipo'];
-      jsonResult['rGEveNom']['dDTipIDRec'] = constanteService.tiposDocumentosReceptorInnominado.filter((um: any) => um.codigo === data['documentoTipo'])[0].descripcion;
+      jsonResult['rGEveNom']['dDTipIDRec'] = constanteService.tiposDocumentosReceptorInnominado.filter(
+        (um: any) => um.codigo === data['documentoTipo'],
+      )[0].descripcion;
 
       if (data['documentoTipo'] == 9) {
         jsonResult['rGEveNom']['dDTipIDRec'] = data['documentoTipoDescripcion'];
       }
-      
+
       //jsonResult['rGEveNom']['dTipIDRec'] = data['tipoContribuyente'];
 
       if (!data['documentoNumero']) {
