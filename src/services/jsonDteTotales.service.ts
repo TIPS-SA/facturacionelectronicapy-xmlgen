@@ -403,7 +403,6 @@ class JSonDteTotalesService {
         jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.pygTaxDecimals);
       }*/
       jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(8); //Maximo permitido
-
     }
 
     return jsonResult;
