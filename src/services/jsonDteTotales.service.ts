@@ -397,11 +397,13 @@ class JSonDteTotalesService {
 
     //Calculo del % de descuento Global
     if (jsonResult['dTotDescGlotem'] > 0) {
-      jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.taxDecimals);
+      /*jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.taxDecimals);
 
       if (moneda == 'PYG') {
         jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.pygTaxDecimals);
-      }
+      }*/
+      jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(8); //Maximo permitido
+
     }
 
     return jsonResult;
