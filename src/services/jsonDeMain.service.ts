@@ -1093,7 +1093,7 @@ class JSonDeMainService {
     this.json['rDE']['DE']['gDatGralOpe']['gEmis']['gRespDE'] = {
       iTipIDRespDE: data['usuario']['documentoTipo'],
       dDTipIDRespDE: constanteService.tiposDocumentosIdentidades.filter(
-        (td) => td.codigo === data['usuario']['documentoTipo'],
+        (td) => td.codigo === +data['usuario']['documentoTipo'],
       )[0]['descripcion'],
     };
 
