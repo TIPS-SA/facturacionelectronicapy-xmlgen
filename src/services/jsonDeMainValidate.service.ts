@@ -2038,6 +2038,8 @@ class JSonDeMainValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosSalidaValidate(params: any, data: any) {
+    var regExpOnlyNumber = new RegExp(/^\d+$/);
+
     let errorDepDisCiu = false;
     if (!data['detalleTransporte']['salida']['ciudad']) {
       this.errors.push('Debe especificar la Ciudad del Local de Salida en data.transporte.salida.ciudad');
@@ -2119,7 +2121,40 @@ class JSonDeMainValidateService {
         );
       }
     }
-    if (!data['detalleTransporte']['salida']['numeroCasa']) {
+
+
+    if (data['detalleTransporte']['salida']['numeroCasa'] == null) {
+      this.errors.push('Debe especificar el Número de Casa del Local de Salida en data.transporte.salida.numeroCasa');
+    } else {
+
+      if (!((data['detalleTransporte']['salida']['numeroCasa'] + '').length > 0)) {
+        this.errors.push('Debe especificar el Número de Casa del Local de Salida en data.transporte.salida.numeroCasa');
+      } else {
+    
+
+        if (data['detalleTransporte']['salida']['numeroCasa']) {
+          if (!regExpOnlyNumber.test(data['detalleTransporte']['salida']['numeroCasa'])) {
+            this.errors.push('El Número de Casa en data.transporte.salida.numeroCasa debe ser numérico');
+          }
+        } else {
+          if (
+            !(
+              (data['detalleTransporte']['salida']['numeroCasa'] + '').length >= 1 &&
+              (data['detalleTransporte']['salida']['numeroCasa'] + '').length <= 6
+            )
+          ) {
+            this.errors.push(
+              "Número de Casa del Local de Salida '" +
+                data['detalleTransporte']['salida']['numeroCasa'] +
+                "' en data.transporte.salida.numeroCasa debe tener una longitud de 1 a 6 caracteres"
+            );
+          }
+        }
+      }
+    }
+  
+  
+    /*if (!data['detalleTransporte']['salida']['numeroCasa']) {
       this.errors.push('Debe especificar el Número de Casa del Local de Salida en data.transporte.salida.numeroCasa');
     } else {
       if (
@@ -2134,7 +2169,7 @@ class JSonDeMainValidateService {
             "' en data.transporte.salida.numeroCasa debe tener una longitud de 1 a 6 caracteres",
         );
       }
-    }
+    }*/
   }
 
   /**
@@ -2146,6 +2181,7 @@ class JSonDeMainValidateService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosEntregaValidate(params: any, data: any) {
+    var regExpOnlyNumber = new RegExp(/^\d+$/);
     let errorDepDisCiu = false;
     if (!data['detalleTransporte']['entrega']['ciudad']) {
       this.errors.push('Debe especificar la Ciudad del Local de Entrega en data.transporte.entrega.ciudad');
@@ -2248,7 +2284,44 @@ class JSonDeMainValidateService {
         );
       }
     }
-    if (!data['detalleTransporte']['entrega']['numeroCasa']) {
+
+    if (data['detalleTransporte']['entrega']['numeroCasa'] == null) {
+      this.errors.push('Debe especificar el Número de Casa del Local de Entrega en data.transporte.entrega.numeroCasa');
+    } else {
+
+      if (!((data['detalleTransporte']['entrega']['numeroCasa'] + '').length > 0)) {
+        this.errors.push('Debe especificar el Número de Casa del Local de Entrega en data.transporte.entrega.numeroCasa');
+      } else {
+    
+
+        if (data['detalleTransporte']['entrega']['numeroCasa']) {
+          if (!regExpOnlyNumber.test(data['detalleTransporte']['entrega']['numeroCasa'])) {
+            this.errors.push('El Número de Casa en data.transporte.entrega.numeroCasa debe ser numérico');
+          }
+        } else {
+          if (
+            !(
+              (data['detalleTransporte']['entrega']['numeroCasa'] + '').length >= 1 &&
+              (data['detalleTransporte']['entrega']['numeroCasa'] + '').length <= 6
+            )
+          ) {
+            this.errors.push(
+              "Número de Casa del Local de Entrega '" +
+                data['detalleTransporte']['entrega']['numeroCasa'] +
+                "' en data.transporte.entrega.numeroCasa debe tener una longitud de 1 a 6 caracteres"
+            );
+          }
+        }
+      }
+    }
+
+
+
+
+
+
+
+    /*if (!data['detalleTransporte']['entrega']['numeroCasa']) {
       this.errors.push('Debe especificar el Número de Casa del Local de Entrega en data.transporte.entrega.numeroCasa');
     } else {
       if (
@@ -2263,7 +2336,7 @@ class JSonDeMainValidateService {
             "' en data.transporte.entrega.numeroCasa debe tener una longitud de 1 a 255 caracteres",
         );
       }
-    }
+    }*/
   }
 
   /**
