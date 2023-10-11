@@ -805,7 +805,7 @@ class JSonDeMainValidateService {
 
     if (data['cliente']['direccion'] && data['cliente']['tipoOperacion'] != 4) {
       if (!data['cliente']['ciudad']) {
-        this.errors.push('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Documento != 4');
+        this.errors.push('Obligatorio especificar la Ciudad en data.cliente.ciudad para Tipo de Operación != 4');
       } else {
         if (
           constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['cliente']['ciudad']).length == 0
@@ -837,7 +837,7 @@ class JSonDeMainValidateService {
       }
 
       if (!data['cliente']['distrito']) {
-        this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Documento != 4');
+        this.errors.push('Obligatorio especificar el Distrito en data.cliente.distrito para Tipo de Operación != 4');
       } else if (
         constanteService.distritos.filter((distrito: any) => distrito.codigo === +data['cliente']['distrito']).length ==
         0
@@ -852,7 +852,7 @@ class JSonDeMainValidateService {
 
       if (!data['cliente']['departamento']) {
         this.errors.push(
-          'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Documento != 4',
+          'Obligatorio especificar el Departamento en data.cliente.departamento para Tipo de Operación != 4',
         );
       } else if (
         constanteService.departamentos.filter(
