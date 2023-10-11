@@ -250,7 +250,7 @@ class JSonDteItemService {
       let descuentoGlobalAplicado = (data['descuentoGlobal'] * pesoPorc) / 100;
       let descuentoGlobalUnitario = descuentoGlobalAplicado / item['cantidad'];
 
-      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario + '').toFixed(8); //Analizar si no es mejor dejar config.decimals
+      jsonResult['dDescGloItem'] = parseFloat(descuentoGlobalUnitario + '').toFixed(8); //Deja en el maximo permitido para que el calculo al final salga exacto
 
       if (data.moneda === 'PYG') {
         //jsonResult['dDescGloItem'] = parseFloat(jsonResult['dDescGloItem']).toFixed(config.pygDecimals);
@@ -312,11 +312,26 @@ class JSonDteItemService {
 
       jsonResult['dTotOpeItem'] = parseFloat(valores + '') * parseFloat(item['cantidad']);
 
-      jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
+      if (jsonResult['dDescGloItem'] == 0) {
+        // Cuando no hay descuento Global por item, entonces utiliza los redondeos establecidos en config, para el dTotOpeItem
+        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.decimals));
 
-      if (data.moneda === 'PYG') {
-        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.pygDecimals));
+        if (data.moneda === 'PYG') {
+          jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.pygDecimals));
+        }  
+      } else {
+        // Cuando hay descuento Global por item, entonces utiliza el maximo permitido para que el calculo al final salga exacto.
+        jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(8));
       }
+
+
+
+
+
+      
+
+
+
     }
     if (data['tipoDocumento'] == 4) {
       //Si es Autofactura
