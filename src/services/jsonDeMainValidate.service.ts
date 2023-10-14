@@ -500,7 +500,7 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosGeneralesEmisorDEValidate(params: any, data: any) {
-    var regExpOnlyNumber = new RegExp(/^\d+$/);
+    const regExpOnlyNumber = new RegExp(/^\d+$/);
 
     if (!(params && params.establecimientos)) {
       this.errors.push('Debe proveer un Array con la información de los establecimientos en params');
@@ -795,6 +795,17 @@ class JSonDeMainValidateService {
       if (!((data['cliente']['numeroCasa'] + '').length > 0)) {
         this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
+
+      //Nueva forma de validar campos numericos
+      /*
+      if (  ! ( data['cliente']['numeroCasa'] != null && 
+                (data['cliente']['numeroCasa'] + '').length > 0 &&
+                regExpOnlyNumber.test(data['cliente']['numeroCasa']) )
+      ) {
+        this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
+      }
+      */
+
     }
 
     if (data['cliente']['numeroCasa']) {

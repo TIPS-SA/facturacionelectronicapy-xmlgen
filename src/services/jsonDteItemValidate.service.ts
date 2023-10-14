@@ -18,6 +18,7 @@ class JSonDteItemValidateService {
    */
   public generateDatosItemsOperacionValidate(params: any, data: any, config: XmlgenConfig, errors: Array<string>) {
     this.errors = errors;
+    const regExpOnlyNumber = new RegExp(/^\d+$/);
 
     const jsonResult: any = [];
 
@@ -187,14 +188,27 @@ class JSonDteItemValidateService {
           }
         }
 
-        if (+item['cantidad'] <= 0) {
-          this.errors.push('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
+        if (  ! ( item['cantidad'] != null && 
+                (item['cantidad'] + '').length > 0  &&
+                regExpOnlyNumber.test(item['cantidad']) )
+        ) {
+          this.errors.push('Debe especificar la cantidad del item en data.items[' + i + '].cantidad');
+        } else {
+          if (+item['cantidad'] <= 0) {
+            this.errors.push('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
+          }  
         }
 
-        if (+item['precioUnitario'] < 0) {
-          this.errors.push(
-            'El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero',
-          );
+        if (  ! ( item['precioUnitario'] != null && 
+                (item['precioUnitario'] + '').length > 0  &&
+                regExpOnlyNumber.test(item['precioUnitario']) )
+        ) {
+          this.errors.push('Debe especificar la precio unitario del item en data.items[' + i + '].precioUnitario');
+        } else {
+          if (+item['precioUnitario'] < 0) {
+            this.errors.push(
+              'El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero');
+          }  
         }
 
         if (item['descuento']) {
