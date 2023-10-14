@@ -391,8 +391,7 @@ class JSonDeMainService {
         //Los valores numericos que pueden aceptar 0 hay que validar de esta manera.
         if (
           item['precio_unitario'] != null &&
-          (item['precio_unitario'] + '').length > 0 &&
-          regExpOnlyNumber.test(item['precio_unitario'])
+          (item['precio_unitario'] + '').length > 0 
         ) {
           item.precioUnitario = item.precio_unitario;
         }

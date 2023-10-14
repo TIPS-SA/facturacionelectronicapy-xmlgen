@@ -188,17 +188,18 @@ class JSonDteItemValidateService {
           }
         }
 
-        if (
+        //se comenta por que este tien problemas con los decimales regExpOnlyNumber
+        /*if (
           !(item['cantidad'] != null && (item['cantidad'] + '').length > 0 && regExpOnlyNumber.test(item['cantidad']))
         ) {
           this.errors.push('Debe especificar la cantidad del item en data.items[' + i + '].cantidad');
-        } else {
+        } else {*/
           if (+item['cantidad'] <= 0) {
             this.errors.push('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
           }
-        }
+        //}
 
-        if (
+        /*if (
           !(
             item['precioUnitario'] != null &&
             (item['precioUnitario'] + '').length > 0 &&
@@ -206,13 +207,13 @@ class JSonDteItemValidateService {
           )
         ) {
           this.errors.push('Debe especificar la precio unitario del item en data.items[' + i + '].precioUnitario');
-        } else {
+        } else {*/
           if (+item['precioUnitario'] < 0) {
             this.errors.push(
               'El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero',
             );
           }
-        }
+        //}
 
         if (item['descuento']) {
           if (+item['descuento'] < 0) {
