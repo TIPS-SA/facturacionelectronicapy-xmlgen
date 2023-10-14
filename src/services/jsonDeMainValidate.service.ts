@@ -805,7 +805,6 @@ class JSonDeMainValidateService {
         this.errors.push('Debe informar el Número de casa del Receptor en data.cliente.numeroCasa');
       }
       */
-
     }
 
     if (data['cliente']['numeroCasa']) {

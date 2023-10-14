@@ -318,20 +318,11 @@ class JSonDteItemService {
 
         if (data.moneda === 'PYG') {
           jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(config.pygDecimals));
-        }  
+        }
       } else {
         // Cuando hay descuento Global por item, entonces utiliza el maximo permitido para que el calculo al final salga exacto.
         jsonResult['dTotOpeItem'] = parseFloat(jsonResult['dTotOpeItem'].toFixed(8));
       }
-
-
-
-
-
-      
-
-
-
     }
     if (data['tipoDocumento'] == 4) {
       //Si es Autofactura
