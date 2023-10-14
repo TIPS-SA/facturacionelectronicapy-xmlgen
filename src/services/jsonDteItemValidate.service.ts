@@ -194,9 +194,9 @@ class JSonDteItemValidateService {
         ) {
           this.errors.push('Debe especificar la cantidad del item en data.items[' + i + '].cantidad');
         } else {*/
-          if (+item['cantidad'] <= 0) {
-            this.errors.push('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
-          }
+        if (+item['cantidad'] <= 0) {
+          this.errors.push('La cantidad del item en data.items[' + i + '].cantidad debe ser mayor a cero');
+        }
         //}
 
         /*if (
@@ -208,11 +208,11 @@ class JSonDteItemValidateService {
         ) {
           this.errors.push('Debe especificar la precio unitario del item en data.items[' + i + '].precioUnitario');
         } else {*/
-          if (+item['precioUnitario'] < 0) {
-            this.errors.push(
-              'El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero',
-            );
-          }
+        if (+item['precioUnitario'] < 0) {
+          this.errors.push(
+            'El precio unitario del item en data.items[' + i + '].precioUnitario debe ser mayor o igual a cero',
+          );
+        }
         //}
 
         if (item['descuento']) {
