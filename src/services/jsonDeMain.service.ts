@@ -764,7 +764,10 @@ class JSonDeMainService {
 
     const id = this.codigoControl;
 
-    const fechaFirmaDigital = new Date(params.fechaFirmaDigital);
+    let fechaFirmaDigital = new Date();
+    if (data.fechaFirmaDigital) {
+      fechaFirmaDigital = new Date(data.fechaFirmaDigital);
+    }
 
     let digitoVerificadorString = this.codigoControl + '';
 
@@ -773,7 +776,7 @@ class JSonDeMainService {
         Id: id,
       },
       dDVId: digitoVerificadorString.substring(digitoVerificadorString.length - 1, digitoVerificadorString.length),
-      dFecFirma: fechaUtilService.convertToJSONFormat(new Date()),
+      dFecFirma: fechaUtilService.convertToJSONFormat(fechaFirmaDigital),
       dSisFact: 1,
     };
 

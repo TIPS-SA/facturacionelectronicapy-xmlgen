@@ -61,7 +61,6 @@ Al final podrá encontrar la estructura completa para el PARAMS y el JSON
 ``` json 
 {
   "version" : 150,
-  "fechaFirmaDigital" : "2022-08-13T00:00:00",
   "ruc" : "80069563-1",
   "razonSocial" : "DE generado en ambiente de prueba - sin valor comercial ni fiscal",
   "nombreFantasia" : "TIPS S.A. TECNOLOGIA Y SERVICIOS",
