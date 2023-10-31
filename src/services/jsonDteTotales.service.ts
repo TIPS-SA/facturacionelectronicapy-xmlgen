@@ -61,26 +61,27 @@ class JSonDteTotalesService {
         //Gravadas 5 o 10
         if (item['gCamIVA']['iAfecIVA'] == 1 || item['gCamIVA']['iAfecIVA'] == 4) {
           //if (!(data['tipoImpuesto'] != 1)) {
-          if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 5) { //Esta condicion se repite en linea 219
+          if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 5) {
+            //Esta condicion se repite en linea 219
             //No debe existir si D013 != 1
             if (item['gCamIVA']['dTasaIVA'] == 5) {
               //E734
-              let sumaGrav5 = 0
+              let sumaGrav5 = 0;
               if (item['gCamIVA']['iAfecIVA'] == 1) {
                 sumaGrav5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //EA008
               }
               if (item['gCamIVA']['iAfecIVA'] == 4) {
-                sumaGrav5 += (item['gCamIVA']['dBasGravIVA'] + item['gCamIVA']['dLiqIVAItem']);  //E735 + E736. NT 13
+                sumaGrav5 += item['gCamIVA']['dBasGravIVA'] + item['gCamIVA']['dLiqIVAItem']; //E735 + E736. NT 13
               }
               dSub5 += sumaGrav5;
             }
             if (item['gCamIVA']['dTasaIVA'] == 10) {
-              let sumaGrav10 = 0
+              let sumaGrav10 = 0;
               if (item['gCamIVA']['iAfecIVA'] == 1) {
                 sumaGrav10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //EA008
               }
               if (item['gCamIVA']['iAfecIVA'] == 4) {
-                sumaGrav10 += (item['gCamIVA']['dBasGravIVA'] + item['gCamIVA']['dLiqIVAItem']);  //E735 + E736. NT 13
+                sumaGrav10 += item['gCamIVA']['dBasGravIVA'] + item['gCamIVA']['dLiqIVAItem']; //E735 + E736. NT 13
               }
               dSub10 += sumaGrav10;
 
@@ -216,7 +217,8 @@ class JSonDteTotalesService {
 
     if (agregarDSub) {
       //if (!(data['tipoImpuesto'] != 1)) {
-      if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 5) { //Esta condicion se repite en linea 64
+      if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 5) {
+        //Esta condicion se repite en linea 64
         //No debe existir si D013 != 1        if (dSub5 > 0) {
         if (dSub5 > 0) {
           jsonResult['dSub5'] = dSub5;
