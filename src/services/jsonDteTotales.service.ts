@@ -41,10 +41,17 @@ class JSonDteTotalesService {
       if (item['gCamIVA']) {
         //gCamIVA puede ser null (MT150=No informar si D013=2 y C002= 4 o 7)
 
-        //Subtotal
-        if (item['gCamIVA']['iAfecIVA'] == 3) {
+        //Subtotal (exenta o iva parcial)
+        if (item['gCamIVA']['iAfecIVA'] == 3 || item['gCamIVA']['iAfecIVA'] == 4) {
           //E731==3
-          dSubExe += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008
+          let sumaExenta = 0;
+          if (item['gCamIVA']['iAfecIVA'] == 3) {
+            sumaExenta += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //Suma de EA008
+          }
+          if (item['gCamIVA']['iAfecIVA'] == 4) {
+            sumaExenta += item['gCamIVA']['dBasExe']; //Suma de E737
+          }
+          dSubExe += sumaExenta; //Suma de EA008
         }
         //Exenta
         if (item['gCamIVA']['iAfecIVA'] == 2) {
@@ -53,14 +60,31 @@ class JSonDteTotalesService {
         }
         //Gravadas 5 o 10
         if (item['gCamIVA']['iAfecIVA'] == 1 || item['gCamIVA']['iAfecIVA'] == 4) {
-          if (!(data['tipoImpuesto'] != 1)) {
+          //if (!(data['tipoImpuesto'] != 1)) {
+          if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 5) { //Esta condicion se repite en linea 219
             //No debe existir si D013 != 1
             if (item['gCamIVA']['dTasaIVA'] == 5) {
               //E734
-              dSub5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
+              let sumaGrav5 = 0
+              if (item['gCamIVA']['iAfecIVA'] == 1) {
+                sumaGrav5 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //EA008
+              }
+              if (item['gCamIVA']['iAfecIVA'] == 4) {
+                sumaGrav5 += (item['gCamIVA']['dBasGravIVA'] + item['gCamIVA']['dLiqIVAItem']);  //E735 + E736. NT 13
+              }
+              dSub5 += sumaGrav5;
             }
             if (item['gCamIVA']['dTasaIVA'] == 10) {
-              dSub10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
+              let sumaGrav10 = 0
+              if (item['gCamIVA']['iAfecIVA'] == 1) {
+                sumaGrav10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem']; //EA008
+              }
+              if (item['gCamIVA']['iAfecIVA'] == 4) {
+                sumaGrav10 += (item['gCamIVA']['dBasGravIVA'] + item['gCamIVA']['dLiqIVAItem']);  //E735 + E736. NT 13
+              }
+              dSub10 += sumaGrav10;
+
+              //dSub10 += item['gValorItem']['gValorRestaItem']['dTotOpeItem'];
             }
             agregarDSub = true;
           }
@@ -191,7 +215,8 @@ class JSonDteTotalesService {
     };
 
     if (agregarDSub) {
-      if (!(data['tipoImpuesto'] != 1)) {
+      //if (!(data['tipoImpuesto'] != 1)) {
+      if (data['tipoImpuesto'] == 1 || data['tipoImpuesto'] == 5) { //Esta condicion se repite en linea 64
         //No debe existir si D013 != 1        if (dSub5 > 0) {
         if (dSub5 > 0) {
           jsonResult['dSub5'] = dSub5;
