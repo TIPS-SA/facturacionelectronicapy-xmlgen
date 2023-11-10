@@ -175,15 +175,7 @@ class JSonDteItemService {
   ) {
     const jsonResult: any = {};
 
-    //Corrige Precio Unitario con la cantidad correcta de decimales
-    /*
     //Mejor no tocar como el usuario envia desde el JSON
-    item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.decimals);
-    if (data.moneda === 'PYG') {
-      item['precioUnitario'] = parseFloat(item['precioUnitario']).toFixed(config.pygDecimals);
-    }
-    */
-
     jsonResult['dPUniProSer'] = item['precioUnitario'];
 
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dPUniProSer']) * parseFloat(item['cantidad']);
@@ -226,12 +218,17 @@ class JSonDteItemService {
 
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
-      //Validar que si el descuento es mayor al precio
+
+      //El descuento por item se pasa asi mismo como viene en el JSON, sin redondeos, igual al precio
+      jsonResult['dDescItem'] = item['descuento'];
+
+/*      //Validar que si el descuento es mayor al precio
       jsonResult['dDescItem'] = parseFloat(item['descuento']).toFixed(config.decimals);
 
       if (data.moneda === 'PYG') {
         jsonResult['dDescItem'] = parseFloat(jsonResult['dDescItem']).toFixed(config.pygDecimals);
       }
+*/
 
       //FacturaSend calcula solo el % Descuento, no hace falta informar
       jsonResult['dPorcDesIt'] = Math.round((parseFloat(item['descuento']) * 100) / parseFloat(item['precioUnitario']));

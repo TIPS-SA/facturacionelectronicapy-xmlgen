@@ -149,7 +149,7 @@ class JSonDteItemValidateService {
                 item['precioUnitario'] +
                 '" en "PYG" en data.items[' +
                 i +
-                '].precioUnitario, no puede contener mas de 8 decimales',
+                '].precioUnitario, no puede contener más de 8 decimales',
             );
           }
         } else {
@@ -159,13 +159,13 @@ class JSonDteItemValidateService {
                 item['precioUnitario'] +
                 '" en data.items[' +
                 i +
-                '].precioUnitario, no puede contener mas de 8 decimales',
+                '].precioUnitario, no puede contener más de 8 decimales',
             );
           }
         }
 
         if (data.moneda == 'PYG') {
-          if ((item['descuento'] + '').split('.')[1]?.length > (config.pygDecimals || 0)) {
+          /*if ((item['descuento'] + '').split('.')[1]?.length > (config.pygDecimals || 0)) {
             this.errors.push(
               'El Descuento del item "' +
                 item['descuento'] +
@@ -175,6 +175,15 @@ class JSonDteItemValidateService {
                 (config.pygDecimals || 0) +
                 ' decimales',
             );
+          }*/
+          if ((item['descuento'] + '').split('.')[1]?.length > 8) {
+            this.errors.push(
+              'El Descuento del item "' +
+                item['descuento'] +
+                '" en "PYG" en data.items[' +
+                i +
+                '].descuento, no puede contener más de 8 decimales',
+            );
           }
         } else {
           if ((item['descuento'] + '').split('.')[1]?.length > 8) {
@@ -183,7 +192,7 @@ class JSonDteItemValidateService {
                 item['descuento'] +
                 '" en data.items[' +
                 i +
-                '].descuento, no puede contener mas de 8 decimales',
+                '].descuento, no puede contener más de 8 decimales',
             );
           }
         }
