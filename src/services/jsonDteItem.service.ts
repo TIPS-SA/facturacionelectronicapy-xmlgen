@@ -218,11 +218,10 @@ class JSonDteItemService {
 
     jsonResult['dDescItem'] = 0;
     if (item['descuento'] && +item['descuento'] > 0) {
-
       //El descuento por item se pasa asi mismo como viene en el JSON, sin redondeos, igual al precio
       jsonResult['dDescItem'] = item['descuento'];
 
-/*      //Validar que si el descuento es mayor al precio
+      /*      //Validar que si el descuento es mayor al precio
       jsonResult['dDescItem'] = parseFloat(item['descuento']).toFixed(config.decimals);
 
       if (data.moneda === 'PYG') {
