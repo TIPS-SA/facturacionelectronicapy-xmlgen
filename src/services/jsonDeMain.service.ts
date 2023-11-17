@@ -1180,7 +1180,6 @@ class JSonDeMainService {
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = '0';
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = 'Sin Nombre';
       }
-  
     }
 
     this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNomRec'] = data['cliente']['razonSocial'].trim();
