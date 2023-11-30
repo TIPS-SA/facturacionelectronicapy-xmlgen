@@ -187,6 +187,53 @@ class ConstanteService {
     },
   ];
 
+  obligaciones = [
+    {
+      codigo: 113,
+      descripcion: 'IMPUESTO A LA RENTA IRACIS - REGÍMENES ESPECIALES',
+    },
+    {
+      codigo: 143,
+      descripcion: 'TRIBUTO UNICO MAQUILA',
+    },
+    {
+      codigo: 211,
+      descripcion: 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS – EXPORTADORES',
+    },
+    {
+      codigo: 311,
+      descripcion: 'IMPUESTO SELECTIVO AL CONSUMO – GENERAL',
+    },
+    {
+      codigo: 321,
+      descripcion: 'IMPUESTO SELECTIVO AL CONSUMO COMBUSTIBLES',
+    },
+    {
+      codigo: 700,
+      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL - RÉGIMEN GENERAL',
+    },
+    {
+      codigo: 701,
+      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL – SIMPLE',
+    },
+    {
+      codigo: 703,
+      descripcion: 'IMPUESTO DE ZONA FRANCA',
+    },
+    {
+      codigo: 702,
+      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL – RESIMPLE',
+    },
+    {
+      codigo: 715,
+      descripcion: 'IMPUESTO A LA RENTA PERSONAL - SERVICIOS PERSONALES',
+    },
+    {
+      codigo: 716,
+      descripcion: 'IMPUESTO A LA RENTA PERSONAL - RENTAS Y GANANCIAS DE CAPITAL',
+    }
+  ];
+
   monedas = [
     { codigo: 'AED', descripcion: 'Dirham' },
     { codigo: 'AFN', descripcion: 'Afghani' },
