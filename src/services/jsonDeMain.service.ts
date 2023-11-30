@@ -982,11 +982,11 @@ class JSonDeMainService {
         let gOblAfeItem : any = {};
         gOblAfeItem['cOblAfe'] = data['obligaciones'][i]['codigo'];
         //gOblAfeItem['dDesOblAfe'] = params['obligaciones'][i]['descripcion'];
-        gOblAfeItem['dDesOblAfe'] = constanteService.obligaciones.filter((ca) => ca.codigo == data['obligaciones'])[0]['descripcion'];
+        gOblAfeItem['dDesOblAfe'] = constanteService.obligaciones.filter((ca) => ca.codigo == +data['obligaciones'][i]['codigo'])[0]['descripcion'];
         gOblAfe.push(gOblAfeItem);
       }
 
-      this.json['rDE']['DE']['gDatGralOpe']['gOblAfe'] = gOblAfe;      
+      this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['gOblAfe'] = gOblAfe;      
     }
 
   }

@@ -509,12 +509,12 @@ class JSonDeMainValidateService {
             this.errors.push('No fue especificado un código en data.obligaciones[' + i + '].codigo');   
           } else {
             //Verificar cada item
-            if (constanteService.obligaciones.filter((um) => um.codigo === obligacion.codigo).length == 0) {
+            if (constanteService.obligaciones.filter((um) => um.codigo === +obligacion.codigo).length == 0) {
               this.errors.push(
                 "Obligación '" +
                 obligacion.codigo +
                   "' en data.obligaciones[" + i + "].codigo no válido. Valores: " +
-                  constanteService.tiposTransacciones.map((a) => a.codigo + '-' + a.descripcion),
+                  constanteService.obligaciones.map((a) => a.codigo + '-' + a.descripcion),
               );
             }
           }
