@@ -974,6 +974,21 @@ class JSonDeMainService {
         'Anticipo ' +
         constanteService.globalPorItem.filter((ca) => ca.codigo == data['condicionAnticipo'])[0]['descripcion'];
     }
+
+    if (data['obligaciones'] && Array.isArray(data['obligaciones'])) {
+
+      let gOblAfe = new Array();
+      for (let i = 0; i < data['obligaciones'].length; i++) {
+        let gOblAfeItem : any = {};
+        gOblAfeItem['cOblAfe'] = data['obligaciones'][i]['codigo'];
+        //gOblAfeItem['dDesOblAfe'] = params['obligaciones'][i]['descripcion'];
+        gOblAfeItem['dDesOblAfe'] = constanteService.obligaciones.filter((ca) => ca.codigo == data['obligaciones'])[0]['descripcion'];
+        gOblAfe.push(gOblAfeItem);
+      }
+
+      this.json['rDE']['DE']['gDatGralOpe']['gOblAfe'] = gOblAfe;      
+    }
+
   }
 
   /**
