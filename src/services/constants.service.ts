@@ -506,6 +506,25 @@ class ConstanteService {
     },
   ];
 
+  tiposDocumentosIdentidadesTransportistas = [
+    {
+      codigo: 1,
+      descripcion: 'Cédula paraguaya',
+    },
+    {
+      codigo: 2,
+      descripcion: 'Pasaporte',
+    },
+    {
+      codigo: 3,
+      descripcion: 'Cédula extranjera',
+    },
+    {
+      codigo: 4,
+      descripcion: 'Carnet de residencia',
+    },
+  ];
+
   tiposDocumentosReceptor = [
     {
       codigo: 1,
@@ -1122,6 +1141,17 @@ class ConstanteService {
       codigo: 4,
       descripcion: 'Venta a flota de vehículos',
     },
+  ];
+
+  tiposIdentificacionesVehiculos = [
+    {
+      codigo: 1,
+      descripcion: 'Número de identificación del vehículo',
+    },
+    {
+      codigo: 2,
+      descripcion: 'Número de matrícula del vehículo',
+    }
   ];
 
   tiposCombustibles = [

@@ -856,6 +856,11 @@ class JSonEventoMainService {
     return jsonResult;
   }
 
+
+
+
+
+
   private eventoEmisorActualizacionDatosTransporte(params: any, data: any) {
     const jsonResult: any = {};
 
@@ -867,6 +872,10 @@ class JSonEventoMainService {
       throw new Error('El CDC en data.cdc debe tener 44 caracteres');
     }
 
+    if (!data['motivo']) {
+      throw new Error('Debe proporcionar el Motivo en data.motivo');
+    }
+/*
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
       throw new Error(
         "Tipo de Receptor '" +
@@ -875,63 +884,230 @@ class JSonEventoMainService {
           constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }
+*/
+    if (data['motivo'] == 1) {
+      let errors = new Array();
+      var regExpOnlyNumber = new RegExp(/^\d+$/);
+      let errorDepDisCiu = false;
+  
+      if (!data['entrega']['ciudad']) {
+        errors.push('Debe especificar la Ciudad del Local de Entrega en data.entrega.ciudad');
+        errorDepDisCiu = true;
+      } else {
+        if (
+          constanteService.ciudades.filter(
+            (ciudad: any) => ciudad.codigo === +data['entrega']['ciudad'],
+          ).length == 0
+        ) {
+          errors.push(
+            "Ciudad '" +
+              data['entrega']['ciudad'] +
+              "' del Cliente en data.entrega.ciudad no encontrado. Valores: " +
+              constanteService.ciudades.map((a: any) => a.codigo + '-' + a.descripcion),
+          );
+          errorDepDisCiu = true;
+        }
+  
+        //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
+        //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
+        //data['entrega']['distrito'] y data['entrega']['departamento']
+        let objCiudad: any = constanteService.ciudades.filter(
+          (ciu) => ciu.codigo === +data['entrega']['ciudad'],
+        );
+  
+        if (objCiudad && objCiudad[0]) {
+          let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
+  
+          let objDepartamento: any = constanteService.departamentos.filter(
+            (dep) => dep.codigo === +objDistrito[0]['departamento'],
+          );
+  
+          //Solo actualiza si no tiene valor
+          if (!data['entrega']['distrito'])
+            data['entrega']['distrito'] = objDistrito[0]['codigo'];
+  
+          if (!data['entrega']['departamento'])
+            data['entrega']['departamento'] = objDepartamento[0]['codigo'];
+        }
+  
+        if (!errorDepDisCiu) {
+          if (!data['entrega']['departamento']) {
+            errors.push(
+              'Debe especificar el Departamento del Local de Entrega en data.entrega.departamento',
+            );
+            errorDepDisCiu = true;
+          }
+          if (!data['entrega']['distrito']) {
+            errors.push('Debe especificar el Distrito del Local de Entrega en data.entrega.distrito');
+            errorDepDisCiu = true;
+          }
+        }
+      }
+  
+      if (!errorDepDisCiu) {
+        constanteService.validateDepartamentoDistritoCiudad(
+          'data.entrega',
+          +data['entrega']['departamento'],
+          +data['entrega']['distrito'],
+          +data['entrega']['ciudad'],
+          errors
+        );
+      }
+        
+      if (errors.length > 0) {
+        throw new Error(errors.join(","));
+      }
 
-    if (!data['nombre']) {
-      throw new Error('Debe especificar el Nombre/Razón Social del receptor en data.nombre');
+      if (data['entrega']['direccion']) {
+        throw new Error('Debe especificar la Dirección de Entrega en data.entrega.direccion');
+      }
+
+      if (data['entrega']['numeroCasa']) {
+        throw new Error('Debe especificar el Número de Casa de Entrega en data.entrega.numeroCasa');
+      }
+
     }
 
-    if (!(data['nombre'].length >= 4)) {
+    if (data['motivo'] == 2) {
+      if (!data['transportista']['chofer']['nombre']) {
+        throw new Error('Debe especificar el Nombre del chofer en data.transportista.chofer.nombre');
+      }
+      if (!data['transportista']['chofer']['documentoNumero']) {
+        throw new Error('Debe especificar el Documento del chofer en data.transportista.chofer.documentoNumero');
+      }
+    }
+
+    if (data['motivo'] == 3) {
+    }
+
+/*    if (!(data['nombre'].length >= 4)) {
       throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
-    }
-
-    if (new String(data['fechaRecepcion']).length != 19) {
-      throw new Error('La fecha de emisión debe tener una longitud de 19 caracteres en data.fechaRecepcion');
-    }
-
-    if (new String(data['fechaRecepcion']).length != 19) {
-      throw new Error('La fecha de recepción debe tener una longitud de 19 caracteres en data.fechaRecepcion');
-    }
+    }*/
 
     jsonResult['rGeVeTr'] = {
       Id: data['cdc'],
-      dFecEmi: data['fechaEmision'],
-      dFecRecep: data['fechaRecepcion'],
-      iTipRec: +data['tipoReceptor'],
-      dNomRec: data['nombre'],
+      dMotEv: data['motivo'],
+      //dFecEmi: data['fechaEmision'],
+      //dFecRecep: data['fechaRecepcion'],
+      //iTipRec: +data['tipoReceptor'],
+      //dNomRec: data['nombre'],
     };
 
-    if (+data['tipoReceptor'] == 1) {
-      if (data['ruc'].indexOf('-') == -1) {
-        throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
-      }
-      const rucEmisor = data['ruc'].split('-')[0];
-      const dvEmisor = data['ruc'].split('-')[1];
+    if (data['entrega'] && data['entrega']['departamento']) {
+      jsonResult['rGeVeTr']['cDepEnt'] = data['entrega']['departamento'];
+      jsonResult['rGeVeTr']['dDesDepEnt'] = constanteService.departamentos.filter(
+        (td) => td.codigo === data['entrega']['departamento'],
+      )[0]['descripcion'];
 
-      jsonResult['rGeVeNotRec']['dRucRec'] = rucEmisor;
-      jsonResult['rGeVeNotRec']['dDVRec'] = dvEmisor;
     }
 
-    if (+data['tipoReceptor'] == 2) {
-      if (
-        constanteService.tiposDocumentosIdentidades.filter((um: any) => um.codigo === data['documentoTipo']).length == 0
-      ) {
-        throw new Error(
-          "Tipo de Documento '" +
-            data['documentoTipo'] +
-            "' en data.documentoTipo no encontrado. Valores: " +
-            constanteService.tiposDocumentosIdentidades.map((a: any) => a.codigo + '-' + a.descripcion),
-        );
-      }
+    if (data['entrega'] && data['entrega']['distrito']) {
+      jsonResult['rGeVeTr']['cDisEnt'] = data['entrega']['distrito'];
+      jsonResult['rGeVeTr']['dDesDisEnt'] = constanteService.distritos.filter(
+        (td) => td.codigo === data['entrega']['distrito'],
+      )[0]['descripcion'];
 
-      jsonResult['rGeVeNotRec']['dTipIDRec'] = data['documentoTipo'];
-
-      if (!data['documentoNumero']) {
-        throw new Error('Debe especificar el Número de Documento del receptor en data.documentoNumero');
-      }
-      jsonResult['rGeVeNotRec']['dNumID'] = data['documentoNumero'];
     }
 
-    jsonResult['rGeVeNotRec']['dTotalGs'] = data['totalPYG'];
+    if (data['entrega'] && data['entrega']['ciudad']) {
+      jsonResult['rGeVeTr']['cCiuEnt'] = data['entrega']['ciudad'];
+      jsonResult['rGeVeTr']['dDesCiuEnt'] = constanteService.ciudades.filter(
+        (td) => td.codigo === data['entrega']['ciudad'],
+      )[0]['descripcion'];
+
+    }
+
+    if (data['entrega'] && data['entrega']['direccion']) {
+      jsonResult['rGeVeTr']['dDirEnt'] = data['entrega']['direccion'];
+    }
+
+    if (data['entrega'] && data['entrega']['dNumCas']) {
+      jsonResult['rGeVeTr']['dDirEnt'] = data['entrega']['dNumCas'];
+    }
+
+    if (data['entrega'] && data['entrega']['dCompDir1']) {
+      jsonResult['rGeVeTr']['dDirEnt'] = data['entrega']['dCompDir1'];
+    }
+    
+    if (data['motivo'] == 2) {
+      jsonResult['rGeVeTr']['dNomChof'] = data['entrega']['transportista']['chofer']['nombre'];
+      jsonResult['rGeVeTr']['dNumIDChof'] = data['entrega']['transportista']['chofer']['documentoNumero'];
+    }
+
+    if (data['motivo'] == 3) {
+      jsonResult['rGeVeTr']['iNatTrans'] = data['entrega']['transportista']['contribuyente'] ? 1 : 0;
+
+      if (data['entrega']['transportista']['contribuyente']) {
+        if (data['ruc'].indexOf('-') == -1) {
+          throw new Error('RUC del Receptor debe contener dígito verificador en data.ruc');
+        }
+        const rucEmisor = data['ruc'].split('-')[0];
+        const dvEmisor = data['ruc'].split('-')[1];
+  
+        jsonResult['rGeVeTr']['dRucRec'] = rucEmisor;
+        jsonResult['rGeVeTr']['dDVRec'] = dvEmisor;
+        jsonResult['rGeVeTr']['nombre'] = data['entrega']['transportista']['nombre'];
+      }
+    
+
+      if ( ! data['entrega']['transportista']['contribuyente']) {
+        jsonResult['rGeVeTr']['dDTipIDTrans'] = data['entrega']['transportista']['documentoTipo'];
+
+        if (
+          constanteService.tiposDocumentosIdentidadesTransportistas.filter((um: any) => um.codigo === +data['entrega']['transportista']['documentoTipo']).length == 0
+        ) {
+          throw new Error(
+            "Tipo de Documento '" +
+              data['entrega']['transportista']['documentoTipo'] +
+              "' en data.entrega.transportista.documentoTipo no encontrado. Valores: " +
+              constanteService.tiposDocumentosIdentidadesTransportistas.map((a: any) => a.codigo + '-' + a.descripcion)
+          );
+        }
+
+
+        if (!data['documentoNumero']) {
+          throw new Error('Debe especificar el Número de Documento del transportista en data.entrega.transportista.documentoNumero');
+        }
+        jsonResult['rGeVeTr']['dNumIDTrans'] = data['entrega']['transportista']['documentoNumero'];
+      }
+
+    }
+
+    if (data['motivo'] == 4) {
+
+      if (data['entrega'] && data['entrega']['tipoTransporte']) {
+        jsonResult['rGeVeTr']['iTipTrans'] = data['entrega']['tipoTransporte'];
+        jsonResult['rGeVeTr']['dDesTipTrans'] = constanteService.tiposTransportes.filter(
+          (td) => td.codigo === data['entrega']['tipoTransporte']
+        )[0]['descripcion'];
+      }
+      
+      if (data['entrega'] && data['entrega']['modalidadTransporte']) {
+        jsonResult['rGeVeTr']['iModTrans'] = data['entrega']['modalidadTransporte'];
+        jsonResult['rGeVeTr']['dDesModTrans'] = constanteService.modalidadesTransportes.filter(
+          (td) => td.codigo === data['entrega']['modalidadTransporte']
+        )[0]['descripcion'];
+      }
+
+      if (data['entrega'] && data['entrega']['vehiculo']['tipo']) {
+        jsonResult['rGeVeTr']['dTiVehTras'] = data['entrega']['vehiculo']['tipo'];
+      }
+      if (data['entrega'] && data['entrega']['vehiculo']['marca']) {
+        jsonResult['rGeVeTr']['dMarVeh'] = data['entrega']['vehiculo']['marca'];
+      }
+      if (data['entrega'] && data['entrega']['vehiculo']['documentoTipo']) {
+        jsonResult['rGeVeTr']['dTipIdenVeh'] = data['entrega']['vehiculo']['documentoTipo'];
+        /*jsonResult['rGeVeTr']['dDesTipTrans'] = constanteService.tiposIdentificacionesVehiculos.filter(
+          (td) => td.codigo === data['entrega']['vehiculo']['documentoTipo']
+        )[0]['descripcion'];*/
+      }
+      if (data['entrega'] && data['entrega']['vehiculo']['documentoNumero']) {
+        jsonResult['rGeVeTr']['dNroIDVeh'] = data['entrega']['vehiculo']['documentoNumero'];
+      }
+      if (data['entrega'] && data['entrega']['vehiculo']['numeroMatricula']) {
+        jsonResult['rGeVeTr']['dNroMatVeh'] = data['entrega']['vehiculo']['numeroMatricula'];
+      }
+    }
 
     return jsonResult;
   }
