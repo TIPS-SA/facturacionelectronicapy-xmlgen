@@ -1524,9 +1524,14 @@ class JSonDeMainService {
 
         cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(4);
 
-        if (data.moneda === 'PYG') {
-          cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(config.pygDecimals);
-        }
+        /*if (data.moneda === 'PYG') {
+          //Maximo 4 decimales
+          let cantDecimalesMontoTipoPago = config.pygDecimals;
+          if (cantDecimalesMontoTipoPago > 4) {
+            cantDecimalesMontoTipoPago = 4;
+          }
+          cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(cantDecimalesMontoTipoPago);
+        }*/
 
         if (dataEntrega['tipo'] == 99) {
           cuotaInicialEntrega['dDesTiPag'] = dataEntrega['tipoDescripcion'];
