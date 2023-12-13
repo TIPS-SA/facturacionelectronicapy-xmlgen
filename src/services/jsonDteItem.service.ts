@@ -417,10 +417,7 @@ class JSonDteItemService {
 
       //Redondeo inicial a 2 decimales
       if (jsonResult['dBasGravIVA']) {
-        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
-        /*if (data.moneda === 'PYG') {
-          jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.pygDecimals));
-        }*/
+        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
       }
     }
 
@@ -435,13 +432,8 @@ class JSonDteItemService {
       jsonResult['dLiqIVAItem'] = (jsonResult['dBasGravIVA'] * item['iva']) / 100;
 
       //Redondeo
-      //jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.taxDecimals)); //Calculo intermedio
-      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(8));
-      /*
-      Se desabilita por que da error en el calculo global, cuando muy tempranamente se redondea.
-      if (data.moneda === 'PYG') {
-        jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.pygDecimals));
-      }*/
+      jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.partialTaxDecimals));
+      
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -468,10 +460,8 @@ class JSonDteItemService {
 
           //Redondeo inicial a 2 decimales
           if (jsonResult['dBasExe']) {
-            jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
-            /*if (data.moneda === 'PYG') {
-              jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.pygDecimals));
-            }*/
+            jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
+
           }
         }
       }
@@ -498,10 +488,7 @@ class JSonDteItemService {
 
         //Redondeo inicial a 2 decimales
         if (jsonResult['dBasExe']) {
-          jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(8)); //Calculo intermedio, usa max decimales de la SET.
-          /*if (data.moneda === 'PYG') {
-            jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.pygDecimals));
-          }*/
+          jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
         }
       }
     }

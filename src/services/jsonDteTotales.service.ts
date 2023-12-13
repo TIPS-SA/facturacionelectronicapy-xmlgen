@@ -406,35 +406,17 @@ class JSonDteTotalesService {
         //Por el Global
         jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
       } else {
-        //jsonResult['dTotalGs'] = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
         //TODO Este hay que ver la forma de que el totalGS sea por la multiplicacion con el cambio de cada item, al final
         // o ver como seria, hacer pruebas
         jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
       }
     } else {
       //No informar si D015 = PYG
-      /*if (data['condicionTipoCambio'] == 1) {
-        //Por el Global
-        jsonResult['dTotalGs'] = parseFloat((dTotGralOpe * data['cambio']).toFixed(config.pygDecimals));
-      } else {
-        jsonResult['dTotalGs'] = parseFloat(dTotGralOpe.toFixed(config.pygDecimals));
-      }*/
     }
-
-    //Por que se puso esto?
-    /*if (moneda != 'PYG') {
-      if (data['tipoDocumento'] == 4) {
-        jsonResult['dTotalGs'] = dTotGralOpe; //Debe ser igual a F014
-      }
-    }*/
 
     //Calculo del % de descuento Global
     if (jsonResult['dTotDescGlotem'] > 0) {
-      /*jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.taxDecimals);
-
-      if (moneda == 'PYG') {
-        jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(config.pygTaxDecimals);
-      }*/
+      
       jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(8); //Maximo permitido
     }
 

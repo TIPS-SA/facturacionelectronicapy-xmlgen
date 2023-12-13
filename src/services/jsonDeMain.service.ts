@@ -31,6 +31,7 @@ class JSonDeMainService {
           decimals: 2,
           taxDecimals: 2,
           pygDecimals: 0,
+          partialTaxDecimals: 8,
           pygTaxDecimals: 0,
           userObjectRemove: false,
           test: false, //Para ambiente de test se debe informar true por "config" exterior..
@@ -1488,38 +1489,17 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE_Contado(params: any, data: any, config: XmlgenConfig) {
-    if (data['condicion']['tipo'] === 1) {
-      if (!(data['condicion']['entregas'] && data['condicion']['entregas'].length > 0)) {
-        /*throw new Error(
-          'El Tipo de Condición es 1 en data.condicion.tipo pero no se encontraron entregas en data.condicion.entregas',
-        );*/
-      }
-    }
 
     if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
       const entregas = [];
       for (let i = 0; i < data['condicion']['entregas'].length; i++) {
         const dataEntrega = data['condicion']['entregas'][i];
 
-        if (constanteService.condicionesTiposPagos.filter((um: any) => um.codigo === dataEntrega['tipo']).length == 0) {
-          /*throw new Error(
-            "Condición de Tipo de Pago '" +
-              dataEntrega['tipo'] +
-              "' en data.condicion.entregas[" +
-              i +
-              '].tipo no encontrado. Valores: ' +
-              constanteService.condicionesTiposPagos.map((a: any) => a.codigo + '-' + a.descripcion),
-          );*/
-        }
-
         const cuotaInicialEntrega: any = {
           iTiPago: dataEntrega['tipo'],
           dDesTiPag: constanteService.condicionesTiposPagos.filter((co) => co.codigo === dataEntrega['tipo'])[0][
             'descripcion'
           ],
-          //dMonTiPag: dataEntrega['monto'],  //se agrega el redondeo de 4 decimales
-          //cMoneTiPag: dataEntrega['3'],asdf
-          //dTiCamTiPag : dataEntrega['cambio'],
         };
 
         cuotaInicialEntrega['dMonTiPag'] = parseFloat(dataEntrega['monto']).toFixed(4);
