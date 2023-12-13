@@ -500,20 +500,22 @@ class JSonDeMainValidateService {
 
     if (data['obligaciones']) {
       if (!Array.isArray(data['obligaciones'])) {
-        this.errors.push('El valor de data.obligaciones debe ser un Array');   
+        this.errors.push('El valor de data.obligaciones debe ser un Array');
       } else {
         for (let i = 0; i < data['obligaciones'].length; i++) {
           let obligacion = data['obligaciones'][i];
 
           if (!obligacion.codigo) {
-            this.errors.push('No fue especificado un código en data.obligaciones[' + i + '].codigo');   
+            this.errors.push('No fue especificado un código en data.obligaciones[' + i + '].codigo');
           } else {
             //Verificar cada item
             if (constanteService.obligaciones.filter((um) => um.codigo === +obligacion.codigo).length == 0) {
               this.errors.push(
                 "Obligación '" +
-                obligacion.codigo +
-                  "' en data.obligaciones[" + i + "].codigo no válido. Valores: " +
+                  obligacion.codigo +
+                  "' en data.obligaciones[" +
+                  i +
+                  '].codigo no válido. Valores: ' +
                   constanteService.obligaciones.map((a) => a.codigo + '-' + a.descripcion),
               );
             }
@@ -521,7 +523,6 @@ class JSonDeMainValidateService {
         }
       }
     }
-
   }
 
   private generateDatosGeneralesEmisorDEValidate(params: any, data: any) {

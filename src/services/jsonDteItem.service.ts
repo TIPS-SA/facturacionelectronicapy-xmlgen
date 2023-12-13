@@ -433,7 +433,6 @@ class JSonDteItemService {
 
       //Redondeo
       jsonResult['dLiqIVAItem'] = parseFloat(jsonResult['dLiqIVAItem'].toFixed(config.partialTaxDecimals));
-      
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -461,7 +460,6 @@ class JSonDteItemService {
           //Redondeo inicial a 2 decimales
           if (jsonResult['dBasExe']) {
             jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
-
           }
         }
       }

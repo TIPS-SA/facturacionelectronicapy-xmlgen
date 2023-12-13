@@ -416,7 +416,6 @@ class JSonDteTotalesService {
 
     //Calculo del % de descuento Global
     if (jsonResult['dTotDescGlotem'] > 0) {
-      
       jsonResult['dPorcDescTotal'] = ((dTotDescGlotem * 100) / dTotOpeSinDescuento).toFixed(8); //Maximo permitido
     }
 

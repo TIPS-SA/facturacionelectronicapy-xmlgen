@@ -231,7 +231,7 @@ class ConstanteService {
     {
       codigo: 716,
       descripcion: 'IMPUESTO A LA RENTA PERSONAL - RENTAS Y GANANCIAS DE CAPITAL',
-    }
+    },
   ];
 
   monedas = [
@@ -1151,7 +1151,7 @@ class ConstanteService {
     {
       codigo: 2,
       descripcion: 'Número de matrícula del vehículo',
-    }
+    },
   ];
 
   tiposCombustibles = [

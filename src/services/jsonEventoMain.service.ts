@@ -856,11 +856,6 @@ class JSonEventoMainService {
     return jsonResult;
   }
 
-
-
-
-
-
   private eventoEmisorActualizacionDatosTransporte(params: any, data: any) {
     const jsonResult: any = {};
 
@@ -875,7 +870,7 @@ class JSonEventoMainService {
     if (!data['motivo']) {
       throw new Error('Debe proporcionar el Motivo en data.motivo');
     }
-/*
+    /*
     if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
       throw new Error(
         "Tipo de Receptor '" +
@@ -889,15 +884,13 @@ class JSonEventoMainService {
       let errors = new Array();
       var regExpOnlyNumber = new RegExp(/^\d+$/);
       let errorDepDisCiu = false;
-  
+
       if (!data['entrega']['ciudad']) {
         errors.push('Debe especificar la Ciudad del Local de Entrega en data.entrega.ciudad');
         errorDepDisCiu = true;
       } else {
         if (
-          constanteService.ciudades.filter(
-            (ciudad: any) => ciudad.codigo === +data['entrega']['ciudad'],
-          ).length == 0
+          constanteService.ciudades.filter((ciudad: any) => ciudad.codigo === +data['entrega']['ciudad']).length == 0
         ) {
           errors.push(
             "Ciudad '" +
@@ -907,34 +900,28 @@ class JSonEventoMainService {
           );
           errorDepDisCiu = true;
         }
-  
+
         //De acuerdo a la Ciudad pasada como parametro, buscar el distrito y departamento y asignar dichos
         //valores de forma predeterminada, aunque este valor sera sobre-escrito caso el usuario envie
         //data['entrega']['distrito'] y data['entrega']['departamento']
-        let objCiudad: any = constanteService.ciudades.filter(
-          (ciu) => ciu.codigo === +data['entrega']['ciudad'],
-        );
-  
+        let objCiudad: any = constanteService.ciudades.filter((ciu) => ciu.codigo === +data['entrega']['ciudad']);
+
         if (objCiudad && objCiudad[0]) {
           let objDistrito: any = constanteService.distritos.filter((dis) => dis.codigo === +objCiudad[0]['distrito']);
-  
+
           let objDepartamento: any = constanteService.departamentos.filter(
             (dep) => dep.codigo === +objDistrito[0]['departamento'],
           );
-  
+
           //Solo actualiza si no tiene valor
-          if (!data['entrega']['distrito'])
-            data['entrega']['distrito'] = objDistrito[0]['codigo'];
-  
-          if (!data['entrega']['departamento'])
-            data['entrega']['departamento'] = objDepartamento[0]['codigo'];
+          if (!data['entrega']['distrito']) data['entrega']['distrito'] = objDistrito[0]['codigo'];
+
+          if (!data['entrega']['departamento']) data['entrega']['departamento'] = objDepartamento[0]['codigo'];
         }
-  
+
         if (!errorDepDisCiu) {
           if (!data['entrega']['departamento']) {
-            errors.push(
-              'Debe especificar el Departamento del Local de Entrega en data.entrega.departamento',
-            );
+            errors.push('Debe especificar el Departamento del Local de Entrega en data.entrega.departamento');
             errorDepDisCiu = true;
           }
           if (!data['entrega']['distrito']) {
@@ -943,19 +930,19 @@ class JSonEventoMainService {
           }
         }
       }
-  
+
       if (!errorDepDisCiu) {
         constanteService.validateDepartamentoDistritoCiudad(
           'data.entrega',
           +data['entrega']['departamento'],
           +data['entrega']['distrito'],
           +data['entrega']['ciudad'],
-          errors
+          errors,
         );
       }
-        
+
       if (errors.length > 0) {
-        throw new Error(errors.join(","));
+        throw new Error(errors.join(','));
       }
 
       if (data['entrega']['direccion']) {
@@ -965,7 +952,6 @@ class JSonEventoMainService {
       if (data['entrega']['numeroCasa']) {
         throw new Error('Debe especificar el Número de Casa de Entrega en data.entrega.numeroCasa');
       }
-
     }
 
     if (data['motivo'] == 2) {
@@ -980,7 +966,7 @@ class JSonEventoMainService {
     if (data['motivo'] == 3) {
     }
 
-/*    if (!(data['nombre'].length >= 4)) {
+    /*    if (!(data['nombre'].length >= 4)) {
       throw new Error('El Nombre del Cliente en data.nombre debe tener una longitud mínima de 4 caracteres');
     }*/
 
@@ -998,7 +984,6 @@ class JSonEventoMainService {
       jsonResult['rGeVeTr']['dDesDepEnt'] = constanteService.departamentos.filter(
         (td) => td.codigo === data['entrega']['departamento'],
       )[0]['descripcion'];
-
     }
 
     if (data['entrega'] && data['entrega']['distrito']) {
@@ -1006,7 +991,6 @@ class JSonEventoMainService {
       jsonResult['rGeVeTr']['dDesDisEnt'] = constanteService.distritos.filter(
         (td) => td.codigo === data['entrega']['distrito'],
       )[0]['descripcion'];
-
     }
 
     if (data['entrega'] && data['entrega']['ciudad']) {
@@ -1014,7 +998,6 @@ class JSonEventoMainService {
       jsonResult['rGeVeTr']['dDesCiuEnt'] = constanteService.ciudades.filter(
         (td) => td.codigo === data['entrega']['ciudad'],
       )[0]['descripcion'];
-
     }
 
     if (data['entrega'] && data['entrega']['direccion']) {
@@ -1028,7 +1011,7 @@ class JSonEventoMainService {
     if (data['entrega'] && data['entrega']['dCompDir1']) {
       jsonResult['rGeVeTr']['dDirEnt'] = data['entrega']['dCompDir1'];
     }
-    
+
     if (data['motivo'] == 2) {
       jsonResult['rGeVeTr']['dNomChof'] = data['entrega']['transportista']['chofer']['nombre'];
       jsonResult['rGeVeTr']['dNumIDChof'] = data['entrega']['transportista']['chofer']['documentoNumero'];
@@ -1043,49 +1026,49 @@ class JSonEventoMainService {
         }
         const rucEmisor = data['ruc'].split('-')[0];
         const dvEmisor = data['ruc'].split('-')[1];
-  
+
         jsonResult['rGeVeTr']['dRucRec'] = rucEmisor;
         jsonResult['rGeVeTr']['dDVRec'] = dvEmisor;
         jsonResult['rGeVeTr']['nombre'] = data['entrega']['transportista']['nombre'];
       }
-    
 
-      if ( ! data['entrega']['transportista']['contribuyente']) {
+      if (!data['entrega']['transportista']['contribuyente']) {
         jsonResult['rGeVeTr']['dDTipIDTrans'] = data['entrega']['transportista']['documentoTipo'];
 
         if (
-          constanteService.tiposDocumentosIdentidadesTransportistas.filter((um: any) => um.codigo === +data['entrega']['transportista']['documentoTipo']).length == 0
+          constanteService.tiposDocumentosIdentidadesTransportistas.filter(
+            (um: any) => um.codigo === +data['entrega']['transportista']['documentoTipo'],
+          ).length == 0
         ) {
           throw new Error(
             "Tipo de Documento '" +
               data['entrega']['transportista']['documentoTipo'] +
               "' en data.entrega.transportista.documentoTipo no encontrado. Valores: " +
-              constanteService.tiposDocumentosIdentidadesTransportistas.map((a: any) => a.codigo + '-' + a.descripcion)
+              constanteService.tiposDocumentosIdentidadesTransportistas.map((a: any) => a.codigo + '-' + a.descripcion),
           );
         }
 
-
         if (!data['documentoNumero']) {
-          throw new Error('Debe especificar el Número de Documento del transportista en data.entrega.transportista.documentoNumero');
+          throw new Error(
+            'Debe especificar el Número de Documento del transportista en data.entrega.transportista.documentoNumero',
+          );
         }
         jsonResult['rGeVeTr']['dNumIDTrans'] = data['entrega']['transportista']['documentoNumero'];
       }
-
     }
 
     if (data['motivo'] == 4) {
-
       if (data['entrega'] && data['entrega']['tipoTransporte']) {
         jsonResult['rGeVeTr']['iTipTrans'] = data['entrega']['tipoTransporte'];
         jsonResult['rGeVeTr']['dDesTipTrans'] = constanteService.tiposTransportes.filter(
-          (td) => td.codigo === data['entrega']['tipoTransporte']
+          (td) => td.codigo === data['entrega']['tipoTransporte'],
         )[0]['descripcion'];
       }
-      
+
       if (data['entrega'] && data['entrega']['modalidadTransporte']) {
         jsonResult['rGeVeTr']['iModTrans'] = data['entrega']['modalidadTransporte'];
         jsonResult['rGeVeTr']['dDesModTrans'] = constanteService.modalidadesTransportes.filter(
-          (td) => td.codigo === data['entrega']['modalidadTransporte']
+          (td) => td.codigo === data['entrega']['modalidadTransporte'],
         )[0]['descripcion'];
       }
 

@@ -977,19 +977,19 @@ class JSonDeMainService {
     }
 
     if (data['obligaciones'] && Array.isArray(data['obligaciones'])) {
-
       let gOblAfe = new Array();
       for (let i = 0; i < data['obligaciones'].length; i++) {
-        let gOblAfeItem : any = {};
+        let gOblAfeItem: any = {};
         gOblAfeItem['cOblAfe'] = data['obligaciones'][i]['codigo'];
         //gOblAfeItem['dDesOblAfe'] = params['obligaciones'][i]['descripcion'];
-        gOblAfeItem['dDesOblAfe'] = constanteService.obligaciones.filter((ca) => ca.codigo == +data['obligaciones'][i]['codigo'])[0]['descripcion'];
+        gOblAfeItem['dDesOblAfe'] = constanteService.obligaciones.filter(
+          (ca) => ca.codigo == +data['obligaciones'][i]['codigo'],
+        )[0]['descripcion'];
         gOblAfe.push(gOblAfeItem);
       }
 
-      this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['gOblAfe'] = gOblAfe;      
+      this.json['rDE']['DE']['gDatGralOpe']['gOpeCom']['gOblAfe'] = gOblAfe;
     }
-
   }
 
   /**
@@ -1489,7 +1489,6 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosCondicionOperacionDE_Contado(params: any, data: any, config: XmlgenConfig) {
-
     if (data['condicion']['entregas'] && data['condicion']['entregas'].length > 0) {
       const entregas = [];
       for (let i = 0; i < data['condicion']['entregas'].length; i++) {
