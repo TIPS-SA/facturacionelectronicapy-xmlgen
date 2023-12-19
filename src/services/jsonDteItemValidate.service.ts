@@ -341,7 +341,13 @@ class JSonDteItemValidateService {
                 '].dncp para el el tipo de operación 3-B2G',
             );
           } else {
-            if ( ! (item['dncp']['codigoNivelGeneral'] && (item['dncp']['codigoNivelGeneral']+"").length > 0 && (item['dncp']['codigoNivelGeneral']+"").length <= 8)) {
+            if (
+              !(
+                item['dncp']['codigoNivelGeneral'] &&
+                (item['dncp']['codigoNivelGeneral'] + '').length > 0 &&
+                (item['dncp']['codigoNivelGeneral'] + '').length <= 8
+              )
+            ) {
               this.errors.push(
                 'Debe especificar los datos de la DNCP en ' +
                   'data.items[' +
@@ -349,10 +355,16 @@ class JSonDteItemValidateService {
                   '].dncp.codigoNivelGeneral (hasta 8 digitos) para el el tipo de operación 3-B2G',
               );
             } else {
-              item['dncp']['codigoNivelGeneral'] = stringUtilService.leftZero( item['dncp']['codigoNivelGeneral'], 8);
+              item['dncp']['codigoNivelGeneral'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
             }
 
-            if ( ! (item['dncp']['codigoNivelEspecifico'] && (item['dncp']['codigoNivelEspecifico']+"").length >= 3 && (item['dncp']['codigoNivelEspecifico']+"").length <= 4)) {
+            if (
+              !(
+                item['dncp']['codigoNivelEspecifico'] &&
+                (item['dncp']['codigoNivelEspecifico'] + '').length >= 3 &&
+                (item['dncp']['codigoNivelEspecifico'] + '').length <= 4
+              )
+            ) {
               this.errors.push(
                 'Debe especificar los datos de la DNCP en ' +
                   'data.items[' +
@@ -364,7 +376,6 @@ class JSonDteItemValidateService {
             }
           }
         }
-
       } //end-for
     }
     return this.errors;
