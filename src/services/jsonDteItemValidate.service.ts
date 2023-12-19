@@ -331,6 +331,40 @@ class JSonDteItemValidateService {
         if (item['sectorAutomotor'] && item['sectorAutomotor']['tipo']) {
           this.generateDatosItemsOperacionSectorAutomotoresValidate(params, data, item, i);
         }
+
+        if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
+          if (!item['dncp']) {
+            this.errors.push(
+              'Debe especificar los datos de la DNCP en ' +
+                'data.items[' +
+                i +
+                '].dncp para el el tipo de operación 3-B2G',
+            );
+          } else {
+            if ( ! (item['dncp']['codigoNivelGeneral'] && (item['dncp']['codigoNivelGeneral']+"").length > 0 && (item['dncp']['codigoNivelGeneral']+"").length <= 8)) {
+              this.errors.push(
+                'Debe especificar los datos de la DNCP en ' +
+                  'data.items[' +
+                  i +
+                  '].dncp.codigoNivelGeneral (hasta 8 digitos) para el el tipo de operación 3-B2G',
+              );
+            } else {
+              item['dncp']['codigoNivelGeneral'] = stringUtilService.leftZero( item['dncp']['codigoNivelGeneral'], 8);
+            }
+
+            if ( ! (item['dncp']['codigoNivelEspecifico'] && (item['dncp']['codigoNivelEspecifico']+"").length >= 3 && (item['dncp']['codigoNivelEspecifico']+"").length <= 4)) {
+              this.errors.push(
+                'Debe especificar los datos de la DNCP en ' +
+                  'data.items[' +
+                  i +
+                  '].dncp.codigoNivelEspecifico (3 o 4 digitos) para el el tipo de operación 3-B2G',
+              );
+            } else {
+              //item['dncp']['codigoNivelEspecifico'] = stringUtilService.leftZero( item['dncp']['codigoNivelEspecifico'], 8);
+            }
+          }
+        }
+
       } //end-for
     }
     return this.errors;
