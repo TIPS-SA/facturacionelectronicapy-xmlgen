@@ -2401,7 +2401,6 @@ class JSonDeMainValidateService {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
       this.errors.push('Los datos del Vehiculo en data.transporte.vehiculo no fueron informados');
     } else {
-
       if (!data['detalleTransporte']['vehiculo']['tipo']) {
         this.errors.push('El tipo de Vehiculo en data.transporte.vehiculo.tipo no fue informado');
       } else {
@@ -2420,9 +2419,11 @@ class JSonDeMainValidateService {
       }
 
       if (!data['detalleTransporte']['vehiculo']['documentoTipo']) {
-        this.errors.push('El Tipo de Documento del Vehiculo en data.transporte.vehiculo.documentoTipo no fue informado');
+        this.errors.push(
+          'El Tipo de Documento del Vehiculo en data.transporte.vehiculo.documentoTipo no fue informado',
+        );
       } else {
-        if ( +data['detalleTransporte']['vehiculo']['documentoTipo'] == 1) {
+        if (+data['detalleTransporte']['vehiculo']['documentoTipo'] == 1) {
           if (!data['detalleTransporte']['vehiculo']['documentoNumero']) {
             this.errors.push(
               'El numero de identificacion del Vehiculo en data.transporte.vehiculo.documentoNumero no fue informado',
@@ -2443,7 +2444,7 @@ class JSonDeMainValidateService {
           }
         }
 
-        if ( +data['detalleTransporte']['vehiculo']['documentoTipo'] == 2) {
+        if (+data['detalleTransporte']['vehiculo']['documentoTipo'] == 2) {
           if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
             this.errors.push(
               'El numero de matricula del Vehiculo en data.transporte.vehiculo.numeroMatricula no fue informado',
@@ -2461,11 +2462,10 @@ class JSonDeMainValidateService {
                   "' en data.transporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
               );
             }
-          }              
+          }
         }
       }
     }
-
 
     if (!data['detalleTransporte']['vehiculo']['marca']) {
       this.errors.push('La marca del Vehiculo en data.transporte.vehiculo.marca no fue informado');
@@ -2483,7 +2483,6 @@ class JSonDeMainValidateService {
         );
       }
     }
-    
   }
 
   /**
