@@ -1270,18 +1270,18 @@ class JSonDeMainService {
   private generateDatosEspecificosPorTipoDE(params: any, data: any, config: XmlgenConfig) {
     this.json['rDE']['DE']['gDtipDE'] = {};
 
-    if (data['tipoDocumento'] === 1) {
+    if (+data['tipoDocumento'] === 1) {
       this.generateDatosEspecificosPorTipoDE_FacturaElectronica(params, data, config);
     }
-    if (data['tipoDocumento'] === 4) {
+    if (+data['tipoDocumento'] === 4) {
       this.generateDatosEspecificosPorTipoDE_Autofactura(params, data);
     }
 
-    if (data['tipoDocumento'] === 5 || data['tipoDocumento'] === 6) {
+    if (+data['tipoDocumento'] === 5 || data['tipoDocumento'] === 6) {
       this.generateDatosEspecificosPorTipoDE_NotaCreditoDebito(params, data);
     }
 
-    if (data['tipoDocumento'] === 7) {
+    if (+data['tipoDocumento'] === 7) {
       this.generateDatosEspecificosPorTipoDE_RemisionElectronica(params, data);
     }
   }
