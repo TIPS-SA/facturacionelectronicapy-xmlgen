@@ -1059,20 +1059,45 @@ class JSonDeMainValidateService {
    * @param options
    */
   private generateDatosEspecificosPorTipoDE_ComprasPublicasValidate(params: any, data: any) {
-    if (!(data['dncp'] && data['dncp']['modalidad'] && data['dncp']['modalidad'].length > 0)) {
-      this.errors.push('Debe informar la modalidad de Contratación DNCP en data.dncp.modalidad');
+    if (!(data['dncp'] && data['dncp']['modalidad'] && (data['dncp']['modalidad'] + '').length == 2)) {
+      this.errors.push('Debe informar la modalidad de Contratación DNCP  (2 digitos) en data.dncp.modalidad');
     }
-    if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].length > 0)) {
+    /*    if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].length > 0)) {
       this.errors.push('Debe informar la entidad de Contratación DNCP en data.dncp.entidad');
+    }*/
+    if (
+      !(data['dncp'] && data['dncp']['entidad'] && +data['dncp']['entidad'] > 9999 && +data['dncp']['entidad'] < 100000)
+    ) {
+      this.errors.push('Debe informar la entidad de Contratación DNCP (5 digitos) en data.dncp.entidad');
     }
-    if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].length > 0)) {
-      this.errors.push('Debe informar la año de Contratación DNCP en data.dncp.año');
+    /*if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].length > 0)) {
+      this.errors.push('Debe informar el año de Contratación DNCP en data.dncp.año');
+    }*/
+    if (!(data['dncp'] && data['dncp']['año'] && +data['dncp']['año'] > 0 && +data['dncp']['año'] < 100)) {
+      this.errors.push('Debe informar el año de Contratación DNCP (2 digitos) en data.dncp.año');
     }
-    if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].length > 0)) {
+    /*if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].length > 0)) {
       this.errors.push('Debe informar la secuencia de Contratación DNCP en data.dncp.secuencia');
+    }*/
+    if (
+      !(
+        data['dncp'] &&
+        data['dncp']['secuencia'] &&
+        +data['dncp']['secuencia'] > 999999 &&
+        +data['dncp']['secuencia'] < 10000000
+      )
+    ) {
+      this.errors.push('Debe informar la secuencia de Contratación DNCP (7 digitos) en data.dncp.secuencia');
     }
-    if (!(data['dncp'] && data['dncp']['fecha'] && data['dncp']['fecha'].length > 0)) {
+
+    if (!(data['dncp'] && data['dncp']['fecha'] && (data['dncp']['fecha'] + '').length > 0)) {
       this.errors.push('Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha');
+    } else {
+      if (!fechaUtilService.isIsoDate(data['dncp']['fecha'])) {
+        this.errors.push(
+          "Fecha DNCP '" + data['dncp']['fecha'] + "' en data.dncp.fecha no válida. Formato: yyyy-MM-dd",
+        );
+      }
     }
   }
 
@@ -2376,57 +2401,86 @@ class JSonDeMainValidateService {
     if (!(data['detalleTransporte'] && data['detalleTransporte']['vehiculo'])) {
       this.errors.push('Los datos del Vehiculo en data.transporte.vehiculo no fueron informados');
     } else {
-      if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
-        this.errors.push(
-          'El numero de matricula del Vehiculo en data.transporte.vehiculo.numeroMatricula no fue informado',
-        );
+      if (!data['detalleTransporte']['vehiculo']['tipo']) {
+        this.errors.push('El tipo de Vehiculo en data.transporte.vehiculo.tipo no fue informado');
       } else {
         if (
           !(
-            data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
-            data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
+            data['detalleTransporte']['vehiculo']['tipo'].length >= 4 &&
+            data['detalleTransporte']['vehiculo']['tipo'].length <= 10
           )
         ) {
           this.errors.push(
-            "Número de Matricula '" +
-              data['detalleTransporte']['vehiculo']['numeroMatricula'] +
-              "' en data.transporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+            "Tipo de Vehiculo '" +
+              data['detalleTransporte']['vehiculo']['tipo'] +
+              "' en data.transporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
           );
-        }
-
-        if (!data['detalleTransporte']['vehiculo']['tipo']) {
-          this.errors.push('El tipo de Vehiculo en data.transporte.vehiculo.tipo no fue informado');
-        } else {
-          if (
-            !(
-              data['detalleTransporte']['vehiculo']['tipo'].length >= 4 &&
-              data['detalleTransporte']['vehiculo']['tipo'].length <= 10
-            )
-          ) {
-            this.errors.push(
-              "Tipo de Vehiculo '" +
-                data['detalleTransporte']['vehiculo']['tipo'] +
-                "' en data.transporte.vehiculo.tipo debe tener una longitud de 4 a 10 caracteres ",
-            );
-          }
         }
       }
 
-      if (!data['detalleTransporte']['vehiculo']['marca']) {
-        this.errors.push('La marca del Vehiculo en data.transporte.vehiculo.marca no fue informado');
+      if (!data['detalleTransporte']['vehiculo']['documentoTipo']) {
+        this.errors.push(
+          'El Tipo de Documento del Vehiculo en data.transporte.vehiculo.documentoTipo no fue informado',
+        );
       } else {
-        if (
-          !(
-            data['detalleTransporte']['vehiculo']['marca'].length >= 1 &&
-            data['detalleTransporte']['vehiculo']['marca'].length <= 10
-          )
-        ) {
-          this.errors.push(
-            "Marca del Vehiculo '" +
-              data['detalleTransporte']['vehiculo']['marca'] +
-              "' en data.transporte.vehiculo.marca debe tener una longitud de 1 a 10 caracteres",
-          );
+        if (+data['detalleTransporte']['vehiculo']['documentoTipo'] == 1) {
+          if (!data['detalleTransporte']['vehiculo']['documentoNumero']) {
+            this.errors.push(
+              'El numero de identificacion del Vehiculo en data.transporte.vehiculo.documentoNumero no fue informado',
+            );
+          } else {
+            if (
+              !(
+                data['detalleTransporte']['vehiculo']['documentoNumero'].length >= 1 &&
+                data['detalleTransporte']['vehiculo']['documentoNumero'].length <= 20
+              )
+            ) {
+              this.errors.push(
+                "Número de Identificacion del Vehiculo '" +
+                  data['detalleTransporte']['vehiculo']['documentoNumero'] +
+                  "' en data.transporte.vehiculo.documentoNumero debe tener una longitud de 1 a 20 caracteres ",
+              );
+            }
+          }
         }
+
+        if (+data['detalleTransporte']['vehiculo']['documentoTipo'] == 2) {
+          if (!data['detalleTransporte']['vehiculo']['numeroMatricula']) {
+            this.errors.push(
+              'El numero de matricula del Vehiculo en data.transporte.vehiculo.numeroMatricula no fue informado',
+            );
+          } else {
+            if (
+              !(
+                data['detalleTransporte']['vehiculo']['numeroMatricula'].length >= 6 &&
+                data['detalleTransporte']['vehiculo']['numeroMatricula'].length <= 7
+              )
+            ) {
+              this.errors.push(
+                "Número de Matricula '" +
+                  data['detalleTransporte']['vehiculo']['numeroMatricula'] +
+                  "' en data.transporte.vehiculo.numeroMatricula debe tener una longitud de 6 a 7 caracteres ",
+              );
+            }
+          }
+        }
+      }
+    }
+
+    if (!data['detalleTransporte']['vehiculo']['marca']) {
+      this.errors.push('La marca del Vehiculo en data.transporte.vehiculo.marca no fue informado');
+    } else {
+      if (
+        !(
+          data['detalleTransporte']['vehiculo']['marca'].length >= 1 &&
+          data['detalleTransporte']['vehiculo']['marca'].length <= 10
+        )
+      ) {
+        this.errors.push(
+          "Marca del Vehiculo '" +
+            data['detalleTransporte']['vehiculo']['marca'] +
+            "' en data.transporte.vehiculo.marca debe tener una longitud de 1 a 10 caracteres",
+        );
       }
     }
   }

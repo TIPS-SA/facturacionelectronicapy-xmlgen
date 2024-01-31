@@ -547,9 +547,14 @@ Para más información sobre el proceso que llevó a la generación de éste mó
 
 
 ## Empresas que utilizan éstos proyectos
+[FacturaSend](https://www.facturasend.com.py/)<br/>
 [JHF Ingeniería Informática](https://jhf.com.py/)<br/>
 [JR Ingeniería y Servicios](https://jringenieriayservicios.com/)<br/>
-[FacturaSend](https://www.facturasend.com/)<br/>
+[Datamex](https://www.datamex.com.py/)<br/>
+[Factupar](https://factupar.com.py/)<br/>
+[Globe Informatica](https://globeinformatica.com.py/)<br/>
+[FZ Sistemas de Gestion](https://fz-gestion.com.py/)<br/>
+
 
 * * * *
 

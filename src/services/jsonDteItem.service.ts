@@ -33,8 +33,15 @@ class JSonDteItemService {
         if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
           gCamItem['dDncpG'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
           gCamItem['dDncpE'] = item['dncp']['codigoNivelEspecifico'];
-          gCamItem['dGtin'] = item['dncp']['codigoGtinProducto'];
-          gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
+        }
+
+        if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
+          if (item['dncp']['codigoGtinProducto']) {
+            gCamItem['dGtin'] = item['dncp']['codigoGtinProducto'];
+          }
+          if (item['dncp']['codigoNivelPaquete']) {
+            gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
+          }
         }
 
         gCamItem['dDesProSer'] = item['descripcion']; // RG 24/2019
