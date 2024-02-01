@@ -620,7 +620,7 @@ class JSonEventoMainService {
           constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
       );
     }*/
-    
+
     if (!data['pais']) {
       throw new Error('Debe especificar el Pais del Receptor en data.pais');
     }
