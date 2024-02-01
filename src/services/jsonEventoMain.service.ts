@@ -612,15 +612,15 @@ class JSonEventoMainService {
       throw new Error('El Motivo del Evento en data.motivo debe tener una longitud entre 5 y 500 caracteres');
     }
 
-    if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
+    /*if (constanteService.tipoReceptor.filter((um: any) => um.codigo === +data['tipoReceptor']).length == 0) {
       throw new Error(
         "Tipo de Receptor '" +
           data['tipoReceptor'] +
           "' en data.tipoReceptor no encontrado. Valores: " +
           constanteService.tipoReceptor.map((a: any) => a.codigo + '-' + a.descripcion),
       );
-    }
-
+    }*/
+    
     if (!data['pais']) {
       throw new Error('Debe especificar el Pais del Receptor en data.pais');
     }
