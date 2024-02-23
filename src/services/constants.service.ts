@@ -1456,7 +1456,7 @@ class ConstanteService {
     { codigo: 'BGD', descripcion: 'Bangladesh' },
     { codigo: 'BTN', descripcion: 'Bhután' },
     { codigo: 'IND', descripcion: 'India' },
-    { codigo: 'IRN', descripcion: 'Irán (República Islámica del)' },
+    { codigo: 'IRN', descripcion: 'Irán (República Islámica de)' },
     { codigo: 'MDV', descripcion: 'Maldivas' },
     { codigo: 'NPL', descripcion: 'Nepal' },
     { codigo: 'PAK', descripcion: 'Pakistán' },
