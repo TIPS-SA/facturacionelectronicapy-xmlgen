@@ -306,6 +306,15 @@ class JSonDeMainService {
       data.remision.tipoResponsable = data.remision.tipo_responsable;
     }
 
+    if (data.remision?.fecha_factura) {
+      data.remision.fechaFactura = data.remision.fecha_factura;
+    }
+
+    if (data.remision?.costo_flete) {
+      data.remision.costoFlete = data.remision.costo_flete;
+    }
+    
+
     //Documento Asociado
     if (data.documento_asociado) {
       data.documentoAsociado = { ...data.documento_asociado };
