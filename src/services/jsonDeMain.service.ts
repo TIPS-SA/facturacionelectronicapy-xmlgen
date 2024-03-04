@@ -313,7 +313,6 @@ class JSonDeMainService {
     if (data.remision?.costo_flete) {
       data.remision.costoFlete = data.remision.costo_flete;
     }
-    
 
     //Documento Asociado
     if (data.documento_asociado) {
