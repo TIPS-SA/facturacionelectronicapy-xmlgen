@@ -1713,7 +1713,7 @@ class JSonDeMainService {
   getPaises() {
     return constanteService.paises;
   }
-  
+
   getDepartamentos() {
     return constanteService.departamentos;
   }

@@ -56,7 +56,7 @@ class DE {
       resolve(paises);
     });
   };
-  
+
   consultarDepartamentos = (): Promise<any> => {
     return new Promise((resolve, reject) => {
       //Enviar Copia
