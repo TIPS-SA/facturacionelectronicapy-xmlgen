@@ -1710,6 +1710,10 @@ class JSonDeMainService {
     return xml;
   }
 
+  getPaises() {
+    return constanteService.paises;
+  }
+  
   getDepartamentos() {
     return constanteService.departamentos;
   }

@@ -44,6 +44,19 @@ class DE {
     return eventoService.generateXMLEventoActualizacionDatosTransporte(id, params, data, config);
   };
 
+  consultarPaises = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      //Enviar Copia
+      let paises = [];
+      for (let index = 0; index < deService.getPaises().length; index++) {
+        const pais = deService.getPaises()[index];
+        paises.push({ ...pais });
+      }
+
+      resolve(paises);
+    });
+  };
+  
   consultarDepartamentos = (): Promise<any> => {
     return new Promise((resolve, reject) => {
       //Enviar Copia
