@@ -949,7 +949,7 @@ class ConstanteService {
     { codigo: 93, representacion: 'CM3   ', descripcion: 'Centimetros cubicos         ' },
     { codigo: 94, representacion: 'PUL   ', descripcion: 'Pulgadas                    ' },
     { codigo: 96, representacion: 'MM2   ', descripcion: 'Milímetros cuadrados        ' },
-    { codigo: 79, representacion: 'kg/m² ', descripcion: 'Kilogramos s/ metro cuadrado' },
+    { codigo: 79, representacion: 'kg/m2 ', descripcion: 'Kilogramos s/ metro cuadrado' },
     { codigo: 97, representacion: 'AA    ', descripcion: 'Año                         ' },
     { codigo: 98, representacion: 'ME    ', descripcion: 'Mes                         ' },
     { codigo: 99, representacion: 'TN    ', descripcion: 'Tonelada                    ' },
