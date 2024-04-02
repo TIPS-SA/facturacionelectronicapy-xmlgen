@@ -272,9 +272,9 @@ class JSonDeMainValidateService {
     const dvEmisor = params['ruc'].split('-')[1];
 
     var reg = new RegExp(/^\d+$/);
-    if (!reg.test(rucEmisor)) {
+    /*if (!reg.test(rucEmisor)) {
       this.errors.push("La parte que corresponde al RUC '" + params['ruc'] + "' en params.ruc debe ser numérico");
-    }
+    }*/
     if (rucEmisor.length > 8) {
       this.errors.push(
         "La parte que corresponde al RUC '" + params['ruc'] + "' en params.ruc debe contener de 1 a 8 caracteres",
