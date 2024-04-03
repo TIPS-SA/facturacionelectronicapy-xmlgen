@@ -231,6 +231,10 @@ class JSonDeMainService {
       data.condicionTipoCambio = data.condicion_tipo_cambio;
     }
 
+    if (data.descuento_global) {
+      data.descuentoGlobal = data.descuento_global;
+    }
+
     //Objeto Cliente
     if (data.cliente?.razon_social) {
       data.cliente.razonSocial = data.cliente.razon_social;
