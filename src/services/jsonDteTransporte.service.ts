@@ -35,10 +35,10 @@ class JSonDteTransporteService {
       }
     }
     if (data['detalleTransporte']['inicioEstimadoTranslado']) {
-      jsonResult['dIniTras'] = data['detalleTransporte']['inicioEstimadoTranslado'];
+      jsonResult['dIniTras'] = (data['detalleTransporte']['inicioEstimadoTranslado'] + "").substring(0, 10);
     }
     if (data['detalleTransporte']['finEstimadoTranslado']) {
-      jsonResult['dFinTras'] = data['detalleTransporte']['finEstimadoTranslado'];
+      jsonResult['dFinTras'] = (data['detalleTransporte']['finEstimadoTranslado'] + "").substring(0, 10);
     }
     if (data['detalleTransporte']['paisDestino']) {
       jsonResult['cPaisDest'] = data['detalleTransporte']['paisDestino'];
