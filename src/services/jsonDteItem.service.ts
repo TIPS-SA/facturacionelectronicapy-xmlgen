@@ -60,8 +60,8 @@ class JSonDteItemService {
           ];
         }
 
-        if (item['observacion'] && (item['observacion']+"").trim().length > 0) {
-          gCamItem['dInfItem'] = (item['observacion']+"").trim();
+        if (item['observacion'] && (item['observacion'] + '').trim().length > 0) {
+          gCamItem['dInfItem'] = (item['observacion'] + '').trim();
         }
 
         if (data['tipoDocumento'] === 7) {

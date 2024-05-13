@@ -268,8 +268,8 @@ class JSonDteItemValidateService {
           }
         }
 
-        if (item['observacion'] && (item['observacion']+"").trim().length > 0) {
-          if (!((item['observacion']+"").trim().length >= 1 && (item['observacion']+"").trim().length <= 500)) {
+        if (item['observacion'] && (item['observacion'] + '').trim().length > 0) {
+          if (!((item['observacion'] + '').trim().length >= 1 && (item['observacion'] + '').trim().length <= 500)) {
             this.errors.push(
               'La observación del item (' +
                 item['observacion'] +
