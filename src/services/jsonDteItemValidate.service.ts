@@ -100,7 +100,7 @@ class JSonDteItemValidateService {
         if (!item['descripcion']) {
           this.errors.push('La descripción del item en data.items[' + i + '].descripcion no puede ser null');
         } else {
-          if (!((item['descripcion']+"").length >= 1 && (item['descripcion']+"").length <= 2000)) {
+          if (!((item['descripcion'] + '').length >= 1 && (item['descripcion'] + '').length <= 2000)) {
             this.errors.push(
               'La descripción del item (' +
                 item['descripcion'] +
