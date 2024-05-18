@@ -248,7 +248,9 @@ class JSonDeMainService {
 
     //Campo que puede ser un numero = 0, hay que validar de esta forma
     if (typeof data.cliente != 'undefined' && typeof data.cliente.numero_casa != 'undefined') {
-      data.cliente.numeroCasa = data.cliente.numero_casa + '';
+      if (data.cliente.numero_casa != null) {
+        data.cliente.numeroCasa = data.cliente.numero_casa + '';
+      }
     }
     if (data.cliente?.tipo_contribuyente) {
       data.cliente.tipoContribuyente = data.cliente.tipo_contribuyente;
@@ -296,9 +298,15 @@ class JSonDeMainService {
       data.autoFactura.documentoNumero = data.autoFactura.documento_numero;
     }
 
-    if (data.autoFactura?.numero_casa) {
-      data.autoFactura.numeroCasa = data.autoFactura.numero_casa;
+    if (typeof data.autoFactura != 'undefined' && typeof data.autoFactura.numero_casa != 'undefined') {
+      if (data.autoFactura.numero_casa != null) {
+        data.autoFactura.numeroCasa = data.autoFactura.numero_casa + '';
+      }
     }
+    
+    /*if (data.autoFactura?.numero_casa) {
+      data.autoFactura.numeroCasa = data.autoFactura.numero_casa;
+    }*/
 
     //Remision
     if (data.nota_credito_debito) {
