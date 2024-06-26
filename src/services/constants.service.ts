@@ -198,11 +198,11 @@ class ConstanteService {
     },
     {
       codigo: 211,
-      descripcion: 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS – EXPORTADORES',
+      descripcion: 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS - EXPORTADORES',
     },
     {
       codigo: 311,
-      descripcion: 'IMPUESTO SELECTIVO AL CONSUMO – GENERAL',
+      descripcion: 'IMPUESTO SELECTIVO AL CONSUMO - GENERAL',
     },
     {
       codigo: 321,
@@ -214,7 +214,7 @@ class ConstanteService {
     },
     {
       codigo: 701,
-      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL – SIMPLE',
+      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL - SIMPLE',
     },
     {
       codigo: 703,
@@ -222,7 +222,7 @@ class ConstanteService {
     },
     {
       codigo: 702,
-      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL – RESIMPLE',
+      descripcion: 'IMPUESTO A LA RENTA EMPRESARIAL - RESIMPLE',
     },
     {
       codigo: 715,
