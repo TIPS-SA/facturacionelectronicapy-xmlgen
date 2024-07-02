@@ -76,7 +76,12 @@ class JSonDteAlgoritmosService {
     rucEmisor = rucEmisor.replace('A', '65');
     rucEmisor = rucEmisor.replace('B', '66');
     rucEmisor = rucEmisor.replace('C', '67');
-    rucEmisor = rucEmisor.replace('D', '68');
+    //rucEmisor = rucEmisor.replace('D', '68');
+
+    rucEmisor = rucEmisor.replace('a', '97');
+    rucEmisor = rucEmisor.replace('b', '98');
+    rucEmisor = rucEmisor.replace('c', '99');
+    //rucEmisor = rucEmisor.replace('d', '68');
 
     rucEmisor = stringUtilService.leftZero(rucEmisor, 8);
 
