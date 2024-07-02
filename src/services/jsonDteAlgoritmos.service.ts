@@ -69,7 +69,17 @@ class JSonDteAlgoritmosService {
       throw new Error('RUC debe contener dígito verificador en params.ruc');
     }
     const tipoDocumento = data['tipoDocumento'];
-    const rucEmisor = stringUtilService.leftZero(params['ruc'].split('-')[0], 8);
+
+    let rucEmisor = params['ruc'].split('-')[0];
+
+    //Si el RUC tiene letras A, B o C, esas letras hay que reemplazar con el código ASCII
+    rucEmisor = rucEmisor.replace("A", "65");
+    rucEmisor = rucEmisor.replace("B", "66");
+    rucEmisor = rucEmisor.replace("C", "67");
+    rucEmisor = rucEmisor.replace("D", "68");
+
+    rucEmisor = stringUtilService.leftZero(rucEmisor, 8);
+
     const dvEmisor = params['ruc'].split('-')[1];
     const establecimiento = stringUtilService.leftZero(data['establecimiento'], 3);
     const punto = stringUtilService.leftZero(data['punto'], 3);
