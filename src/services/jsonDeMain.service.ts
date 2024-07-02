@@ -1315,7 +1315,8 @@ class JSonDeMainService {
    */
   private generateDatosEspecificosPorTipoDE_FacturaElectronica(params: any, data: any, config: XmlgenConfig) {
     if (
-      constanteService.indicadoresPresencias.filter((um: any) => um.codigo === +data['factura']['presencia']).length == 0
+      constanteService.indicadoresPresencias.filter((um: any) => um.codigo === +data['factura']['presencia']).length ==
+      0
     ) {
       /*throw new Error(
         "Indicador de Presencia '" +
@@ -1327,9 +1328,9 @@ class JSonDeMainService {
 
     this.json['rDE']['DE']['gDtipDE']['gCamFE'] = {
       iIndPres: data['factura']['presencia'],
-      dDesIndPres: constanteService.indicadoresPresencias.filter((ip) => ip.codigo === +data['factura']['presencia'])[0][
-        'descripcion'
-      ],
+      dDesIndPres: constanteService.indicadoresPresencias.filter(
+        (ip) => ip.codigo === +data['factura']['presencia'],
+      )[0]['descripcion'],
       //dFecEmNR : data['factura']['fechaEnvio']
     };
 

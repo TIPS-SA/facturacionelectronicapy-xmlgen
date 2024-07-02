@@ -73,10 +73,10 @@ class JSonDteAlgoritmosService {
     let rucEmisor = params['ruc'].split('-')[0];
 
     //Si el RUC tiene letras A, B o C, esas letras hay que reemplazar con el código ASCII
-    rucEmisor = rucEmisor.replace("A", "65");
-    rucEmisor = rucEmisor.replace("B", "66");
-    rucEmisor = rucEmisor.replace("C", "67");
-    rucEmisor = rucEmisor.replace("D", "68");
+    rucEmisor = rucEmisor.replace('A', '65');
+    rucEmisor = rucEmisor.replace('B', '66');
+    rucEmisor = rucEmisor.replace('C', '67');
+    rucEmisor = rucEmisor.replace('D', '68');
 
     rucEmisor = stringUtilService.leftZero(rucEmisor, 8);
 

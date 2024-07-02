@@ -1022,7 +1022,8 @@ class JSonDeMainValidateService {
     }
 
     if (
-      constanteService.indicadoresPresencias.filter((um: any) => um.codigo === +data['factura']['presencia']).length == 0
+      constanteService.indicadoresPresencias.filter((um: any) => um.codigo === +data['factura']['presencia']).length ==
+      0
     ) {
       this.errors.push(
         "Indicador de Presencia '" +
