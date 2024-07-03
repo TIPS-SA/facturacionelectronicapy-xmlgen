@@ -94,7 +94,6 @@ class JSonDteAlgoritmosService {
       tipoEmision +
       codigoSeguridadAleatorio;
 
-
     let rucEmisorParaCalculoDV = params['ruc'].split('-')[0];
     //Si el RUC tiene letras A, B o C, esas letras hay que reemplazar con el código ASCII
     rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('A', '65');
@@ -119,7 +118,7 @@ class JSonDteAlgoritmosService {
       codigoSeguridadAleatorio;
 
     const digitoVerificador = this.calcularDigitoVerificador(cdcParaCalculoDV, 11);
-    
+
     cdc += digitoVerificador;
     return cdc;
   }
