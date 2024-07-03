@@ -71,18 +71,6 @@ class JSonDteAlgoritmosService {
     const tipoDocumento = data['tipoDocumento'];
 
     let rucEmisor = params['ruc'].split('-')[0];
-
-    //Si el RUC tiene letras A, B o C, esas letras hay que reemplazar con el código ASCII
-    rucEmisor = rucEmisor.replace('A', '65');
-    rucEmisor = rucEmisor.replace('B', '66');
-    rucEmisor = rucEmisor.replace('C', '67');
-    //rucEmisor = rucEmisor.replace('D', '68');
-
-    rucEmisor = rucEmisor.replace('a', '97');
-    rucEmisor = rucEmisor.replace('b', '98');
-    rucEmisor = rucEmisor.replace('c', '99');
-    //rucEmisor = rucEmisor.replace('d', '68');
-
     rucEmisor = stringUtilService.leftZero(rucEmisor, 8);
 
     const dvEmisor = params['ruc'].split('-')[1];
@@ -106,7 +94,32 @@ class JSonDteAlgoritmosService {
       tipoEmision +
       codigoSeguridadAleatorio;
 
-    const digitoVerificador = this.calcularDigitoVerificador(cdc, 11);
+
+    let rucEmisorParaCalculoDV = params['ruc'].split('-')[0];
+    //Si el RUC tiene letras A, B o C, esas letras hay que reemplazar con el código ASCII
+    rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('A', '65');
+    rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('B', '66');
+    rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('C', '67');
+    rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('a', '97');
+    rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('b', '98');
+    rucEmisorParaCalculoDV = rucEmisorParaCalculoDV.replace('c', '99');
+    rucEmisorParaCalculoDV = stringUtilService.leftZero(rucEmisorParaCalculoDV, 8);
+    const dvEmisorParaCalculoDV = params['ruc'].split('-')[1];
+
+    let cdcParaCalculoDV =
+      stringUtilService.leftZero(tipoDocumento, 2) +
+      rucEmisorParaCalculoDV +
+      dvEmisorParaCalculoDV +
+      establecimiento +
+      punto +
+      numero +
+      tipoContribuyente +
+      fechaEmision +
+      tipoEmision +
+      codigoSeguridadAleatorio;
+
+    const digitoVerificador = this.calcularDigitoVerificador(cdcParaCalculoDV, 11);
+    
     cdc += digitoVerificador;
     return cdc;
   }
