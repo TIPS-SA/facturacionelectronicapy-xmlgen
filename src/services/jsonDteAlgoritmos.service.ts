@@ -117,8 +117,8 @@ class JSonDteAlgoritmosService {
       tipoEmision +
       codigoSeguridadAleatorio;
 
-    const digitoVerificador = this.calcularDigitoVerificador(cdcParaCalculoDV, 11);
-
+    //const digitoVerificador = this.calcularDigitoVerificador(cdcParaCalculoDV, 11);
+    const digitoVerificador = this.calcularDigitoVerificador(cdc, 11);
     cdc += digitoVerificador;
     return cdc;
   }
