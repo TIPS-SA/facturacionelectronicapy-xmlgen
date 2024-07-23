@@ -241,9 +241,9 @@ class JSonDeMainService {
     if ((data.numero + '').length > 7) {
       throw new Error('El Número de Documento no puede superar 7 digitos en data.numero');
     }
-    if ((data.fecha + '').length > 10) {
+    /*if ((data.fecha + '').length > 10) {
       throw new Error('La Fecha de Emisión no puede superar los 10 caracteres en data.fecha');
-    }
+    }*/
   }
 
   /**
