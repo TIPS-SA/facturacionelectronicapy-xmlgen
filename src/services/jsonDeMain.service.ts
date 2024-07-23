@@ -187,9 +187,66 @@ class JSonDeMainService {
         (data['fecha'] + '').substring(5, 7) +
         (data['fecha'] + '').substring(8, 10);
     } else {
+
+      this.validateCamposDelCDC(params, data);
+
       this.codigoSeguridad = stringUtilService.leftZero(data.codigoSeguridadAleatorio, 9);
       this.codigoControl = jsonDteAlgoritmos.generateCodigoControl(params, data, this.codigoSeguridad);
     }
+  }
+
+  private validateCamposDelCDC(params: any, data: any) {
+      //Validar campos básicos para el código de control
+      if (!params.ruc) {
+        throw new Error("Debe completar Tipo de Documento en params.ruc");
+      }
+      if (!data.tipoDocumento) {
+        throw new Error("Debe completar Tipo de Documento en data.tipoDocumento");
+      }
+      if (!data.establecimiento) {
+        throw new Error("Debe completar Establecimiento de la Emisión en data.establecimiento");
+      }
+      if (!data.punto) {
+        throw new Error("Debe completar el Punto de emisión en data.punto");
+      }
+      if (!data.numero) {
+        throw new Error("Debe completar el Número de Documento en data.numero");
+      }
+      if (!data.fecha) {
+        throw new Error("Debe completar la Fecha de Emisión en data.fecha");
+      }
+
+      if (!(params.ruc.indexOf("-") >= 0)) {
+        throw new Error("El RUC del Emisor debe contener el DV en params.ruc");
+      }
+
+      let rucEmisor = params['ruc'].split('-')[0];
+      let dvEmisor = params['ruc'].split('-')[1];
+
+      if ((rucEmisor+"").length > 8) {
+        throw new Error("La parte del RUC del Emisor no puede superar los 8 caracteres");
+      }
+      if ((dvEmisor+"").length > 1) {
+        throw new Error("El DV del RUC del Emisor no puede superar 1 caracter");
+      }
+
+      if ((data.tipoDocumento+"").length > 1) {
+        throw new Error("El Tipo de Documento no puede superar 1 digito en data.tipoDocumento");
+      }
+      if ((data.establecimiento+"").length > 3) {
+        throw new Error("El Establecimiento no puede superar 3 digitos en data.establecimiento");
+      }
+      if ((data.punto+"").length > 3) {
+        throw new Error("El Punto de Emisión no puede superar 3 digitos en data.punto");
+      }
+      if ((data.numero+"").length > 7) {
+        throw new Error("El Número de Documento no puede superar 7 digitos en data.numero");
+      }
+      if ((data.fecha+"").length > 10) {
+        throw new Error("La Fecha de Emisión no puede superar los 10 caracteres en data.fecha");
+      }
+
+
   }
 
   /**
