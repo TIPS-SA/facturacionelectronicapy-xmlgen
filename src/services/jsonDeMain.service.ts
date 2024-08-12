@@ -351,12 +351,11 @@ class JSonDeMainService {
     if (data.autoFactura?.documento_numero) {
       data.autoFactura.documentoNumero = data.autoFactura.documento_numero;
     }
-
-    if (typeof data.autoFactura != 'undefined' && typeof data.autoFactura.numero_casa != 'undefined') {
-      if (data.autoFactura.numero_casa != null) {
-        data.autoFactura.numeroCasa = data.autoFactura.numero_casa + '';
-      }
-    }
+	    if (data.autoFactura != null && typeof data.autoFactura != 'undefined' && typeof data.autoFactura.numero_casa != 'undefined') {
+            if (data.autoFactura.numero_casa != null) {
+                data.autoFactura.numeroCasa = data.autoFactura.numero_casa + '';
+            }
+        }
 
     /*if (data.autoFactura?.numero_casa) {
       data.autoFactura.numeroCasa = data.autoFactura.numero_casa;
