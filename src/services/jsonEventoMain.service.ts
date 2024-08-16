@@ -643,10 +643,18 @@ class JSonEventoMainService {
       }
     }
 
-    if (data['contribuyente']) {
+    /*if (data['contribuyente']) {
       if (!data['tipoContribuyente']) {
         throw new Error(
           'Debe especificar el Tipo de Contribuyente en data.tipoContribuyente 1-Persona Física o 2-Persona Jurídica',
+        );
+      }
+    }*/
+
+    if (data['contribuyente']) {
+      if (!data['tipoReceptor']) {
+        throw new Error(
+          'Debe especificar el Tipo de Contribuyente en data.tipoReceptor 1-Persona Física o 2-Persona Jurídica',
         );
       }
     }
