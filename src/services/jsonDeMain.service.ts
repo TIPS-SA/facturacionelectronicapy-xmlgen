@@ -352,7 +352,12 @@ class JSonDeMainService {
       data.autoFactura.documentoNumero = data.autoFactura.documento_numero;
     }
 
-    if (data.autoFactura != null && typeof data.autoFactura != 'undefined' && data.autoFactura.numero_casa != null && typeof data.autoFactura.numero_casa != 'undefined') {
+    if (
+      data.autoFactura != null &&
+      typeof data.autoFactura != 'undefined' &&
+      data.autoFactura.numero_casa != null &&
+      typeof data.autoFactura.numero_casa != 'undefined'
+    ) {
       if (data.autoFactura.numero_casa != null) {
         data.autoFactura.numeroCasa = data.autoFactura.numero_casa + '';
       }
