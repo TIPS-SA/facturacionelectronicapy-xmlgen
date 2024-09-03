@@ -127,7 +127,7 @@ class JSonDteItemValidateService {
               item['cantidad'] +
               '" en data.items[' +
               i +
-              '].cantidad, no puede contener mas de 4 decimales',
+              '].cantidad, no puede contener mas de 8 decimales',
           );
         }
 
