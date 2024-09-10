@@ -2981,8 +2981,12 @@ class JSonDeMainValidateService {
       if (!(dataDocumentoAsociado['cdc'] && dataDocumentoAsociado['cdc'].length >= 44)) {
         this.errors.push('Debe indicar el CDC asociado en data.documentoAsociado.cdc');
       }
+      if (dataDocumentoAsociado['rucFusionado']) {
+        if (!(dataDocumentoAsociado['rucFusionado'] >= 3 && dataDocumentoAsociado['rucFusionado'].length <= 8)) {
+          this.errors.push('El RUC fusionado debe estar entre 3 y 8 caracteres');
+        } 
+      }
     }
-
     if (dataDocumentoAsociado['formato'] == 2) {
       //H002 = Impreso
       if (!dataDocumentoAsociado['timbrado']) {

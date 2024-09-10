@@ -122,12 +122,12 @@ class JSonDeMainService {
       data['tipoDocumento'] == 6 ||
       data['tipoDocumento'] == 7
     ) {
-      //this.json['rDE']['DE']['gDtipDE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, data);
       if (data['documentoAsociado']) {
         if (!Array.isArray(data['documentoAsociado'])) {
           this.json['rDE']['DE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(
             params,
             data['documentoAsociado'],
+            data
           );
         } else {
           //Caso sea un array.
@@ -137,7 +137,7 @@ class JSonDeMainService {
             const dataDocumentoAsociado = data['documentoAsociado'][i];
 
             this.json['rDE']['DE']['gCamDEAsoc'].push(
-              jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, dataDocumentoAsociado),
+              jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, dataDocumentoAsociado, data)
             );
           }
         }
@@ -412,6 +412,10 @@ class JSonDeMainService {
 
     if (data.documentoAsociado?.constancia_control) {
       data.documentoAsociado.constanciaControl = data.documentoAsociado.constancia_control;
+    }
+
+    if (data.documentoAsociado?.ruc_fusionado) {
+      data.documentoAsociado.rucFusionado = data.documentoAsociado.ruc_fusionado;
     }
 
     //Condicion entregas

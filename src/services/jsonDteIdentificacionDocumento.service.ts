@@ -9,7 +9,7 @@ class JSonDteIdentificacionDocumentoService {
    * @param data
    * @param options
    */
-  public generateDatosDocumentoAsociado(params: any, dataDocumentoAsociado: any) {
+  public generateDatosDocumentoAsociado(params: any, dataDocumentoAsociado: any, data: any) {
     const jsonResult: any = {
       iTipDocAso: dataDocumentoAsociado['formato'],
       dDesTipDocAso: constanteService.tiposDocumentosAsociados.filter(
@@ -22,6 +22,12 @@ class JSonDteIdentificacionDocumentoService {
       if (dataDocumentoAsociado['cdc'] && dataDocumentoAsociado['cdc'].length >= 44) {
         jsonResult['dCdCDERef'] = dataDocumentoAsociado['cdc'];
       }
+      if (data['tipoDocumento'] == 5 || data['tipoDocumento'] == 6 || data['tipoDocumento'] == 7) {
+        if (dataDocumentoAsociado['rucFusionado'].length >= 3) {
+          jsonResult['dRucFus'] = dataDocumentoAsociado['rucFusionado'];
+        }
+      }
+
     }
     if (dataDocumentoAsociado['formato'] == 2) {
       //H002 = Impreso
