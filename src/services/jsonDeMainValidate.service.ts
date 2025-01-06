@@ -97,7 +97,7 @@ class JSonDeMainValidateService {
       //1 Opcional, 7 Obligatorio
       if (data['tipoDocumento'] == 7) {
         if (!data['detalleTransporte']) {
-          this.errors.push('Debe especificar el detalle de tranporte en data.tranporte para el Tipo de Documento = 7');
+          this.errors.push('Debe especificar el detalle de transporte en data.transporte para el Tipo de Documento = 7');
         } else {
           this.generateDatosTransporteValidate(params, data);
         }
