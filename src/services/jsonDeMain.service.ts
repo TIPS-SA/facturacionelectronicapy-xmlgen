@@ -127,7 +127,7 @@ class JSonDeMainService {
           this.json['rDE']['DE']['gCamDEAsoc'] = jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(
             params,
             data['documentoAsociado'],
-            data
+            data,
           );
         } else {
           //Caso sea un array.
@@ -137,7 +137,7 @@ class JSonDeMainService {
             const dataDocumentoAsociado = data['documentoAsociado'][i];
 
             this.json['rDE']['DE']['gCamDEAsoc'].push(
-              jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, dataDocumentoAsociado, data)
+              jsonDteIdentificacionDocumento.generateDatosDocumentoAsociado(params, dataDocumentoAsociado, data),
             );
           }
         }
@@ -1258,10 +1258,8 @@ class JSonDeMainService {
     }
 
     //if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) { 2024-09-03
-    if ( ! data['cliente']['contribuyente']) {
-        //Obligatorio completar D210
-
-
+    if (!data['cliente']['contribuyente']) {
+      //Obligatorio completar D210
 
       if (data['cliente']['documentoTipo']) {
         this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['iTipIDRec'] = +data['cliente']['documentoTipo'];
@@ -1276,8 +1274,6 @@ class JSonDeMainService {
       }
 
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec']['dNumIDRec'] = (data['cliente']['documentoNumero'] + '').trim();
-
-
 
       if (+data['cliente']['documentoTipo'] === 5) {
         //Si es innominado completar con cero

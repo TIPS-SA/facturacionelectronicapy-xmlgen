@@ -97,7 +97,9 @@ class JSonDeMainValidateService {
       //1 Opcional, 7 Obligatorio
       if (data['tipoDocumento'] == 7) {
         if (!data['detalleTransporte']) {
-          this.errors.push('Debe especificar el detalle de transporte en data.transporte para el Tipo de Documento = 7');
+          this.errors.push(
+            'Debe especificar el detalle de transporte en data.transporte para el Tipo de Documento = 7',
+          );
         } else {
           this.generateDatosTransporteValidate(params, data);
         }
@@ -2984,7 +2986,7 @@ class JSonDeMainValidateService {
       if (dataDocumentoAsociado['rucFusionado']) {
         if (!(dataDocumentoAsociado['rucFusionado'] >= 3 && dataDocumentoAsociado['rucFusionado'].length <= 8)) {
           this.errors.push('El RUC fusionado debe estar entre 3 y 8 caracteres');
-        } 
+        }
       }
     }
     if (dataDocumentoAsociado['formato'] == 2) {

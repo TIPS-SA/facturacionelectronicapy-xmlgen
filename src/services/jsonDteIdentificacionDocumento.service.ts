@@ -27,7 +27,6 @@ class JSonDteIdentificacionDocumentoService {
           jsonResult['dRucFus'] = dataDocumentoAsociado['rucFusionado'];
         }
       }
-
     }
     if (dataDocumentoAsociado['formato'] == 2) {
       //H002 = Impreso

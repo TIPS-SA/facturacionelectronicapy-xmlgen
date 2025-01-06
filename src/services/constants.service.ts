@@ -962,7 +962,6 @@ class ConstanteService {
     { codigo: 109, representacion: 'M2    ', descripcion: 'Metros cuadrados            ' },
     { codigo: 110, representacion: 'M3    ', descripcion: 'Metros cúbicos              ' },
 
-
     /*
     { codigo: 111, representacion: '4A ', descripcion: 'Bovinas' },
     { codigo: 112, representacion: 'Ci ', descripcion: 'Curie' },
@@ -995,7 +994,6 @@ class ConstanteService {
     { codigo: 139, representacion: 'BK ', descripcion: 'Cesta' },    
     { codigo: 140, representacion: 'BW ', descripcion: 'Peso Base' },    
     */
-    
 
     { codigo: 569, representacion: 'ración', descripcion: 'Ración                      ' },
     { codigo: 625, representacion: 'Km    ', descripcion: 'Kilómetros                  ' },
