@@ -35,7 +35,7 @@ class JSonDeMainService {
           pygTaxDecimals: 0,
           userObjectRemove: false,
           test: false,
-          sum0_000001SuffixBeforeToFixed: false
+          sum0_000001SuffixBeforeToFixed: false,
         };
 
         defaultConfig = Object.assign(defaultConfig, config);

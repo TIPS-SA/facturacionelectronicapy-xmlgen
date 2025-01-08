@@ -190,7 +190,7 @@ class JSonDteItemService {
     if (config.sum0_000001SuffixBeforeToFixed == true) {
       jsonResult['dTotBruOpeItem'] += 0.000001;
     }
-    jsonResult['dTotBruOpeItem'] = parseFloat((jsonResult['dTotBruOpeItem']).toFixed(config.decimals));
+    jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.decimals));
     //console.log("dTotBruOpeItem 2", jsonResult['dTotBruOpeItem']);
 
     if (data.moneda === 'PYG') {
