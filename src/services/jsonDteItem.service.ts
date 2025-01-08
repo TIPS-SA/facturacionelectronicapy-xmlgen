@@ -84,9 +84,9 @@ class JSonDteItemService {
         //Tratamiento E719. Tiene relacion con generateDatosGeneralesInherentesOperacion
         if (data['tipoDocumento'] == 1 || data['tipoDocumento'] == 4) {
           //if (data['tipoTransaccion'] === 9) {
-            if (item['cdcAnticipo']) {
-              gCamItem['dCDCAnticipo'] = item['cdcAnticipo'];
-            }
+          if (item['cdcAnticipo']) {
+            gCamItem['dCDCAnticipo'] = item['cdcAnticipo'];
+          }
           //}
         }
 
