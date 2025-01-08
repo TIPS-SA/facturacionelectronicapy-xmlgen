@@ -282,6 +282,10 @@ class JSonDeMainService {
       data.condicionAnticipo = data.condicion_anticipo;
     }
 
+    if (data.anticipo_global) {
+      data.anticipoGlobal = data.anticipo_global;
+    }
+
     if (data.condicion_tipo_cambio) {
       data.condicionTipoCambio = data.condicion_tipo_cambio;
     }
