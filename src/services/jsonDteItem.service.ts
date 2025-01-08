@@ -186,8 +186,13 @@ class JSonDteItemService {
     jsonResult['dPUniProSer'] = item['precioUnitario'];
 
     jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dPUniProSer']) * parseFloat(item['cantidad']);
+    //console.log("dTotBruOpeItem 1", jsonResult['dTotBruOpeItem']);
+    if (config.sum0_000001SuffixBeforeToFixed == true) {
+      jsonResult['dTotBruOpeItem'] += 0.000001;
+    }
+    jsonResult['dTotBruOpeItem'] = parseFloat((jsonResult['dTotBruOpeItem']).toFixed(config.decimals));
+    //console.log("dTotBruOpeItem 2", jsonResult['dTotBruOpeItem']);
 
-    jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.decimals));
     if (data.moneda === 'PYG') {
       jsonResult['dTotBruOpeItem'] = parseFloat(jsonResult['dTotBruOpeItem'].toFixed(config.pygDecimals));
     }
@@ -306,14 +311,18 @@ class JSonDteItemService {
       data['tipoImpuesto'] == 4 ||
       data['tipoImpuesto'] == 5
     ) {
-      const valores =
+      const precioUnitarioConDescuentoAplicado =
         parseFloat(item['precioUnitario']) -
         parseFloat(jsonResult['dDescItem'] || 0) -
         parseFloat(jsonResult['dDescGloItem'] || 0) -
         parseFloat(jsonResult['dAntPreUniIt'] || 0) -
         parseFloat(jsonResult['dAntGloPreUniIt'] || 0);
 
-      jsonResult['dTotOpeItem'] = parseFloat(valores + '') * parseFloat(item['cantidad']);
+      jsonResult['dTotOpeItem'] = parseFloat(precioUnitarioConDescuentoAplicado + '') * parseFloat(item['cantidad']);
+
+      if (config.sum0_000001SuffixBeforeToFixed == true) {
+        jsonResult['dTotOpeItem'] += 0.000001;
+      }
 
       if (jsonResult['dDescGloItem'] == 0) {
         // Cuando no hay descuento Global por item, entonces utiliza los redondeos establecidos en config, para el dTotOpeItem
