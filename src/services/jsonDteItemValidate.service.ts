@@ -332,6 +332,7 @@ class JSonDteItemValidateService {
           this.generateDatosItemsOperacionSectorAutomotoresValidate(params, data, item, i);
         }
 
+        /* Validación retirada temporalmente, por el nuevo error de B2G
         if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
           if (!item['dncp']) {
             this.errors.push(
@@ -375,7 +376,7 @@ class JSonDteItemValidateService {
               //item['dncp']['codigoNivelEspecifico'] = stringUtilService.leftZero( item['dncp']['codigoNivelEspecifico'], 8);
             }
           }
-        }
+        }*/
       } //end-for
     }
     return this.errors;
