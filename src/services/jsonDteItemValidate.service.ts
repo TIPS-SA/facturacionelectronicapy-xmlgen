@@ -338,7 +338,7 @@ class JSonDteItemValidateService {
               'Debe especificar los datos de la DNCP en ' +
                 'data.items[' +
                 i +
-                '].dncp para el el tipo de operación 3-B2G',
+                '].dncp para el tipo de operación 3-B2G',
             );
           } else {
             if (
@@ -352,7 +352,7 @@ class JSonDteItemValidateService {
                 'Debe especificar los datos de la DNCP en ' +
                   'data.items[' +
                   i +
-                  '].dncp.codigoNivelGeneral (hasta 8 digitos) para el el tipo de operación 3-B2G',
+                  '].dncp.codigoNivelGeneral (hasta 8 digitos) para el tipo de operación 3-B2G',
               );
             } else {
               item['dncp']['codigoNivelGeneral'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
@@ -369,7 +369,7 @@ class JSonDteItemValidateService {
                 'Debe especificar los datos de la DNCP en ' +
                   'data.items[' +
                   i +
-                  '].dncp.codigoNivelEspecifico (3 o 4 digitos) para el el tipo de operación 3-B2G',
+                  '].dncp.codigoNivelEspecifico (3 o 4 digitos) para el tipo de operación 3-B2G',
               );
             } else {
               //item['dncp']['codigoNivelEspecifico'] = stringUtilService.leftZero( item['dncp']['codigoNivelEspecifico'], 8);
