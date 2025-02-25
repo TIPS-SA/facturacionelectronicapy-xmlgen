@@ -31,15 +31,18 @@ class JSonDteItemService {
         }
 
         if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
-          gCamItem['dDncpG'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
-          gCamItem['dDncpE'] = item['dncp']['codigoNivelEspecifico'];
-        }
-
-        if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
-          if (item['dncp']['codigoGtinProducto']) {
+          if (item['dncp'] && item['dncp']['codigoNivelGeneral']) {
+            gCamItem['dDncpG'] = stringUtilService.leftZero(item['dncp']['codigoNivelGeneral'], 8);
+          }
+          if (item['dncp'] && item['dncp']['codigoNivelEspecifico']) {
+            gCamItem['dDncpE'] = item['dncp']['codigoNivelEspecifico'];
+          }
+          //}
+          //if (data['cliente']['tipoOperacion'] && data['cliente']['tipoOperacion'] === 3) {
+          if (item['dncp'] && item['dncp']['codigoGtinProducto']) {
             gCamItem['dGtin'] = item['dncp']['codigoGtinProducto'];
           }
-          if (item['dncp']['codigoNivelPaquete']) {
+          if (item['dncp'] && item['dncp']['codigoNivelPaquete']) {
             gCamItem['dGtinPq'] = item['dncp']['codigoNivelPaquete'];
           }
         }
