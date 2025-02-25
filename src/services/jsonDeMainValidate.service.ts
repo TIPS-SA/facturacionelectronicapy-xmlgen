@@ -1049,8 +1049,7 @@ class JSonDeMainValidateService {
     }
 
     if (data['cliente']['tipoOperacion'] === 3) {
-      // Retirado temporariamente, ya que al parecer SIFEN aplico restricción de B2G a entitidades publicas, aunque no sea por licitación
-      // this.generateDatosEspecificosPorTipoDE_ComprasPublicasValidate(params, data);
+      this.generateDatosEspecificosPorTipoDE_ComprasPublicasValidate(params, data);
     }
   }
 
@@ -1066,23 +1065,14 @@ class JSonDeMainValidateService {
     if (!(data['dncp'] && data['dncp']['modalidad'] && (data['dncp']['modalidad'] + '').length == 2)) {
       this.errors.push('Debe informar la modalidad de Contratación DNCP  (2 digitos) en data.dncp.modalidad');
     }
-    /*    if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].length > 0)) {
-      this.errors.push('Debe informar la entidad de Contratación DNCP en data.dncp.entidad');
-    }*/
     if (
       !(data['dncp'] && data['dncp']['entidad'] && +data['dncp']['entidad'] > 9999 && +data['dncp']['entidad'] < 100000)
     ) {
       this.errors.push('Debe informar la entidad de Contratación DNCP (5 digitos) en data.dncp.entidad');
     }
-    /*if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].length > 0)) {
-      this.errors.push('Debe informar el año de Contratación DNCP en data.dncp.año');
-    }*/
     if (!(data['dncp'] && data['dncp']['año'] && +data['dncp']['año'] > 0 && +data['dncp']['año'] < 100)) {
       this.errors.push('Debe informar el año de Contratación DNCP (2 digitos) en data.dncp.año');
     }
-    /*if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].length > 0)) {
-      this.errors.push('Debe informar la secuencia de Contratación DNCP en data.dncp.secuencia');
-    }*/
     if (
       !(
         data['dncp'] &&
