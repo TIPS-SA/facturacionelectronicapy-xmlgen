@@ -1049,7 +1049,8 @@ class JSonDeMainValidateService {
     }
 
     if (data['cliente']['tipoOperacion'] === 3) {
-      this.generateDatosEspecificosPorTipoDE_ComprasPublicasValidate(params, data);
+      // Retirado temporariamente, ya que al parecer SIFEN aplico restricción de B2G a entitidades publicas, aunque no sea por licitación
+      // this.generateDatosEspecificosPorTipoDE_ComprasPublicasValidate(params, data);
     }
   }
 
