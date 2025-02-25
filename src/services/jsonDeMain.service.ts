@@ -1430,8 +1430,14 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosEspecificosPorTipoDE_ComprasPublicas(params: any, data: any) {
-
-    if (data['dncp'] && data['dncp']['modalidad'] && data['dncp']['entidad'] && data['dncp']['año'] && data['dncp']['secuencia'] && data['dncp']['fecha'] ) {
+    if (
+      data['dncp'] &&
+      data['dncp']['modalidad'] &&
+      data['dncp']['entidad'] &&
+      data['dncp']['año'] &&
+      data['dncp']['secuencia'] &&
+      data['dncp']['fecha']
+    ) {
       this.json['rDE']['DE']['gDtipDE']['gCamFE']['gCompPub'] = {
         dModCont: data['dncp']['modalidad'],
         dEntCont: data['dncp']['entidad'],
