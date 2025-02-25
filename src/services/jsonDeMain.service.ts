@@ -1430,29 +1430,16 @@ class JSonDeMainService {
    * @param options
    */
   private generateDatosEspecificosPorTipoDE_ComprasPublicas(params: any, data: any) {
-    if (!(data['dncp'] && data['dncp']['modalidad'] && data['dncp']['modalidad'].length > 0)) {
-      //throw new Error('Debe informar la modalidad de Contratación DNCP en data.dncp.modalidad');
-    }
-    if (!(data['dncp'] && data['dncp']['entidad'] && data['dncp']['entidad'].length > 0)) {
-      //throw new Error('Debe informar la entidad de Contratación DNCP en data.dncp.entidad');
-    }
-    if (!(data['dncp'] && data['dncp']['año'] && data['dncp']['año'].length > 0)) {
-      //throw new Error('Debe informar la año de Contratación DNCP en data.dncp.año');
-    }
-    if (!(data['dncp'] && data['dncp']['secuencia'] && data['dncp']['secuencia'].length > 0)) {
-      //throw new Error('Debe informar la secuencia de Contratación DNCP en data.dncp.secuencia');
-    }
-    if (!(data['dncp'] && data['dncp']['fecha'] && data['dncp']['fecha'].length > 0)) {
-      //throw new Error('Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha');
-    }
 
-    this.json['rDE']['DE']['gDtipDE']['gCamFE']['gCompPub'] = {
-      dModCont: data['dncp']['modalidad'],
-      dEntCont: data['dncp']['entidad'],
-      dAnoCont: data['dncp']['año'],
-      dSecCont: data['dncp']['secuencia'],
-      dFeCodCont: data['dncp']['fecha'],
-    };
+    if (data['dncp'] && data['dncp']['modalidad'] && data['dncp']['entidad'] && data['dncp']['año'] && data['dncp']['secuencia'] && data['dncp']['fecha'] ) {
+      this.json['rDE']['DE']['gDtipDE']['gCamFE']['gCompPub'] = {
+        dModCont: data['dncp']['modalidad'],
+        dEntCont: data['dncp']['entidad'],
+        dAnoCont: data['dncp']['año'],
+        dSecCont: data['dncp']['secuencia'],
+        dFeCodCont: data['dncp']['fecha'],
+      };
+    }
   }
 
   private generateDatosEspecificosPorTipoDE_Autofactura(params: any, data: any) {
