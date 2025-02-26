@@ -1065,15 +1065,17 @@ class JSonDeMainValidateService {
     if (!(data['dncp'] && data['dncp']['modalidad'] && (data['dncp']['modalidad'] + '').length == 2)) {
       this.errors.push('Debe informar la modalidad de Contratación DNCP  (2 digitos) en data.dncp.modalidad');
     }
-    if (
+    /*if (
       !(data['dncp'] && data['dncp']['entidad'] && +data['dncp']['entidad'] > 9999 && +data['dncp']['entidad'] < 100000)
-    ) {
+    ) {*/
+    if (!(data['dncp'] && data['dncp']['entidad'] && (data['dncp']['entidad'] + '').length == 5)) {
       this.errors.push('Debe informar la entidad de Contratación DNCP (5 digitos) en data.dncp.entidad');
     }
-    if (!(data['dncp'] && data['dncp']['año'] && +data['dncp']['año'] > 0 && +data['dncp']['año'] < 100)) {
+    //if (!(data['dncp'] && data['dncp']['año'] && +data['dncp']['año'] > 0 && +data['dncp']['año'] < 100)) {
+    if (!(data['dncp'] && data['dncp']['año'] && (data['dncp']['año'] + '').length == 2)) {
       this.errors.push('Debe informar el año de Contratación DNCP (2 digitos) en data.dncp.año');
     }
-    if (
+    /*if (
       !(
         data['dncp'] &&
         data['dncp']['secuencia'] &&
@@ -1082,8 +1084,10 @@ class JSonDeMainValidateService {
       )
     ) {
       this.errors.push('Debe informar la secuencia de Contratación DNCP (7 digitos) en data.dncp.secuencia');
+    }*/
+    if (!(data['dncp'] && data['dncp']['secuencia'] && (data['dncp']['secuencia'] + '').length == 7)) {
+        this.errors.push('Debe informar la secuencia de Contratación DNCP (7 digitos) en data.dncp.secuencia');
     }
-
     if (!(data['dncp'] && data['dncp']['fecha'] && (data['dncp']['fecha'] + '').length > 0)) {
       this.errors.push('Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha');
     } else {
