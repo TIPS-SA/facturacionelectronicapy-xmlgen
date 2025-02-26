@@ -118,8 +118,7 @@ class JSonDteComplementariosService {
    * @param items Es el item actual del array de items de "data" que se está iterando
    */
   private generateDatosAdicionalesUsoComercial(params: any, data: any) {
-    const jsonResult: any = {
-    };
+    const jsonResult: any = {};
 
     if (data['sectorAdicional']['ciclo']) {
       jsonResult['dCiclo'] = data['sectorAdicional']['ciclo'];
@@ -134,7 +133,6 @@ class JSonDteComplementariosService {
     }
 
     if (data['sectorAdicional']['vencimientoPago']) {
-
       let fecha = new Date(data.fecha);
       let fechaPago = new Date(data['sectorAdicional']['vencimientoPago']);
       jsonResult['dVencPag'] = data['sectorAdicional']['vencimientoPago'];

@@ -1086,7 +1086,7 @@ class JSonDeMainValidateService {
       this.errors.push('Debe informar la secuencia de Contratación DNCP (7 digitos) en data.dncp.secuencia');
     }*/
     if (!(data['dncp'] && data['dncp']['secuencia'] && (data['dncp']['secuencia'] + '').length == 7)) {
-        this.errors.push('Debe informar la secuencia de Contratación DNCP (7 digitos) en data.dncp.secuencia');
+      this.errors.push('Debe informar la secuencia de Contratación DNCP (7 digitos) en data.dncp.secuencia');
     }
     if (!(data['dncp'] && data['dncp']['fecha'] && (data['dncp']['fecha'] + '').length > 0)) {
       this.errors.push('Debe informar la fecha de emisión de código de Contratación DNCP en data.dncp.fecha');
