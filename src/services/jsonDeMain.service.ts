@@ -305,20 +305,21 @@ class JSonDeMainService {
       data.cliente.tipoOperacion = data.cliente.tipo_operacion;
     }
 
-    if (data.cliente?.tipoOperacion == 3) { //B2G
+    if (data.cliente?.tipoOperacion == 3) {
+      //B2G
       //Completar los datos de la DNCP de forma predeterminada.
       if (!data.dncp) {
         data.dncp = {};
-        data.dncp.modalidad = "11";
-        data.dncp.entidad = "11111";
-        data.dncp.secuencia = "1111111";
-        data.dncp.año = "11";
+        data.dncp.modalidad = '11';
+        data.dncp.entidad = '11111';
+        data.dncp.secuencia = '1111111';
+        data.dncp.año = '11';
         let fechaContratacion = new Date();
-        fechaContratacion.setDate(fechaContratacion.getDate()-30);  //1 mes antes
-        data.dncp.fecha =  fechaUtilService.convertToAAAA_MM_DD(fechaContratacion);
+        fechaContratacion.setDate(fechaContratacion.getDate() - 30); //1 mes antes
+        data.dncp.fecha = fechaUtilService.convertToAAAA_MM_DD(fechaContratacion);
       }
     }
-        //Campo que puede ser un numero = 0, hay que validar de esta forma
+    //Campo que puede ser un numero = 0, hay que validar de esta forma
     if (typeof data.cliente != 'undefined' && typeof data.cliente.numero_casa != 'undefined') {
       if (data.cliente.numero_casa != null) {
         data.cliente.numeroCasa = data.cliente.numero_casa + '';
@@ -542,13 +543,14 @@ class JSonDeMainService {
         }
 
         //Datos predeterminados para DNCP, si no se le pasa
-        if (data.cliente?.tipoOperacion == 3) { //B2G - NT20
+        if (data.cliente?.tipoOperacion == 3) {
+          //B2G - NT20
           if (!item.dncp) {
             item.dncp = {};
-            item.dncp.codigoNivelGeneral = "00000000";
-            item.dncp.codigoNivelEspecifico = "000";
-            item.dncp.codigoGtinProducto = "11111111";  //Numerico
-            item.dncp.codigoNivelPaquete = "11111111";  //Numerico
+            item.dncp.codigoNivelGeneral = '00000000';
+            item.dncp.codigoNivelEspecifico = '000';
+            item.dncp.codigoGtinProducto = '11111111'; //Numerico
+            item.dncp.codigoNivelPaquete = '11111111'; //Numerico
           }
         }
 
