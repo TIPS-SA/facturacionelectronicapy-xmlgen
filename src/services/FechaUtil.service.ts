@@ -8,6 +8,13 @@ class FechaUtilService {
       stringUtilService.leftZero(fecha.getDate(), 2)
     );
   }
+  convertToAAAA_MM_DD(fecha: Date) {
+    return (
+      fecha.getFullYear() + "-" +
+      stringUtilService.leftZero(fecha.getMonth() + 1, 2) + "-" +
+      stringUtilService.leftZero(fecha.getDate(), 2)
+    );
+  }
   convertToJSONFormat(fecha: Date) {
     return (
       fecha.getFullYear() +
