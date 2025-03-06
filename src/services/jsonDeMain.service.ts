@@ -318,6 +318,10 @@ class JSonDeMainService {
         fechaContratacion.setDate(fechaContratacion.getDate() - 30); //1 mes antes
         data.dncp.fecha = fechaUtilService.convertToAAAA_MM_DD(fechaContratacion);
       }
+    } else {
+      if (data.dncp.ano) {
+        data.dncp.año = data.dncp.ano;
+      }
     }
     //Campo que puede ser un numero = 0, hay que validar de esta forma
     if (typeof data.cliente != 'undefined' && typeof data.cliente.numero_casa != 'undefined') {
