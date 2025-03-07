@@ -319,7 +319,7 @@ class JSonDeMainService {
         data.dncp.fecha = fechaUtilService.convertToAAAA_MM_DD(fechaContratacion);
       }
     } else {
-      if (data.dncp.ano) {
+      if (data.dncp?.ano) {
         data.dncp.año = data.dncp.ano;
       }
     }
