@@ -322,7 +322,6 @@ class JSonDeMainService {
           data.dncp.año = data.dncp.ano;
         }
       }
-
     } else {
       if (data.dncp?.ano) {
         data.dncp.año = data.dncp.ano;
