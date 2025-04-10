@@ -1203,7 +1203,7 @@ class JSonDeMainService {
 
       //Verificar si tiene varios correos.
       if (email.indexOf(',') > -1) {
-        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que la SET no acepta Comas
+        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que SIFEN no acepta Comas
         email = email.split(',')[0].trim();
       }
 
@@ -1370,7 +1370,7 @@ class JSonDeMainService {
 
       //Verificar si tiene varios correos.
       if (email.indexOf(',') > -1) {
-        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que la SET no acepta Comas
+        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que SIFEN no acepta Comas
         email = email.split(',')[0].trim();
       }
 

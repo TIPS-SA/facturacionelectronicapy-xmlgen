@@ -1,4 +1,4 @@
-# Facturación Electrónica - Generación de XML para la SET (Paraguay)
+# Facturación Electrónica - Generación de XML para SIFEN (Paraguay)
 
 Módulo NodeJS que genera el **archivo XML** para enviar a la **SET** _(Subsecretaria de Estado de Tributación del Ministerio de Hacienda)_ para el proceso y generación del documento electrónico, a partir de una estructura de datos en formato JSON.
 
@@ -14,7 +14,7 @@ El módulo está preparado de forma a proveer una fácil integración dentro de 
 - Genera el CDC automáticamente de acuerdo a los datos del documento electrónico
 - Implementa el Algoritmo del dígito verificador del CDC
 - Permite sobreescribir el valor del código de seguridad, de acuerdo a las necesidades del implementador
-- Realiza la validación de los datos de entrada conforme el menual técnico de la SET
+- Realiza la validación de los datos de entrada conforme el menual técnico de SIFEN
 
 ## Instalación
 
@@ -425,7 +425,7 @@ El email del Cliente, si bien puede enviarse mas de 1 (uno), en SIFEN solamente 
 
 ## Eventos
 
-Para la invocación de Eventos de la SET se debe utilizar como primer parámetro, el mismo `params` utilizado en la Generación de XML.
+Para la invocación de Eventos de SIFEN se debe utilizar como primer parámetro, el mismo `params` utilizado en la Generación de XML.
 
 El segundo parámetro `data` debe ser pasado en el siguiente formato, dependiendo del evento a ser invocado. A continuación los ejemplos para cada evento.
 
@@ -542,7 +542,7 @@ Para más información sobre el proceso que llevó a la generación de éste mó
 [Generación de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlgen)<br/>
 [Firma de XML](https://www.npmjs.com/package/facturacionelectronicapy-xmlsign)<br/>
 [Generación de QR](https://www.npmjs.com/package/facturacionelectronicapy-qrgen)<br/>
-[API de la SET](https://www.npmjs.com/package/facturacionelectronicapy-setapi)<br/>
+[API de SIFEN](https://www.npmjs.com/package/facturacionelectronicapy-setapi)<br/>
 [Generación KUDE](https://www.npmjs.com/package/facturacionelectronicapy-kude)<br/>
 
 

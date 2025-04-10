@@ -373,7 +373,7 @@ class JSonDeMainValidateService {
                   i +
                   '].telefono no puede contener () o []',
               );*/
-              //Finalmente no da error en la SET por esto
+              //Finalmente no da error en SIFEN por esto
             }
           }
         }
@@ -938,7 +938,7 @@ class JSonDeMainValidateService {
           /*this.errors.push(
             "El valor '" + data['cliente']['telefono'] + "' en data.cliente.telefono no puede contener () o []",
           );*/
-          //Finalmente no da error en la SET por esto
+          //Finalmente no da error en SIFEN por esto
         }
       }
     }
@@ -969,7 +969,7 @@ class JSonDeMainValidateService {
 
       //Verificar si tiene varios correos.
       if (email.indexOf(',') > -1) {
-        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que la SET no acepta Comas
+        //Si el Email tiene , (coma) entonces va enviar solo el primer valor, ya que SIFEN no acepta Comas
         email = email.split(',')[0].trim();
       }
 

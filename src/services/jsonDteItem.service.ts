@@ -436,7 +436,7 @@ class JSonDteItemService {
 
       //Redondeo inicial a 2 decimales
       if (jsonResult['dBasGravIVA']) {
-        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
+        jsonResult['dBasGravIVA'] = parseFloat(jsonResult['dBasGravIVA'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de SIFEN.
       }
     }
 
@@ -456,7 +456,7 @@ class JSonDteItemService {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (config.test == true) {
-      //Ambiente de test de la SET
+      //Ambiente de test de SIFEN
       if (new Date().getTime() >= new Date('2023-04-21').getTime()) {
         //Esta parte debe entrar en vigor en produccion a partir de 21/05/2023
         //Calculo para E737, aparecio en la NT13
@@ -478,7 +478,7 @@ class JSonDteItemService {
 
           //Redondeo inicial a 2 decimales
           if (jsonResult['dBasExe']) {
-            jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
+            jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de SIFEN.
           }
         }
       }
@@ -505,7 +505,7 @@ class JSonDteItemService {
 
         //Redondeo inicial a 2 decimales
         if (jsonResult['dBasExe']) {
-          jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de la SET.
+          jsonResult['dBasExe'] = parseFloat(jsonResult['dBasExe'].toFixed(config.partialTaxDecimals)); //Calculo intermedio, usa max decimales de SIFEN.
         }
       }
     }
