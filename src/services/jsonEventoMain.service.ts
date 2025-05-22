@@ -324,7 +324,7 @@ class JSonEventoMainService {
       throw new Error('El timbrado debe tener una longitud de 8 caracteres');
     }
     if (!data['motivo']) {
-      throw new Error('Falta el Motivo de la Cancelación en data.motivo');
+      throw new Error('Falta el Motivo de la Inutilización en data.motivo');
     }
     if (!((data['motivo'] + '').length >= 5 && (data['motivo'] + '').length <= 500)) {
       throw new Error('El Motivo de la Inutilización en data.motivo debe contener de [5-500] caracteres');
@@ -693,14 +693,14 @@ class JSonEventoMainService {
     if (data['nombreFantasia']) {
       if (!(data['nombreFantasia'].length >= 4 && data['nombreFantasia'].length <= 255)) {
         throw new Error(
-          'El Nombre del Cliente en data.nombreFantasia debe tener una longitud entre 4 y 255 caracteres',
+          'El Nombre de Fantasía del Cliente en data.nombreFantasia debe tener una longitud entre 4 y 255 caracteres',
         );
       }
     }
 
     if (data['direccion']) {
       if (!(data['direccion'].length >= 1 && data['direccion'].length <= 255)) {
-        throw new Error('El Nombre del Cliente en data.direccion debe tener una longitud entre 1 y 255 caracteres');
+        throw new Error('La dirección del Cliente en data.direccion debe tener una longitud entre 1 y 255 caracteres');
       }
     }
 
@@ -708,8 +708,8 @@ class JSonEventoMainService {
       if (!data['numeroCasa']) {
         throw new Error('Debe especificar el numero de casa en data.numeroCasa');
       } else {
-        if (!(data['numeroCasa'].length >= 1 && data['numeroCasa'].length <= 6)) {
-          throw new Error('El Nombre del Cliente en data.numeroCasa debe tener una longitud entre 1 y 6 caracteres');
+        if (!((data['numeroCasa']+"").length >= 1 && (data['numeroCasa']+"").length <= 6)) {
+          throw new Error('El Número de Casa del Cliente en data.numeroCasa debe tener una longitud entre 1 y 6 caracteres');
         }
       }
     }
