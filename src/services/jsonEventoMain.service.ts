@@ -180,7 +180,13 @@ class JSonEventoMainService {
 
     this.json['gGroupGesEve']['rGesEve']['rEve']['$'] = {};
     this.json['gGroupGesEve']['rGesEve']['rEve']['$']['Id'] = 1;
-    this.json['gGroupGesEve']['rGesEve']['rEve']['dFecFirma'] = fechaUtilService.convertToJSONFormat(new Date());
+
+    let fechaFirmaDigital = new Date();
+    if (data.fechaFirmaDigital) {
+      fechaFirmaDigital = new Date(data.fechaFirmaDigital);
+    }
+
+    this.json['gGroupGesEve']['rGesEve']['rEve']['dFecFirma'] = fechaUtilService.convertToJSONFormat(fechaFirmaDigital);
     this.json['gGroupGesEve']['rGesEve']['rEve']['dVerFor'] = params.version;
     this.json['gGroupGesEve']['rGesEve']['rEve']['gGroupTiEvt'] = {};
 
