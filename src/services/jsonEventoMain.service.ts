@@ -714,8 +714,10 @@ class JSonEventoMainService {
       if (!data['numeroCasa']) {
         throw new Error('Debe especificar el numero de casa en data.numeroCasa');
       } else {
-        if (!((data['numeroCasa']+"").length >= 1 && (data['numeroCasa']+"").length <= 6)) {
-          throw new Error('El Número de Casa del Cliente en data.numeroCasa debe tener una longitud entre 1 y 6 caracteres');
+        if (!((data['numeroCasa'] + '').length >= 1 && (data['numeroCasa'] + '').length <= 6)) {
+          throw new Error(
+            'El Número de Casa del Cliente en data.numeroCasa debe tener una longitud entre 1 y 6 caracteres',
+          );
         }
       }
     }
