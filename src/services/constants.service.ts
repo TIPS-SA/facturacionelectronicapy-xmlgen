@@ -440,11 +440,11 @@ class ConstanteService {
   globalPorItem = [
     {
       codigo: 1,
-      descripcion: 'Global',
+      descripcion: 'Global',  //Anticipo Global
     },
     {
       codigo: 2,
-      descripcion: 'por Item',
+      descripcion: 'por Ítem',  //Anticipo por Ítem
     },
   ];
 
