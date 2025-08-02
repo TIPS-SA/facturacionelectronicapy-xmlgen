@@ -1362,7 +1362,7 @@ class JSonDeMainService {
     if (data['cliente']['telefono']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dTelRec = (data['cliente']['telefono'] + '').trim();
     }
-/*    if (data['cliente']['celular']) {
+    /*    if (data['cliente']['celular']) {
       this.json['rDE']['DE']['gDatGralOpe']['gDatRec'].dCelRec = (data['cliente']['celular'] + '').trim();
     }*/
     if (data['cliente']['celular']) {
