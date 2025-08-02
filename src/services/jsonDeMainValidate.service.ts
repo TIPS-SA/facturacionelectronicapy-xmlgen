@@ -943,24 +943,40 @@ class JSonDeMainValidateService {
       }
     }
 
-    if (data['cliente']['celular']) {
-      if (!(data['cliente']['celular'].length >= 10 && data['cliente']['celular'].length <= 20)) {
-        this.errors.push(
+    const validateNumeroCelular = (celular: any, errors: any) => {
+      if (!(celular.length >= 10 && celular.length <= 20)) {
+        errors.push(
           "El valor '" +
-            data['cliente']['celular'] +
+            celular +
             "' en data.cliente.celular debe tener una longitud de 10 a 20 caracteres",
         );
       } else {
         if (
-          (data['cliente']['celular'] + '').includes('(') ||
-          (data['cliente']['celular'] + '').includes(')') ||
-          (data['cliente']['celular'] + '').includes('[') ||
-          (data['cliente']['celular'] + '').includes(']')
+          (celular + '').includes('(') ||
+          (celular + '').includes(')') ||
+          (celular + '').includes('[') ||
+          (celular + '').includes(']') ||
+          (celular + '').includes(';') ||
+          (celular + '').includes('=') ||
+          (celular + '').includes('/') ||
+          (celular + '').includes('\\')
         ) {
-          this.errors.push(
-            "El valor '" + data['cliente']['celular'] + "' en data.cliente.celular no puede contener () o []",
+          errors.push(
+            "El valor '" + celular + "' en data.cliente.celular no puede contener (), [] o ;",
           );
         }
+      }
+    }
+
+    if (data['cliente']['celular']) {
+      //Primero verificar si el celular tiene comas
+      if ((data['cliente']['celular'] + '').includes(',')) {
+        let celulares = data['cliente']['celular'].split(",");
+        for(let i=0; i< celulares.lenght; i++) {
+          validateNumeroCelular(celulares[i], this.errors);
+        }
+      } else {
+        validateNumeroCelular(data['cliente']['celular'], this.errors);
       }
     }
 
