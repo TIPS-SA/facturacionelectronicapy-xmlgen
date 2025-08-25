@@ -1007,7 +1007,7 @@ class ConstanteService {
   ];*/
 
   unidadesMedidas = [
-    { codigo: 77, representacion: 'UN    ', descripcion: 'Unidad                      ' },
+    { codigo: 77, representacion: 'UNI   ', descripcion: 'Unidad                      ' },
     { codigo: 79, representacion: 'kg/m2 ', descripcion: 'Kilogramos s/ metro cuadrado' },
     { codigo: 83, representacion: 'kg    ', descripcion: 'Kilogramos                  ' },
     { codigo: 86, representacion: 'g     ', descripcion: 'Gramos                      ' },
