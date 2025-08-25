@@ -991,8 +991,8 @@ class ConstanteService {
     { codigo: 136, representacion: 'JR', descripcion: 'Pote' },
     { codigo: 137, representacion: 'BL', descripcion: 'Fardos' },
     { codigo: 138, representacion: 'AB', descripcion: 'Bulto' },
-    { codigo: 139, representacion: 'BK', descripcion: 'Cesta' },    
-    { codigo: 140, representacion: 'BW', descripcion: 'Peso Base' },    
+    { codigo: 139, representacion: 'BK', descripcion: 'Cesta' },
+    { codigo: 140, representacion: 'BW', descripcion: 'Peso Base' },
     //Fin NT 23
 
     { codigo: 569, representacion: 'ración', descripcion: 'Ración' },
@@ -1062,8 +1062,8 @@ class ConstanteService {
     { codigo: 136, representacion: 'JR ', descripcion: 'Pote' },
     { codigo: 137, representacion: 'BL ', descripcion: 'Fardos' },
     { codigo: 138, representacion: 'AB ', descripcion: 'Bulto' },
-    { codigo: 139, representacion: 'BK ', descripcion: 'Cesta' },    
-    { codigo: 140, representacion: 'BW ', descripcion: 'Peso Base' },    
+    { codigo: 139, representacion: 'BK ', descripcion: 'Cesta' },
+    { codigo: 140, representacion: 'BW ', descripcion: 'Peso Base' },
     //Fin NT 23
 
     { codigo: 569, representacion: 'ración', descripcion: 'Ración                      ' },
