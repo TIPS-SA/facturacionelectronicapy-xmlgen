@@ -962,7 +962,7 @@ class ConstanteService {
     { codigo: 109, representacion: 'M2    ', descripcion: 'Metros cuadrados            ' },
     { codigo: 110, representacion: 'M3    ', descripcion: 'Metros cúbicos              ' },
 
-    /*
+    //Inicio NT 23
     { codigo: 111, representacion: '4A ', descripcion: 'Bovinas' },
     { codigo: 112, representacion: 'Ci ', descripcion: 'Curie' },
     { codigo: 113, representacion: 'DOC', descripcion: 'Docena' },
@@ -981,7 +981,7 @@ class ConstanteService {
     { codigo: 126, representacion: 'RM ', descripcion: 'Resmas' },
     { codigo: 127, representacion: 'RO ', descripcion: 'Rollos' },
     { codigo: 128, representacion: 'kWh', descripcion: '1000 Kilowatt Hora' },
-    { codigo: 129, representacion: 'U(JGO)', descripcion: ' Mazos' },
+    { codigo: 129, representacion: 'U(JGO)', descripcion: 'Mazos' },
     { codigo: 130, representacion: 'DR ', descripcion: 'Tambores' },
     { codigo: 131, representacion: 'BX ', descripcion: 'Caja' },
     { codigo: 132, representacion: 'SET', descripcion: 'Juego' },
@@ -993,7 +993,7 @@ class ConstanteService {
     { codigo: 138, representacion: 'AB ', descripcion: 'Bulto' },
     { codigo: 139, representacion: 'BK ', descripcion: 'Cesta' },    
     { codigo: 140, representacion: 'BW ', descripcion: 'Peso Base' },    
-    */
+    //Fin NT 23
 
     { codigo: 569, representacion: 'ración', descripcion: 'Ración                      ' },
     { codigo: 625, representacion: 'Km    ', descripcion: 'Kilómetros                  ' },
