@@ -22,10 +22,8 @@ class JSonDteItemValidateService {
 
     const jsonResult: any = [];
 
-    if ( ! (data['items'] && data['items'].length > 0 ) ) {
-      this.errors.push(
-        'Debe especificar los items del documento en data.items'
-      );
+    if (!(data['items'] && data['items'].length > 0)) {
+      this.errors.push('Debe especificar los items del documento en data.items');
     }
 
     //Recorrer array de items e informar en el JSON

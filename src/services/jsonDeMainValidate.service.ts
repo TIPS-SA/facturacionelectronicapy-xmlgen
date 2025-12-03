@@ -1325,20 +1325,21 @@ class JSonDeMainValidateService {
         }
       }
 
-      if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === +data['remision']['motivo']).length == 0) {
+      if (
+        constanteService.remisionesMotivos.filter((um: any) => um.codigo === +data['remision']['motivo']).length == 0
+      ) {
         this.errors.push(
           "Motivo de la Remisión '" +
             data['remision']['motivo'] +
             "' en data.remision.motivo no encontrado. Valores: " +
             constanteService.remisionesMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
         );
-      }      
+      }
     }
 
     if (!(data['remision'] && data['remision']['tipoResponsable'])) {
       this.errors.push('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');
     }
-
 
     if (!data['remision']['kms']) {
       //analizar por que se puso
