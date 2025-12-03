@@ -1296,7 +1296,7 @@ class JSonDeMainValidateService {
   }
 
   private generateDatosEspecificosPorTipoDE_NotaCreditoDebitoValidate(params: any, data: any) {
-    if (!(data['notaCreditoDebito']['motivo'] && data['notaCreditoDebito']['motivo'])) {
+    if (!(data['notaCreditoDebito'] && data['notaCreditoDebito']['motivo'])) {
       this.errors.push('Debe completar el motivo para la nota de crédito/débito en data.notaCreditoDebito.motivo');
     } else {
       if (
@@ -1324,20 +1324,21 @@ class JSonDeMainValidateService {
           );
         }
       }
+
+      if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === +data['remision']['motivo']).length == 0) {
+        this.errors.push(
+          "Motivo de la Remisión '" +
+            data['remision']['motivo'] +
+            "' en data.remision.motivo no encontrado. Valores: " +
+            constanteService.remisionesMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
+        );
+      }      
     }
 
     if (!(data['remision'] && data['remision']['tipoResponsable'])) {
       this.errors.push('No fue pasado el Tipo de Responsable de la Remisión en data.remision.tipoResponsable.');
     }
 
-    if (constanteService.remisionesMotivos.filter((um: any) => um.codigo === +data['remision']['motivo']).length == 0) {
-      this.errors.push(
-        "Motivo de la Remisión '" +
-          data['remision']['motivo'] +
-          "' en data.remision.motivo no encontrado. Valores: " +
-          constanteService.remisionesMotivos.map((a: any) => a.codigo + '-' + a.descripcion),
-      );
-    }
 
     if (!data['remision']['kms']) {
       //analizar por que se puso
