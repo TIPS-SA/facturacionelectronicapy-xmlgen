@@ -371,7 +371,6 @@ class JSonDteItemService {
     gCamItem: any,
     config: XmlgenConfig,
   ) {
-
     let ivaProporcion = item['ivaBase'];
     if (typeof item.ivaProporcion != 'undefined') {
       ivaProporcion = item.ivaProporcion;

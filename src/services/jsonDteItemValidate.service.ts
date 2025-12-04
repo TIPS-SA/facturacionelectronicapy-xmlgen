@@ -516,7 +516,9 @@ class JSonDteItemValidateService {
     }
 
     if (!(ivaProporcion >= 0 && ivaProporcion <= 100)) {
-      this.errors.push('Valor invalido "ivaProporcion"=' + item['iva'] + ' proporcionado en data.items[' + i + '].ivaProporcion');
+      this.errors.push(
+        'Valor invalido "ivaProporcion"=' + item['iva'] + ' proporcionado en data.items[' + i + '].ivaProporcion',
+      );
     }
   }
 
