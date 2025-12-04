@@ -257,7 +257,7 @@ El campo Email, si bien puede informarse mas de 1 (uno), en el Sifen solamente s
             "codigoNivelPaquete" : "12345678"
         },
         "ivaTipo" : 1,
-        "ivaBase" : 100,
+        "ivaProporcion" : 100,
         "iva" : 5,
         "lote" : "A-001",
         "vencimiento" : "2022-10-30",
@@ -421,6 +421,9 @@ El campo Email, si bien puede informarse mas de 1 (uno), en el Sifen solamente s
     }
 }
 ```
+## Actualización importante Diciembre 2025
+El campo item.ivaBase pasa a llamarse item.ivaProporcion, no obstante el campo item.ivaBase se mantiene por compatibilidad de integraciones previas.
+
 El email del Cliente, si bien puede enviarse mas de 1 (uno), en SIFEN solamente será enviado el primero.
 
 ## Eventos

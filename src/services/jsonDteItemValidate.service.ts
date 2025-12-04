@@ -445,29 +445,34 @@ class JSonDteItemValidateService {
       );
     }
 
+    let ivaProporcion = item['ivaBase'];
+    if (typeof item.ivaProporcion != 'undefined') {
+      ivaProporcion = item.ivaProporcion;
+    }
+
     if (item['ivaTipo'] == 1) {
-      if (item['ivaBase'] != 100) {
+      if (ivaProporcion != 100) {
         this.errors.push(
-          'Valor de "ivaBase"=' +
-            item['ivaBase'] +
+          'Valor de "ivaProporcion"=' +
+            ivaProporcion +
             ' debe ser igual a 100 para "ivaTipo" = 1 en data.items[' +
             i +
-            '].ivaBase',
+            '].ivaProporcion',
         );
       }
     }
 
     if (item['ivaTipo'] == 2 || item['ivaTipo'] == 3) {
       //Exento
-      if (item['ivaBase'] != 0) {
+      if (ivaProporcion != 0) {
         this.errors.push(
-          'Valor de "ivaBase"=' +
-            item['ivaBase'] +
+          'Valor de "ivaProporcion"=' +
+            ivaProporcion +
             ' debe ser igual a 0 para "ivaTipo" = ' +
             item['ivaTipo'] +
             ' en data.items[' +
             i +
-            '].ivaBase',
+            '].ivaProporcion',
         );
       }
 
@@ -512,8 +517,8 @@ class JSonDteItemValidateService {
       this.errors.push('Valor invalido "iva"=' + item['iva'] + ' proporcionado en data.items[' + i + '].iva');
     }
 
-    if (!(item['ivaBase'] >= 0 && item['ivaBase'] <= 100)) {
-      this.errors.push('Valor invalido "ivaBase"=' + item['iva'] + ' proporcionado en data.items[' + i + '].ivaBase');
+    if (!(ivaProporcion >= 0 && ivaProporcion <= 100)) {
+      this.errors.push('Valor invalido "ivaProporcion"=' + item['iva'] + ' proporcionado en data.items[' + i + '].ivaProporcion');
     }
   }
 
