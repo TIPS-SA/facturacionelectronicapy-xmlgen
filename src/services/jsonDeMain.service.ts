@@ -521,6 +521,10 @@ class JSonDeMainService {
         if (typeof item.iva_base != 'undefined') {
           item.ivaBase = item.iva_base;
         }
+        if (typeof item.iva_proporcional != 'undefined') {
+          item.ivaProporcion = item.iva_proporcional;
+          delete item.iva_proporcional;
+        }
         if (item.numero_serie) {
           item.numeroSerie = item.numero_serie;
         }

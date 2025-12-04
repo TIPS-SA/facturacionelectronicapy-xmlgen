@@ -371,12 +371,18 @@ class JSonDteItemService {
     gCamItem: any,
     config: XmlgenConfig,
   ) {
+
+    let ivaProporcion = item['ivaBase'];
+    if (typeof item.ivaProporcion != 'undefined') {
+      ivaProporcion = item.ivaProporcion;
+    }
+
     const jsonResult: any = {
       iAfecIVA: item['ivaTipo'], //E731
       dDesAfecIVA: constanteService.codigosAfectaciones.filter((ca) => ca.codigo === +item['ivaTipo'])[0][
         'descripcion'
       ],
-      dPropIVA: item['ivaBase'], //E733
+      dPropIVA: ivaProporcion, //E733
       dTasaIVA: item['iva'], //E734
     };
 
@@ -393,11 +399,11 @@ class JSonDteItemService {
       // Antes de NT13 -- esta opcion esta deprecada, valida solo hasta el 21/05/2023
       if (item['iva'] == 10) {
         jsonResult['dBasGravIVA'] =
-          (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (item['ivaBase'] / 100)) / 1.1;
+          (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (ivaProporcion / 100)) / 1.1;
       }
       if (item['iva'] == 5) {
         jsonResult['dBasGravIVA'] =
-          (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (item['ivaBase'] / 100)) / 1.05;
+          (gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (ivaProporcion / 100)) / 1.05;
       }
 
       if (config.test == true) {
@@ -413,8 +419,8 @@ class JSonDteItemService {
         */
         if (new Date().getTime() >= new Date('2023-04-21').getTime()) {
           jsonResult['dBasGravIVA'] =
-            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) /
-            (10000 + item['iva'] * item['ivaBase']);
+            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * ivaProporcion) /
+            (10000 + item['iva'] * ivaProporcion);
         }
       }
 
@@ -429,8 +435,8 @@ class JSonDteItemService {
           Si E731 = 2 o 3 este campo es igual 0
         */
         jsonResult['dBasGravIVA'] =
-          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * item['ivaBase']) /
-          (10000 + item['iva'] * item['ivaBase']);
+          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * ivaProporcion) /
+          (10000 + item['iva'] * ivaProporcion);
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -473,8 +479,8 @@ class JSonDteItemService {
           */
 
           jsonResult['dBasExe'] =
-            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase'])) /
-            (10000 + item['iva'] * item['ivaBase']);
+            (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - ivaProporcion)) /
+            (10000 + item['iva'] * ivaProporcion);
 
           //Redondeo inicial a 2 decimales
           if (jsonResult['dBasExe']) {
@@ -500,8 +506,8 @@ class JSonDteItemService {
         */
 
         jsonResult['dBasExe'] =
-          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - item['ivaBase'])) /
-          (10000 + item['iva'] * item['ivaBase']);
+          (100 * gCamItem['gValorItem']['gValorRestaItem']['dTotOpeItem'] * (100 - ivaProporcion)) /
+          (10000 + item['iva'] * ivaProporcion);
 
         //Redondeo inicial a 2 decimales
         if (jsonResult['dBasExe']) {
