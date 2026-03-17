@@ -69,10 +69,15 @@ class JSonDteItemService {
 
         if (data['tipoDocumento'] === 7) {
           if (item['tolerancia']) {
-            gCamItem['cRelMerc'] = item['tolerancia'];
-            gCamItem['dDesRelMerc'] = constanteService.relevanciasMercaderias.filter(
-              (um) => um.codigo === item['tolerancia'],
-            )[0]['descripcion'];
+            gCamItem['cRelMerc'] = +item['tolerancia'];
+            
+            if (constanteService.relevanciasMercaderias.filter(
+              (um) => um.codigo === +item['tolerancia'],
+            ).length > 0) {
+              gCamItem['dDesRelMerc'] = constanteService.relevanciasMercaderias.filter(
+                (um) => um.codigo === +item['tolerancia'],
+              )[0]['descripcion'];
+            }
 
             if (item['toleranciaCantidad']) {
               gCamItem['dCanQuiMer'] = item['toleranciaCantidad'];
