@@ -744,11 +744,15 @@ class JSonDeMainValidateService {
     if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion']) {
       //No es contribuyente
       //Obligatorio completar D210
-
       if (!data['cliente']['contribuyente'] && data['cliente']['tipoOperacion'] != 4) {
         if (!data['cliente']['documentoTipo']) {
           //Val.: 59
           this.errors.push('Debe informar el Tipo de Documento del Cliente en data.cliente.documentoTipo');
+        } else {
+          let documentoTipoDS = constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === +data['cliente']['documentoTipo'])
+          if (documentoTipoDS.length <= 0) {
+            this.errors.push('Tipo de Documento del Cliente en data.cliente.documentoTipo no válido');
+          }
         }
 
         //Cuando el campo puede ser un número, y se admite el valor cero, mejor preguntar de ésta forma
@@ -771,6 +775,15 @@ class JSonDeMainValidateService {
         }
       }
     }
+
+    //Este es solo una validacion por si coloca un documentoTipo erróneo, independientemente asi tiene que tener o no el campo
+    if (data['cliente']['documentoTipo']) {
+      let documentoTipoDS = constanteService.tiposDocumentosReceptor.filter((tdr) => tdr.codigo === +data['cliente']['documentoTipo'])
+      if (documentoTipoDS.length <= 0) {
+        this.errors.push('Tipo de Documento del Cliente ' + data['cliente']['documentoTipo'] + ' en data.cliente.documentoTipo no válido');
+      }
+    }
+
 
     if (
       !data['cliente']['contribuyente'] &&
