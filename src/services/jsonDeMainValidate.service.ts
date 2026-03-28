@@ -730,8 +730,7 @@ class JSonDeMainValidateService {
       this.errors.push(
         "Pais '" +
           data['cliente']['pais'] +
-          "' del Cliente en data.cliente.pais no encontrado. Valores: " +
-          constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+          "' del Cliente en data.cliente.pais no encontrado."
       );
     }
 
@@ -2026,6 +2025,28 @@ class JSonDeMainValidateService {
         );
       }
     }
+
+    //Nuevas validaciones
+    if (data['detalleTransporte'] && data['detalleTransporte']['paisDestino']) {
+      if (constanteService.paises.filter((pais: any) => pais.codigo === data['detalleTransporte']['paisDestino']).length == 0) {
+        this.errors.push(
+          "Pais '" +
+            data['detalleTransporte']['paisDestino'] +
+            "' en detalleTransporte.paisDestino no encontrado."
+        );
+      }
+    }
+
+    if (data['detalleTransporte'] && data['detalleTransporte']['transportista'] && data['detalleTransporte']['transportista']['pais']) {
+      if (constanteService.paises.filter((pais: any) => pais.codigo === data['detalleTransporte']['transportista']['pais']).length == 0) {
+        this.errors.push(
+          "Pais '" +
+            data['detalleTransporte']['transportista']['pais'] +
+            "' en detalleTransporte.transportista.pais no encontrado."
+        );
+      }
+    }
+
     if (data['tipoDocumento'] == 7) {
       if (!data['detalleTransporte']['inicioEstimadoTranslado']) {
         this.errors.push('Obligatorio informar data.transporte.inicioEstimadoTranslado. Formato yyyy-MM-dd');
@@ -2785,8 +2806,7 @@ class JSonDeMainValidateService {
         this.errors.push(
           "Pais '" +
             data['detalleTransporte']['transportista']['pais'] +
-            "' del Cliente en data.transporte.transportista.pais no encontrado. Valores: " +
-            constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+            "' del Cliente en data.transporte.transportista.pais no encontrado."
         );
       }
     }

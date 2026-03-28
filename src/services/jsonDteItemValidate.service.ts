@@ -266,8 +266,7 @@ class JSonDteItemValidateService {
                 item['pais'] +
                 "' del Producto en data.items[" +
                 i +
-                '].pais no encontrado. Valores: ' +
-                constanteService.paises.map((a: any) => a.codigo + '-' + a.descripcion),
+                '].pais no encontrado.'
             );
           }
         }
