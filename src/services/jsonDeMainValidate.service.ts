@@ -2919,7 +2919,7 @@ class JSonDeMainValidateService {
     ) {
       if (
         constanteService.unidadesMedidas.filter(
-          (um) => um.codigo === data['complementarios']['carga']['unidadMedidaVolumenTotal'],
+          (um) => um.codigo === +data['complementarios']['carga']['unidadMedidaVolumenTotal'],
         ).length == 0
       ) {
         this.errors.push(
@@ -2938,7 +2938,7 @@ class JSonDeMainValidateService {
     ) {
       if (
         constanteService.unidadesMedidas.filter(
-          (um) => um.codigo === data['complementarios']['carga']['unidadMedidaPesoTotal'],
+          (um) => um.codigo === +data['complementarios']['carga']['unidadMedidaPesoTotal'],
         ).length == 0
       ) {
         this.errors.push(
