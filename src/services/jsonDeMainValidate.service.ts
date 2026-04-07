@@ -2957,7 +2957,7 @@ class JSonDeMainValidateService {
     ) {
       if (
         constanteService.caracteristicasCargas.filter(
-          (um) => um.codigo === data['complementarios']['carga']['caracteristicaCarga'],
+          (um) => um.codigo === +data['complementarios']['carga']['caracteristicaCarga'],
         ).length == 0
       ) {
         this.errors.push(
